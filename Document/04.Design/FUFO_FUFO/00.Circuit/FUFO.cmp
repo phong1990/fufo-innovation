@@ -1,16 +1,15 @@
-Component Name : dsPIC30F4012
+Component   : dsPIC30F4012
+PCB Library : FUFO.PcbLib
+Date        : 3/22/2012
+Time        : 1:47:42 PM
 
-Part Count : 2
 
-Part : *
-     Pins - (Normal) : 0
-          Hidden Pins : 
 
-Part : *
-     Pins - (Normal) : 4
-          1              1              Passive
-          2              2              Passive
-          3              3              Passive
-          4              4              Passive
-          Hidden Pins : 
+Dimension : 0.56 x 1.625 in
 
+ Layer(s)              Pads(s)  Tracks(s)  Fill(s)  Arc(s)  Text(s)
+--------------------------------------------------------------------
+ Top Overlay                 0          8        0       0        2
+ Multi Layer                28          0        0       0        0
+--------------------------------------------------------------------
+ Total                      28          8        0       0        2
