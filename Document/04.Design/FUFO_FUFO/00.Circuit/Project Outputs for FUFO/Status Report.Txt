@@ -1,0 +1,6 @@
+   Printed Document[FUFO.PcbDoc]
+
+Files Generated   : 0
+Documents Printed : 1
+
+Finished Output Generation At 3:40:42 PM On 3/28/2012
