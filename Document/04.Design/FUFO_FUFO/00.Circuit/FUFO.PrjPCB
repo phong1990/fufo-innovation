@@ -101,6 +101,10 @@ ClassGenCCAutoRoomEnabled=1
 ClassGenNCAutoScope=None
 DItemRevisionGUID=
 
+[GeneratedDocument1]
+DocumentPath=Project Outputs for FUFO\Design Rule Check - FUFO.html
+DItemRevisionGUID=
+
 [Generic_SmartPDF]
 AutoOpenFile=-1
 AutoOpenOutJob=-1
@@ -294,7 +298,7 @@ OutputName1=Composite Drawing
 OutputDocumentPath1=D:\fufo-innovation\Document\04.Design\FUFO_FUFO\00.Circuit\FUFO.PcbDoc
 OutputVariantName1=
 OutputDefault1=0
-PageOptions1=Record=PageOptions|CenterHorizontal=True|CenterVertical=True|PrintScale=1.00|XCorrection=1.00|YCorrection=1.00|PrintKind=1|BorderSize=5000000|LeftOffset=0|BottomOffset=0|Orientation=2|PaperLength=1000|PaperWidth=1000|Scale=100|PaperSource=7|PrintQuality=-4|MediaType=1|DitherType=10|PaperKind=Letter|PrintScaleMode=0
+PageOptions1=Record=PageOptions|CenterHorizontal=True|CenterVertical=True|PrintScale=1.00|XCorrection=1.00|YCorrection=1.00|PrintKind=1|BorderSize=5000000|LeftOffset=0|BottomOffset=0|Orientation=2|PaperLength=1000|PaperWidth=1000|Scale=100|PaperSource=7|PrintQuality=-4|MediaType=1|DitherType=10|PaperKind=A4|PrintScaleMode=0
 Configuration1_Name1=OutputConfigurationParameter1
 Configuration1_Item1=PrintArea=DesignExtent|PrintAreaLowerLeftCornerX=0|PrintAreaLowerLeftCornerY=0|PrintAreaUpperRightCornerX=0|PrintAreaUpperRightCornerY=0|Record=PcbPrintView
 Configuration1_Name2=OutputConfigurationParameter2
@@ -954,7 +958,7 @@ ComponentLibIdentifierKind7=Library Name And Type
 ComponentLibraryIdentifier7=FUFO.SchLib
 ComponentDesignItemID7=JAC_CV
 ComponentSymbolReference7=JAC_CV
-ComponentUpdate7=1
+ComponentUpdate7=0
 ComponentIsDeviceSheet7=0
 ComponentLibIdentifierKind8=Library Name And Type
 ComponentLibraryIdentifier8=FUFO.SchLib
@@ -990,7 +994,7 @@ ComponentLibIdentifierKind13=Library Name And Type
 ComponentLibraryIdentifier13=FUFO.SchLib
 ComponentDesignItemID13=Module_Bluetooth
 ComponentSymbolReference13=Module_Bluetooth
-ComponentUpdate13=0
+ComponentUpdate13=1
 ComponentIsDeviceSheet13=0
 ComponentLibIdentifierKind14=Library Name And Type
 ComponentLibraryIdentifier14=FUFO.SchLib
