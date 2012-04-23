@@ -9,8 +9,10 @@
 
 #define	LCD_EN	LATB1			//Tin hieu Enable cho LCD, chan RB1
 #define	LCD_RS	LATB0			//Tin hieu Reset cho LCD, chan RB0
-#define	LCD_DAT	LATB			//Cac tin hieu Data cho LCD, chan RB2..RB5 (D4..D7)
-#define	LCD_TRIS	TRISB		//Tristate cua cac tin hieu Data cho LCD
+#define	LCD_DAT1	LATB2			//Cac tin hieu Data cho LCD, chan RB2..RB5 (D4..D7)
+#define	LCD_DAT2	LATB3
+#define	LCD_DAT3	LATB4
+#define	LCD_DAT4	LATB5
 
 #define	LCD_clear	0x01		//Xoa man hinh LCD
 #define	LCD_home	0x02		//Tro ve dau dong
@@ -34,7 +36,7 @@ void LCD_dat4(unsigned char);		//Xuat du lieu ra LCD qua giao tiep 4-bit
 
 
 //Bang hang so trong ROM
-const unsigned char __attribute__ ((space(psv), address (0x0400))) 
+const unsigned char __attribute__ ((space(psv), address (0x0800))) 
 	//Chuoi ky tu se xuat ra LCD
 	Chuoi1[]="Hello world!\0";		//Chuoi ky tu se duoc xuat ra LCD
 
@@ -81,8 +83,14 @@ void Init_TMR1(void) {
 //Chuong trinh con khoi tao cac cong I/O, de noi voi LED
 //------------------------------------------------------------------------------
 void Init_PORTS(void) {
-	LCD_DAT &= 0xFFF0;		//Xoa cac bit chot du lieu LCD
-	LCD_TRIS = 0xFFF0;		//Cac chan du lieu LCD la ngo ra
+	LATBbits.LCD_DAT1 = 0;		//Xoa cac bit chot du lieu LCD
+	LATBbits.LCD_DAT2 = 0;
+	LATBbits.LCD_DAT3 = 0;
+	LATBbits.LCD_DAT4 = 0;
+	_TRISB2 = 0;		//Cac chan du lieu LCD la ngo ra
+	_TRISB3 = 0;
+	_TRISB4 = 0;
+	_TRISB5 = 0;
 	LATBbits.LCD_EN = 0;
 	_TRISB1 = 0;			//RB1 la ngo ra, noi vao Enable cua LCD
 	LATBbits.LCD_RS = 0;
@@ -118,15 +126,27 @@ void Init_LCD(void) {
 //Chuong trinh con xuat lenh o che do 4 bit
 //------------------------------------------------------------------------------
 void LCD_cmd4(unsigned char cmd) {
-	unsigned temp1, i;
+	unsigned i;
 	LATBbits.LCD_RS = 0;		//Dat che do xuat lenh
-	temp1 = LCD_DAT & 0xFFF0;	//Lay trang thai hien thoi cua LCD_DAT
-	LCD_DAT = temp1 | (cmd >> 4);	//Xuat 4 bit cao
+	//temp1 = LATBbits.LCD_DAT1;	//Lay trang thai hien thoi cua LCD_DAT1
+	LATBbits.LCD_DAT1 = ((cmd >> 7) % 2);	//Xuat 4 bit cao(bit8)
+	//temp1 = LATBbits.LCD_DAT2;	//Lay trang thai hien thoi cua LCD_DAT2
+	LATBbits.LCD_DAT2 = ((cmd >> 6) % 2);	//Xuat 4 bit cao(bit7)
+	//temp1 = LATBbits.LCD_DAT3;	//Lay trang thai hien thoi cua LCD_DAT3
+	LATBbits.LCD_DAT3 = ((cmd >> 5) % 2);	//Xuat 4 bit cao(bit6)
+	//temp1 = LATBbits.LCD_DAT4;	//Lay trang thai hien thoi cua LCD_DAT4
+	LATBbits.LCD_DAT4 = ((cmd >> 4) % 2);	//Xuat 4 bit cao(bit5)
 	LATBbits.LCD_EN = 1;		//Tao xung Enable
 	for (i = 0; i < 2; i++);	//keo dai toi thieu 1 us
 	LATBbits.LCD_EN = 0;
-	temp1 = LCD_DAT & 0xFFF0;	//Lay trang thai hien thoi cua LCD_DAT
-	LCD_DAT = temp1 | (cmd & 0x0F);	//Xuat 4 bit thap
+	//temp1 = LATBbits.LCD_DAT1;	//Lay trang thai hien thoi cua LCD_DAT1
+	LATBbits.LCD_DAT1 = ((cmd >> 3) % 2);	//Xuat 4 bit thap(bit4)
+	//temp1 = LATBbits.LCD_DAT2;	//Lay trang thai hien thoi cua LCD_DAT2
+	LATBbits.LCD_DAT2 = ((cmd >> 2) % 2);	//Xuat 4 bit thap(bit3)
+	//temp1 = LATBbits.LCD_DAT3;	//Lay trang thai hien thoi cua LCD_DAT3
+	LATBbits.LCD_DAT3 = ((cmd >> 1) % 2);	//Xuat 4 bit thap(bit2)
+	//temp1 = LATBbits.LCD_DAT4;	//Lay trang thai hien thoi cua LCD_DAT4
+	LATBbits.LCD_DAT4 = (cmd % 2);	//Xuat 4 bit thap(bit1)
 	LATBbits.LCD_EN = 1;		//Tao xung Enable
 	for (i = 0; i < 2; i++);	//keo dai toi thieu 1 us
 	LATBbits.LCD_EN = 0;
@@ -135,15 +155,27 @@ void LCD_cmd4(unsigned char cmd) {
 //Chuong trinh con xuat du lieu o che do 4 bit
 //------------------------------------------------------------------------------
 void LCD_dat4(unsigned char dat) {
-	unsigned temp2, i;
+	unsigned i;
 	LATBbits.LCD_RS = 1;		//Dat che do xuat du lieu
-	temp2 = LCD_DAT & 0xFFF0;	//Lay trang thai hien thoi cua LCD_DAT
-	LCD_DAT = temp2 | (dat >> 4);	//Xuat 4 bit cao
+	//temp2 = LATBbits.LCD_DAT1;	//Lay trang thai hien thoi cua LCD_DAT1
+	LATBbits.LCD_DAT1 = ((dat >> 7) % 2);	//Xuat 4 bit cao(bit8)
+	//temp2 = LATBbits.LCD_DAT2;	//Lay trang thai hien thoi cua LCD_DAT2
+	LATBbits.LCD_DAT2 = ((dat >> 6) % 2);	//Xuat 4 bit cao(bit7)
+	//temp2 = LATBbits.LCD_DAT3;	//Lay trang thai hien thoi cua LCD_DAT3
+	LATBbits.LCD_DAT3 = ((dat >> 5) % 2);	//Xuat 4 bit cao(bit6)
+	//temp2 = LATBbits.LCD_DAT4;	//Lay trang thai hien thoi cua LCD_DAT4
+	LATBbits.LCD_DAT4 = ((dat >> 4) % 2);	//Xuat 4 bit cao(bit5)
 	LATBbits.LCD_EN = 1;		//Tao xung Enable
 	for (i = 0; i < 2; i++);	//keo dai toi thieu 1 us
 	LATBbits.LCD_EN = 0;
-	temp2 = LCD_DAT & 0xFFF0;	//Lay trang thai hien thoi cua LCD_DAT
-	LCD_DAT = temp2 | (dat & 0x0F);	//Xuat 4 bit thap
+	//temp2 = LATBbits.LCD_DAT1;	//Lay trang thai hien thoi cua LCD_DAT1
+	LATBbits.LCD_DAT1 = ((dat >> 3) % 2);	//Xuat 4 bit thap(bit4)
+	//temp2 = LATBbits.LCD_DAT2;	//Lay trang thai hien thoi cua LCD_DAT2
+	LATBbits.LCD_DAT2 = ((dat >> 2) % 2);	//Xuat 4 bit thap(bit3)
+	//temp2 = LATBbits.LCD_DAT3;	//Lay trang thai hien thoi cua LCD_DAT3
+	LATBbits.LCD_DAT3 = ((dat >> 1) % 2);	//Xuat 4 bit thap(bit2)
+	//temp2 = LATBbits.LCD_DAT4;	//Lay trang thai hien thoi cua LCD_DAT4
+	LATBbits.LCD_DAT4 = (dat % 2);	//Xuat 4 bit thap(bit1)
 	LATBbits.LCD_EN = 1;		//Tao xung Enable
 	for (i = 0; i < 2; i++);	//keo dai toi thieu 1 us
 	LATBbits.LCD_EN = 0;
