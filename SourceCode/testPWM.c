@@ -38,7 +38,7 @@ void Init_MCPWM(void) {
 							//O day resolution la 16 (0xFFFF)
 	PWMCON1 = 0x070F;		//1. Chinh mode Independent;  2. Chinh PWM chi ra o pin L, khong ra pin H;
 	OVDCON = 0xFF00;		//Khong dung overdrive
-	PDC1 = 5424;			//Khoi tao PWM1 chay o 15%
-	PDC2 = 5424;
+	PDC1 = 2712;			//Khoi tao PWM1 chay o 15%  duty- 1ms: 1808;	 1.5ms: 2712;	 2ms: 3616
+	PDC2 = 3616;
 	PTCON = 0x8000;			//Kich hoat module PWM
 }
