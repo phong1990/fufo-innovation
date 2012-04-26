@@ -61,7 +61,6 @@ int main (void){
 	TRISE = 0x0000; // Port E is a output port 
 	PORTE = 0x0100	// output HIGH on RE8, low on RE0
 	init_PWM_2timer(); // setup timer 2 for 20ms, timer1 for 1.5ms
-	while (1) {	
-	}
+	while (1) Nop();
 }
 

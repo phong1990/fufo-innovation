@@ -58,6 +58,5 @@ int main (void){
 	TRISE = 0x0000; // Port E is a output port 
 	PORTE = 0x0100	// output HIGH on RE8, low on RE0
 	Init_PWM_Timer2(); // start the software PWM. which is output HIGH 1.5ms then LOW 18.5ms in a loop
-	while (1) {
-	}
+	while (1) Nop();
 }
