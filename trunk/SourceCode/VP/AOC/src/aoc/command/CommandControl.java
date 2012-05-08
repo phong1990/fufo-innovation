@@ -18,6 +18,8 @@
  */
 package aoc.command;
 
+import aoc.gui.*;
+
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.net.ServerSocket;
@@ -28,25 +30,28 @@ import java.net.Socket;
  *
  */
 public class CommandControl extends Thread implements KeyListener{
-    
+
     //Create server socket to control command
     ServerSocket svsk = null;
     Socket cmsk = null;
-    private byte command;
+    private byte command ;
+    private int key = 0;
+    private KeyEvent e;
     public CommandControl(){}
     public CommandControl(Socket sk){
         cmsk = sk;
     }
-    
+
     public void run(){
-       command = waitCommandFromUser();
-       sendCommandToAOP(command);       
+        command = waitCommandFromUser();
+        sendCommandToAOP(command);
+        keyPressed(e);
     }
-    
+
     public byte waitCommandFromUser(){
         return command;
     }
-    
+
     public void sendCommandToAOP(byte command){
         System.out.print("Sent command to AOP!");
     }
@@ -58,7 +63,11 @@ public class CommandControl extends Thread implements KeyListener{
     @Override
     public void keyPressed(KeyEvent arg0) {
         // TODO Auto-generated method stub
-        
+        if(arg0.getID() == KeyEvent.KEY_PRESSED){
+            key = arg0.getKeyCode();
+            command = (byte)(arg0.getKeyChar());
+            System.out.print(command);
+        }
     }
     /**
      * [Explain the description for this method here].
@@ -68,7 +77,7 @@ public class CommandControl extends Thread implements KeyListener{
     @Override
     public void keyReleased(KeyEvent arg0) {
         // TODO Auto-generated method stub
-        
+
     }
     /**
      * [Explain the description for this method here].
@@ -78,7 +87,7 @@ public class CommandControl extends Thread implements KeyListener{
     @Override
     public void keyTyped(KeyEvent arg0) {
         // TODO Auto-generated method stub
-        
+
     }
 
 }
