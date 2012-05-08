@@ -18,8 +18,6 @@
  */
 package aoc.gui;
 
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import java.awt.BorderLayout;
 import javax.swing.JButton;
@@ -33,44 +31,32 @@ import java.awt.Component;
 import java.awt.Color;
 import net.miginfocom.swing.MigLayout;
 import java.awt.LayoutManager;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 /**
  * @author khoinguyen67
  *
  */
-public class AOC {
+public class AOC implements KeyListener {
 
     private JFrame frmFufo;
     private JPanel panel_1;
     private JLabel lblFramePicture;
+    private JLabel lblConnectedToFufo;    
+    private byte command;
+    private int key;
 
-    /**
-     * Launch the application.
-     */
     public static void main(String[] args) {
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                    AOC window = new AOC();
-                    window.frmFufo.setVisible(true);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
+        AOC aoc = new AOC();
+        aoc.frmFufo.setVisible(true);
+        aoc.frmFufo.addKeyListener(aoc);
     }
-
     /**
      * Create the application.
      */
     public AOC() {
-        initialize();
-    }
 
-    /**
-     * Initialize the contents of the frame.
-     */
-    private void initialize() {
         frmFufo = new JFrame();
         frmFufo.setTitle("FUFO");
         frmFufo.getContentPane().setBackground(Color.WHITE);
@@ -80,26 +66,21 @@ public class AOC {
         flowLayout_1.setAlignOnBaseline(true);
         frmFufo.getContentPane().setLayout(flowLayout_1);
         frmFufo.setVisible(true);
-        frmFufo.setSize(340,400);
+        frmFufo.setSize(340,405);
         JPanel panel = new JPanel();
         panel.setSize(320, 240);
         frmFufo.getContentPane().add(panel,BorderLayout.NORTH);
         LayoutManager overlay = new OverlayLayout(panel);
         panel.setLayout(overlay);
         JLabel lblBi = new JLabel(new ImageIcon("C:\\Users\\khoinguyen67\\Pictures\\Picture1.png")); 
-   //     lblBi.setHorizontalAlignment(SwingConstants.RIGHT);
-     //   lblBi.setVerticalAlignment(SwingConstants.TOP);
-      //  lblBi.setBounds(250,100,10,10);
-     //   lblBi.setAlignmentX(0.5f);
-      //  lblBi.setAlignmentY(0.5f);
         panel.add(lblBi);
         lblFramePicture = new JLabel("");
         lblFramePicture.setBounds(0, 0, 320, 240);
-       lblFramePicture.setIcon(new ImageIcon("C:\\Users\\khoinguyen67\\Dropbox\\Project\\FUFO\\Pictures2\\1009.jpg"));
+        lblFramePicture.setIcon(new ImageIcon("C:\\Users\\khoinguyen67\\Dropbox\\Project\\FUFO\\Pictures2\\1009.jpg"));
         lblFramePicture.setAlignmentX(0.1f);
         lblFramePicture.setAlignmentY(0.5f);
         panel.add(lblFramePicture);
-
+        
         JPanel panel_3 = new JPanel();
         FlowLayout flowLayout = (FlowLayout) panel_3.getLayout();
         flowLayout.setVgap(0);
@@ -135,12 +116,9 @@ public class AOC {
         
         JButton btnDown = new JButton("");
         btnDown.setAlignmentX(Component.RIGHT_ALIGNMENT);
-        btnDown.setBackground(Color.LIGHT_GRAY);
         btnDown.setAlignmentY(Component.BOTTOM_ALIGNMENT);
-        btnDown.setHorizontalAlignment(SwingConstants.TRAILING);
         btnDown.setIcon(new ImageIcon("C:\\Users\\khoinguyen67\\Pictures\\down.png"));
-        btnDown.setSelectedIcon(new ImageIcon("C:\\Users\\khoinguyen67\\Pictures\\down.png"));
-        btnDown.setVerticalAlignment(SwingConstants.BOTTOM);
+
         panel_2.setLayout(new MigLayout("", "[120px]", "[42px][42px]"));
         panel_2.add(btnUp, "cell 0 0,alignx center,aligny top");
         panel_2.add(btnDown, "cell 0 1,alignx center,aligny bottom");
@@ -149,17 +127,61 @@ public class AOC {
         panel_4.setForeground(Color.GREEN);
         frmFufo.getContentPane().add(panel_4,BorderLayout.SOUTH);
         panel_4.setBackground(Color.GREEN);
-        panel_4.setLayout(new FlowLayout(FlowLayout.CENTER, 120, 5));
+        panel_4.setLayout(new FlowLayout(FlowLayout.CENTER, 160, 5));
        // panel_4.set
         
-        JLabel lblConnectedToFufo = new JLabel("Connected to FUFO!");
+        lblConnectedToFufo = new JLabel("Connected To FUFU!");
         lblConnectedToFufo.setHorizontalAlignment(SwingConstants.CENTER);
         panel_4.add(lblConnectedToFufo);
-    //    frmFufo.add(panel,BorderLayout.NORTH);
+      // frmFufo.addKeyListener(this);
+/*       panel.invalidate();
+       panel_2.invalidate();
+       panel_3.invalidate();
+       panel_4.invalidate();*/
+       
         
     }
 
     public JLabel getLblNewLabel() {
         return lblFramePicture;
+    }
+
+    /**
+     * [Explain the description for this method here].
+     * @param e
+     * @see java.awt.event.KeyListener#keyPressed(java.awt.event.KeyEvent)
+     */
+    @Override
+    public void keyPressed(KeyEvent e) {
+        // TODO Auto-generated method stub
+        
+      //  if(e.getID() == KeyEvent.KEY_PRESSED){
+          key = e.getKeyCode();
+      //      command = (byte)e.getKeyChar();
+            System.out.print(e.getKeyChar());
+            lblConnectedToFufo.setText(((Integer)key).toString());
+       // }
+    }
+
+    /**
+     * [Explain the description for this method here].
+     * @param e
+     * @see java.awt.event.KeyListener#keyReleased(java.awt.event.KeyEvent)
+     */
+    @Override
+    public void keyReleased(KeyEvent e) {
+        // TODO Auto-generated method stub
+    //    System.out.print("release");
+    }
+
+    /**
+     * [Explain the description for this method here].
+     * @param e
+     * @see java.awt.event.KeyListener#keyTyped(java.awt.event.KeyEvent)
+     */
+    @Override
+    public void keyTyped(KeyEvent e) {
+        // TODO Auto-generated method stub
+      //  System.out.print("type");
     }
 }
