@@ -1,0 +1,3 @@
+test PWM hardware xuat xung 1ms roi sau 5ms tang len 1.5
+test pwm bang 2 timer, xuat xung 1ms roi sau 5ms tang len 1.5
+test pwm bang 1 timer, code Phong, xuat xung 1ms
