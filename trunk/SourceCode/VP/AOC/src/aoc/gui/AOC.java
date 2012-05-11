@@ -31,27 +31,22 @@ import java.awt.Component;
 import java.awt.Color;
 import net.miginfocom.swing.MigLayout;
 import java.awt.LayoutManager;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 
 /**
+ * This class is used to create GUI.
  * @author khoinguyen67
  *
  */
-public class AOC implements KeyListener {
+public class AOC  {
 
-    private JFrame frmFufo;
+    public JFrame frmFufo;
     private JPanel panel_1;
     private JLabel lblFramePicture;
-    private JLabel lblConnectedToFufo;    
-    private byte command;
-    private int key;
+    public JLabel lblConnectedToFufo;   
+    public JPanel panel_4 ;
+    public byte command;
+    public int key;
 
-    public static void main(String[] args) {
-        AOC aoc = new AOC();
-        aoc.frmFufo.setVisible(true);
-        aoc.frmFufo.addKeyListener(aoc);
-    }
     /**
      * Create the application.
      */
@@ -67,16 +62,18 @@ public class AOC implements KeyListener {
         frmFufo.getContentPane().setLayout(flowLayout_1);
         frmFufo.setVisible(true);
         frmFufo.setSize(340,405);
+        
         JPanel panel = new JPanel();
         panel.setSize(320, 240);
         frmFufo.getContentPane().add(panel,BorderLayout.NORTH);
         LayoutManager overlay = new OverlayLayout(panel);
         panel.setLayout(overlay);
+        
         JLabel lblBi = new JLabel(new ImageIcon("C:\\Users\\khoinguyen67\\Pictures\\Picture1.png")); 
         panel.add(lblBi);
         lblFramePicture = new JLabel("");
         lblFramePicture.setBounds(0, 0, 320, 240);
-        lblFramePicture.setIcon(new ImageIcon("C:\\Users\\khoinguyen67\\Dropbox\\Project\\FUFO\\Pictures2\\1009.jpg"));
+        lblFramePicture.setIcon(new ImageIcon("C:\\Users\\khoinguyen67\\Dropbox\\Project\\Pictures2\\1009.jpg"));
         lblFramePicture.setAlignmentX(0.1f);
         lblFramePicture.setAlignmentY(0.5f);
         panel.add(lblFramePicture);
@@ -123,65 +120,18 @@ public class AOC implements KeyListener {
         panel_2.add(btnUp, "cell 0 0,alignx center,aligny top");
         panel_2.add(btnDown, "cell 0 1,alignx center,aligny bottom");
         
-        JPanel panel_4 = new JPanel();
-        panel_4.setForeground(Color.GREEN);
+        panel_4 = new JPanel();      
         frmFufo.getContentPane().add(panel_4,BorderLayout.SOUTH);
-        panel_4.setBackground(Color.GREEN);
+        panel_4.setBackground(Color.RED);
         panel_4.setLayout(new FlowLayout(FlowLayout.CENTER, 160, 5));
-       // panel_4.set
         
-        lblConnectedToFufo = new JLabel("Connected To FUFU!");
+        lblConnectedToFufo = new JLabel("Disconnected!");
         lblConnectedToFufo.setHorizontalAlignment(SwingConstants.CENTER);
-        panel_4.add(lblConnectedToFufo);
-      // frmFufo.addKeyListener(this);
-/*       panel.invalidate();
-       panel_2.invalidate();
-       panel_3.invalidate();
-       panel_4.invalidate();*/
-       
-        
+        panel_4.add(lblConnectedToFufo);    
     }
-
-    public JLabel getLblNewLabel() {
-        return lblFramePicture;
-    }
-
-    /**
-     * [Explain the description for this method here].
-     * @param e
-     * @see java.awt.event.KeyListener#keyPressed(java.awt.event.KeyEvent)
-     */
-    @Override
-    public void keyPressed(KeyEvent e) {
-        // TODO Auto-generated method stub
-        
-      //  if(e.getID() == KeyEvent.KEY_PRESSED){
-          key = e.getKeyCode();
-      //      command = (byte)e.getKeyChar();
-            System.out.print(e.getKeyChar());
-            lblConnectedToFufo.setText(((Integer)key).toString());
-       // }
-    }
-
-    /**
-     * [Explain the description for this method here].
-     * @param e
-     * @see java.awt.event.KeyListener#keyReleased(java.awt.event.KeyEvent)
-     */
-    @Override
-    public void keyReleased(KeyEvent e) {
-        // TODO Auto-generated method stub
-    //    System.out.print("release");
-    }
-
-    /**
-     * [Explain the description for this method here].
-     * @param e
-     * @see java.awt.event.KeyListener#keyTyped(java.awt.event.KeyEvent)
-     */
-    @Override
-    public void keyTyped(KeyEvent e) {
-        // TODO Auto-generated method stub
-      //  System.out.print("type");
-    }
+    /*  public static void main(String[] args) {
+    AOC aoc = new AOC();
+    aoc.frmFufo.setVisible(true);
+    aoc.frmFufo.addKeyListener(aoc);
+}*/
 }

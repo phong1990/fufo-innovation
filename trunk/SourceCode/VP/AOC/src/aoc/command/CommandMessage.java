@@ -19,16 +19,33 @@
 package aoc.command;
 
 /**
+ * This class is not used.
  * @author khoinguyen67
- *
+ * 
  */
 public class CommandMessage {
-    private byte command;
-    private String message;
-    public String setMessage(byte command){
-        return message;
+    
+    private int command;
+    private String commandMessage;
+    public CommandMessage(int command){
+        this.command = command;
     }
-    public byte getCommand(String message){
+    
+    public String setCommandMessage(int command){
+        commandMessage = "FU" + command + "FO";
+        return commandMessage;
+    }
+    
+    public int getCommand(String message){
+        try {
+            if(message.startsWith("FU") && message.endsWith("FO")) {
+                String temp = message.substring(2,4);
+                command = Integer.parseInt(temp);               
+            }
+        } catch (Exception ex) {
+            // TODO Auto-generated catch block
+            ex.printStackTrace();
+        }
         return command;
     }
 
