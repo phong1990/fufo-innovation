@@ -18,29 +18,52 @@
  */
 package aoc.control;
 
+import aoc.gui.*;
+
+import java.awt.Color;
 import java.net.ServerSocket;
 import java.net.Socket;
 
 import aoc.command.CommandControl;
 
 /**
+ * This class is main class uses to control all of threads and GUI
+ *  in application on computer.
  * @author khoinguyen67
  *
  */
 public class Control {
-    private ServerSocket svsk = null;
-    private Socket sk = null;
+    
+    private ServerSocket serverSocket = null;               //Initiate ServerSocket to create server
+    private Socket tcpSocket = null;                        //Used to send command and receive status
+    public static final int PORT = 6767;                    //Port of server
+    
+    /*
+     * This method uses to create TCP server to send command
+     * and receive status from FUFO
+     */
     private void createServer() throws Exception{
-        svsk = new ServerSocket(6767);
-       // sk = svsk.accept();
+        serverSocket = new ServerSocket(PORT);                //Start server
+        tcpSocket = serverSocket.accept();                    //Wait for client connecting
     }
     
+    /*
+     * Used to start GUI and threads 
+     */
     public static void main(String args[]){
         try{
-        Control ct = new Control();
-        ct.createServer();
-        CommandControl cmct = new CommandControl(ct.sk);
-        cmct.start();
+        AOC aoc = new AOC();                                   //Initiate GUI aoc
+        aoc.frmFufo.setVisible(true);                          //Set components in GUI can visible
+    
+        Control ct = new Control();                            //Create an object for this class
+        ct.createServer();                                     //Call method createServer()
+        aoc.panel_4.setBackground(Color.GREEN);                //Set color for panel of gui when connecting successful
+        aoc.lblConnectedToFufo.setText("Connected to FUFO!");  //Set text for label in GUI when connecting successful
+        
+        //Initiate thread to control command with 2 arguments TCP socket and  GUI aoc 
+        CommandControl cmct = new CommandControl(ct.tcpSocket, aoc);    
+        cmct.start();                                            //Start this thread.
+        
         }catch(Exception e){
             System.out.print(e.getMessage());
         }
