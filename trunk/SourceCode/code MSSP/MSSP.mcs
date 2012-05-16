@@ -1,3 +1,123 @@
 [Header]
 MagicCookie={0b13fe8c-dfe0-40eb-8900-6712719559a7}
 Version=1.0
+[File000]
+Location=D:\FU\FPTHN_FALL(20110905)\FUFO\SourceCode\code MSSP\main.o
+Folder=Intermediary
+DeviceName=dsPIC30F4012
+LanguageToolSuiteID={479DDE59-4D56-455E-855E-FFF59A3DB57E}
+LanguageToolID={069BD372-6CA0-40D4-BF2F-5DC806D05083}
+LanguageToolLocation=C:\Program Files\Microchip\MPLAB C30\bin\pic30-gcc.exe
+PPAD=$(BINDIR)||$(TMPDIR)||$(AINDIR)||$(INCDIR)||$(LIBDIR)|C:\Program Files\Microchip\MPLAB C30\lib||$(LKRDIR)||
+SOLK=<src>|main.c|ADXL345_accel\ADXL345.c|DELAY\DelayTMR1.c|I2C\I2C.c|L3G4200D_gyro\L3G4200D.c|LCD\LCD.c|UART\UART.c||<obj>||<lib>||<lkr>||
+SuiteArgsString=
+ToolArgsString=-g -Wall
+TraceCmdString=
+DebugOptions=-D__DEBUG
+[File001]
+Location=D:\FU\FPTHN_FALL(20110905)\FUFO\SourceCode\code MSSP\ADXL345.o
+Folder=Intermediary
+DeviceName=dsPIC30F4012
+LanguageToolSuiteID={479DDE59-4D56-455E-855E-FFF59A3DB57E}
+LanguageToolID={069BD372-6CA0-40D4-BF2F-5DC806D05083}
+LanguageToolLocation=C:\Program Files\Microchip\MPLAB C30\bin\pic30-gcc.exe
+PPAD=$(BINDIR)||$(TMPDIR)||$(AINDIR)||$(INCDIR)||$(LIBDIR)|C:\Program Files\Microchip\MPLAB C30\lib||$(LKRDIR)||
+SOLK=<src>|main.c|ADXL345_accel\ADXL345.c|DELAY\DelayTMR1.c|I2C\I2C.c|L3G4200D_gyro\L3G4200D.c|LCD\LCD.c|UART\UART.c||<obj>||<lib>||<lkr>||
+SuiteArgsString=
+ToolArgsString=-g -Wall
+TraceCmdString=
+DebugOptions=-D__DEBUG
+[File002]
+Location=D:\FU\FPTHN_FALL(20110905)\FUFO\SourceCode\code MSSP\DelayTMR1.o
+Folder=Intermediary
+DeviceName=dsPIC30F4012
+LanguageToolSuiteID={479DDE59-4D56-455E-855E-FFF59A3DB57E}
+LanguageToolID={069BD372-6CA0-40D4-BF2F-5DC806D05083}
+LanguageToolLocation=C:\Program Files\Microchip\MPLAB C30\bin\pic30-gcc.exe
+PPAD=$(BINDIR)||$(TMPDIR)||$(AINDIR)||$(INCDIR)||$(LIBDIR)|C:\Program Files\Microchip\MPLAB C30\lib||$(LKRDIR)||
+SOLK=<src>|main.c|ADXL345_accel\ADXL345.c|DELAY\DelayTMR1.c|I2C\I2C.c|L3G4200D_gyro\L3G4200D.c|LCD\LCD.c|UART\UART.c||<obj>||<lib>||<lkr>||
+SuiteArgsString=
+ToolArgsString=-g -Wall
+TraceCmdString=
+DebugOptions=-D__DEBUG
+[File003]
+Location=D:\FU\FPTHN_FALL(20110905)\FUFO\SourceCode\code MSSP\I2C.o
+Folder=Intermediary
+DeviceName=dsPIC30F4012
+LanguageToolSuiteID={479DDE59-4D56-455E-855E-FFF59A3DB57E}
+LanguageToolID={069BD372-6CA0-40D4-BF2F-5DC806D05083}
+LanguageToolLocation=C:\Program Files\Microchip\MPLAB C30\bin\pic30-gcc.exe
+PPAD=$(BINDIR)||$(TMPDIR)||$(AINDIR)||$(INCDIR)||$(LIBDIR)|C:\Program Files\Microchip\MPLAB C30\lib||$(LKRDIR)||
+SOLK=<src>|main.c|ADXL345_accel\ADXL345.c|DELAY\DelayTMR1.c|I2C\I2C.c|L3G4200D_gyro\L3G4200D.c|LCD\LCD.c|UART\UART.c||<obj>||<lib>||<lkr>||
+SuiteArgsString=
+ToolArgsString=-g -Wall
+TraceCmdString=
+DebugOptions=-D__DEBUG
+[File004]
+Location=D:\FU\FPTHN_FALL(20110905)\FUFO\SourceCode\code MSSP\L3G4200D.o
+Folder=Intermediary
+DeviceName=dsPIC30F4012
+LanguageToolSuiteID={479DDE59-4D56-455E-855E-FFF59A3DB57E}
+LanguageToolID={069BD372-6CA0-40D4-BF2F-5DC806D05083}
+LanguageToolLocation=C:\Program Files\Microchip\MPLAB C30\bin\pic30-gcc.exe
+PPAD=$(BINDIR)||$(TMPDIR)||$(AINDIR)||$(INCDIR)||$(LIBDIR)|C:\Program Files\Microchip\MPLAB C30\lib||$(LKRDIR)||
+SOLK=<src>|main.c|ADXL345_accel\ADXL345.c|DELAY\DelayTMR1.c|I2C\I2C.c|L3G4200D_gyro\L3G4200D.c|LCD\LCD.c|UART\UART.c||<obj>||<lib>||<lkr>||
+SuiteArgsString=
+ToolArgsString=-g -Wall
+TraceCmdString=
+DebugOptions=-D__DEBUG
+[File005]
+Location=D:\FU\FPTHN_FALL(20110905)\FUFO\SourceCode\code MSSP\LCD.o
+Folder=Intermediary
+DeviceName=dsPIC30F4012
+LanguageToolSuiteID={479DDE59-4D56-455E-855E-FFF59A3DB57E}
+LanguageToolID={069BD372-6CA0-40D4-BF2F-5DC806D05083}
+LanguageToolLocation=C:\Program Files\Microchip\MPLAB C30\bin\pic30-gcc.exe
+PPAD=$(BINDIR)||$(TMPDIR)||$(AINDIR)||$(INCDIR)||$(LIBDIR)|C:\Program Files\Microchip\MPLAB C30\lib||$(LKRDIR)||
+SOLK=<src>|main.c|ADXL345_accel\ADXL345.c|DELAY\DelayTMR1.c|I2C\I2C.c|L3G4200D_gyro\L3G4200D.c|LCD\LCD.c|UART\UART.c||<obj>||<lib>||<lkr>||
+SuiteArgsString=
+ToolArgsString=-g -Wall
+TraceCmdString=
+DebugOptions=-D__DEBUG
+[File006]
+Location=D:\FU\FPTHN_FALL(20110905)\FUFO\SourceCode\code MSSP\UART.o
+Folder=Intermediary
+DeviceName=dsPIC30F4012
+LanguageToolSuiteID={479DDE59-4D56-455E-855E-FFF59A3DB57E}
+LanguageToolID={069BD372-6CA0-40D4-BF2F-5DC806D05083}
+LanguageToolLocation=C:\Program Files\Microchip\MPLAB C30\bin\pic30-gcc.exe
+PPAD=$(BINDIR)||$(TMPDIR)||$(AINDIR)||$(INCDIR)||$(LIBDIR)|C:\Program Files\Microchip\MPLAB C30\lib||$(LKRDIR)||
+SOLK=<src>|main.c|ADXL345_accel\ADXL345.c|DELAY\DelayTMR1.c|I2C\I2C.c|L3G4200D_gyro\L3G4200D.c|LCD\LCD.c|UART\UART.c||<obj>||<lib>||<lkr>||
+SuiteArgsString=
+ToolArgsString=-g -Wall
+TraceCmdString=
+DebugOptions=-D__DEBUG
+[File007]
+Location=D:\FU\FPTHN_FALL(20110905)\FUFO\SourceCode\code MSSP\MSSP.cof
+Folder=Output
+DeviceName=dsPIC30F4012
+LanguageToolSuiteID={479DDE59-4D56-455E-855E-FFF59A3DB57E}
+LanguageToolID={433C3D55-811D-409D-A6BF-159CF9355B42}
+LanguageToolLocation=C:\Program Files\Microchip\MPLAB C30\bin\pic30-ld.exe
+PPAD=$(BINDIR)||$(TMPDIR)||$(AINDIR)||$(INCDIR)||$(LIBDIR)|C:\Program Files\Microchip\MPLAB C30\lib||$(LKRDIR)||
+SOLK=<src>|main.c|ADXL345_accel\ADXL345.c|DELAY\DelayTMR1.c|I2C\I2C.c|L3G4200D_gyro\L3G4200D.c|LCD\LCD.c|UART\UART.c||<obj>||<lib>||<lkr>||
+SuiteArgsString=
+ToolArgsString=-o"$(BINDIR_)$(TARGETBASE).$(TARGETSUFFIX)" -Map="$(BINDIR_)$(TARGETBASE).map" --report-mem
+TraceCmdString=
+DebugOptions=--defsym=__MPLAB_DEBUG=1
+[File008]
+Location=D:\FU\FPTHN_FALL(20110905)\FUFO\SourceCode\code MSSP\MSSP.hex
+Folder=Output
+DeviceName=dsPIC30F4012
+LanguageToolSuiteID={479DDE59-4D56-455E-855E-FFF59A3DB57E}
+LanguageToolID={433C3D55-811D-409D-A6BF-159CF9355B42}
+LanguageToolLocation=C:\Program Files\Microchip\MPLAB C30\bin\pic30-ld.exe
+PPAD=$(BINDIR)||$(TMPDIR)||$(AINDIR)||$(INCDIR)||$(LIBDIR)|C:\Program Files\Microchip\MPLAB C30\lib||$(LKRDIR)||
+SOLK=<src>|main.c|ADXL345_accel\ADXL345.c|DELAY\DelayTMR1.c|I2C\I2C.c|L3G4200D_gyro\L3G4200D.c|LCD\LCD.c|UART\UART.c||<obj>||<lib>||<lkr>||
+SuiteArgsString=
+ToolArgsString=-o"$(BINDIR_)$(TARGETBASE).$(TARGETSUFFIX)" -Map="$(BINDIR_)$(TARGETBASE).map" --report-mem
+TraceCmdString=
+DebugOptions=--defsym=__MPLAB_DEBUG=1
+[TOOL_LOC_STAMPS]
+tool_loc{069BD372-6CA0-40D4-BF2F-5DC806D05083}=C:\Program Files\Microchip\MPLAB C30\bin\pic30-gcc.exe
+tool_loc{433C3D55-811D-409D-A6BF-159CF9355B42}=C:\Program Files\Microchip\MPLAB C30\bin\pic30-ld.exe

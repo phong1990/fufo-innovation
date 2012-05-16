@@ -38,7 +38,7 @@ void fufoAckI2C(void) {
 void fufoNackI2C(void) {
 	I2CCONbits.ACKDT = 1;//Set for notACK
 	I2CCONbits.ACKEN = 1;//Send a  notACK
-	while(I2CCONbits.ACCKEN);//wait for notACK to complete
+	while(I2CCONbits.ACKEN);//wait for notACK to complete
 	I2CCONbits.ACKDT = 0;//Set for ACK
 }
 
@@ -125,7 +125,7 @@ unsigned char fufoReadByteI2C(unsigned char i2cADD, unsigned char ADD, unsigned 
 	return error;
 }
 
-unsigned char fufoReadArrayI2C(unsigned char i2sADD, unsigned char ADD, unsigned char *data, unsigned char length) {
+unsigned char fufoReadArrayI2C(unsigned char i2cADD, unsigned char ADD, unsigned char *data, unsigned char length) {
 	unsigned char error = 0;
 	fufoStartI2C();
 	error += !fufoWriteAckI2C(i2cADD << 1 | I2CWRITE);
