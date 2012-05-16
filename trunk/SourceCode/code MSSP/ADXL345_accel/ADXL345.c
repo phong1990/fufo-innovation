@@ -11,7 +11,7 @@
 #define ADXL345_OFSZ                    0x20    // R/W   Z-axis offset 
 #define ADXL345_DUR                     0x21    // R/W   Tap duration 
 #define ADXL345_LATENT                  0x22    // R/W   Tap latency 
-#define ADXL345_WINDOW                  0x23    // R/W   Tap window 
+#define ADXL345_WINDOW                  0x23    // R/W   Tap window
 #define ADXL345_THRESH_ACT              0x24    // R/W   Activity threshold 
 #define ADXL345_THRESH_INACT    		0x25    // R/W   Inactivity threshold 
 #define ADXL345_TIME_INACT              0x26    // R/W   Inactivity time 
