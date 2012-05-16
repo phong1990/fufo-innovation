@@ -40,8 +40,8 @@ import java.awt.LayoutManager;
 public class AOC  {
 
     public JFrame frmFufo;
-    private JPanel panel_1;
-    private JLabel lblFramePicture;
+    public JPanel panel_1;
+    public JLabel lblFramePicture;
     public JLabel lblConnectedToFufo;   
     public JPanel panel_4 ;
     public byte command;
@@ -74,7 +74,7 @@ public class AOC  {
         lblFramePicture = new JLabel("");
         lblFramePicture.setBounds(0, 0, 320, 240);
         lblFramePicture.setIcon(new ImageIcon("C:\\Users\\khoinguyen67\\Dropbox\\Project\\Pictures2\\1009.jpg"));
-        lblFramePicture.setAlignmentX(0.1f);
+        lblFramePicture.setAlignmentX(0.5f);
         lblFramePicture.setAlignmentY(0.5f);
         panel.add(lblFramePicture);
         

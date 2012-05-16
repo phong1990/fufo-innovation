@@ -19,11 +19,12 @@
 package aoc.control;
 
 import aoc.gui.*;
+import aoc.status.StatusControl;
+import aoc.video.VideoControl;
 
 import java.awt.Color;
 import java.net.ServerSocket;
 import java.net.Socket;
-
 import aoc.command.CommandControl;
 
 /**
@@ -34,18 +35,9 @@ import aoc.command.CommandControl;
  */
 public class Control {
     
-    private ServerSocket serverSocket = null;               //Initiate ServerSocket to create server
-    private Socket tcpSocket = null;                        //Used to send command and receive status
-    public static final int PORT = 6767;                    //Port of server
-    
-    /*
-     * This method uses to create TCP server to send command
-     * and receive status from FUFO
-     */
-    private void createServer() throws Exception{
-        serverSocket = new ServerSocket(PORT);                //Start server
-        tcpSocket = serverSocket.accept();                    //Wait for client connecting
-    }
+    private static ServerSocket serverSocket = null;               //Initiate ServerSocket to create server
+    private static Socket tcpSocket = null;                        //Used to send command and receive status
+    public static final int PORT = 8888;                           //Port of server
     
     /*
      * Used to start GUI and threads 
@@ -55,18 +47,23 @@ public class Control {
         AOC aoc = new AOC();                                   //Initiate GUI aoc
         aoc.frmFufo.setVisible(true);                          //Set components in GUI can visible
     
-        Control ct = new Control();                            //Create an object for this class
-        ct.createServer();                                     //Call method createServer()
+        serverSocket = new ServerSocket(PORT);                //Start server
+        tcpSocket =  serverSocket.accept();                    //Wait for client connecting
         aoc.panel_4.setBackground(Color.GREEN);                //Set color for panel of gui when connecting successful
         aoc.lblConnectedToFufo.setText("Connected to FUFO!");  //Set text for label in GUI when connecting successful
         
         //Initiate thread to control command with 2 arguments TCP socket and  GUI aoc 
-        CommandControl cmct = new CommandControl(ct.tcpSocket, aoc);    
+        CommandControl cmct = new CommandControl(tcpSocket, aoc);    
         cmct.start();                                            //Start this thread.
+        
+        StatusControl stct = new StatusControl(tcpSocket, aoc);
+        stct.start();
+        
+        VideoControl vdct = new VideoControl(aoc);
+        vdct.start();
         
         }catch(Exception e){
             System.out.print(e.getMessage());
         }
     }
-
 }

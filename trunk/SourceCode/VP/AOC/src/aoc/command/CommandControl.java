@@ -23,54 +23,42 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.net.ServerSocket;
 import java.net.Socket;
 
 /**
  * @author khoinguyen67
  * This class uses to start a thread to receive pressing keyboard 
  * from users and send it to Android phone via TCP. 
- *
  */
 public class CommandControl extends Thread implements KeyListener{
 
     //Create server socket to control command
     AOC aoc;                                  //Initiate GUI aoc.
-    ServerSocket serverSocket = null;         //Initiate serverSocket to create server
     Socket commandSocket = null;              //Initiate Socket to send command
     PrintWriter out;                          //Initiate PrinWriter to send via TCP socket
     private int command ;                     //Initiate command
-    
+
     //Constructor
     public CommandControl(){}
-    
+
     //Constructor receive 2 arguments Socket to send command and aoc to add KeyListener
     public CommandControl(Socket commandSocket, AOC aoc){
 
         this.commandSocket = commandSocket;
         this.aoc = aoc;
-        aoc.frmFufo.addKeyListener(this);       //Add KeyListener to main frame
     }
 
     public void run(){
         
-    }
-
-    /*
-     * Use to send command to phone via TCP.This command
-     * is get from user by pressing keyboard
-     */
-    public void sendCommandToAOP(int command){
-        
         try {
+            aoc.frmFufo.addKeyListener(this);       //Add KeyListener to main frame
             out = new PrintWriter(commandSocket.getOutputStream(),true);
-            out.println(command);               //Send command to phone via TCP socket
-            
         } catch (IOException ex) {
             // TODO Auto-generated catch block
             ex.printStackTrace();
-        } 
+        }
     }
+    
     /**
      * When users pressing keyboard, this method will be called. 
      * @param e
@@ -78,11 +66,11 @@ public class CommandControl extends Thread implements KeyListener{
      */
     @Override
     public void keyPressed(KeyEvent e) {
-        
-        
+
         command = e.getKeyCode();           //Get key code of pressed key
-        sendCommandToAOP(command);          //Send command to phone
+        out.println(command);               //Send command to phone via TCP socket
     }
+    
     /**
      * [Explain the description for this method here].
      * @param arg0
@@ -93,6 +81,7 @@ public class CommandControl extends Thread implements KeyListener{
         // TODO Auto-generated method stub
 
     }
+    
     /**
      * [Explain the description for this method here].
      * @param arg0

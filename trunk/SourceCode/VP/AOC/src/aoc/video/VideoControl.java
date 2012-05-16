@@ -19,54 +19,56 @@
 package aoc.video;
 
 import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+import aoc.gui.AOC;
 
 /**
  * @author khoinguyen67
  *
  */
-public class UDPpackage {
+public class VideoControl extends Thread {
     
+    AOC aoc;
+    DatagramSocket udpSocket;
     DatagramPacket udpPackage;
-    static int pacNum = -128;
+    UDPpackage pk;
+    int packNum;
+    
     byte[] frameBuffer = new byte[15000];
     byte[] pacBuffer = new byte[15001];
-    static byte test ;
+   
+    public VideoControl(){ };
     
-    public UDPpackage(){}
-    
-    public UDPpackage(DatagramPacket udpPackage){
-        this.udpPackage = udpPackage;
-    }
-    
-    public static void main(String arg[]){
+    public VideoControl(AOC aoc){
         
-        UDPpackage upk = new UDPpackage();
-        upk.setPackage(-124);
-        upk.getPacNum(upk.pacBuffer);
-        
-        
+        this.aoc = aoc;
     }
-    public void setPackage(int pacNum){
-
-        Integer in = new Integer(pacNum);
-         test = in.byteValue();
-         System.out.println(frameBuffer.length);
-         byte[] temp = new byte[4];
-         temp[0] = test;
-         System.arraycopy(frameBuffer,0,pacBuffer,0,frameBuffer.length);
-         System.arraycopy(temp,0,pacBuffer,15000,1);
-    }
-    
-    public void getPacNum(byte[] pacBuffer){
-
-        Byte test = new Byte(pacBuffer[15000]);
-        pacNum = test.intValue();
-        System.out.println(pacNum);
-    }
-    
-    public void getFrameBuffer(byte[] pacBuffer){
+ 
+    /*
+     * This method is called when this thread starts.
+     */
+    public void run(){
+        try {
+            udpSocket = new DatagramSocket(8888);
+            udpPackage = new DatagramPacket(pacBuffer, pacBuffer.length);
+            
+            while(true){
+                udpSocket.receive(udpPackage);
+                showOnScreen(udpPackage);
+            }
+       
+        } catch (Exception ex) {
+            // TODO Auto-generated catch block
+            ex.printStackTrace();
+        }
         
     }
     
+    public void showOnScreen(DatagramPacket udpPackage){
+        frameBuffer = pacBuffer;       
+        aoc.lblFramePicture = new JLabel( new ImageIcon(frameBuffer));
+    }
 
 }
