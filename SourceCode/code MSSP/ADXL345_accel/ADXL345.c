@@ -46,7 +46,7 @@ unsigned char fufoInitAccel(void) {
 	return error;
 }
 
-//Read the values in an array of 3 integers, temp, accel_X, accel_Y, accel_Z.
+//Read the values in an array of 3 integers accel_X, accel_Y, accel_Z.
 //Return an error if it can not.
 unsigned char fufoReadAccel(int *data) {
 	unsigned char error = 0;
