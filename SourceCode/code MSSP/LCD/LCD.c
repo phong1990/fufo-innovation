@@ -1,6 +1,8 @@
 //Definition LCD1602
 #include "p30f4012.h"
+#include "LCD.h"
 #include "../Delay/DelayTMR1.h"
+
 
 //---------------------functions--------------------------------------
 
@@ -22,23 +24,22 @@ void fufoInitLCDPorts(void) {
 
 //Initialize LCD
 void fufoInitLCD(void) {
-	fufoCmd4LCD(LCD_home);			//Return to top of the line, this command have to be sent to lcd
+	fufoCmd4LCD(LCD_HOME);			//Return to top of the line, this command have to be sent to lcd
 	fufoDelayMs(1);
-	fufoCmd4LCD(LCD_4b2l);			//2 lines and 4 bits communication mode
+	fufoCmd4LCD(LCD_4B2L);			//2 lines and 4 bits communication mode
 	fufoDelayMs(1);
-	fufoCmd4LCD(LCD_off);			//Turn off the screen
+	fufoCmd4LCD(LCD_OFF);			//Turn off the screen
 	fufoDelayMs(1);
-	fufoCmd4LCD(LCD_normal);		//Normal mode
+	fufoCmd4LCD(LCD_NORMAL);		//Normal mode
 	fufoDelayMs(1);
-	fufoCmd4LCD(LCD_on_blink);		//Turn on the screen and the blink cursor
+	fufoCmd4LCD(LCD_ON_BLINK);		//Turn on the screen and the blink cursor
 	fufoDelayMs(1);
-	fufoCmd4LCD(LCD_clear);		//Clear the screen
+	fufoCmd4LCD(LCD_CLEAR);		//Clear the screen
 	fufoDelayMs(5);
 }
 
 //Output command to LCD by 4-bit mode
 void fufoCmd4LCD(unsigned char cmd) {
-	unsigned i;
 	LCD_RS = 0;		//Output command mode
 	LCD_DAT4 = ((cmd & 0x80) >> 7);	//Output 4 high bits(bit8)
 	LCD_DAT3 = ((cmd & 0x40) >> 6);	//Output 4 high bits(bit7)
@@ -58,7 +59,6 @@ void fufoCmd4LCD(unsigned char cmd) {
 
 //Output data to LCD by 4-bit mode
 void fufoDat4LCD(unsigned char dat) {
-	unsigned i;
 	LCD_RS = 1;		//Dat che do xuat du lieu
 	LCD_DAT4 = ((dat & 0x80) >> 7);	//Output 4 high bits(bit8)
 	LCD_DAT3 = ((dat & 0x40) >> 6);	//Output 4 high bits(bit7)

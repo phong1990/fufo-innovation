@@ -3,6 +3,7 @@
 #include "ADXL345_accel/ADXL345.h"
 #include "L3G4200D_gyro/L3G4200D.h"
 #include "Delay/DelayTMR1.h"
+#include "I2C/I2C.h"
 #include "LCD/LCD.h"
 
 	_FOSC(CSW_FSCM_OFF & XT);		//Clock = 7.3728 MHz
@@ -20,7 +21,7 @@ unsigned char str[16], temp;
 int main(void) {
 	 int dataGyroArray[3], dataAccelArray[3];
 
-        initSystem();
+        fufoInitSystem();
 
         while(1)
         {
@@ -34,9 +35,9 @@ int main(void) {
             fufoDelayMs(10);
 
 			fufoOutputInt(dataAccelArray[0]);
-			fufoOutputChar(",");
+			fufoDat4LCD(',');
 			fufoOutputInt(dataAccelArray[1]);
-			fufoOutputChar(",");
+			fufoDat4LCD(',');
 			fufoOutputInt(dataAccelArray[2]);
             fufoDelayMs(10);
         }
