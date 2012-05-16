@@ -56,6 +56,26 @@ void fufoCmd4LCD(unsigned char cmd) {
 	LCD_EN = 0;
 }
 
+//Output data to LCD by 4-bit mode
+void fufoDat4LCD(unsigned char dat) {
+	unsigned i;
+	LCD_RS = 1;		//Dat che do xuat du lieu
+	LCD_DAT4 = ((dat & 0x80) >> 7);	//Output 4 high bits(bit8)
+	LCD_DAT3 = ((dat & 0x40) >> 6);	//Output 4 high bits(bit7)
+	LCD_DAT2 = ((dat & 0x20) >> 5);	//Output 4 high bits(bit6)
+	LCD_DAT1 = ((dat & 0x10) >> 4);	//Output 4 high bits(bit5)
+	LCD_EN = 1;		//Create enable pulse
+	fufoDelayUs(5);	//Delay 2 us at least
+	LCD_EN = 0;
+	LCD_DAT4 = ((dat & 0x08) >> 3);	//Output 4 low bits(bit4)
+	LCD_DAT3 = ((dat & 0x04) >> 2);	//Output 4 low bits(bit3)
+	LCD_DAT2 = ((dat & 0x02) >> 1);	//Output 4 low bits(bit2)
+	LCD_DAT1 = (dat & 0x01);	//Output 4 low bits(bit1)
+	LCD_EN = 1;		//Create enable pulse
+	fufoDelayUs(5);	//Delay 2 us at least
+	LCD_EN = 0;	
+}
+
 //Output data in char type
 void fufoOutputChar(unsigned char data[]){
 	fufoDelayMs(10);
@@ -79,24 +99,4 @@ void fufoOutputInt(unsigned int a) {
         fufoDat4LCD(aArr[--idx]);
 		fufoDelayMs(10);
     }
-}
-
-//Output data to LCD by 4-bit mode
-void fufoDat4LCD(unsigned char dat) {
-	unsigned i;
-	LCD_RS = 1;		//Dat che do xuat du lieu
-	LCD_DAT4 = ((dat & 0x80) >> 7);	//Output 4 high bits(bit8)
-	LCD_DAT3 = ((dat & 0x40) >> 6);	//Output 4 high bits(bit7)
-	LCD_DAT2 = ((dat & 0x20) >> 5);	//Output 4 high bits(bit6)
-	LCD_DAT1 = ((dat & 0x10) >> 4);	//Output 4 high bits(bit5)
-	LCD_EN = 1;		//Create enable pulse
-	fufoDelayUs(5);	//Delay 2 us at least
-	LCD_EN = 0;
-	LCD_DAT4 = ((dat & 0x08) >> 3);	//Output 4 low bits(bit4)
-	LCD_DAT3 = ((dat & 0x04) >> 2);	//Output 4 low bits(bit3)
-	LCD_DAT2 = ((dat & 0x02) >> 1);	//Output 4 low bits(bit2)
-	LCD_DAT1 = (dat & 0x01);	//Output 4 low bits(bit1)
-	LCD_EN = 1;		//Create enable pulse
-	fufoDelayUs(5);	//Delay 2 us at least
-	LCD_EN = 0;	
 }
