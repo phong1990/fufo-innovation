@@ -102,6 +102,7 @@ void LCD_int4(unsigned int dat) {
 //TMR1 duoc dung de dem so ms troi qua, o muc xung 7,3728/4 Mips (fcy = 7,3728/4 MHz)
 //------------------------------------------------------------------------------
 void Init_TMR1(void) {
+	IPC0bits.T1IP = 6;
 	TMR1 = 0;			//Xoa so dem trong TMR1
 	PR1 = ms_count;		//TMR1 tran moi ms
 	_T1IF = 0;			//Xoa co ngat cua Timer 1
