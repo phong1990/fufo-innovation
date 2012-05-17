@@ -85,7 +85,7 @@ int main (void){
 	PR2_value = 1843;
 	Init_PWM_Timer2(); // start the software PWM. which is output HIGH 1ms then LOW 19ms in a loop
 	while (1) {
-//		delay_tmr1(3000);
-//		PR2_value += 100;
+		delay_tmr1(3000);
+		PR2_value += 100;
 	}Nop();
 }

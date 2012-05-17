@@ -16,11 +16,11 @@ void setup_TMR1(void)
 	IPC0bits.T1IP = 7;		//highest priority interrupt
 	T1CONbits.TCKPS = 0;	// timer 1 prescale = 1
 	TMR1 = 0;
-	PR1 = PR1_value;		//set timer preset 1 ms
+	PR1 = 1843;		//set timer preset 1 ms
 	//T1CON = 0x0000;			//internal Tcy/1 clock
 	IFS0bits.T1IF = 0;		//interupt flag clear
     IEC0bits.T1IE = 1;  	//Enable Timer1 Interrupt Service Routine
-	T1CONbits.TON = 1;		//timer 1 on
+	//T1CONbits.TON = 1;		//timer 1 on
 	return;
 }
 
@@ -58,15 +58,16 @@ void delay_tmr3(unsigned int delay)
 void __attribute__((__interrupt__ , auto_psv)) _T1Interrupt (void)
 {
 	IFS0bits.T1IF = 0;
-	_LATB0 = 0;
+	_LATE0 = 0;
 	T1CONbits.TON = 0; 		//timer 1 off.
 }
 
 void __attribute__((__interrupt__ , auto_psv)) _T2Interrupt (void)
 {
 	IFS0bits.T2IF = 0;
-	_LATB0 = 1;
-	setup_TMR1();
+	_LATE0 = 1;
+	//setup_TMR1();
+	T1CONbits.TON = 1;		//timer 1 on.
 }
 
 void __attribute__((__interrupt__ , auto_psv)) _T3Interrupt (void)
@@ -87,6 +88,7 @@ int main (void){
 	TRISE = 0;
 	PR1_value = 1843;		// setup PR1 1ms
 	setup_TMR2();
+	setup_TMR1();
 	//delay_tmr3(5000);
 	//PR1_value = 2765;		// cho tang len 1.5 ms
 	while (1) {
