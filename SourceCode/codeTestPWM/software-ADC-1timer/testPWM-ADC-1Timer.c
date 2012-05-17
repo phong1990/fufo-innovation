@@ -12,33 +12,31 @@
 #define	PWM_TRIS	TRISE		//Thanh ghi 3 trang thai cho cac tin hieu PWM
 #define	PWM_LAT		LATE		//Thanh ghi chot cac tin hieu PWM
 #define	Fcy			(7372800/4)		//Tan so thuc thi lenh
-#define	Fpwm		50		//Tan so PWM = 40 kHz
+#define	Fpwm		50		//Tan so PWM = 40 kHz      2339 moi chay.
 
 void Init_PORTS(void);
-void Init_MCPWM(void);
 void Init_ADC10(void);
 
 //Cac bien toan cuc
 unsigned int ADCValue;
 volatile unsigned int timer2_count;
-volatile unsigned int timer2_value;
+volatile unsigned int PR2_value;
 
 //------------------------------------------------------------------------------
 //Chuong trinh chinh
 int main(void) {
 	Init_PORTS();			//Khoi tao cac cong I/O
-	//Init_MCPWM();			//Khoi tao module PWM
 	Init_ADC10();			//Khoi tao module ADC
+	PR2_value = 1843;
+	setup_TMR2();
 	LCD_Init();
-	//timer2_value = 1843;
 	while (1){
 		_LATE8 = 1;
-		delay_tmr2(1000);
-		Init_LCD();
-		_LATE8 = 0;
-		delay_tmr2(1000);
-		//xuatint1(ADCValue);	
-		xuatint1(PDC1);
+		Delay_ms(1000);
+		LCD_cmd4(LCD_clear);
+//		_LATE8 = 0;
+		Delay_ms(1000);	
+		xuatint1(PR2_value);
 	} Nop();
 }
 
@@ -74,57 +72,37 @@ void Init_ADC10(void) {
 	_ASAM = 1;				//Khoi dong che do tu dong lay mau
 }
 
-void Init_MCPWM(void) {
-	PTPER = Fcy/Fpwm - 1;	//Dat thanh ghi chu ky voi tan so PWM = 50Hz
-							//Cong thuc tinh PTPER = (Fcy/(Fpwm*prescaler))-1
-							//voi Fcy va Fpwm nhu tren va Prescaler la 1:1 thi PTPER = 36863 (0x8D43)
-							//Cong thuc tinh resolution : log(2*Fcy/Fpwm)/log(2)
-							//O day resolution la 16 (0xFFFF)
-	SEVTCMP = PTPER;
-	PWMCON1 = 0x070F;		//1. Chinh mode Independent;  2. Chinh PWM chi ra o pin L, khong ra pin H;
-	OVDCON = 0xFF00;		//Khong dung overdrive
-	PDC1 = 1843;			//Khoi tao ESC1 chay o 1ms
-	PDC2 = 2765;			//Khoi tao ESC3 chay o 1.5ms
-	PTCON = 0x8000;			//Kich hoat module PWM
-}
-
 //Trinh phuc vu ngat cho ADC
 void _ISR _ADCInterrupt(void)
 {
 	ADCValue = ADCBUF0 >> 1;		//Chi lay 9-bit cao nhat cua ket qua ADC
-	PDC1 = 1843 + ADCValue;
+	PR2_value = 1843 + (3*ADCValue) + (3*ADCValue/5);
 	_ADIF = 0;
 }
 
 void setup_TMR2(void)
 {
-	IPC1bits.T2IP = 6;		//highest priority interrupt
-	T2CONbits.TCKPS = 0;	// timer 1 prescale = 1
+	IPC1bits.T2IP = 7;  	//highest priority interrupt
+	T2CONbits.TCKPS = 0;	// timer 2 prescale = 1
 	TMR2 = 0;
-	PR2 = 1843;//timer2_value;		//set timer preset 1ms
-	//T1CON = 0x0000;			//internal Tcy/1 clock
+	PR2 = 36864 - PR2_value;			// 19 ms	for downtime
 	IFS0bits.T2IF = 0;		//interupt flag clear
     IEC0bits.T2IE = 1;  	//Enable Timer1 Interrupt Service Routine
-	T2CONbits.TON = 1;		//timer 1 on
+	T2CONbits.TON = 1;		//timer 2 on
 	return;
-}
-
-void delay_tmr2(unsigned int delay)
-{
-	timer2_count = delay;
-	setup_TMR2();	
-	while(timer2_count);
 }
 
 void __attribute__((__interrupt__ , auto_psv)) _T2Interrupt (void)
 {
-	
-	IFS0bits.T2IF = 0;
-	if ( timer2_count == 0 )
-		T2CONbits.TON = 0; 		//timer 1 off.
-	else
-		{
-		TMR2 = 0;
-		timer2_count--;
-		}
+	IFS0bits.T2IF = 0;	// clear interrupt flag manually	
+	T2CONbits.TON = 0;	//timer 2 off
+	if (PR2 == (36864 - PR2_value)){
+		PR2 = PR2_value;		// HIGH on 1 ms
+		PORTE = 0x0101; 	// output HIGH on RE0, HIGH on RE8	
+	}else{
+		PR2 = 36864 - PR2_value;		// LOW on 19ms
+		PORTE = 0x0100; 	// output LOW on RE0, HIGH on RE8
+	}
+	T2CONbits.TON = 1;		//timer 2 on
+
 }
