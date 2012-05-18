@@ -69,11 +69,11 @@ public class AOC  {
         LayoutManager overlay = new OverlayLayout(panel);
         panel.setLayout(overlay);
         
-        JLabel lblBi = new JLabel(new ImageIcon("C:\\Users\\khoinguyen67\\Pictures\\Picture1.png")); 
+        JLabel lblBi = new JLabel(new ImageIcon("pic\\Picture1.png")); 
         panel.add(lblBi);
         lblFramePicture = new JLabel("");
         lblFramePicture.setBounds(0, 0, 320, 240);
-        lblFramePicture.setIcon(new ImageIcon("C:\\Users\\khoinguyen67\\Dropbox\\Project\\Pictures2\\1009.jpg"));
+        lblFramePicture.setIcon(new ImageIcon("pic\\1009.jpg"));
         lblFramePicture.setAlignmentX(0.5f);
         lblFramePicture.setAlignmentY(0.5f);
         panel.add(lblFramePicture);
@@ -88,19 +88,19 @@ public class AOC  {
         panel_1.setLayout(new MigLayout("", "[50px][50px][50px]", "[27px][27px][27px]"));
         
         JButton btnFront = new JButton("");
-        btnFront.setIcon(new ImageIcon("C:\\Users\\khoinguyen67\\Pictures\\upu.png"));
+        btnFront.setIcon(new ImageIcon("pic\\upu.png"));
         panel_1.add(btnFront, "cell 1 0,growx,aligny top");
         
         JButton btnLeft = new JButton("");
-        btnLeft.setIcon(new ImageIcon("C:\\Users\\khoinguyen67\\Pictures\\left.png"));
+        btnLeft.setIcon(new ImageIcon("pic\\left.png"));
         panel_1.add(btnLeft, "cell 0 1,grow");
         
         JButton btnRight = new JButton("");
-        btnRight.setIcon(new ImageIcon("C:\\Users\\khoinguyen67\\Pictures\\right.png"));
+        btnRight.setIcon(new ImageIcon("pic\\right.png"));
         panel_1.add(btnRight, "cell 2 1,grow");
         
         JButton btnBack = new JButton("");
-        btnBack.setIcon(new ImageIcon("C:\\Users\\khoinguyen67\\Pictures\\downd.png"));
+        btnBack.setIcon(new ImageIcon("pic\\downd.png"));
         panel_1.add(btnBack, "cell 1 2,growx,aligny center");
         
         JPanel panel_2 = new JPanel();
@@ -109,12 +109,12 @@ public class AOC  {
         JButton btnUp = new JButton("");
         btnUp.setAlignmentX(Component.RIGHT_ALIGNMENT);
         btnUp.setAlignmentY(Component.TOP_ALIGNMENT);
-        btnUp.setIcon(new ImageIcon("C:\\Users\\khoinguyen67\\Pictures\\up.png"));
+        btnUp.setIcon(new ImageIcon("pic\\up.png"));
         
         JButton btnDown = new JButton("");
         btnDown.setAlignmentX(Component.RIGHT_ALIGNMENT);
         btnDown.setAlignmentY(Component.BOTTOM_ALIGNMENT);
-        btnDown.setIcon(new ImageIcon("C:\\Users\\khoinguyen67\\Pictures\\down.png"));
+        btnDown.setIcon(new ImageIcon("pic\\down.png"));
 
         panel_2.setLayout(new MigLayout("", "[120px]", "[42px][42px]"));
         panel_2.add(btnUp, "cell 0 0,alignx center,aligny top");
