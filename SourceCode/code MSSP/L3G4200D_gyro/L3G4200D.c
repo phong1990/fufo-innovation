@@ -40,7 +40,9 @@
 //Initialize Gyroscope
 unsigned char fufoInitGyro(void) {
 	unsigned char error = 0;
-	error += fufoWriteByteI2C(L3G4200D_I2C, L3G4200D_CTRL_REG1, 0x0F);
+	error += fufoWriteByteI2C(L3G4200D_I2C, L3G4200D_CTRL_REG1, 0x1F);
+	error += fufoWriteByteI2C(L3G4200D_I2C, L3G4200D_CTRL_REG3, 0x08);
+	error += fufoWriteByteI2C(L3G4200D_I2C, L3G4200D_CTRL_REG4, 0x80);
 	return error;
 }
 

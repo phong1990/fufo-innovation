@@ -69,24 +69,10 @@ unsigned char fufoReadI2C(void) {
 
 //Initialize I2C modulde	
 void fufoInitI2C(void) {
-	//7-bit address
-	I2CCONbits.A10M = 0;
-	I2CCONbits.SCLREL = 0;
-	
-	//Clean slave address
-	I2CADD = 0;
-	
-	//Disable SMbus
-	I2CCONbits.SMEN = 0;
+	I2CCON = 0x8200; 
 	
 	//Baudrate setting
 	I2CBRG = ((((FOSC/4)/I2CBAUD) - ((FOSC/4)/1111111))-1);
-	
-	//Enable I2C module
-	I2CCONbits.I2CEN = 1;
-	
-	//Disable Slew rate
-	I2CCONbits.DISSLW = 1;
 	
 }
 
