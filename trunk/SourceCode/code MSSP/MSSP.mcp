@@ -37,6 +37,7 @@ file_009=I2C
 file_010=L3G4200D_gyro
 file_011=LCD
 file_012=UART
+file_013=.
 [GENERATED_FILES]
 file_000=no
 file_001=no
@@ -51,6 +52,7 @@ file_009=no
 file_010=no
 file_011=no
 file_012=no
+file_013=no
 [OTHER_FILES]
 file_000=no
 file_001=no
@@ -65,6 +67,7 @@ file_009=no
 file_010=no
 file_011=no
 file_012=no
+file_013=no
 [FILE_INFO]
 file_000=main.c
 file_001=ADXL345_accel\ADXL345.c
@@ -79,6 +82,7 @@ file_009=I2C\I2C.h
 file_010=L3G4200D_gyro\L3G4200D.h
 file_011=LCD\LCD.h
 file_012=UART\UART.h
+file_013=C:\Program Files\Microchip\MPLAB C30\support\gld\p30f4012.gld
 [SUITE_INFO]
 suite_guid={479DDE59-4D56-455E-855E-FFF59A3DB57E}
 suite_state=
