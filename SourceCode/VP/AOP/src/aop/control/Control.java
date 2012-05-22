@@ -12,9 +12,12 @@ import android.widget.EditText;
 import android.widget.TextView;
 import aop.command.CommandControl;
 import aop.control.R.color;
+import aop.video.VideoControl;
 
 public class Control extends Activity {
+    
     CommandControl cmct;
+    VideoControl vdct; 
     EditText ipServer,etport;
     TextView message,status;
     Socket tcpSocket;
@@ -50,6 +53,8 @@ public class Control extends Activity {
                 cmct = new CommandControl(tcpSocket);
                 cmct.start();
                 
+                vdct = new VideoControl(Control.this);
+                vdct.start();
                 
             }catch(Exception e){
                 

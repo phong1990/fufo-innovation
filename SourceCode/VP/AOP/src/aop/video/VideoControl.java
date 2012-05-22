@@ -18,10 +18,37 @@
  */
 package aop.video;
 
+import android.app.Activity;
+import android.hardware.Camera;
+
 /**
  * @author khoinguyen67
  *
  */
-public class VideoControl {
+public class VideoControl extends Thread {
+    Activity control;
+    public VideoControl(Activity control){
+        this.control = control;     
+    }
+    private Camera mCamera;
+    private CameraPreview mPreview;
+    
+    public void run(){
+        mCamera = getCameraInstance();
+        mPreview = new CameraPreview(control, mCamera);
+        mCamera.startPreview();
+    }
+    
+    
 
+    /** A safe way to get an instance of the Camera object. */
+    public static Camera getCameraInstance() {
+        Camera c = null;
+        try {
+            c = Camera.open(); // attempt to get a Camera instance
+        } catch (Exception e) {
+            // Camera is not available (in use or does not exist)
+        }
+        return c; // returns null if camera is unavailable
+    }
 }

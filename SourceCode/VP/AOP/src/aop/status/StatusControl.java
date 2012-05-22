@@ -18,14 +18,45 @@
  */
 package aop.status;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.net.Socket;
+
 /**
  * @author khoinguyen67
  *
  */
 public class StatusControl extends Thread{
     
+    Socket statusSocket;
+    PrintWriter out;  
+    String statusMessage;
+    
+    public StatusControl(){}
+    public StatusControl(Socket statusSocket){
+        this.statusSocket = statusSocket;
+    }
+    
     public void run(){
         
+        try {
+            out = new PrintWriter(statusSocket.getOutputStream());
+            waitStatusFromFUFO();
+            sendStatusToAOC();
+        } catch (IOException ex) {
+            // TODO Auto-generated catch block
+            ex.printStackTrace();
+        }
     }
+    
+    public void waitStatusFromFUFO(){
+        
+    }
+    
+    public void sendStatusToAOC(){
+        out.println(statusMessage);
+    }
+    
+    
 
 }
