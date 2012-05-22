@@ -4,7 +4,6 @@
  *
  */
 package aoc.video;
-
 //Server
 
 import java.io.IOException;
@@ -24,7 +23,7 @@ public class ServerTest {
        
       
          iconLabel = new JLabel();
-        icon = new ImageIcon("D://842.jpg");
+        icon = new ImageIcon("F://489.jpg");
         iconLabel.setIcon(icon);
         frame.getContentPane().add(iconLabel);
         //Display the window.
@@ -57,7 +56,9 @@ public class ServerTest {
                 ++fileNum;
                 buf = new byte[15000];
                 pktReceiver = new DatagramPacket(buf, buf.length);
+                System.out.println("dang doi packet");
                 sckReceiver.receive(pktReceiver);
+                System.out.println("da nhan packet");
                 long time1 = System.currentTimeMillis();
                 System.out.println("After receive: " + time1);
                 icon = new ImageIcon(buf);
