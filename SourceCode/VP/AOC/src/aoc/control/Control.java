@@ -54,10 +54,10 @@ public class Control {
         
         //Initiate thread to control command with 2 arguments TCP socket and  GUI aoc 
         CommandControl cmct = new CommandControl(tcpSocket, aoc);    
-        cmct.start();                                            //Start this thread.
+        //cmct.start();                                            //Start this thread.
         
         StatusControl stct = new StatusControl(tcpSocket, aoc);
-        stct.start();
+      //  stct.start();
         
         VideoControl vdct = new VideoControl(aoc);
         vdct.start();
