@@ -46,7 +46,7 @@ public class Control {
         try{
         AOC aoc = new AOC();                                   //Initiate GUI aoc
         aoc.frmFufo.setVisible(true);                          //Set components in GUI can visible
-    
+        
         serverSocket = new ServerSocket(PORT);                //Start server
         tcpSocket =  serverSocket.accept();                    //Wait for client connecting
         aoc.panel_4.setBackground(Color.GREEN);                //Set color for panel of gui when connecting successful
@@ -54,7 +54,7 @@ public class Control {
         
         //Initiate thread to control command with 2 arguments TCP socket and  GUI aoc 
         CommandControl cmct = new CommandControl(tcpSocket, aoc);    
-        //cmct.start();                                            //Start this thread.
+        cmct.start();                                            //Start this thread.
         
         StatusControl stct = new StatusControl(tcpSocket, aoc);
       //  stct.start();

@@ -51,12 +51,13 @@ public class VideoControl extends Thread {
      */
     public void run(){
         try {
-            udpSocket = new DatagramSocket(8888);
+            udpSocket = new DatagramSocket(4444);
             udpPackage = new DatagramPacket(pacBuffer, pacBuffer.length);
             
             while(true){
                 udpSocket.receive(udpPackage);
                 showOnScreen(udpPackage);
+                System.out.println("received!");
             }
        
         } catch (Exception ex) {
@@ -68,7 +69,12 @@ public class VideoControl extends Thread {
     
     public void showOnScreen(DatagramPacket udpPackage){
         frameBuffer = pacBuffer;       
-        aoc.lblFramePicture = new JLabel( new ImageIcon(frameBuffer));
+       // AOC.lblFramePicture = new JLabel( new ImageIcon(frameBuffer));
+      //  aoc.panel.add(aoc.lblFramePicture);
+     //   aoc.frmFufo.getContentPane().update(aoc.lblFramePicture.getGraphics());
+      //  aoc.panel.updateUI();
+        AOC.lblFramePicture.setIcon(new ImageIcon(frameBuffer));
+       
     }
 
 }

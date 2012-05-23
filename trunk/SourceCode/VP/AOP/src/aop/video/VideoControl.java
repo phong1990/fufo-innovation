@@ -26,21 +26,28 @@ import android.hardware.Camera;
  *
  */
 public class VideoControl extends Thread {
+    
     Activity control;
-    public VideoControl(Activity control){
-        this.control = control;     
-    }
     private Camera mCamera;
     private CameraPreview mPreview;
+    
+    public VideoControl(Activity control){
+        
+        this.control = control;     
+    }
+    
+    public VideoControl(){
+    
+        
+    }
     
     public void run(){
         mCamera = getCameraInstance();
         mPreview = new CameraPreview(control, mCamera);
+        
         mCamera.startPreview();
     }
     
-    
-
     /** A safe way to get an instance of the Camera object. */
     public static Camera getCameraInstance() {
         Camera c = null;

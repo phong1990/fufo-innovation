@@ -41,12 +41,13 @@ public class AOC  {
 
     public JFrame frmFufo;
     public JPanel panel_1;
-    public JLabel lblFramePicture;
+    public static JLabel lblFramePicture;
     public JLabel lblConnectedToFufo;   
     public JPanel panel_4 ;
     public byte command;
     public int key;
-
+    public ImageIcon imic;
+    public JPanel panel;
     /**
      * Create the application.
      */
@@ -63,7 +64,7 @@ public class AOC  {
         frmFufo.setVisible(true);
         frmFufo.setSize(340,405);
         
-        JPanel panel = new JPanel();
+        panel = new JPanel();
         panel.setSize(320, 240);
         frmFufo.getContentPane().add(panel,BorderLayout.NORTH);
         LayoutManager overlay = new OverlayLayout(panel);
@@ -73,7 +74,8 @@ public class AOC  {
         panel.add(lblBi);
         lblFramePicture = new JLabel("");
         lblFramePicture.setBounds(0, 0, 320, 240);
-        lblFramePicture.setIcon(new ImageIcon("pic\\1009.jpg"));
+        imic = new ImageIcon("pic\\1009.jpg");
+        lblFramePicture.setIcon(imic);
         lblFramePicture.setAlignmentX(0.5f);
         lblFramePicture.setAlignmentY(0.5f);
         panel.add(lblFramePicture);
