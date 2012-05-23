@@ -54,7 +54,7 @@ public class Control extends Activity {
                 cmct.start();
                 
                 vdct = new VideoControl(Control.this);
-                vdct.start();
+               // vdct.start();
                 
             }catch(Exception e){
                 
