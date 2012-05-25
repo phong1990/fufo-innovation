@@ -47,7 +47,7 @@ public class AOC  {
     public byte command;
     public int key;
     public ImageIcon imic;
-    public JPanel panel;
+    public static JPanel panel;
     /**
      * Create the application.
      */
@@ -73,7 +73,7 @@ public class AOC  {
         JLabel lblBi = new JLabel(new ImageIcon("pic\\Picture1.png")); 
         panel.add(lblBi);
         lblFramePicture = new JLabel("");
-        lblFramePicture.setBounds(0, 0, 320, 240);
+      //  lblFramePicture.setBounds(0, 0, 320, 240);
         imic = new ImageIcon("pic\\1009.jpg");
         lblFramePicture.setIcon(imic);
         lblFramePicture.setAlignmentX(0.5f);

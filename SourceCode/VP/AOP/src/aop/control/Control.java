@@ -11,7 +11,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import aop.command.CommandControl;
-import aop.control.R.color;
 import aop.video.VideoControl;
 
 public class Control extends Activity {
