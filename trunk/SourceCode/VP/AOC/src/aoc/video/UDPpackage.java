@@ -38,14 +38,14 @@ public class UDPpackage {
         this.udpPackage = udpPackage;
     }
     
-    public static void main(String arg[]){
+/*    public static void main(String arg[]){
         
         UDPpackage upk = new UDPpackage();
         upk.setPackage(-124);
         upk.getPacNum(upk.pacBuffer);
         
         
-    }
+    }*/
     public void setPackage(int pacNum){
 
         Integer in = new Integer(pacNum);

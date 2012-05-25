@@ -52,15 +52,16 @@ public class Control {
         aoc.panel_4.setBackground(Color.GREEN);                //Set color for panel of gui when connecting successful
         aoc.lblConnectedToFufo.setText("Connected to FUFO!");  //Set text for label in GUI when connecting successful
         
+        
+        StatusControl stct = new StatusControl(tcpSocket);
+        stct.start();
+       
         //Initiate thread to control command with 2 arguments TCP socket and  GUI aoc 
         CommandControl cmct = new CommandControl(tcpSocket, aoc);    
         cmct.start();                                            //Start this thread.
-        
-        StatusControl stct = new StatusControl(tcpSocket, aoc);
-      //  stct.start();
-        
+               
         VideoControl vdct = new VideoControl(aoc);
-        vdct.start();
+       vdct.start();
         
         }catch(Exception e){
             System.out.print(e.getMessage());

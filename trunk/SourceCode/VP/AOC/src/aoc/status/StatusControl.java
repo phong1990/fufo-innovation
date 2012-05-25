@@ -31,7 +31,7 @@ import java.net.Socket;
  */
 public class StatusControl extends Thread {
     //Create server socket to control command
-    AOC aoc;                                  //Initiate GUI aoc.
+ //   AOC aoc;                                  //Initiate GUI aoc.
     Socket statusSocket = null;               //Initiate Socket to receive status
     BufferedReader in;                        //Initiate BufferedReader to save status
     StatusMessage sm;
@@ -43,10 +43,9 @@ public class StatusControl extends Thread {
     public StatusControl(){}
     
     //Constructor receive 2 arguments Socket to send command and aoc
-    public StatusControl(Socket statusSocket, AOC aoc){
+    public StatusControl(Socket statusSocket){
 
         this.statusSocket = statusSocket;
-        this.aoc = aoc;
     }
 
     /*
@@ -56,8 +55,8 @@ public class StatusControl extends Thread {
         
         try {
             while(true){
+            updateStatusOnScreen(90,40);
             waitStatusFromeAOP();
-            updateStatusOnScreen(hoStatus,veStatus);
             }
         } catch (IOException ex) {
             // TODO Auto-generated catch block
@@ -83,11 +82,13 @@ public class StatusControl extends Thread {
      * This method uses to update status on screen when new status receive
      */
     public void updateStatusOnScreen(int hoStatus,int veStatus){
-        float x = hoStatus/100;
-        float y = veStatus/100;
-        aoc.lblConnectedToFufo.setAlignmentX(0.6f);
-        aoc.lblConnectedToFufo.setAlignmentY(0.9f);
-        System.out.println(hoStatus + " : " + veStatus + " : " + x + " : " + y);
+   //     float x = hoStatus/100;
+    //    float y = veStatus/100;
+        AOC.lblFramePicture.setAlignmentX(0.6f);
+        AOC.lblFramePicture.setAlignmentY(0.9f);
+        AOC.panel.add(AOC.lblFramePicture);
+        
+        System.out.println(hoStatus + " : " + veStatus + " : " );
     }
 
 

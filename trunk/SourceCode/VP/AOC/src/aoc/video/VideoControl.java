@@ -64,17 +64,11 @@ public class VideoControl extends Thread {
             // TODO Auto-generated catch block
             ex.printStackTrace();
         }
-        
     }
     
     public void showOnScreen(DatagramPacket udpPackage){
+        
         frameBuffer = pacBuffer;       
-       // AOC.lblFramePicture = new JLabel( new ImageIcon(frameBuffer));
-      //  aoc.panel.add(aoc.lblFramePicture);
-     //   aoc.frmFufo.getContentPane().update(aoc.lblFramePicture.getGraphics());
-      //  aoc.panel.updateUI();
-        AOC.lblFramePicture.setIcon(new ImageIcon(frameBuffer));
-       
+        AOC.lblFramePicture.setIcon(new ImageIcon(frameBuffer));  
     }
-
 }
