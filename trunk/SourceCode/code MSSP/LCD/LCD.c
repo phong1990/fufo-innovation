@@ -31,6 +31,7 @@ void fufoInitLCD(void) {
 	fufoCmd4LCD(LCD_OFF);			//Turn off the screen
 	fufoDelayMs(1);
 	fufoCmd4LCD(LCD_NORMAL);		//Normal mode
+
 	fufoDelayMs(1);
 	fufoCmd4LCD(LCD_ON_BLINK);		//Turn on the screen and the blink cursor
 	fufoDelayMs(1);

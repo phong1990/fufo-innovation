@@ -34,13 +34,12 @@
 #define ADXL345_DATAZ1                  0x37    // R     Z-Axis Data 1 
 #define ADXL345_FIFO_CTL                0x38    // R/W   FIFO control 
 #define ADXL345_FIFO_STATUS             0x39    // R     FIFO status
-#define ADXL345_OUTPUTS                 0x32
 
 //-------------------------Functions-----------------------
 //Initialize Accelerometer
 unsigned char fufoInitAccel(void) {
 	unsigned char error = 0;
-	error += fufoWriteByteI2C(ADXL345_I2C, ADXL345_DATA_FORMAT, 0x0A);
+	error += fufoWriteByteI2C(ADXL345_I2C, ADXL345_DATA_FORMAT, 0x0B);
 	error += fufoWriteByteI2C(ADXL345_I2C, ADXL345_POWER_CTL, 0x08);
 	error += fufoWriteByteI2C(ADXL345_I2C, ADXL345_BW_RATE, 0x0A);
 	return error;
@@ -48,8 +47,23 @@ unsigned char fufoInitAccel(void) {
 
 //Read the values in an array of 3 integers accel_X, accel_Y, accel_Z.
 //Return an error if it can not.
-unsigned char fufoReadAccel(int *data) {
+unsigned char fufoReadAccel(unsigned int *data) {
 	unsigned char error = 0;
-	error += fufoReadArrayI2C(ADXL345_I2C, ADXL345_OUTPUTS, (unsigned char*) data, 6);
+	unsigned char datatemp[6];
+	error += fufoReadArrayI2C(ADXL345_I2C, ADXL345_DATAX0, datatemp, 6);
+	*data = ((datatemp[1] << 8)  | datatemp[0]) & (0x1FFF); //X_Axis
+	*(data+1) = ((datatemp[3] << 8) | datatemp[2]) & (0x1FFF); //Y_Axis
+	*(data+2) = ((datatemp[5] << 8) | datatemp[4])  & (0x1FFF); //Z_Axis
+//	unsigned char datatemp[1];
+//	unsigned char datatemp1[1];
+//	error += fufoReadByteI2C(ADXL345_I2C, ADXL345_DATAX0, datatemp);
+//	error += fufoReadByteI2C(ADXL345_I2C, ADXL345_DATAX1, datatemp1);
+//	*data = ((datatemp1[0] << 8)&(0x1FFF)) | datatemp[0];
+//	error += fufoReadByteI2C(ADXL345_I2C, ADXL345_DATAY0, datatemp);
+//	error += fufoReadByteI2C(ADXL345_I2C, ADXL345_DATAY1, datatemp1);
+//	*(data + 1) = ((datatemp1[0] << 8)&(0x1FFF)) | datatemp[0];
+//	error += fufoReadByteI2C(ADXL345_I2C, ADXL345_DATAZ0, datatemp);
+//	error += fufoReadByteI2C(ADXL345_I2C, ADXL345_DATAZ1, datatemp1);
+//	*(data + 2) = ((datatemp1[0] << 8)&(0x1FFF)) | datatemp[0];
 	return error;
 }
