@@ -27,11 +27,11 @@ int main(void) {
 		float convertAccel = 0.0039;
 		float convertGyro = 0.00875;
         int xIntA, yIntA, zIntA, xIntG, yIntG, zIntG;
-		_RE0 = 0;
-		_TRISE0 = 1;
+		_RE5 = 0;
+		_TRISE5 = 1;
         fufoInitSystem();
         while(1)
-        {	if(_RE0 == 0) {
+        {	if(_RE5 == 0) {
 				error = fufoReadAccel(dataAccelArray);
 				if(error == 0) {
 		        	if(dataAccelArray[0] < 4096) {
