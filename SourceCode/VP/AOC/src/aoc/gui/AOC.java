@@ -29,8 +29,13 @@ import javax.swing.SwingConstants;
 import java.awt.FlowLayout;
 import java.awt.Component;
 import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
+
 import net.miginfocom.swing.MigLayout;
 import java.awt.LayoutManager;
+import java.awt.geom.Line2D;
 
 /**
  * This class is used to create GUI.
@@ -39,7 +44,7 @@ import java.awt.LayoutManager;
  */
 public class AOC  {
 
-    public JFrame frmFufo;
+    public static JFrame frmFufo;
     public JPanel panel_1;
     public static JLabel lblFramePicture;
     public JLabel lblConnectedToFufo;   
@@ -47,7 +52,7 @@ public class AOC  {
     public byte command;
     public int key;
     public ImageIcon imic;
-    public static JPanel panel;
+    public static ControlPanel panel;
     /**
      * Create the application.
      */
@@ -59,12 +64,12 @@ public class AOC  {
         frmFufo.setBounds(100, 100, 339, 401);
         frmFufo.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         FlowLayout flowLayout_1 = new FlowLayout(FlowLayout.CENTER, 0, 0);
-        flowLayout_1.setAlignOnBaseline(true);
+      //  flowLayout_1.setAlignOnBaseline(true);
         frmFufo.getContentPane().setLayout(flowLayout_1);
-        frmFufo.setVisible(true);
+       // frmFufo.setVisible(true);
         frmFufo.setSize(340,405);
         
-        panel = new JPanel();
+        panel = new ControlPanel();
         panel.setSize(320, 240);
         frmFufo.getContentPane().add(panel,BorderLayout.NORTH);
         LayoutManager overlay = new OverlayLayout(panel);
@@ -129,11 +134,50 @@ public class AOC  {
         
         lblConnectedToFufo = new JLabel("Disconnected!");
         lblConnectedToFufo.setHorizontalAlignment(SwingConstants.CENTER);
-        panel_4.add(lblConnectedToFufo);    
+        panel_4.add(lblConnectedToFufo); 
+        frmFufo.setVisible(true);
     }
+    public void paint(Graphics g) {
+        
+       Line2D line1 = new Line2D.Double(0, 0, 200, 200);
+    
+     Graphics2D graph = (Graphics2D)g;
+     graph.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+             RenderingHints.VALUE_ANTIALIAS_ON);
+     graph.dispose();
+     System.out.println("in duong thang");
+     graph.setPaintMode();
+     graph.setPaint(Color.green);
+     graph.draw(line1);
+     frmFufo.setVisible(true);
+     System.out.print("in duong thang xong");
+        g.drawLine(10, 20, 300, 310);
+     
+/*   Graphics g2 = AOC.panel.getGraphics();
+     g.setColor(Color.RED);
+     g.drawLine(0,0,200,200);
+     AOC.panel.setVisible(true);
+     AOC.frmFufo.setVisible(true);
+     
+     System.out.print("in duong thang xong");*/
+     }
+    
     /*  public static void main(String[] args) {
     AOC aoc = new AOC();
     aoc.frmFufo.setVisible(true);
     aoc.frmFufo.addKeyListener(aoc);
 }*/
+
+public class ControlPanel extends JPanel {
+
+
+
+    public void paint(Graphics g) {
+        super.paint(g);
+        Line2D line1 = new Line2D.Double(100, 120, 220, 120);
+        Graphics2D graph = (Graphics2D)g;
+        graph.setPaint(Color.green);
+        graph.draw(line1);
+    }
+}
 }

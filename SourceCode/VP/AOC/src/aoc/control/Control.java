@@ -23,6 +23,9 @@ import aoc.status.StatusControl;
 import aoc.video.VideoControl;
 
 import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.geom.Line2D;
 import java.net.ServerSocket;
 import java.net.Socket;
 import aoc.command.CommandControl;
@@ -45,23 +48,26 @@ public class Control {
     public static void main(String args[]){
         try{
         AOC aoc = new AOC();                                   //Initiate GUI aoc
-        aoc.frmFufo.setVisible(true);                          //Set components in GUI can visible
+       // aoc.frmFufo.setVisible(true);                          //Set components in GUI can visible
         
+      //aoc.frmFufo.paint(aoc.frmFufo.getGraphics());
+       aoc.paint(AOC.panel.getGraphics()) ;
+     //  aoc.frmFufo.setVisible(true);
         serverSocket = new ServerSocket(PORT);                //Start server
         tcpSocket =  serverSocket.accept();                    //Wait for client connecting
         aoc.panel_4.setBackground(Color.GREEN);                //Set color for panel of gui when connecting successful
         aoc.lblConnectedToFufo.setText("Connected to FUFO!");  //Set text for label in GUI when connecting successful
         
         
-        StatusControl stct = new StatusControl(tcpSocket);
-        stct.start();
+       // StatusControl stct = new StatusControl(tcpSocket);
+       // stct.start();
        
         //Initiate thread to control command with 2 arguments TCP socket and  GUI aoc 
-        CommandControl cmct = new CommandControl(tcpSocket, aoc);    
-        cmct.start();                                            //Start this thread.
+      //  CommandControl cmct = new CommandControl(tcpSocket, aoc);    
+      //  cmct.start();                                            //Start this thread.
                
-        VideoControl vdct = new VideoControl(aoc);
-       vdct.start();
+      //  VideoControl vdct = new VideoControl(aoc);
+      // vdct.start();
         
         }catch(Exception e){
             System.out.print(e.getMessage());
