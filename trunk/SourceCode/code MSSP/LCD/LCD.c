@@ -78,7 +78,7 @@ void fufoDat4LCD(unsigned char dat) {
 }
 
 //Output data in char type
-void fufoOutputChar(unsigned char data[]){
+void fufoOutputChar(unsigned char *data){
 	fufoDelayMs(10);
 	int idx = 0;
 	while (data[idx]) {
