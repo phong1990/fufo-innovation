@@ -1,8 +1,9 @@
-//Communication dspic30f4012 with ADXL345 in I2C
-#include "p30f4012.h"
+//Communication dspic30f4012 with BlueTooth module (HC-06-S) in UART
+#define UARTBAUD 38400
+#define lineU1() fufoSendIntUART('\r');fufoSendIntUART('\n')
 
-
-	_FOSC(CSW_FSCM_OFF & XT);		//Clock = 7.3728 MHz
-	_FWDT(WDT_OFF);
-	_FBORPOR(MCLR_EN & PBOR_OFF & PWMxL_ACT_HI & PWMxH_ACT_HI);
-	_FGS(CODE_PROT_OFF);
+void fufoInitUART(void);
+void fufoSendIntUART(int i);
+void fufoSendCharUART(unsigned char c);
+void fufoSendStringUART(unsigned char *s);
+unsigned char fufoReceiveUART(void);
