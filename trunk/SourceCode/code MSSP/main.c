@@ -26,6 +26,7 @@ int main(void) {
 		unsigned char error = 0;
 		unsigned char noticeError[] = "Errored";
 		unsigned char receiOK[25];
+		unsigned char cmdBL;
 		float xA, yA, zA, xG, yG, zG;
 		float convertAccel = 0.0039;
 		float convertGyro = 0.00875;
@@ -55,8 +56,17 @@ int main(void) {
 			fufoDat4LCD(receiOK[idx++]);
 			fufoDelayMs(1);
 		}
+		fufoDelayMs(5000);
+		fufoCmd4LCD(LCD_CLEAR);
+		fufoDelayMs(1);
         while(1)
         {	
+//			if(IFS0bits.U1RXIF) {
+				cmdBL = fufoReceiveUART();
+				IFS0bits.U1RXIF = 0;
+				fufoDat4LCD(cmdBL);
+				fufoDelayMs(1);
+//			}
 //			if(_RE5 == 0) {
 //				error = fufoReadAccel(dataAccelArray);
 //				if(error == 0) {
