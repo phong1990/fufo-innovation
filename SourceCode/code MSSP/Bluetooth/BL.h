@@ -13,3 +13,5 @@
 #define ATPIN 	"AT+PIN1234"
 
 void fufoInitBluetooth(unsigned char *s);
+unsigned char fufoReceiveCmd(void);
+

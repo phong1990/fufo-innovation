@@ -35,3 +35,7 @@ void fufoInitBluetooth(unsigned char *s){
 	*(s+25) = fufoReceiveUART();
 	
 }
+
+unsigned char fufoReceiveCmd(void) {
+	
+}

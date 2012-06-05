@@ -9,8 +9,9 @@
 //Initialize UART module
 void fufoInitUART(void) {
 	U1MODE = 0x8400;		//Main I/O, 8-bit, no parity, 1 stop bit
+//	_U1RXIE = 1;
 	U1STA = 0x0400;			//bit10=UTXEN
-	U1BRG = ((((FOSC/4)/UARTBAUD)/16)-1);	//38400 bps @ FOSC = 7372800 Hz
+	U1BRG = ((((FOSC/4)/UARTBAUD)/16)-1);	//38400 bps @ FOSC = 7372800 Hz	
 }
 
 //
