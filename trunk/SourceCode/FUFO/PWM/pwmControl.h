@@ -6,6 +6,10 @@
 #define	Fpwm		50
 
 void initPWMPort(void);
-int initPWM(unsigned int Fcy,unsigned int initDutyCycleValue);
-void initPWMHardware(unsigned int initDutyCycleValue);
+int initPWM(unsigned int Fcy,unsigned int DCValue);
+void initPWMHardware(void);
 void initPWMSoftware(void);
+void setPWM1(unsigned int Thrust1, unsigned int PID_Motor1);
+void setPWM2(unsigned int Thrust2, unsigned int PID_Motor2);
+void setPWM3(unsigned int Thrust3, unsigned int PID_Motor3);
+void setPWM4(unsigned int Thrust4, unsigned int PID_Motor4);

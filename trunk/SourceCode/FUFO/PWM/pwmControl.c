@@ -4,31 +4,32 @@
 
 unsigned int PR4_value;
 unsigned int periodValue;
+unsigned int initDCValue;
 
 void initPWMPort(void){
 	PWM_LAT = 0;
 	PWM_TRIS = 0;
 }
 
-int initPWM(unsigned int Fcy,unsigned int initDutyCycleValue){
+int initPWM(unsigned int Fcy,unsigned int DCValue){
 	periodValue = Fcy/Fpwm - 1;
-	PR4_value = initDutyCycleValue;
+	initDCValue = DCValue;
+	PR4_value = initDCValue;
 	initPWMPort();
-	initPWMHardware(initDutyCycleValue);
+	initPWMHardware();
 	initPWMSoftware();
 	PTCON = 0x8000;			//Kich hoat module PWM
 	_RE5 = 1;
 	T4CONbits.TON = 1;		//timer 4 on
-	return PDC1;
 }
 
-void initPWMHardware(unsigned int initDutyCycleValue){
+void initPWMHardware(){
 	PTPER = periodValue;
 	PWMCON1 = 0x070F;			//1. Chinh mode Independent;  2. Chinh PWM chi ra o pin L, khong ra pin H;
 	OVDCON = 0xFF00;			//Khong dung overdrive
-	PDC1 = initDutyCycleValue*2;			//Khoi tao ESC1 chay o 1ms
-	PDC2 = initDutyCycleValue*2;			//Khoi tao ESC3 chay o 1ms
-	PDC3 = initDutyCycleValue*2;			//Khoi tao ESC5 chay o 1ms
+	PDC1 = initDCValue*2;			//Khoi tao ESC1 chay o 1ms
+	PDC2 = initDCValue*2;			//Khoi tao ESC3 chay o 1ms
+	PDC3 = initDCValue*2;			//Khoi tao ESC5 chay o 1ms
 }
 
 void initPWMSoftware(void){
@@ -39,6 +40,22 @@ void initPWMSoftware(void){
 	IFS1bits.T4IF = 0;		//interupt flag clear
     IEC1bits.T4IE = 1;  	//Enable Timer1 Interrupt Service Routine
 	T4CONbits.TON = 0;		//timer 2 off
+}
+
+void setPWM1(unsigned int Thrust1, unsigned int PID_Motor1){
+	PDC1 = (initDCValue + Thrust1*19 + PID_Motor1)*2;
+}
+
+void setPWM2(unsigned int Thrust2, unsigned int PID_Motor2){
+	PDC2 = (initDCValue + Thrust2*19 + PID_Motor2)*2;
+}
+
+void setPWM3(unsigned int Thrust3, unsigned int PID_Motor3){
+	PDC3 = (initDCValue + Thrust3*19 + PID_Motor3)*2;
+}
+
+void setPWM4(unsigned int Thrust4, unsigned int PID_Motor4){
+	PR4_value = initDCValue + Thrust4*19 + PID_Motor4;
 }
 
 void __attribute__((__interrupt__ , auto_psv)) _T4Interrupt (void)
