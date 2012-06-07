@@ -9,7 +9,7 @@ LanguageToolSuiteID={479DDE59-4D56-455E-855E-FFF59A3DB57E}
 LanguageToolID={069BD372-6CA0-40D4-BF2F-5DC806D05083}
 LanguageToolLocation=C:\Program Files\Microchip\MPLAB C30\bin\pic30-gcc.exe
 PPAD=$(BINDIR)||$(TMPDIR)||$(AINDIR)||$(INCDIR)||$(LIBDIR)|C:\Program Files\Microchip\MPLAB C30\lib||$(LKRDIR)||
-SOLK=<src>|Main.c|DELAY\DelayTMR1.c|LCD\LCD.c||<obj>||<lib>||<lkr>|p30f4012.gld||
+SOLK=<src>|Main.c|DELAY\DelayTMR1.c|LCD\LCD.c|PWM\pwmControl.c||<obj>||<lib>||<lkr>|p30f4012.gld||
 SuiteArgsString=
 ToolArgsString=-g -Wall
 TraceCmdString=
@@ -22,7 +22,7 @@ LanguageToolSuiteID={479DDE59-4D56-455E-855E-FFF59A3DB57E}
 LanguageToolID={069BD372-6CA0-40D4-BF2F-5DC806D05083}
 LanguageToolLocation=C:\Program Files\Microchip\MPLAB C30\bin\pic30-gcc.exe
 PPAD=$(BINDIR)||$(TMPDIR)||$(AINDIR)||$(INCDIR)||$(LIBDIR)|C:\Program Files\Microchip\MPLAB C30\lib||$(LKRDIR)||
-SOLK=<src>|Main.c|DELAY\DelayTMR1.c|LCD\LCD.c||<obj>||<lib>||<lkr>|p30f4012.gld||
+SOLK=<src>|Main.c|DELAY\DelayTMR1.c|LCD\LCD.c|PWM\pwmControl.c||<obj>||<lib>||<lkr>|p30f4012.gld||
 SuiteArgsString=
 ToolArgsString=-g -Wall
 TraceCmdString=
@@ -35,12 +35,25 @@ LanguageToolSuiteID={479DDE59-4D56-455E-855E-FFF59A3DB57E}
 LanguageToolID={069BD372-6CA0-40D4-BF2F-5DC806D05083}
 LanguageToolLocation=C:\Program Files\Microchip\MPLAB C30\bin\pic30-gcc.exe
 PPAD=$(BINDIR)||$(TMPDIR)||$(AINDIR)||$(INCDIR)||$(LIBDIR)|C:\Program Files\Microchip\MPLAB C30\lib||$(LKRDIR)||
-SOLK=<src>|Main.c|DELAY\DelayTMR1.c|LCD\LCD.c||<obj>||<lib>||<lkr>|p30f4012.gld||
+SOLK=<src>|Main.c|DELAY\DelayTMR1.c|LCD\LCD.c|PWM\pwmControl.c||<obj>||<lib>||<lkr>|p30f4012.gld||
 SuiteArgsString=
 ToolArgsString=-g -Wall
 TraceCmdString=
 DebugOptions=-D__DEBUG
 [File003]
+Location=C:\FUFO\SourceCode\FUFO\pwmControl.o
+Folder=Intermediary
+DeviceName=dsPIC30F4012
+LanguageToolSuiteID={479DDE59-4D56-455E-855E-FFF59A3DB57E}
+LanguageToolID={069BD372-6CA0-40D4-BF2F-5DC806D05083}
+LanguageToolLocation=C:\Program Files\Microchip\MPLAB C30\bin\pic30-gcc.exe
+PPAD=$(BINDIR)||$(TMPDIR)||$(AINDIR)||$(INCDIR)||$(LIBDIR)|C:\Program Files\Microchip\MPLAB C30\lib||$(LKRDIR)||
+SOLK=<src>|Main.c|DELAY\DelayTMR1.c|LCD\LCD.c|PWM\pwmControl.c||<obj>||<lib>||<lkr>|p30f4012.gld||
+SuiteArgsString=
+ToolArgsString=-g -Wall
+TraceCmdString=
+DebugOptions=-D__DEBUG
+[File004]
 Location=C:\FUFO\SourceCode\FUFO\FUFO.cof
 Folder=Output
 DeviceName=dsPIC30F4012
@@ -48,12 +61,12 @@ LanguageToolSuiteID={479DDE59-4D56-455E-855E-FFF59A3DB57E}
 LanguageToolID={433C3D55-811D-409D-A6BF-159CF9355B42}
 LanguageToolLocation=C:\Program Files\Microchip\MPLAB C30\bin\pic30-ld.exe
 PPAD=$(BINDIR)||$(TMPDIR)||$(AINDIR)||$(INCDIR)||$(LIBDIR)|C:\Program Files\Microchip\MPLAB C30\lib||$(LKRDIR)||
-SOLK=<src>|Main.c|DELAY\DelayTMR1.c|LCD\LCD.c||<obj>||<lib>||<lkr>|p30f4012.gld||
+SOLK=<src>|Main.c|DELAY\DelayTMR1.c|LCD\LCD.c|PWM\pwmControl.c||<obj>||<lib>||<lkr>|p30f4012.gld||
 SuiteArgsString=
 ToolArgsString=-o"$(BINDIR_)$(TARGETBASE).$(TARGETSUFFIX)" -Map="$(BINDIR_)$(TARGETBASE).map" --report-mem
 TraceCmdString=
 DebugOptions=--defsym=__MPLAB_DEBUG=1
-[File004]
+[File005]
 Location=C:\FUFO\SourceCode\FUFO\FUFO.hex
 Folder=Output
 DeviceName=dsPIC30F4012
@@ -61,7 +74,7 @@ LanguageToolSuiteID={479DDE59-4D56-455E-855E-FFF59A3DB57E}
 LanguageToolID={433C3D55-811D-409D-A6BF-159CF9355B42}
 LanguageToolLocation=C:\Program Files\Microchip\MPLAB C30\bin\pic30-ld.exe
 PPAD=$(BINDIR)||$(TMPDIR)||$(AINDIR)||$(INCDIR)||$(LIBDIR)|C:\Program Files\Microchip\MPLAB C30\lib||$(LKRDIR)||
-SOLK=<src>|Main.c|DELAY\DelayTMR1.c|LCD\LCD.c||<obj>||<lib>||<lkr>|p30f4012.gld||
+SOLK=<src>|Main.c|DELAY\DelayTMR1.c|LCD\LCD.c|PWM\pwmControl.c||<obj>||<lib>||<lkr>|p30f4012.gld||
 SuiteArgsString=
 ToolArgsString=-o"$(BINDIR_)$(TARGETBASE).$(TARGETSUFFIX)" -Map="$(BINDIR_)$(TARGETBASE).map" --report-mem
 TraceCmdString=
