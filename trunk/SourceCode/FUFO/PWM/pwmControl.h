@@ -3,10 +3,10 @@
 #define	PWM_PORT	PORTE		//Cac tin hieu PWM nam o cong E
 #define	PWM_TRIS	TRISE		//Thanh ghi 3 trang thai cho cac tin hieu PWM
 #define	PWM_LAT		LATE		//Thanh ghi chot cac tin hieu PWM
-#define	Fpwm		50
+
 
 void initPWMPort(void);
-int initPWM(unsigned int Fcy,unsigned int DCValue);
+void initPWM(unsigned int DCValue);
 void initPWMHardware(void);
 void initPWMSoftware(void);
 void setPWM1(unsigned int Thrust1, unsigned int PID_Motor1);
