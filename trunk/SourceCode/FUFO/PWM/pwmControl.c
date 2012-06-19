@@ -28,9 +28,9 @@ void initPWMHardware(){
 	PTPER = periodValue;
 	PWMCON1 = 0x070F;			//1. Chinh mode Independent;  2. Chinh PWM chi ra o pin L, khong ra pin H;
 	OVDCON = 0xFF00;			//Khong dung overdrive
-	PDC1 = initDCValue;			//Khoi tao ESC1 chay o 1ms
-	PDC2 = initDCValue;			//Khoi tao ESC3 chay o 1ms
-	PDC3 = initDCValue;			//Khoi tao ESC5 chay o 1ms
+	PDC1 = initDCValue*2;			//Khoi tao ESC1 chay o 1ms
+	PDC2 = initDCValue*2;			//Khoi tao ESC3 chay o 1ms
+	PDC3 = initDCValue*2;			//Khoi tao ESC5 chay o 1ms
 }
 
 void initPWMSoftware(void){

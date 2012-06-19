@@ -18,7 +18,7 @@
 void controlFUFO(void);
 void getInstruction(void);
 int getThrustRate(void);
-void getValuefromBluetooth(void);
+int getUserInput(void);
 void setSetpoint(unsigned int phi, unsigned int theta, unsigned int psi);
 void getValuefromSensor();
 void calcAngle_sum(unsigned int phiDesire, unsigned int thetaDesire, unsigned int psiDesire);
