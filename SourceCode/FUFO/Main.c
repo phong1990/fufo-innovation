@@ -16,7 +16,7 @@
 
 //------------------------------------------------------------------------------
 //Cac hang so cua chuong trinh (gia tri tuc thoi dung trong chuong trinh)
-unsigned int userInput = 1;
+unsigned int userInputFlag = 0;
 
 //Cac prototype cho cac chuong trinh con
 void initFUFO(void);
@@ -33,14 +33,21 @@ int main(void) {
 	fufoCmd4LCD(LCD_CLEAR);
 	fufoOutputChar("Welcome to FUFO");
 	fufoDelayMs(300);
+	T2CONbits.TON = 1;		//timer 2 on
 	while(1){
 		fufoCmd4LCD(LCD_CLEAR);
-		fufoOutputChar("Thrust Rate: ");
+		fufoDelayMs(5);
+		fufoOutputChar("Thrust: ");
 		fufoOutputInt(getThrustRate());
 		fufoCmd4LCD(LCD_HOMEL2);
 		fufoOutputInt(PDC2);
-		if (userInput == 1){
+//		if (IFS0bits.U1RXIF == 1){
+//			IFS0bits.U1RXIF = 0;
+//		 	fufoOutputChar("interrup");
+//		} else fufoOutputChar("bang 0");
+		if (userInputFlag == 0){
 			getInstruction();
+			userInputFlag = getUserInput();
 		}
 	}
 }
@@ -62,29 +69,36 @@ void initFUFO(void){
 	fufoInitUART();
 	fufoDelayMs(200);
 	fufoOutputChar("....");
+	initTMR2();
 //	fufoInitBluetooth(receiOK);
 //	testConnectBluetooth(receiOK);
 }
 
 void initTMR2(void){
-	IPC1bits.T2IP = 6;  	//highest priority interrupt
+	IPC1bits.T2IP = 7;  	//highest priority interrupt
 	T2CONbits.TCKPS = 0;	// timer 2 prescale = 1
 	TMR2 = 0;
-	PR2 = Fcy/Fsp;		
+	PR2 = 36864;		
 	IFS0bits.T2IF = 0;		//interupt flag clear
     IEC0bits.T2IE = 1;  	//Enable Timer1 Interrupt Service Routine
-	T2CONbits.TON = 0;		//timer 2 off
+	T2CONbits.TON = 0;		//timer 2 on
 }
 
 void __attribute__((__interrupt__ , auto_psv)) _T2Interrupt (void)
 {	
-	TMR2 = 0;			//reset timer register
+	TMR2 = 0;
+	//T2CONbits.TON = 0;		//timer 2 off
 	controlFUFO();
-	index++;
-	userInput = 0;
-	if (index == 25){
-		index = 0;
-		userInput = 1;
+	if(userInputFlag == 1){
+		
+		_RE8 = 1;
+		index++;
+		if(index == 25){
+			index = 0;
+			userInputFlag = 0;
+			_RE8 = 0;
+		}
 	}
+	//T2CONbits.TON = 1;
 	IFS0bits.T2IF = 0;	// clear interrupt flag manually
 }

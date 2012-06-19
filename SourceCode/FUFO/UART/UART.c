@@ -1,6 +1,7 @@
 //Communication dspic30f4012 with BlueTooth module (HC-06-S) in UART
 #include "p30f4012.h"
 #include "UART.h"
+#include "../Control/Control.h"
 
 #define UARTWRITE 0
 #define UARTREAD 1
@@ -34,6 +35,6 @@ void fufoSendStringUART(unsigned char *s) {
 
 //Receive a Char by UART
 unsigned char fufoReceiveUART(void) {
-	while(!U1STAbits.URXDA); 
+	while(!U1STAbits.URXDA);
     return U1RXREG;
 }

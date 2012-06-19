@@ -3,7 +3,7 @@
 unsigned int Up, Down, Left, Right, Forward, Backward;
 int Yaw_sum, Pitch_sum, Roll_sum;
 unsigned int pidEnable = 0;
-unsigned int thrustRate = 20;
+unsigned int thrustRate = 22;
 int PWM_Motor1 = 0; 
 int PWM_Motor2 = 0;
 int PWM_Motor3 = 0;
@@ -17,25 +17,21 @@ int D = 0;
 int e = 0;
 int total_e = 0;
 int Angle_sum;
-
-
-void getInstruction(void){
-	getValuefromBluetooth();
-}
+unsigned int userInput;
 
 int getThrustRate(void){
 	return thrustRate;	
 }
 
+int getUserInput(void){
+	return userInput;	
+}
+
 void controlFUFO(void){
 	if(Up == 1){
 		setSetpoint(0,0,0);
-		thrustRate += 1;
-		if(thrustRate > 97) thrustRate = 97;
 	} else if (Down == 1){
 		setSetpoint(0,0,0);
-		thrustRate -= 1;
-		if(thrustRate < 20) thrustRate = 20;
 	} else if(Forward == 1){
 		setSetpoint(20,0,0);
 	} else if (Backward == 1){
@@ -47,14 +43,26 @@ void controlFUFO(void){
 	} else setSetpoint(0,0,0);
 }
 
-void getValuefromBluetooth(void){
+void getInstruction(void){
 	resetInstruction();
 	comandfromBluetooth = fufoReceiveUART();
 	IFS0bits.U1RXIF = 0;
 	if(comandfromBluetooth == 'o'){
 		Up = 1;
+		thrustRate += 1;
+		if(thrustRate >= 22){
+			//pidEnable = 1;
+			pidEnable = 0;
+			if(thrustRate > 97) thrustRate = 97;
+		}
 	} else if(comandfromBluetooth == 'p'){
 		Down = 1;
+		thrustRate -= 1;
+		if (thrustRate < 22){
+			pidEnable = 0;
+			thrustRate = 22;
+			resetSensor();
+		}
 	} else if(comandfromBluetooth == 'w'){
 		Forward = 1;
 //		PWM_Motor1 -= 1;
@@ -72,12 +80,9 @@ void getValuefromBluetooth(void){
 //		PWM_Motor2 += 1;
 //		PWM_Motor4 -= 1;
 	}
-	if(thrustRate > 21){
-		pidEnable = 0;
-	} else {
-		pidEnable = 0;
-		resetSensor();
-	}
+	if(Up == 1 || Down == 1 || Left == 1 || Right == 1 || Forward == 1 || Backward == 1){
+		userInput = 1;
+	} else userInput = 0;
 }
 
 void setSetpoint(unsigned int Phi, unsigned int Theta, unsigned int Psi){
