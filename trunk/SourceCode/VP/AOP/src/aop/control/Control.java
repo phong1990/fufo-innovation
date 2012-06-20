@@ -1,64 +1,44 @@
 package aop.control;
 
-import java.net.InetAddress;
-import java.net.Socket;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.OutputStream;
 
-import android.app.Activity;
+import android.app.TabActivity;
+import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
-import aop.command.CommandControl;
-import aop.video.VideoControl;
+import android.os.Environment;
+import android.util.Log;
+import android.widget.TabHost;
+import aop.control.R.color;
 
-public class Control extends Activity {
-    
-    CommandControl cmct;
-    VideoControl vdct; 
-    EditText ipServer,etport;
-    TextView message,status;
-    Socket tcpSocket;
-
-    @Override
+public class control extends TabActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.client);
-        ipServer = (EditText)findViewById(R.id.ipServer);
-        etport = (EditText)findViewById(R.id.port);
-        Button Connect = (Button)findViewById(R.id.Connect);
-        message = (TextView)findViewById(R.id.message);
-        status = (TextView)findViewById(R.id.status);
-        Connect.setOnClickListener(btConnectOnClickListener);
+        setContentView(R.layout.main);
+        Resources res = getResources(); // Resource object to get Drawables
+        TabHost tabHost = getTabHost();  // The activity TabHost
+        TabHost.TabSpec spec;  // Resusable TabSpec for each tab
+        Intent intent;  // Reusable Intent for each tab
+
+        // Create an Intent to launch an Activity for the tab (to be reused)
+        intent = new Intent().setClass(this, SettingActivity.class);
+
+        // Initialize a TabSpec for each tab and add it to the TabHost
+        spec = tabHost.newTabSpec("setting").setIndicator("Setting",
+                          res.getDrawable(R.drawable.ic_tab_setting))
+                      .setContent(intent);
+        tabHost.addTab(spec);
+        
+        // Do the same for the other tabs
+        intent = new Intent().setClass(this, ControlActivity.class);
+        spec = tabHost.newTabSpec("control").setIndicator("Control",
+                          res.getDrawable(R.drawable.ic_tab_control))
+                      .setContent(intent);
+        tabHost.addTab(spec);
+        tabHost.setCurrentTab(0);
     }
-
-    Button.OnClickListener btConnectOnClickListener
-    = new Button.OnClickListener(){
-
-        @Override
-        public void onClick(View arg0) {
-            // TODO Auto-generated method stub
-            
-            String hostname = ipServer.getText().toString();
-            int port = Integer.parseInt(etport.getText().toString());
-            try{
-                InetAddress serverAddr = InetAddress.getByName(hostname);
-                
-                tcpSocket = new Socket(serverAddr, port);
-                status.setText("Connected!");
-                status.setTextColor(Color.GREEN);
-                
-                cmct = new CommandControl(tcpSocket);
-                cmct.start();
-                
-                vdct = new VideoControl(Control.this);
-               // vdct.start();
-                
-            }catch(Exception e){
-                
-            }
-            
-        }
-    };
 }

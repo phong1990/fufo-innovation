@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    >
+    <RadioGroup  
+        android:id="@+id/radioGroup" 
+        android:orientation="vertical"  
+        android:layout_width="fill_parent"  
+        android:layout_height="wrap_content"       
+        >  
+        <RadioButton  
+         android:id="@+id/radio1"  
+         android:layout_width="fill_parent"  
+         android:layout_height="wrap_content"  
+         android:text="Control via Computer."  
+        />  
+        <View
+        android:layout_height="2dip"
+        android:background="#FF909090" />
+        <RadioButton  
+            android:id="@+id/radio2"  
+            android:layout_width="fill_parent"  
+            android:layout_height="wrap_content"       
+            android:text="Control via Phone."  
+            android:checked = "true"
+        />  
+    </RadioGroup>  
+ 
+   
+  <LinearLayout
+    android:orientation="horizontal"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+
+    >  
+    <TableLayout
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft = "5px"
+    android:layout_marginTop = "5px"
+    android:layout_marginBottom= "5px"
+    android:layout_marginRight = "5px"
+
+    >
+    <TableRow>
+         <Button 
+          android:id="@+id/bt_fwd"  
+          android:layout_column="1"
+          android:layout_width ="fill_parent"
+          android:layout_height ="wrap_content"
+          android:background="@drawable/fwd" />
+          <Button 
+          android:id="@+id/bt_up" 
+          android:background="@drawable/up"
+          android:layout_column="5"
+          android:layout_width ="fill_parent"
+          android:layout_height ="wrap_content" />
+    </TableRow>
+    <TableRow>
+         <Button 
+          android:id="@+id/bt_lft" 
+          android:layout_column="0"
+          android:layout_width ="fill_parent"
+          android:layout_height ="wrap_content"
+            android:background="@drawable/lft" 
+             android:paddingBottom="35px" />
+             <Button 
+             android:id="@+id/bt_ct" 
+          android:layout_column="1"
+          android:layout_width ="fill_parent"
+          android:layout_height ="wrap_content"   
+          android:background="@drawable/ct" 
+          android:layout_marginLeft = "15px"
+          android:layout_marginTop = "15px"
+          android:layout_marginBottom= "15px"
+          android:layout_marginRight = "15px"
+           android:visibility="invisible"/>
+         <Button 
+         android:id="@+id/bt_rgt" 
+          android:layout_column="2"
+          android:layout_width ="fill_parent"
+          android:layout_height ="wrap_content"   
+          android:background="@drawable/rgt"
+           android:paddingBottom="35px" />
+            <Button 
+         android:id="@+id/bt_rgt" 
+          android:layout_column="3"
+          android:layout_width ="fill_parent"
+          android:layout_height ="wrap_content"   
+          android:background="@drawable/rgt"
+          android:visibility="invisible" />
+          <Button 
+          android:id="@+id/bt_nkdt" 
+          android:layout_column="4"
+          android:layout_width ="fill_parent"
+          android:layout_height ="wrap_content"
+          android:background="@drawable/nkdh"
+          android:paddingBottom="35px" />
+          <Button 
+          android:id="@+id/bt_rgt" 
+          android:layout_column="5"
+          android:layout_width ="fill_parent"
+          android:layout_height ="wrap_content"   
+          android:background="@drawable/rgt"
+                    android:layout_marginLeft = "15px"
+          android:layout_marginTop = "15px"
+          android:layout_marginBottom= "15px"
+          android:layout_marginRight = "15px"
+          android:visibility="invisible" />
+           <Button 
+           android:id="@+id/bt_kdh" 
+          android:layout_column="6"
+          android:layout_width ="wrap_content"
+          android:layout_height ="wrap_content"
+          android:background="@drawable/kdh"
+          android:paddingBottom="35px"
+          android:paddingRight="15px" />
+    </TableRow>
+    <TableRow>
+         <Button    
+         android:id="@+id/bt_bwd" 
+          android:layout_column="1"
+          android:layout_width ="wrap_content"
+          android:layout_height ="wrap_content"
+            android:background="@drawable/bwd"/>
+         <Button 
+         android:id="@+id/bt_dwn" 
+         android:background="@drawable/down"
+          android:layout_column="5"
+          android:layout_height ="wrap_content"
+          android:layout_width="wrap_content"/>
+     </TableRow>
+     </TableLayout>
+  </LinearLayout>
+    <TextView
+    android:id="@+id/status"
+    android:layout_width ="wrap_content"
+    android:layout_height = "wrap_content"
+    android:layout_gravity = "bottom"
+    android:text = "Disconnected!"
+    android:textColor="@color/red"/>    
+</LinearLayout>
