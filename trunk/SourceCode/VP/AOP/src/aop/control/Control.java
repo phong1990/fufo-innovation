@@ -12,13 +12,23 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TabHost;
+import android.widget.TableLayout;
+import android.widget.TextView;
+import aop.command.CommandControl;
 import aop.control.R.color;
 
-public class control extends TabActivity {
+public class control extends TabActivity{
+
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
+        Log.d("FUFO", "hehe 2");
         Resources res = getResources(); // Resource object to get Drawables
         TabHost tabHost = getTabHost();  // The activity TabHost
         TabHost.TabSpec spec;  // Resusable TabSpec for each tab
@@ -40,5 +50,10 @@ public class control extends TabActivity {
                       .setContent(intent);
         tabHost.addTab(spec);
         tabHost.setCurrentTab(0);
+
+        
+     /*   Thread cmct = new CommandControl();
+        cmct.start();*/
     }
+
 }
