@@ -360,9 +360,13 @@ public class SettingActivity extends ExpandableListActivity implements OnItemCli
     {
         // signal connect event for this BT dev
         ConnectionEvent(1,nIndex,null);
-        control.cmct = new CommandControl(tcpSocket,m_btSck,1);
+        if(!control.cmct.isAlive())
+        {
+            control.cmct = new CommandControl(tcpSocket,m_btSck,1);
+        
      //   m_hReadThread = control.cmct;
         control.cmct.start();
+        }
         /*m_hReadThread = new Thread() {
             public void run() 
             {
