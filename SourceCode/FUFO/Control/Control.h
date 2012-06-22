@@ -17,7 +17,12 @@
 
 void controlFUFO(void);
 void getInstruction(void);
+void getStartInstruction(void);
+void getUpInstruction(void);
+void checkPhoneConnection(void);
+void checkPCConnection(void);
 int getThrustRate(void);
+void setThrustRate(unsigned int Thrust);
 int getUserInput(void);
 void setSetpoint(unsigned int phi, unsigned int theta, unsigned int psi);
 void getValuefromSensor();

@@ -1,9 +1,10 @@
 #include "Control.h"
+#include "../FUFO.h"
 
 unsigned int Up, Down, Left, Right, Forward, Backward;
 int Yaw_sum, Pitch_sum, Roll_sum;
 unsigned int pidEnable = 0;
-unsigned int thrustRate = 22;
+unsigned int thrustRate = 0;
 int PWM_Motor1 = 0; 
 int PWM_Motor2 = 0;
 int PWM_Motor3 = 0;
@@ -21,6 +22,10 @@ unsigned int userInput;
 
 int getThrustRate(void){
 	return thrustRate;	
+}
+
+void setThrustRate(unsigned int Thrust){
+	thrustRate = Thrust;
 }
 
 int getUserInput(void){
@@ -43,6 +48,55 @@ void controlFUFO(void){
 	} else setSetpoint(0,0,0);
 }
 
+void checkPhoneConnection(void){
+	comandfromBluetooth = fufoReceiveUART();
+	if(comandfromBluetooth == 'n'){ // ky tu n bao da ket noi voi Phone
+		setState(3);
+		fufoCmd4LCD(LCD_CLEAR);
+		fufoOutputChar("Phone connected!");
+	}
+}
+
+void checkPCConnection(void){
+	comandfromBluetooth = fufoReceiveUART();
+	if(comandfromBluetooth == 'c'){ // ky tu c bao da ket noi voi PC
+		setState(3);
+		fufoCmd4LCD(LCD_HOMEL2);
+		fufoOutputChar("PC connected!");
+		fufoDelayMs(500);
+	}
+}
+
+void getStartInstruction(void){
+	fufoCmd4LCD(LCD_HOMEL2);
+	fufoOutputChar("vao  ");
+	comandfromBluetooth = fufoReceiveUART();
+	fufoOutputChar("qua  ");
+	if(comandfromBluetooth == 'f'){ // ky tu f bao Start
+		setState(4);
+		fufoOutputChar("dc  ");
+	} else {
+		fufoCmd4LCD(LCD_HOMEL2);
+		fufoOutputChar("loi");
+	}	
+}
+
+void getUpInstruction(void){
+	resetInstruction();
+	comandfromBluetooth = fufoReceiveUART();
+	IFS0bits.U1RXIF = 0;
+	if(comandfromBluetooth == 'o'){
+		Up = 1;
+		thrustRate += 1;
+		if(thrustRate > 22){
+			//pidEnable = 1;
+			pidEnable = 0;
+			setState(6);
+			if(thrustRate > 97) thrustRate = 97;
+		}
+	}
+}
+
 void getInstruction(void){
 	resetInstruction();
 	comandfromBluetooth = fufoReceiveUART();
@@ -50,17 +104,19 @@ void getInstruction(void){
 	if(comandfromBluetooth == 'o'){
 		Up = 1;
 		thrustRate += 1;
-		if(thrustRate >= 22){
+		if(thrustRate > 22){
 			//pidEnable = 1;
 			pidEnable = 0;
+			setState(6);
 			if(thrustRate > 97) thrustRate = 97;
 		}
 	} else if(comandfromBluetooth == 'p'){
 		Down = 1;
 		thrustRate -= 1;
 		if (thrustRate < 22){
+			setState(7);
 			pidEnable = 0;
-			thrustRate = 22;
+			thrustRate = 21;
 			resetSensor();
 		}
 	} else if(comandfromBluetooth == 'w'){
