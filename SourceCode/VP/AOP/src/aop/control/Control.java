@@ -24,7 +24,7 @@ import aop.command.CommandControl;
 import aop.control.R.color;
 
 public class control extends TabActivity{
-
+        public static CommandControl cmct ;
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
