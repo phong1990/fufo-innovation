@@ -61,13 +61,16 @@ import android.widget.ExpandableListView.ExpandableListContextMenuInfo;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-import aop.control.PerseusAndroid.BTDev;
+import aop.command.CommandControl;
 
 /**
  * @author khoinguyen67
  *
  */
 public class SettingActivity extends ExpandableListActivity implements OnItemClickListener{
+    
+    Socket tcpSocket ;
+    
     String                      LOG_TAG                 = "FUFO";
     final static String         FUFO_BTADDR             = "00:12:02:15:60:12";
     String         m_szAppTitle            = "FUFOAndroid";
@@ -88,7 +91,7 @@ public class SettingActivity extends ExpandableListActivity implements OnItemCli
     // Intent request codes
     BluetoothSocket             m_btSck;                                    //used to handle Android<->Robot communication
     private static final UUID   SPP_UUID                = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
-    Thread                      m_hReadThread;
+    public static Thread                      m_hReadThread;
     Thread click;
     int idLVFirstItem;
     
@@ -228,7 +231,7 @@ public class SettingActivity extends ExpandableListActivity implements OnItemCli
         ArrayList<Device> m_Devices = new ArrayList<Device>();
         Device device = null;
         for (int i=0;i<BTCount;i++) {
-            if (BTDevs[i].m_szAddress.compareTo(PerseusAndroid.ROBO_BTADDR) == 0) {
+            if (BTDevs[i].m_szAddress.compareTo(FUFO_BTADDR) == 0) {
                 BTDevs[i].m_nBTDEVType = 1;
                 m_nRoboDev = i;
                 device = new Device(BTDevs[i].m_szName, 
@@ -357,8 +360,10 @@ public class SettingActivity extends ExpandableListActivity implements OnItemCli
     {
         // signal connect event for this BT dev
         ConnectionEvent(1,nIndex,null);
-        
-        m_hReadThread = new Thread() {
+        control.cmct = new CommandControl(tcpSocket,m_btSck,1);
+     //   m_hReadThread = control.cmct;
+        control.cmct.start();
+        /*m_hReadThread = new Thread() {
             public void run() 
             {
                 while (true) 
@@ -395,7 +400,7 @@ public class SettingActivity extends ExpandableListActivity implements OnItemCli
                 }
             }
         };
-        m_hReadThread.start();
+        m_hReadThread.start();*/
         return 0;
     }
  // Worker event function called on various events
@@ -590,7 +595,7 @@ public class SettingActivity extends ExpandableListActivity implements OnItemCli
                     Log.d("FUFO", "vao1");
                     InetAddress serverAddr = InetAddress.getByName(ipServer);
                     Log.d("FUFO", "vao2 :" + ipServer + port );
-                    Socket tcpSocket = new Socket(serverAddr, port);
+                    tcpSocket = new Socket(serverAddr, port);
                     tv_ServerStatus = (TextView)(ipView.findViewById(0x7f06000e));
                     tv_ServerStatus.setText("Connected!");
                     tv_ServerStatus.setTextColor(Color.GREEN);
@@ -598,6 +603,7 @@ public class SettingActivity extends ExpandableListActivity implements OnItemCli
                     et_Port.setEnabled(false); 
                     bt_Connect.setEnabled(false); 
                     bt_Stop.setEnabled(true);
+                    StartReadThread(1);
                 }else if (v.getId() == bt_Stop.getId()){
                     tv_ServerStatus.setText("Disconnected!");
                     tv_ServerStatus.setTextColor(Color.RED);

@@ -58,15 +58,15 @@ public class ControlActivity extends Activity implements OnCheckedChangeListener
         rd_Phone = (RadioButton)findViewById(R.id.rd_phone);
         tb_LO = (TableLayout)findViewById(R.id.tb_layout);
         rd_Group.setOnCheckedChangeListener(this);
-        bt_Fwd.setOnClickListener(testOnClick);
-        bt_Bwd.setOnClickListener(testOnClick);
-        bt_Rgt.setOnClickListener(testOnClick);
-        bt_Lft.setOnClickListener(testOnClick);
-        bt_Up.setOnClickListener(testOnClick);
-        bt_Dwn.setOnClickListener(testOnClick);
-        bt_Nkdh.setOnClickListener(testOnClick);
-        bt_Kdh.setOnClickListener(testOnClick);
-        bt_Ct.setOnClickListener(testOnClick);
+        bt_Fwd.setOnClickListener(control.cmct);
+        bt_Bwd.setOnClickListener(control.cmct);
+        bt_Rgt.setOnClickListener(control.cmct);
+        bt_Lft.setOnClickListener(control.cmct);
+        bt_Up.setOnClickListener(control.cmct);
+        bt_Dwn.setOnClickListener(control.cmct);
+        bt_Nkdh.setOnClickListener(control.cmct);
+        bt_Kdh.setOnClickListener(control.cmct);
+        bt_Ct.setOnClickListener(control.cmct);
     }
     View.OnClickListener testOnClick = new View.OnClickListener() {
         
@@ -90,10 +90,12 @@ public class ControlActivity extends Activity implements OnCheckedChangeListener
     public void onCheckedChanged(RadioGroup arg0, int arg1) {
         // TODO Auto-generated method stub
           if(arg0.getCheckedRadioButtonId() == 0x7f060001){
-          tb_LO.setVisibility(4);         
+          tb_LO.setVisibility(4); 
+          control.cmct.controlMode = 0;
         }
         else {
             tb_LO.setVisibility(0);
+            control.cmct.controlMode = 1;
         }
     }
 }
