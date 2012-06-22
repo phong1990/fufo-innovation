@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
 
+import android.bluetooth.BluetoothSocket;
 import android.util.Log;
 
 /**
@@ -34,15 +35,16 @@ public class CommandControl extends Thread {
     Socket commandSocket = null;               //Initiate Socket to receive command
     BufferedReader in;                        //Initiate BufferedReader to save command
     int command;
-
+    BluetoothSocket bluetoothSocket = null;
     
     //Constructor
     public CommandControl(){}
     
     //Constructor receive argument Socket to send command
-    public CommandControl(Socket commandSocket){
+    public CommandControl(Socket commandSocket, BluetoothSocket bluetoothSocket){
 
         this.commandSocket = commandSocket;
+        this.bluetoothSocket = bluetoothSocket;
     }
 
     /*

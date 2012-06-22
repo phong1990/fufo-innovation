@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"       
         >  
         <RadioButton  
-         android:id="@+id/radio1"  
+         android:id="@+id/rd_computer"  
          android:layout_width="fill_parent"  
          android:layout_height="wrap_content"  
          android:text="Control via Computer."  
@@ -20,7 +20,7 @@
         android:layout_height="2dip"
         android:background="#FF909090" />
         <RadioButton  
-            android:id="@+id/radio2"  
+            android:id="@+id/rd_phone"  
             android:layout_width="fill_parent"  
             android:layout_height="wrap_content"       
             android:text="Control via Phone."  
@@ -36,6 +36,7 @@
 
     >  
     <TableLayout
+    android:id="@+id/tb_layout"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:layout_marginLeft = "5px"
@@ -85,12 +86,16 @@
           android:background="@drawable/rgt"
            android:paddingBottom="35px" />
             <Button 
-         android:id="@+id/bt_rgt" 
+         android:id="@+id/bt_start" 
           android:layout_column="3"
           android:layout_width ="fill_parent"
           android:layout_height ="wrap_content"   
-          android:background="@drawable/rgt"
-          android:visibility="invisible" />
+          android:layout_marginLeft = "15px"
+          android:layout_marginTop = "15px"
+          android:layout_marginBottom= "15px"
+          android:layout_marginRight = "15px"
+          android:background="@drawable/start"
+          />
           <Button 
           android:id="@+id/bt_nkdt" 
           android:layout_column="4"
