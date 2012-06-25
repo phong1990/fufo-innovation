@@ -42,9 +42,9 @@ public final class R {
         public static final int up=0x7f020013;
     }
     public static final class id {
-        public static final int bt_Connect=0x7f060012;
-        public static final int bt_Search=0x7f06000f;
-        public static final int bt_Stop=0x7f060014;
+        public static final int bt_Connect=0x7f060013;
+        public static final int bt_Search=0x7f060010;
+        public static final int bt_Stop=0x7f060015;
         public static final int bt_bwd=0x7f06000c;
         public static final int bt_ct=0x7f060007;
         public static final int bt_dwn=0x7f06000d;
@@ -55,9 +55,10 @@ public final class R {
         public static final int bt_rgt=0x7f060008;
         public static final int bt_start=0x7f060009;
         public static final int bt_up=0x7f060005;
-        public static final int ipServer=0x7f060011;
-        public static final int m_lvSearch=0x7f060010;
-        public static final int port=0x7f060013;
+        public static final int camera_preview=0x7f06000f;
+        public static final int ipServer=0x7f060012;
+        public static final int m_lvSearch=0x7f060011;
+        public static final int port=0x7f060014;
         public static final int radioGroup=0x7f060000;
         public static final int rd_computer=0x7f060001;
         public static final int rd_phone=0x7f060002;

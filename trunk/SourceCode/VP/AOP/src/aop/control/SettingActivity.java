@@ -160,6 +160,7 @@ public class SettingActivity extends ExpandableListActivity implements OnItemCli
          // Register for broadcasts when discovery has finished
          filter = new IntentFilter(BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
          this.registerReceiver(mReceiver, filter); 
+         Log.d("FUFO", "da toi cuoi oncread " );
 
     }
 
@@ -517,18 +518,21 @@ public class SettingActivity extends ExpandableListActivity implements OnItemCli
             (Context.LAYOUT_INFLATER_SERVICE);
             if(flag == 0){
                 ipView =inflater.inflate(R.layout.tab_setting_child_item_ipserver, parent, false);  
-                bt_Connect = (Button)(ipView.findViewById(0x7f060012));
-                bt_Stop = (Button)(ipView.findViewById(0x7f060014));
+                bt_Connect = (Button)(ipView.findViewById(R.id.bt_Connect));
+                bt_Stop = (Button)(ipView.findViewById(R.id.bt_Stop));
                 bt_Connect.setOnClickListener(onClickBt);
                 bt_Stop.setOnClickListener(onClickBt);
                 flag = 1;
             }
             ffView =inflater.inflate(R.layout.tab_setting_child_item_fufo, parent, false);  
-             bt_Search = (Button)(ffView.findViewById(0x7f06000f));
+             bt_Search = (Button)(ffView.findViewById(R.id.bt_Search));
              bt_Search.setOnClickListener(onClickBt);
-             m_lvSearch = (ListView)(ffView.findViewById(0x7f060010));
+             m_lvSearch = (ListView)(ffView.findViewById(R.id.m_lvSearch));
+             
+             //Test lai dong nay
              idLVFirstItem = 0x7f060010;
              m_lvSearch.setOnItemClickListener(this);
+             Log.d("FUFO","toi click child view");
             if(groupPosition == 0) return ipView;
             else return ffView;
         }
@@ -599,10 +603,10 @@ public class SettingActivity extends ExpandableListActivity implements OnItemCli
             try{
                 Log.d("FUFO", "vao");
                 if(v.getId() == bt_Connect.getId()){
-                    et_IpServer = (EditText)(ipView.findViewById(0x7f060011));
+                    et_IpServer = (EditText)(ipView.findViewById(R.id.ipServer));
                     String ipServer = et_IpServer.getText().toString();
                     Log.d("FUFO", "vao" + ipServer);
-                    et_Port = (EditText)(ipView.findViewById(0x7f060013));
+                    et_Port = (EditText)(ipView.findViewById(R.id.port));
                     int port = Integer.parseInt(et_Port.getText().toString());
                     Log.d("FUFO", "vao1");
                     InetAddress serverAddr = InetAddress.getByName(ipServer);

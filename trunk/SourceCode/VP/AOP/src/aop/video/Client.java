@@ -31,7 +31,7 @@ import android.util.Log;
  */
 public class Client {
     
-    String ipClient = "10.0.2.2";
+    String ipClient = "192.168.157.1";
     int portClient = 4444;
     DatagramSocket socket;
     DatagramPacket fspacket;
