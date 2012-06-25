@@ -214,6 +214,7 @@ public class SettingActivity extends ExpandableListActivity implements OnItemCli
             {
                 //connect to ROBOT
                 Connect(nIndex);
+                Control.ffSetting = 1;
                 StartReadThread(nIndex);
             }
             else 
@@ -358,15 +359,22 @@ public class SettingActivity extends ExpandableListActivity implements OnItemCli
     // Worker functions
     int StartReadThread(final int nIndex)
     {
+        Log.d("FUFO", "vao startReadThread");
         // signal connect event for this BT dev
         ConnectionEvent(1,nIndex,null);
-        if(!control.cmct.isAlive())
-        {
-            control.cmct = new CommandControl(tcpSocket,m_btSck,1);
-        
+                   Log.d("FUFO", "init thread cmct1");
+            if(tcpSocket != null ){
+                Control.cmct.commandSocket = tcpSocket;
+            }
+            
+         if(m_btSck != null)
+             Control.cmct.bluetoothSocket = m_btSck;
+            
+           // control.cmct = new CommandControl(tcpSocket,m_btSck,1);
+            Log.d("FUFO", "init thread cmct2");
      //   m_hReadThread = control.cmct;
-        control.cmct.start();
-        }
+            Control.cmct.start();
+           Log.d("FUFO", "init thread cmct3");
         /*m_hReadThread = new Thread() {
             public void run() 
             {
@@ -600,6 +608,7 @@ public class SettingActivity extends ExpandableListActivity implements OnItemCli
                     InetAddress serverAddr = InetAddress.getByName(ipServer);
                     Log.d("FUFO", "vao2 :" + ipServer + port );
                     tcpSocket = new Socket(serverAddr, port);
+                    Control.svSetting = 1;
                     tv_ServerStatus = (TextView)(ipView.findViewById(0x7f06000e));
                     tv_ServerStatus.setText("Connected!");
                     tv_ServerStatus.setTextColor(Color.GREEN);

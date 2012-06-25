@@ -28,7 +28,10 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.RadioGroup.OnCheckedChangeListener;
+import aop.control.Control;
+import aop.control.ControlActivity;
 import aop.control.R;
+
 
 /**
  * @author khoinguyen67
@@ -36,13 +39,13 @@ import aop.control.R;
  */
 public class CommandControl extends Thread implements OnClickListener {
     //Create server socket to control command
-    Socket commandSocket = null;               //Initiate Socket to receive command
+    public Socket commandSocket = null;               //Initiate Socket to receive command
     BufferedReader in;                        //Initiate BufferedReader to save command
     int command;
-    BluetoothSocket bluetoothSocket = null;
+    public BluetoothSocket bluetoothSocket = null;
     public int controlMode;
     int buttonID;
-    byte control;
+    byte controlByte;
     int flagDelay = 1;
 
     //Constructor
@@ -63,11 +66,26 @@ public class CommandControl extends Thread implements OnClickListener {
     public void run(){
 
         try {
-            Log.d("FUFO", "vo roi1" + command);
-            while(true){
-                waitCommandFromeAOC();
-                if (controlMode == 0) {
             
+            
+            Log.d("FUFO", "vo roi1 :" + Control.ffSetting + " : " + Control.svSetting);
+            
+            while(true){
+                if(Control.ffSetting == 1){
+                    Log.d("FUFO", "vo roi111");
+                //    ControlActivity.rd_Phone.setEnabled(true);
+                    Log.d("FUFO", "vo roi123");
+                }
+                
+                if(Control.svSetting == 1){
+                    Log.d("FUFO", "vo roi1");
+                  //  ControlActivity.rd_Computer.setEnabled(true);
+                    Log.d("FUFO", "vo roi2");
+                    waitCommandFromeAOC();
+                    Log.d("FUFO", "vo roi3 "+ controlMode);
+                }
+                if (controlMode == 1) {
+                    Log.d("FUFO", "vo ctm");
                     sendCommandToFUFO();
                 }
             }
@@ -81,34 +99,34 @@ public class CommandControl extends Thread implements OnClickListener {
      * This method uses to receive command from AOC via TCP socket
      */
     public void waitCommandFromeAOC() throws IOException{
-
+        Log.d("FUFO", "vo ham wait for cm");
         in = new BufferedReader(new InputStreamReader(
                 commandSocket.getInputStream()));
         command = Integer.parseInt(in.readLine());
         switch(command){
             case 37:
-                control = 'n';
+                controlByte = 'n';
                 break;
             case 38:
-                control = 'o';
+                controlByte = 'o';
                 break;
             case 39:
-                control = 'k';
+                controlByte = 'k';
                 break;
             case 40:
-                control = 'p';
+                controlByte = 'p';
                 break;
             case 65:
-                control = 'a';
+                controlByte = 'a';
                 break;
             case 87:
-                control = 'w';
+                controlByte = 'w';
                 break;
             case 68:
-                control = 'd';
+                controlByte = 'd';
                 break;
             case 83:
-                control = 's';
+                controlByte = 's';
                 break;
 
         }
@@ -118,17 +136,20 @@ public class CommandControl extends Thread implements OnClickListener {
      * This method uses to send command to FUFO when new command receive
      */
     public void sendCommandToFUFO(){
-        Log.d("FUFO", "Control:" + control + " .Command : " + command + " .CtM: " + controlMode);
-        if (bluetoothSocket != null && flagDelay == 1)
+      
+        if (Control.ffSetting == 1 && flagDelay == 1){
+            Log.d("FUFO", "Control:" + controlByte + " .Command : " + command + " .CtM: " + controlMode);
             try {
                 flagDelay = 2;
-                bluetoothSocket.getOutputStream().write(control);
+                if (bluetoothSocket != null)
+                bluetoothSocket.getOutputStream().write(controlByte);
                 sleep(500);
                 flagDelay =1;
             } catch (Exception e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
+        }
     }
 
     /**
@@ -143,39 +164,39 @@ public class CommandControl extends Thread implements OnClickListener {
         buttonID = v.getId();
         switch (buttonID){
             case R.id.bt_lft:
-                control = 'a'; 
+                controlByte = 'a'; 
                 sendCommandToFUFO();
                 break;
             case R.id.bt_fwd:
-                control = 'w'; 
+                controlByte = 'w'; 
                 sendCommandToFUFO();
                 break;
             case R.id.bt_rgt:
-                control = 'd'; 
+                controlByte = 'd'; 
                 sendCommandToFUFO();
                 break;
             case R.id.bt_bwd:
-                control = 's'; 
+                controlByte = 's'; 
                 sendCommandToFUFO();
                 break;
             case R.id.bt_up:
-                control = 'o'; 
+                controlByte = 'o'; 
                 sendCommandToFUFO();
                 break;
             case R.id.bt_dwn:
-                control = 'p'; 
+                controlByte = 'p'; 
                 sendCommandToFUFO();
                 break;
-            case R.id.bt_ct:
-                control = 'c'; 
+            case R.id.bt_start:
+                controlByte = 'f'; 
                 sendCommandToFUFO();
                 break;
             case R.id.bt_nkdt:
-                control = 'n'; 
+                controlByte = 'n'; 
                 sendCommandToFUFO();
                 break;
             case R.id.bt_kdh:
-                control = 'k'; 
+                controlByte = 'k'; 
                 sendCommandToFUFO();
                 break;
         }

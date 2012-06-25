@@ -26,6 +26,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TableLayout;
 import android.widget.TextView;
@@ -36,8 +37,8 @@ import android.widget.TextView;
  */
 public class ControlActivity extends Activity implements OnCheckedChangeListener {
     Button  bt_Fwd, bt_Bwd, bt_Rgt, 
-    bt_Lft, bt_Up, bt_Dwn, bt_Nkdh, bt_Kdh, bt_Ct;
-    RadioButton rd_Computer,rd_Phone;
+    bt_Lft, bt_Up, bt_Dwn, bt_Nkdh, bt_Kdh, bt_Start;
+   public static RadioButton rd_Computer,rd_Phone;
     RadioGroup rd_Group;
     TableLayout tb_LO;
     public void onCreate(Bundle savedInstanceState) {
@@ -52,21 +53,25 @@ public class ControlActivity extends Activity implements OnCheckedChangeListener
         bt_Dwn = (Button)findViewById(R.id.bt_dwn);
         bt_Nkdh = (Button)findViewById(R.id.bt_nkdt);
         bt_Kdh = (Button)findViewById(R.id.bt_kdh);
-        bt_Ct = (Button)findViewById(R.id.bt_ct);
+        bt_Start = (Button)findViewById(R.id.bt_start);
         rd_Group = (RadioGroup)findViewById(R.id.radioGroup);
         rd_Computer = (RadioButton)findViewById(R.id.rd_computer);
         rd_Phone = (RadioButton)findViewById(R.id.rd_phone);
         tb_LO = (TableLayout)findViewById(R.id.tb_layout);
         rd_Group.setOnCheckedChangeListener(this);
-        bt_Fwd.setOnClickListener(control.cmct);
-        bt_Bwd.setOnClickListener(control.cmct);
-        bt_Rgt.setOnClickListener(control.cmct);
-        bt_Lft.setOnClickListener(control.cmct);
-        bt_Up.setOnClickListener(control.cmct);
-        bt_Dwn.setOnClickListener(control.cmct);
-        bt_Nkdh.setOnClickListener(control.cmct);
-        bt_Kdh.setOnClickListener(control.cmct);
-        bt_Ct.setOnClickListener(control.cmct);
+        bt_Fwd.setOnClickListener(Control.cmct);
+        bt_Bwd.setOnClickListener(Control.cmct);
+        bt_Rgt.setOnClickListener(Control.cmct);
+        bt_Lft.setOnClickListener(Control.cmct);
+        bt_Up.setOnClickListener(Control.cmct);
+        bt_Dwn.setOnClickListener(Control.cmct);
+        bt_Nkdh.setOnClickListener(Control.cmct);
+        bt_Kdh.setOnClickListener(Control.cmct);
+        bt_Start.setOnClickListener(Control.cmct);
+ 
+            tb_LO.setVisibility(4);
+
+        
     }
     View.OnClickListener testOnClick = new View.OnClickListener() {
         
@@ -88,14 +93,28 @@ public class ControlActivity extends Activity implements OnCheckedChangeListener
      */
     @Override
     public void onCheckedChanged(RadioGroup arg0, int arg1) {
+        Log.d("FUFO", "radio button pressed!");
         // TODO Auto-generated method stub
+        try{
           if(arg0.getCheckedRadioButtonId() == 0x7f060001){
+              Log.d("FUFO", "computer radio button pressed!");
           tb_LO.setVisibility(4); 
-          control.cmct.controlMode = 0;
+          Log.d("FUFO", "computer radio button pressed1!");
+          
+              Control.cmct.controlMode = 1;
+              if(Control.cmct.bluetoothSocket != null){
+                  Control.cmct.bluetoothSocket.getOutputStream().write('c');
+              }
         }
         else {
             tb_LO.setVisibility(0);
-            control.cmct.controlMode = 1;
+            if(Control.cmct.bluetoothSocket != null){
+                Control.cmct.bluetoothSocket.getOutputStream().write('n');
+            }
+            Control.cmct.controlMode = 2;
         }
+    }catch(Exception e){
+        
     }
+}
 }
