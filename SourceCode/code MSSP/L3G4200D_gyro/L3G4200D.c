@@ -40,7 +40,7 @@
 //Initialize Gyroscope
 unsigned char fufoInitGyro(void) {
 	unsigned char error = 0;
-	error += fufoWriteByteI2C(L3G4200D_I2C, L3G4200D_CTRL_REG1, 0x0F);
+	error += fufoWriteByteI2C(L3G4200D_I2C, L3G4200D_CTRL_REG1, 0x1F);
 	//error += fufoWriteByteI2C(L3G4200D_I2C, L3G4200D_CTRL_REG2, 0x00);
 	//error += fufoWriteByteI2C(L3G4200D_I2C, L3G4200D_CTRL_REG3, 0x08);
 	//error += fufoWriteByteI2C(L3G4200D_I2C, L3G4200D_CTRL_REG4, 0x00);// scale = 250
@@ -54,21 +54,21 @@ unsigned char fufoInitGyro(void) {
 //Return an error if it can not.
 unsigned char fufoReadGyro(unsigned int *data) {
 	unsigned char error = 0;
-	unsigned char datatemp[6];
-	error += fufoReadArrayI2C(L3G4200D_I2C, (L3G4200D_OUT_X_L | 0x80), datatemp, 6);
-	*data = (datatemp[1] << 8) | datatemp[0]; //X_Axis
-	*(data+1) = (datatemp[3] << 8) | datatemp[2]; //Y_Axis
-	*(data+2) = (datatemp[5] << 8) | datatemp[4]; //Z_Axis
-//	unsigned char datatemp[1];
-//	unsigned char datatemp1[1];
-//	error += fufoReadByteI2C(L3G4200D_I2C, L3G4200D_OUT_X_L, datatemp);
-//    error += fufoReadByteI2C(L3G4200D_I2C, L3G4200D_OUT_X_H, datatemp1);
-//	*data = (datatemp1[0] << 8) | datatemp[0];
-//	error += fufoReadByteI2C(L3G4200D_I2C, L3G4200D_OUT_Y_L, datatemp);
-//    error += fufoReadByteI2C(L3G4200D_I2C, L3G4200D_OUT_Y_H, datatemp1);
-//	*(data + 1) = (datatemp1[0] << 8) | datatemp[0]; 
-//	error += fufoReadByteI2C(L3G4200D_I2C, L3G4200D_OUT_Z_L, datatemp);
-//    error += fufoReadByteI2C(L3G4200D_I2C, L3G4200D_OUT_Z_H, datatemp1);
-//	*(data + 2) = (datatemp1[0] << 8) | datatemp[0];  
+//	unsigned char datatemp[6];
+//	error += fufoReadArrayI2C(L3G4200D_I2C, (L3G4200D_OUT_X_L | 0x80), datatemp, 6);
+//	*data = (datatemp[1] << 8) | datatemp[0]; //X_Axis
+//	*(data+1) = (datatemp[3] << 8) | datatemp[2]; //Y_Axis
+//	*(data+2) = (datatemp[5] << 8) | datatemp[4]; //Z_Axis
+	unsigned char datatemp[1];
+	unsigned char datatemp1[1];
+	error += fufoReadByteI2C(L3G4200D_I2C, L3G4200D_OUT_X_L, datatemp);
+    error += fufoReadByteI2C(L3G4200D_I2C, L3G4200D_OUT_X_H, datatemp1);
+	*data = (datatemp1[0] << 8) | datatemp[0];
+	error += fufoReadByteI2C(L3G4200D_I2C, L3G4200D_OUT_Y_L, datatemp);
+    error += fufoReadByteI2C(L3G4200D_I2C, L3G4200D_OUT_Y_H, datatemp1);
+	*(data + 1) = (datatemp1[0] << 8) | datatemp[0]; 
+	error += fufoReadByteI2C(L3G4200D_I2C, L3G4200D_OUT_Z_L, datatemp);
+    error += fufoReadByteI2C(L3G4200D_I2C, L3G4200D_OUT_Z_H, datatemp1);
+	*(data + 2) = (datatemp1[0] << 8) | datatemp[0];  
 	return error;
 }

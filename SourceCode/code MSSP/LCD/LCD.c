@@ -79,17 +79,16 @@ void fufoDat4LCD(unsigned char dat) {
 
 //Output data in char type
 void fufoOutputChar(unsigned char *data){
-	fufoDelayMs(10);
 	int idx = 0;
 	while (data[idx]) {
 		fufoDat4LCD(data[idx++]);
-		fufoDelayMs(10);
+		fufoDelayMs(1);
 	}	
 }
 
 //Output data in int type
 void fufoOutputInt(unsigned int a) {
-    unsigned char aArr[] = "Array";
+    unsigned char aArr[15];
     int idx = 0;
     while((a % 10) >= 0 && a > 0){
         aArr[idx++] = (char)((int)'0'+(a % 10));
