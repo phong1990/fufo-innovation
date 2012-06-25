@@ -23,8 +23,11 @@ import android.widget.TextView;
 import aop.command.CommandControl;
 import aop.control.R.color;
 
-public class control extends TabActivity{
-        public static CommandControl cmct ;
+public class Control extends TabActivity{
+        public static int svSetting = 0;
+        public static int ffSetting = 1;
+        
+        public static CommandControl cmct  = new CommandControl();
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
