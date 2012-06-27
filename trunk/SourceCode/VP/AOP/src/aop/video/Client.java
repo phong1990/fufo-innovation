@@ -23,6 +23,7 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
 import android.util.Log;
+import aop.control.SettingActivity;
 
 
 /**
@@ -46,7 +47,7 @@ public class Client {
     }
     public void creatClient(){
         try{
-             serverAddr = InetAddress.getByName(ipClient);
+            serverAddr = SettingActivity.serverAddr;
              socket = new DatagramSocket();                 
         }catch(SocketException e){
             Log.e("CameraTest", "Client: Errror socket", e);

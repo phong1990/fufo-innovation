@@ -1,30 +1,15 @@
 package aop.control;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
-import java.io.OutputStream;
-
 import android.app.TabActivity;
 import android.content.Intent;
 import android.content.res.Resources;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Environment;
 import android.util.Log;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
-import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TabHost;
-import android.widget.TableLayout;
-import android.widget.TextView;
 import aop.command.CommandControl;
-import aop.control.R.color;
 
 public class Control extends TabActivity{
-        public static int svSetting = 0;
+        public static int svSetting = 1;
         public static int ffSetting = 1;
         
         public static CommandControl cmct  = new CommandControl();
@@ -53,10 +38,5 @@ public class Control extends TabActivity{
                       .setContent(intent);
         tabHost.addTab(spec);
         tabHost.setCurrentTab(0);
-
-        
-     /*   Thread cmct = new CommandControl();
-        cmct.start();*/
     }
-
 }

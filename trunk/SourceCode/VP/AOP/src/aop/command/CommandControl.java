@@ -64,28 +64,23 @@ public class CommandControl extends Thread implements OnClickListener {
      * This method is called when this thread starts.
      */
     public void run(){
-
+        Log.d("cmct","Da vo Thread");
         try {
-            
-            
-            Log.d("FUFO", "vo roi1 :" + Control.ffSetting + " : " + Control.svSetting);
             
             while(true){
                 if(Control.ffSetting == 1){
-                    Log.d("FUFO", "vo roi111");
+
                 //    ControlActivity.rd_Phone.setEnabled(true);
-                    Log.d("FUFO", "vo roi123");
+
                 }
                 
                 if(Control.svSetting == 1){
-                    Log.d("FUFO", "vo roi1");
+ 
                   //  ControlActivity.rd_Computer.setEnabled(true);
-                    Log.d("FUFO", "vo roi2");
+
                     waitCommandFromeAOC();
-                    Log.d("FUFO", "vo roi3 "+ controlMode);
                 }
                 if (controlMode == 1) {
-                    Log.d("FUFO", "vo ctm");
                     sendCommandToFUFO();
                 }
             }
@@ -99,7 +94,7 @@ public class CommandControl extends Thread implements OnClickListener {
      * This method uses to receive command from AOC via TCP socket
      */
     public void waitCommandFromeAOC() throws IOException{
-        Log.d("FUFO", "vo ham wait for cm");
+
         in = new BufferedReader(new InputStreamReader(
                 commandSocket.getInputStream()));
         command = Integer.parseInt(in.readLine());
@@ -136,9 +131,10 @@ public class CommandControl extends Thread implements OnClickListener {
      * This method uses to send command to FUFO when new command receive
      */
     public void sendCommandToFUFO(){
-      
+
         if (Control.ffSetting == 1 && flagDelay == 1){
-            Log.d("FUFO", "Control:" + controlByte + " .Command : " + command + " .CtM: " + controlMode);
+            
+            Log.d("cmct", "Control:" + controlByte + " .Command : " + command + " .CtM: " + controlMode + Control.ffSetting +Control.svSetting);
             try {
                 flagDelay = 2;
                 if (bluetoothSocket != null)
