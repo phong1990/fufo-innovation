@@ -9,3 +9,7 @@ int getState(){
 void setState(unsigned int State){
 	mainState = State;
 }
+
+int calcTimeMS(unsigned int time){
+	return (time*Fcy/1000);
+}

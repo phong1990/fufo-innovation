@@ -2,9 +2,20 @@
 #define Fcy		(7372800/4)			//Tan so thuc thi lenh
 #define	Fpwm		400
 #define Fsp			50
+#define Start						0
+#define	Waiting_for_connection		1
+#define	Verify						2
+#define	Pending						3
+#define	Setup						4
+#define	Ready						5
+#define	Hovering					6
+#define Landing						7
+#define End							10
 
 int getState(void);
 void setState(unsigned int State);
+int calcTimeMS(unsigned int time);
+
 
 /* QUy dinh: 
 	- Trang thai Start:
