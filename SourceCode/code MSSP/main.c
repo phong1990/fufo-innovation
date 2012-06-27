@@ -9,26 +9,27 @@
 #include "Bluetooth/BL.h"
 #include "math.h"
 
-	_FOSC(CSW_FSCM_OFF & XT);		//Clock = 7.3728 MHz
+	_FOSC(CSW_FSCM_OFF & XT_PLL8);		//Clock = 8*8 = 32 MHz
 	_FWDT(WDT_OFF);
 	_FBORPOR(MCLR_EN & PBOR_OFF & PWMxL_ACT_HI & PWMxH_ACT_HI);
 	_FGS(CODE_PROT_OFF);
 
 void fufoInitSystem(void);
 void fufoInitTimer2();
+void fufoInitTimer4();
 void fufoGetRateAngle();
 void fufoGetAngle();
 unsigned short flag1, flag2, buf_idx, str_idx, i;
 unsigned int idx100 = 0;
 unsigned int setupFlag = 1;
-unsigned int readTimes = 1;
+unsigned int readTimes = 0;
 unsigned int h  = 0;
 int R0x, R0y, R0z;
 int xIntA, yIntA, zIntA, xIntG, yIntG, zIntG;
 int Rxm, Rym, Rzm;
-int Rx, Ry, Rz;
+long Rx, Ry, Rz;
 float Ax, Ay, Az;
-int phiAngle, thetaAngle;
+long phiAngle, thetaAngle;
 float convertAccel = 0.0039;
 float convertGyro = 0.00875;
 unsigned int dataGyroArray[3], dataAccelArray[3];
@@ -40,9 +41,10 @@ int main(void) {
 		unsigned char dataArr[1];
 		//unsigned char cmdBL;
 		float xA, yA, zA, xG, yG, zG;
-		
+		int tm;
+		float tmf;
 		int idx = 0;
-		fufoDelayMs(5000);
+		fufoDelayMs(20000);
         fufoInitSystem();
 		//Init BL module
 //		fufoInitBluetooth(receiOK);
@@ -66,7 +68,7 @@ int main(void) {
 //		}
 //		fufoDelayMs(5000);
 //		fufoCmd4LCD(LCD_CLEAR);
-//		fufoDelayMs(1);		
+//		fufoDelayMs(1);
       while(1) {
 //			fufoDelayMs(500);
 //			fufoCmd4LCD(LCD_CLEAR);
@@ -78,18 +80,30 @@ int main(void) {
 //				} else {fufoDat4LCD('S');}
 //			} else {fufoOutputChar(noticeError);}
 //			fufoDelayMs(500);
-			T4CONbits.TON = 1;
+//			if(T2CONbits.TON == 1) {
+//			T4CONbits.TON = 1;
 			if (h == 1) {
+				if(readTimes >= 10000) {
+					T2CONbits.TON = 0;
+					fufoDat4LCD('F');
+				}
+//				fufoSendIntUART(readTimes);
+//				fufoSendCharUART('\r');
+//				fufoSendCharUART('\n');				
 				fufoGetRateAngle();
 				fufoGetAngle();
 				h = 0;
-				T2CONbits.TON = 0;
+//				tmf += TMR4/250;
+//				if(readTimes%100 == 0) {
+//					tm = (int)tmf;
+//					fufoSendIntUART(tm);
+//					fufoOutputInt(tm);
+//					tmf = 0;
+//				}
 			}
-			T4CONbits.TON = 0;
-			fufoOutputInt(TMR4);
-			fufoDelayMs(2000);
-			fufoCmd4LCD(LCD_CLEAR);
-			TMR4 = 0;
+//			T4CONbits.TON = 0;
+//			TMR4 = 0;
+//			}
         }
 }
 
@@ -108,14 +122,15 @@ void fufoInitSystem() {
 	fufoDelayMs(5);
 	fufoInitLCD();
 	fufoDelayMs(5);
+	fufoInitTimer4();
+	fufoDelayMs(5);
 	fufoInitTimer2();
-
 }
 void fufoInitTimer2() {
 	IPC1bits.T2IP = 6;  	//highest priority interrupt
 	T2CONbits.TCKPS = 2;	// timer 2 prescale = 1:64
 	TMR2 = 0;
-	PR2 = 288;			// 10 ms	for downtime
+	PR2 = 2500;				// 10 ms for downtime
 	IFS0bits.T2IF = 0;		//interupt flag clear
     IEC0bits.T2IE = 1;  	//Enable Timer1 Interrupt Service Routine
 	T2CONbits.TON = 1;		//timer 2 on
@@ -124,11 +139,10 @@ void fufoInitTimer2() {
 void fufoInitTimer4() {
 	T4CONbits.TCKPS = 2;	// timer 4 prescale = 1:64
 	TMR4 = 0;
-	PR4 = 28800;			// 1000 ms	for downtime
 }
 
 void fufoGetRateAngle() {
-	if(setupFlag == 1 && idx100 < 100) {
+	if(idx100 < 100) {
 		fufoReadGyro(dataGyroArray);
 		if(dataGyroArray[0] < 32768) {
 			xIntG += dataGyroArray[0];
@@ -172,30 +186,30 @@ void fufoGetRateAngle() {
 		} else {
 			Rzm = (dataGyroArray[2] - 65536);
 		}
-	}
-	if(idx100 >= 100) {	
-		Rx = (int)(convertGyro*(Rxm - R0x) * 1000);
+		Rx = convertGyro*(Rxm - R0x) * 1000;
 		Ry = convertGyro*(Rym - R0y) * 1000;
 		Rz = convertGyro*(Rzm - R0z) * 1000;
 		
-//		if(Ry < 0) {
+//		if(Rx < 0) {
 //			fufoSendCharUART('-');
 //		}
-		if(Rx < 0) {
+//		fufoSendLongUART(Rx);
+//		fufoSendCharUART(',');
+		
+		if(Ry < 0) {
 			fufoSendCharUART('-');
-		}	
-
-		fufoSendIntUART(Rx);
+		}
+		fufoSendLongUART(Ry);
 		fufoSendCharUART(',');
-		//fufoSendIntUART(Ry);
-		//fufoSendCharUART(',');		
-	}
+	}		
+
 }
 
 void fufoGetAngle() {
+	if(idx100 > 100) {
 	fufoReadAccel(dataAccelArray);
 	
-        if(dataAccelArray[0] < 4096) {
+    if(dataAccelArray[0] < 4096) {
 		Ax = dataAccelArray[0] * convertAccel;	
 	} else {
 		Ax = (8192 - dataAccelArray[0]) * convertAccel;
@@ -215,21 +229,24 @@ void fufoGetAngle() {
 		Az = (8192 - dataAccelArray[2]) * convertAccel;
 			
 	}
-	phiAngle = (int)((180 / 3.1415926) * atan2(-Ax, sqrt(pow(Ay, 2) + pow(Az, 2))) * 1000);
+	phiAngle = (180 / 3.1415926) * atan2(-Ax, sqrt(pow(Ay, 2) + pow(Az, 2))) * 1000;
 
-	thetaAngle = (int)((180 / 3.1415926) * atan2(Ay, sqrt(pow(Az, 2) + 0.01 * pow(Ax, 2))) * 1000);
-	
-//	if(phiAngle < 0) {
-//		fufoSendCharUART('-');
-//	}
-//	fufoSendIntUART(phiAngle);
-	if(thetaAngle < 0) {
+	thetaAngle = (180 / 3.1415926) * atan2(Ay, sqrt(pow(Az, 2) + 0.01 * pow(Ax, 2))) * 1000;
+
+	if(phiAngle < 0) {
 		fufoSendCharUART('-');
 	}
-	fufoSendIntUART(thetaAngle);
+	fufoSendLongUART(phiAngle);
+//	if(thetaAngle < 0) {
+//		fufoSendCharUART('-');
+//	}
+//	fufoSendLongUART(thetaAngle);
 	fufoSendCharUART('\r');
 	fufoSendCharUART('\n');
-	
+	}
+	if(idx100 == 100) {
+		idx100++;
+	}
 }
 void _ISR _U1RXInterrupt(void) {
 	unsigned char cmdBL;
