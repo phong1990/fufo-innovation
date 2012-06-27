@@ -18,8 +18,11 @@
  */
 package aop.video;
 
-import android.app.Activity;
+import aop.control.*;
+import android.content.Context;
+import android.content.pm.PackageManager;
 import android.hardware.Camera;
+import android.widget.FrameLayout;
 
 /**
  * @author khoinguyen67
@@ -27,27 +30,48 @@ import android.hardware.Camera;
  */
 public class VideoControl extends Thread {
     
-    Activity control;
+    ControlActivity controlActivity;
     private Camera mCamera;
     private CameraPreview mPreview;
+    FrameLayout preview;
     
-    public VideoControl(Activity control){
+    public VideoControl(ControlActivity control){
         
-        this.control = control;     
+        this.controlActivity = control;     
     }
     
-    public VideoControl(){
-    
-        
+    public VideoControl(){  
     }
     
     public void run(){
-        mCamera = getCameraInstance();
-        mPreview = new CameraPreview(control, mCamera);
-        
-        mCamera.startPreview();
+     //   while(true);
+      startStream();
     }
     
+    public void startStream(){
+        
+        if (checkCameraHardware(controlActivity)) {
+        
+            // Create an instance of Camera
+            mCamera = getCameraInstance();
+            mPreview = new CameraPreview(controlActivity, mCamera);
+            controlActivity.preview.addView(mPreview);  
+            mCamera.startPreview();       // Start preview 
+        }
+    }
+    
+    /** Check if this device has a camera */
+    private boolean checkCameraHardware(Context context) {
+        if (context.getPackageManager().hasSystemFeature(
+                PackageManager.FEATURE_CAMERA)) {
+            // this device has a camera
+            return true;
+        } else {
+            // no camera on this device
+            return false;
+        }
+    }
+
     /** A safe way to get an instance of the Camera object. */
     public static Camera getCameraInstance() {
         Camera c = null;
@@ -57,5 +81,27 @@ public class VideoControl extends Thread {
             // Camera is not available (in use or does not exist)
         }
         return c; // returns null if camera is unavailable
+    }
+
+    /** Release the camera **/
+    private void releaseCamera() {
+        if (mCamera != null) {
+            mCamera.setPreviewCallback(null);
+            mCamera.release(); // release the camera for other applications
+            mCamera = null;
+        }
+    }
+    
+    public void stopStream() {
+        // check if the system has a camera
+        if (checkCameraHardware(controlActivity)) {
+            // in case user forget to push the stop button
+            if (mCamera != null) {
+                // Stoppreview first
+                mCamera.stopPreview();
+                // release camera
+                releaseCamera();
+            }
+        }
     }
 }

@@ -70,7 +70,7 @@ import aop.command.CommandControl;
 public class SettingActivity extends ExpandableListActivity implements OnItemClickListener{
     
     Socket tcpSocket ;
-    
+    public static InetAddress serverAddr;
     String                      LOG_TAG                 = "FUFO";
     final static String         FUFO_BTADDR             = "00:12:02:15:60:12";
     String         m_szAppTitle            = "FUFOAndroid";
@@ -216,7 +216,16 @@ public class SettingActivity extends ExpandableListActivity implements OnItemCli
                 //connect to ROBOT
                 Connect(nIndex);
                 Control.ffSetting = 1;
+                ControlActivity.rd_Phone.setEnabled(true);
                 StartReadThread(nIndex);
+                if(Control.cmct.bluetoothSocket != null){
+                    try {
+                        Control.cmct.bluetoothSocket.getOutputStream().write('h');
+                    } catch (IOException ex) {
+                        // TODO Auto-generated catch block
+                        ex.printStackTrace();
+                    }
+                }
             }
             else 
                 Toast.makeText(getBaseContext(), 
@@ -374,6 +383,7 @@ public class SettingActivity extends ExpandableListActivity implements OnItemCli
            // control.cmct = new CommandControl(tcpSocket,m_btSck,1);
             Log.d("FUFO", "init thread cmct2");
      //   m_hReadThread = control.cmct;
+            Control.cmct.setPriority(Thread.MAX_PRIORITY);
             Control.cmct.start();
            Log.d("FUFO", "init thread cmct3");
         /*m_hReadThread = new Thread() {
@@ -609,11 +619,15 @@ public class SettingActivity extends ExpandableListActivity implements OnItemCli
                     et_Port = (EditText)(ipView.findViewById(R.id.port));
                     int port = Integer.parseInt(et_Port.getText().toString());
                     Log.d("FUFO", "vao1");
-                    InetAddress serverAddr = InetAddress.getByName(ipServer);
+                    serverAddr = InetAddress.getByName(ipServer);
                     Log.d("FUFO", "vao2 :" + ipServer + port );
                     tcpSocket = new Socket(serverAddr, port);
-                    Control.svSetting = 1;
-                    tv_ServerStatus = (TextView)(ipView.findViewById(0x7f06000e));
+                    Log.d("FUFO", "da connect");
+                    Control.svSetting = 1; 
+                    Log.d("FUFO", "da connect");
+                    Log.d("FUFO", "da connect");
+                    tv_ServerStatus = (TextView)(ipView.findViewById(R.id.status));
+                    Log.d("FUFO", "da connect");
                     tv_ServerStatus.setText("Connected!");
                     tv_ServerStatus.setTextColor(Color.GREEN);
                     et_IpServer.setEnabled(false); 
