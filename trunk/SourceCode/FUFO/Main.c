@@ -16,8 +16,7 @@
 
 //------------------------------------------------------------------------------
 //Cac hang so cua chuong trinh (gia tri tuc thoi dung trong chuong trinh)
-unsigned int userInputFlag = 0;
-unsigned int FUFO_State;
+
 
 //Cac prototype cho cac chuong trinh con
 void initFUFO(void);
@@ -26,60 +25,63 @@ void initFUFO(void);
 unsigned char receiOK[25];
 unsigned int index = 0;
 unsigned int FUFO_thrust = 0;
-
+unsigned int userInputFlag = 0;
+unsigned int FUFO_State;
 
 //------------------------------------------------------------------------------
 //Chuong trinh chinh
 int main(void) {
-	T2CONbits.TON = 1;		//timer 2 on
+	//T2CONbits.TON = 1;		//timer 2 on
 	while(1){
 		FUFO_State = getState();
 		switch(FUFO_State){
-			case 0: // trang thai Start
+			case Start: // trang thai Start
 					initFUFO();					
 					break;
 
-			case 1: // Trang thai Waiting for connection
+			case Waiting_for_connection: // Trang thai Waiting for connection
 					fufoCmd4LCD(LCD_CLEAR);
 					fufoOutputChar("Welcome to FUFO");
 					fufoDelayMs(10);
 					fufoCmd4LCD(LCD_HOMEL2);
-					fufoOutputChar("press Connect di");
-					checkPhoneConnection();
+					fufoOutputChar("Waiting connection");
+					checkBLConnection();
 					break;
 
-			case 2: // Trang thai Verify
-					checkPCConnection();
-					break;
-
-			case 3: // Trang thai Pending
+			case Verify: // Trang thai Verify
 					fufoCmd4LCD(LCD_CLEAR);
-					fufoOutputChar("Press Start di");
+					fufoOutputChar("Choose connect!");
+					checkConnection();
+					break;
+
+			case Pending: // Trang thai Pending 
+					fufoCmd4LCD(LCD_CLEAR);
+					fufoOutputChar("Press Start!!!");
 					getStartInstruction();
 					fufoDelayMs(500);
 					fufoOutputInt(getState());
 					break;
 
-			case 4: // Trang thai Setup 
+			case Setup: // Trang thai Setup
 					//CalcR0();
 					fufoDelayMs(50);
 					FUFO_thrust++;
 					if(FUFO_thrust >= 21) {
 						FUFO_thrust = 21;
-						setState(5);
+						setState(Ready);
 						T2CONbits.TON = 1;
 					}
 					setThrustRate(FUFO_thrust);
 					controlFUFO();
 					break;
 
-			case 5: // Trang thai Ready
+			case Ready: // Trang thai Ready
 					fufoCmd4LCD(LCD_CLEAR);
 					fufoOutputChar("Dieu khien di!");
 					getUpInstruction();
 					break;
 
-			case 6: // Trang thai hovering
+			case Hovering: // Trang thai Hovering
 					fufoCmd4LCD(LCD_CLEAR);
 					fufoOutputChar("Thrust :");
 					fufoOutputInt(getThrustRate());
@@ -88,8 +90,9 @@ int main(void) {
 						userInputFlag = getUserInput();
 					}
 					break;
-
-			case 7: // Trang thai Landing
+			
+			case Landing: // Trang thai Landing
+					// Auto landing
 					fufoCmd4LCD(LCD_CLEAR);
 					fufoOutputChar("Doi xiu di!");
 					fufoCmd4LCD(LCD_HOMEL2);
@@ -104,10 +107,10 @@ int main(void) {
 					fufoDelayMs(1000);
 					fufoOutputChar("1 ");
 					T2CONbits.TON = 0;
-					setState(3);
+					setState(Pending);
 					break;
 
-			case 10: 
+			case End: 
 					break;
 		}
 
@@ -143,7 +146,7 @@ void initFUFO(void){
 	fufoDelayMs(200);
 	fufoOutputChar("....");
 	initTMR2();
-	setState(1);
+	setState(Waiting_for_connection);
 //	fufoInitBluetooth(receiOK);
 //	testConnectBluetooth(receiOK);
 }

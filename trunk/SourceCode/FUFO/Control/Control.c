@@ -48,21 +48,27 @@ void controlFUFO(void){
 	} else setSetpoint(0,0,0);
 }
 
-void checkPhoneConnection(void){
+void checkConnection(void){
 	comandfromBluetooth = fufoReceiveUART();
 	if(comandfromBluetooth == 'n'){ // ky tu n bao da ket noi voi Phone
-		setState(3);
+		setState(Pending);
 		fufoCmd4LCD(LCD_CLEAR);
 		fufoOutputChar("Phone connected!");
+		fufoDelayMs(500);
+	} else if(comandfromBluetooth == 'c'){ // ky tu c bao da ket noi voi PC
+		setState(Pending);
+		fufoCmd4LCD(LCD_CLEAR);
+		fufoOutputChar("PC connected!");
+		fufoDelayMs(500);
 	}
 }
 
-void checkPCConnection(void){
+void checkBLConnection(void){
 	comandfromBluetooth = fufoReceiveUART();
-	if(comandfromBluetooth == 'c'){ // ky tu c bao da ket noi voi PC
-		setState(3);
-		fufoCmd4LCD(LCD_HOMEL2);
-		fufoOutputChar("PC connected!");
+	if(comandfromBluetooth == 'h'){ // ky tu n bao da ket noi Bluetooth
+		setState(Verify);
+		fufoCmd4LCD(LCD_CLEAR);
+		fufoOutputChar("Bluetooth connected!");
 		fufoDelayMs(500);
 	}
 }
@@ -73,7 +79,7 @@ void getStartInstruction(void){
 	comandfromBluetooth = fufoReceiveUART();
 	fufoOutputChar("qua  ");
 	if(comandfromBluetooth == 'f'){ // ky tu f bao Start
-		setState(4);
+		setState(Setup);
 		fufoOutputChar("dc  ");
 	} else {
 		fufoCmd4LCD(LCD_HOMEL2);
@@ -88,10 +94,10 @@ void getUpInstruction(void){
 	if(comandfromBluetooth == 'o'){
 		Up = 1;
 		thrustRate += 1;
-		if(thrustRate > 22){
+		if(thrustRate > 21){
 			//pidEnable = 1;
 			pidEnable = 0;
-			setState(6);
+			setState(Hovering);
 			if(thrustRate > 97) thrustRate = 97;
 		}
 	}
@@ -107,14 +113,14 @@ void getInstruction(void){
 		if(thrustRate > 22){
 			//pidEnable = 1;
 			pidEnable = 0;
-			setState(6);
+			//setState(Hovering);
 			if(thrustRate > 97) thrustRate = 97;
 		}
 	} else if(comandfromBluetooth == 'p'){
 		Down = 1;
 		thrustRate -= 1;
 		if (thrustRate < 22){
-			setState(7);
+			setState(Landing);
 			pidEnable = 0;
 			thrustRate = 21;
 			resetSensor();
