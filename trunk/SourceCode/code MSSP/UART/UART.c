@@ -4,7 +4,8 @@
 
 #define UARTWRITE 0
 #define UARTREAD 1
-#define FOSC 7372800
+#define FOSC 8000000
+#define PLL 8
 
 //Initialize UART module
 void fufoInitUART(void) {
@@ -14,8 +15,8 @@ void fufoInitUART(void) {
 	IFS0bits.U1TXIF = 0;	//Clear transfer interrupt flag
 	IEC0bits.U1TXIE = 0;	//Enable transfer interrupt
 	IFS0bits.U1RXIF = 0;	//Clear receive interrupt flag
-	IEC0bits.U1RXIE = 1;	//Enable receive interrupt
-	U1BRG = ((((FOSC/4)/UARTBAUD)/16)-1);	//38400 bps @ FOSC = 7372800 Hz	
+	IEC0bits.U1RXIE = 0;	//Enable receive interrupt
+	U1BRG = ((((FOSC*PLL/4)/UARTBAUD)/16)-1);	//38400 bps @ FOSC = 8 MHz	
 }
 
 //Send a char by UART

@@ -4,8 +4,8 @@
 	
 #define I2CWRITE 0
 #define I2CREAD 1
-#define FOSC 7372800
-
+#define FOSC 8000000
+#define PLL 8
 //Send start bit
 void fufoStartI2C(void ) {
 	//Enable a start condition
@@ -72,7 +72,7 @@ void fufoInitI2C(void) {
 	I2CCON = 0x8200; 
 	
 	//Baudrate setting
-	I2CBRG = ((((FOSC/4)/I2CBAUD) - ((FOSC/4)/1111111))-1);
+	I2CBRG = ((((FOSC*PLL/4)/I2CBAUD) - ((FOSC*PLL/4)/1111111))-1);
 	
 }
 

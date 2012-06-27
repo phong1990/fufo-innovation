@@ -97,6 +97,6 @@ void fufoOutputInt(unsigned int a) {
 	 }
     while(idx > 0){
         fufoDat4LCD(aArr[--idx]);
-		fufoDelayMs(10);
+		fufoDelayMs(1);
     }
 }
