@@ -6,7 +6,7 @@
 
 
 void initPWMPort(void);
-void initPWM(unsigned int DCValue);
+void initPWM(void);
 void initPWMHardware(void);
 void initPWMSoftware(void);
 void setPWM1(unsigned int Thrust1, unsigned int PID_Motor1);

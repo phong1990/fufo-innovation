@@ -70,6 +70,10 @@ void checkBLConnection(void){
 		fufoCmd4LCD(LCD_CLEAR);
 		fufoOutputChar("Bluetooth connected!");
 		fufoDelayMs(500);
+	} else {
+		fufoCmd4LCD(LCD_CLEAR);
+		fufoDat4LCD(comandfromBluetooth);
+		fufoDelayMs(2000);
 	}
 }
 
