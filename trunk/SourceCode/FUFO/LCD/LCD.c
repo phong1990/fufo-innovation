@@ -83,7 +83,7 @@ void fufoOutputChar(unsigned char *data){
 	int idx = 0;
 	while (data[idx]) {
 		fufoDat4LCD(data[idx++]);
-		fufoDelayMs(10);
+		fufoDelayMs(1);
 	}	
 }
 
@@ -98,6 +98,6 @@ void fufoOutputInt(unsigned int a) {
 	 }
     while(idx > 0){
         fufoDat4LCD(aArr[--idx]);
-		fufoDelayMs(10);
+		fufoDelayMs(1);
     }
 }

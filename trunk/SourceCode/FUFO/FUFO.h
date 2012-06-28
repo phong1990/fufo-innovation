@@ -14,10 +14,24 @@
 #define Landing						7
 #define End							10
 
-
 int getState(void);
 void setState(unsigned int State);
 int calcTimeMS(unsigned int time);
+void setPhiAngle(float Phi);
+float getPhiAngle(void);
+void setThetaAngle(float Theta);
+float getThetaAngle(void);
+void setPsiAngle(float Psi);
+float getPsiAngle(void);
+
+void setPID1(int p1);
+int getPID1(void);
+void setPID2(int p2);
+int getPID2(void);
+void setPID3(int p3);
+int getPID3(void);
+void setPID4(int p4);
+int getPID4(void);
 
 
 /* QUy dinh: 

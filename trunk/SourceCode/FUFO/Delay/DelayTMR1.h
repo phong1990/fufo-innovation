@@ -1,5 +1,5 @@
 /*Using TMR1 make delays*/
-#define COUNTMS 16000
-#define COUNTUS 16
+#define COUNTMS 8000
+#define COUNTUS 8
 void fufoDelayMs(unsigned int n);
 void fufoDelayUs(unsigned int n);

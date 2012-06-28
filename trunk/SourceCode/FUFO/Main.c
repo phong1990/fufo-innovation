@@ -7,6 +7,7 @@
 #include "Control/Control.h"
 #include "math.h"
 #include "FUFO.h"
+#include "Filter/Filter.h"
 
 
 	_FOSC(CSW_FSCM_OFF & XT_PLL4);		//Clock = 7.3728 MHz
@@ -58,12 +59,13 @@ int main(void) {
 					fufoCmd4LCD(LCD_CLEAR);
 					fufoOutputChar("Press Start!!!");
 					getStartInstruction();
-					fufoDelayMs(500);
+					//fufoDelayMs(500);
+					fufoGetRateAngle(); // calc R0
 					fufoOutputInt(getState());
 					break;
 
 			case Setup: // Trang thai Setup
-					//CalcR0();
+					
 					fufoDelayMs(50);
 					FUFO_thrust++;
 					if(FUFO_thrust >= 21) {
@@ -82,11 +84,11 @@ int main(void) {
 					break;
 
 			case Hovering: // Trang thai Hovering
-					fufoCmd4LCD(LCD_CLEAR);
-					fufoOutputChar("Thrust :");
-					fufoOutputInt(getThrustRate());
-					fufoCmd4LCD(LCD_HOMEL2);
-					fufoOutputInt(PDC2);
+//					fufoCmd4LCD(LCD_CLEAR);
+//					fufoOutputChar("Thrust :");
+//					fufoOutputInt(getThrustRate());
+//					fufoCmd4LCD(LCD_HOMEL2);
+					fufoOutputInt(getPID1());
 					if (userInputFlag == 0){
 						getInstruction();
 						userInputFlag = getUserInput();
@@ -157,7 +159,7 @@ void initTMR2(void){
 	IPC1bits.T2IP = 7;  	//highest priority interrupt
 	T2CONbits.TCKPS = 0;	// timer 2 prescale = 1
 	TMR2 = 0;
-	PR2 = calcTimeMS(20);		
+	PR2 = calcTimeMS(10);		
 	IFS0bits.T2IF = 0;		//interupt flag clear
     IEC0bits.T2IE = 1;  	//Enable Timer1 Interrupt Service Routine
 	T2CONbits.TON = 0;		//timer 2 on
@@ -172,7 +174,7 @@ void __attribute__((__interrupt__ , auto_psv)) _T2Interrupt (void)
 		
 		_RE8 = 1;
 		index++;
-		if(index == 25){
+		if(index == 50){
 			index = 0;
 			userInputFlag = 0;
 			_RE8 = 0;
