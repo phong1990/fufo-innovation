@@ -2,30 +2,31 @@
 #include "../Delay/DelayTMR1.h"
 #include "pwmControl.h"
 #include "../FUFO.h"
+#include "../LCD/LCD.h"
 
 unsigned int PR4_value;
 unsigned int periodValue;
 unsigned int initDCValue;
-
+unsigned int PWM_per_thrust = Fcy/100000;
 void initPWMPort(void){
 	PWM_LAT = 0;
 	PWM_TRIS = 0;
 }
 
-void initPWM(unsigned int DCValue){
+void initPWM(void){
 	periodValue = Fcy/Fpwm - 1;
-	initDCValue = DCValue;
+	initDCValue = calcTimeMS(1);
 	PR4_value = initDCValue;
 	initPWMPort();
 	initPWMHardware();
 	initPWMSoftware();
-	PTCON = 0x8000;			//Kich hoat module PWM
+	PTCON = 0x8000;			//Kich hoat module PWM, prescale 1:4
 	_RE5 = 1;
 	T4CONbits.TON = 1;		//timer 4 on
 }
 
-void initPWMHardware(){
-	PTPER = periodValue;
+void initPWMHardware(void){
+	PTPER = Fcy/Fpwm - 1;
 	PWMCON1 = 0x070F;			//1. Chinh mode Independent;  2. Chinh PWM chi ra o pin L, khong ra pin H;
 	OVDCON = 0xFF00;			//Khong dung overdrive
 	PDC1 = initDCValue*2;			//Khoi tao ESC1 chay o 1ms
@@ -44,19 +45,19 @@ void initPWMSoftware(void){
 }
 
 void setPWM1(unsigned int Thrust1, unsigned int PID_Motor1){
-	PDC1 = (initDCValue + Thrust1*19 + PID_Motor1)*2 + 38;
+	PDC1 = (initDCValue + Thrust1*PWM_per_thrust + PID_Motor1)*2 + PWM_per_thrust*2;
 }
 
 void setPWM2(unsigned int Thrust2, unsigned int PID_Motor2){
-	PDC2 = (initDCValue + Thrust2*19 + PID_Motor2)*2;
+	PDC2 = (initDCValue + Thrust2*PWM_per_thrust + PID_Motor2)*2;
 }
 
 void setPWM3(unsigned int Thrust3, unsigned int PID_Motor3){
-	PDC3 = (initDCValue + Thrust3*19 + PID_Motor3)*2 + 456;
+	PDC3 = (initDCValue + Thrust3*PWM_per_thrust + PID_Motor3)*2 + PWM_per_thrust*24;
 }
 
 void setPWM4(unsigned int Thrust4, unsigned int PID_Motor4){
-	PR4_value = initDCValue + 114 + Thrust4*19 + PID_Motor4;
+	PR4_value = initDCValue + Thrust4*PWM_per_thrust + PID_Motor4 + PWM_per_thrust*7;
 }
 
 void __attribute__((__interrupt__ , auto_psv)) _T4Interrupt (void)

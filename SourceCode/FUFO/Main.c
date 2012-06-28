@@ -9,7 +9,7 @@
 #include "FUFO.h"
 
 
-	_FOSC(CSW_FSCM_OFF & XT);		//Clock = 7.3728 MHz
+	_FOSC(CSW_FSCM_OFF & XT_PLL4);		//Clock = 7.3728 MHz
 	_FWDT(WDT_OFF);
 	_FBORPOR(MCLR_EN & PBOR_OFF & PWMxL_ACT_HI & PWMxH_ACT_HI);
 	_FGS(CODE_PROT_OFF);
@@ -44,7 +44,7 @@ int main(void) {
 					fufoOutputChar("Welcome to FUFO");
 					fufoDelayMs(10);
 					fufoCmd4LCD(LCD_HOMEL2);
-					fufoOutputChar("Waiting connection");
+					fufoOutputChar("Wait for connect");
 					checkBLConnection();
 					break;
 
@@ -77,7 +77,7 @@ int main(void) {
 
 			case Ready: // Trang thai Ready
 					fufoCmd4LCD(LCD_CLEAR);
-					fufoOutputChar("Dieu khien di!");
+					fufoOutputChar("Press Up!");
 					getUpInstruction();
 					break;
 
@@ -85,6 +85,8 @@ int main(void) {
 					fufoCmd4LCD(LCD_CLEAR);
 					fufoOutputChar("Thrust :");
 					fufoOutputInt(getThrustRate());
+					fufoCmd4LCD(LCD_HOMEL2);
+					fufoOutputInt(PDC2);
 					if (userInputFlag == 0){
 						getInstruction();
 						userInputFlag = getUserInput();
@@ -136,7 +138,7 @@ void initFUFO(void){
 	fufoDelayMs(10);
 	fufoOutputChar("Please wait");
 	fufoCmd4LCD(LCD_HOMEL2);
-	initPWM(1843);		// khoi tao PWM voi tan so thuc thi lenh Fcy;
+	initPWM();		// khoi tao PWM voi tan so thuc thi lenh Fcy;
 							// do rong xung ban dau 1ms (1843).
 	fufoDelayMs(200);
 	fufoOutputChar("...");
@@ -155,7 +157,7 @@ void initTMR2(void){
 	IPC1bits.T2IP = 7;  	//highest priority interrupt
 	T2CONbits.TCKPS = 0;	// timer 2 prescale = 1
 	TMR2 = 0;
-	PR2 = 36864;		
+	PR2 = calcTimeMS(20);		
 	IFS0bits.T2IF = 0;		//interupt flag clear
     IEC0bits.T2IE = 1;  	//Enable Timer1 Interrupt Service Routine
 	T2CONbits.TON = 0;		//timer 2 on

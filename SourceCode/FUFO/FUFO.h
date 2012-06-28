@@ -1,7 +1,9 @@
 // Khao bao bien hoac method dung chung cho ca project
-#define Fcy		(7372800/4)			//Tan so thuc thi lenh
+#define Fcy		(8000000*4/4)			//Tan so thuc thi lenh
 #define	Fpwm		400
 #define Fsp			50
+#define PLL			4
+#define FOSC 	8000000
 #define Start						0
 #define	Waiting_for_connection		1
 #define	Verify						2
@@ -11,6 +13,7 @@
 #define	Hovering					6
 #define Landing						7
 #define End							10
+
 
 int getState(void);
 void setState(unsigned int State);
