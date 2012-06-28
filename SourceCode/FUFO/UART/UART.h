@@ -3,7 +3,8 @@
 #define lineU1() fufoSendIntUART('\r');fufoSendIntUART('\n')
 
 void fufoInitUART(void);
-void fufoSendIntUART(int i);
 void fufoSendCharUART(unsigned char c);
 void fufoSendStringUART(unsigned char *s);
+void fufoSendIntUART(int a);
+void fufoSendLongUART(long a);
 unsigned char fufoReceiveUART(void);

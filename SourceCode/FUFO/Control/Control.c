@@ -1,24 +1,25 @@
 #include "Control.h"
 #include "../FUFO.h"
+#include "../Filter/Filter.h"
 
 unsigned int Up, Down, Left, Right, Forward, Backward;
-int Yaw_sum, Pitch_sum, Roll_sum;
+float Yaw_sum, Pitch_sum, Roll_sum;
 unsigned int pidEnable = 0;
 unsigned int thrustRate = 0;
 int PWM_Motor1 = 0; 
 int PWM_Motor2 = 0;
 int PWM_Motor3 = 0;
 int PWM_Motor4 = 0;
-int phiActual, thetaActual, psiActual;
 int gyro_output;
 unsigned char comandfromBluetooth;
-int P = 0;
-int I = 0;
-int D = 0;
-int e = 0;
-int total_e = 0;
-int Angle_sum;
+float P = 0;
+float I = 0;
+float D = 0;
+float e = 0;
+float total_e = 0;
+float Angle_sum;
 unsigned int userInput;
+
 
 int getThrustRate(void){
 	return thrustRate;	
@@ -83,7 +84,6 @@ void getStartInstruction(void){
 	comandfromBluetooth = fufoReceiveUART();
 	fufoOutputChar("qua  ");
 	if(comandfromBluetooth == 'f'){ // ky tu f bao Start
-		setState(Setup);
 		fufoOutputChar("dc  ");
 	} else {
 		fufoCmd4LCD(LCD_HOMEL2);
@@ -99,8 +99,8 @@ void getUpInstruction(void){
 		Up = 1;
 		thrustRate += 1;
 		if(thrustRate > 21){
-			//pidEnable = 1;
-			pidEnable = 0;
+			pidEnable = 1;
+			//pidEnable = 0;
 			setState(Hovering);
 			if(thrustRate > 97) thrustRate = 97;
 		}
@@ -115,8 +115,8 @@ void getInstruction(void){
 		Up = 1;
 		thrustRate += 1;
 		if(thrustRate > 22){
-			//pidEnable = 1;
-			pidEnable = 0;
+			pidEnable = 1;
+			//pidEnable = 0;
 			//setState(Hovering);
 			if(thrustRate > 97) thrustRate = 97;
 		}
@@ -151,36 +151,39 @@ void getInstruction(void){
 	} else userInput = 0;
 }
 
-void setSetpoint(unsigned int Phi, unsigned int Theta, unsigned int Psi){
+void setSetpoint(float Phi, float Theta, float Psi){
 	if (pidEnable == 1) {
-		getValuefromSensor();
+		CompFilter();
 		calcAngle_sum(Phi, Theta, Psi);
-	} else {
-		PWM_Motor1 = - Roll_sum + Yaw_sum;
-		PWM_Motor2 = Pitch_sum - Yaw_sum;
-		PWM_Motor3 = Roll_sum + Yaw_sum;
-		PWM_Motor4 = - Pitch_sum - Yaw_sum;
 	}
+	PWM_Motor1 = - Roll_sum + Yaw_sum;
+	PWM_Motor2 = Pitch_sum - Yaw_sum;
+	PWM_Motor3 = Roll_sum + Yaw_sum;
+	PWM_Motor4 = - Pitch_sum - Yaw_sum;
+
+	setPID1(PWM_Motor1);
+	setPID2(PWM_Motor2);	
+	setPID3(PWM_Motor3);
+	setPID4(PWM_Motor4);
+
 	setPWM1(thrustRate, PWM_Motor1);
 	setPWM2(thrustRate, PWM_Motor2);
 	setPWM3(thrustRate, PWM_Motor3);
 	setPWM4(thrustRate, PWM_Motor4);
 }
 
-void getValuefromSensor(){
-//	phiActual = getPhiActual();
-//	thetaActual = getThetaActual();
-//	psiActual = getPsiActual();
-//	gyro_output = getGyro_output();
+void calcAngle_sum(float phiDesire, float thetaDesire, float psiDesire){
+	float phiAct, thetaAct, psiAct;
+	phiAct = getPhiAngle();
+	thetaAct = getThetaAngle();
+	//psiAct = getPsiAngle();
+	Pitch_sum = calcAngle(phiDesire, phiAct, KpPhi, KiPhi, KdPhi);
+	Roll_sum = calcAngle(thetaDesire, thetaAct, KpTheta, KiTheta, KdTheta);
+	//Yaw_sum = calcAngle(psiDesire, psiAct, KpPsi, KiPsi, KdPsi);
+	Yaw_sum = 0;
 }
 
-void calcAngle_sum(unsigned int phiDesire, unsigned int thetaDesire, unsigned int psiDesire){
-	Pitch_sum = calcAngle(phiDesire, phiActual, KpPhi, KiPhi, KdPhi);
-	Roll_sum = calcAngle(thetaDesire, thetaActual, KpTheta, KiTheta, KdTheta);
-	Yaw_sum = calcAngle(psiDesire, psiActual, KpPsi, KiPsi, KdPsi);
-}
-
-int calcAngle(unsigned int desire_Angle, unsigned int actual_Angle, unsigned int Kp, unsigned int Ki, unsigned int Kd){
+float calcAngle(float desire_Angle, float actual_Angle, float Kp, float Ki, float Kd){
 	e = desire_Angle - actual_Angle;
 	total_e = total_e + e;
 	P = Kp*e;
