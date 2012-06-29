@@ -46,7 +46,8 @@ public class CommandControl extends Thread implements OnClickListener {
     public int controlMode;
     int buttonID;
     byte controlByte;
-    int flagDelay = 1;
+    public static int flagDelay = 1;
+    public boolean flagWhile = true;
 
     //Constructor
     public CommandControl(){}
@@ -64,21 +65,14 @@ public class CommandControl extends Thread implements OnClickListener {
      * This method is called when this thread starts.
      */
     public void run(){
-        Log.d("cmct","Da vo Thread");
+        Log.d("cmct","Da vo Thread " + controlMode +Control.ffSetting+ Control.svSetting);
         try {
             
             while(true){
-                if(Control.ffSetting == 1){
-
-                //    ControlActivity.rd_Phone.setEnabled(true);
-
-                }
-                
+                           
                 if(Control.svSetting == 1){
- 
-                  //  ControlActivity.rd_Computer.setEnabled(true);
-
-                    waitCommandFromeAOC();
+                    
+                   waitCommandFromeAOC();
                 }
                 if (controlMode == 1) {
                     sendCommandToFUFO();
@@ -94,7 +88,8 @@ public class CommandControl extends Thread implements OnClickListener {
      * This method uses to receive command from AOC via TCP socket
      */
     public void waitCommandFromeAOC() throws IOException{
-
+        Log.d("cmct","Da vo wait");
+        
         in = new BufferedReader(new InputStreamReader(
                 commandSocket.getInputStream()));
         command = Integer.parseInt(in.readLine());

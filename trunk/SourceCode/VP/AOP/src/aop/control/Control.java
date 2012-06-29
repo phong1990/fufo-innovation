@@ -4,19 +4,21 @@ import android.app.TabActivity;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.KeyEvent;
 import android.widget.TabHost;
+import android.widget.Toast;
 import aop.command.CommandControl;
 
 public class Control extends TabActivity{
-        public static int svSetting = 1;
-        public static int ffSetting = 1;
+    
+        public static int svSetting = 0;
+        public static int ffSetting = 1;      
+        public static CommandControl cmct = new CommandControl();
         
-        public static CommandControl cmct  = new CommandControl();
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
-        Log.d("FUFO", "hehe 2");
+
         Resources res = getResources(); // Resource object to get Drawables
         TabHost tabHost = getTabHost();  // The activity TabHost
         TabHost.TabSpec spec;  // Resusable TabSpec for each tab

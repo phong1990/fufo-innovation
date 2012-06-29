@@ -69,16 +69,18 @@ public class CameraPreview extends SurfaceView implements
 			mCamera.setPreviewCallback(this);
 
 			parameters = mCamera.getParameters();
+			
+			parameters.setPictureSize(320, 240);
+			parameters.setJpegQuality(1);
+			parameters.setPreviewSize(320, 240);
+
 			// get preview size for calculation of the back buffer
 			// compute the back buffer size according to the preview format. In
 			// this case we use NV21 format
 			// so the following formula should be equal to ( width x height x 3
 			// / 2 )
 			previewSize = mCamera.getParameters().getPreviewSize();
-			int dataBufferSize = (int) (previewSize.height * previewSize.width * (ImageFormat
-					.getBitsPerPixel(mCamera.getParameters().getPreviewFormat()) / 8.0));
 			mCamera.setParameters(parameters);
-			Log.v("CameraTest", "dataBufferSize = " + dataBufferSize);
 
 		} catch (IOException e) {
 			if (mCamera != null) {
@@ -136,9 +138,6 @@ public class CameraPreview extends SurfaceView implements
 
 	@Override
 	public void onPreviewFrame(byte[] data, Camera camera) {
-	    Log.d("aop", "da vao6");
-		Log.d("FUFO", "Time Gap = "
-				+ (System.currentTimeMillis() - timestamp));
 		timestamp = System.currentTimeMillis();
 		// NV21toRGB24Converter(pixels, data, previewSize.width,
 		// previewSize.height);
@@ -157,10 +156,6 @@ public class CameraPreview extends SurfaceView implements
 		// increase the file number
 		fileNumber++;
 		 //Sendfile to Server
-        Log.d("FUFO", "package = "
-                + fileNumber);
-	   
-	       
 		    client.sendPackage(buffer);
 	}
 }

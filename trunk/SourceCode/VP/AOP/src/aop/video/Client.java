@@ -61,13 +61,8 @@ public class Client {
             
             /* chuan bi du lieu de gui */        
             byte[] b = buffer;      
-            Log.d("CameraTest", "size frame: " + b.length + "'"); 
             fspacket = new DatagramPacket(b,b.length, serverAddr, portClient);  
             socket.send(fspacket);
-            Log.d("CameraTest", "da gui");
-            ++number; 
-            Log.v("CameraTest", "sendNumber = "
-                    + number);
         } catch (Exception e) {
             Log.e("CameraTest", "Client: Errror", e);
         }               

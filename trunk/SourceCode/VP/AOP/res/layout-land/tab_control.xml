@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    >
+    <RadioGroup  
+        android:id="@+id/radioGroup" 
+        android:orientation="horizontal"  
+        android:layout_width="fill_parent"  
+        android:layout_height="wrap_content"       
+        >  
+        <RadioButton  
+         android:id="@+id/rd_computer"  
+         android:layout_width="wrap_content"  
+         android:layout_height="wrap_content"  
+         android:layout_weight = "1"
+         android:text="Control via Computer."  
+        />  
+        
+        <RadioButton  
+            android:id="@+id/rd_phone"  
+            android:layout_width="wrap_content"  
+            android:layout_height="wrap_content"       
+            android:text="Control via Phone."  
+           android:layout_weight = "1"
+        />  
+    </RadioGroup>  
+ 
+   
+  <LinearLayout
+    android:orientation="horizontal"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+
+    >  
+    <TableLayout
+    android:id="@+id/tb_layout"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+
+
+    >
+    <TableRow>
+    <Button 
+          android:layout_column="0"
+          android:layout_weight = "1"
+          android:visibility="invisible"/>
+         <Button 
+          android:id="@+id/bt_fwd"  
+          android:layout_column="1"
+          android:layout_width ="wrap_content"
+          android:layout_height ="wrap_content"
+          android:background="@drawable/fwd" 
+          android:layout_weight = "1"/>
+           <Button 
+          android:layout_column="2"
+          android:layout_weight = "1"
+          android:visibility="invisible"/>
+           <Button 
+          android:layout_column="3"
+          android:layout_weight = "1"
+          android:visibility="invisible"/>
+          <Button 
+          android:layout_column="4"
+          android:layout_weight = "1"
+          android:visibility="invisible"/>
+          <Button 
+          android:id="@+id/bt_up" 
+          android:background="@drawable/up"
+          android:layout_column="5"
+          android:layout_width ="wrap_content"
+          android:layout_height ="wrap_content"
+          android:layout_weight = "1" />
+           <Button 
+          android:layout_column="6"
+          android:layout_weight = "1"
+          android:visibility="invisible"/>
+          
+    </TableRow>
+    <TableRow>
+         <Button 
+          android:id="@+id/bt_lft" 
+          android:layout_column="0"
+          android:layout_width ="wrap_content"
+          android:layout_height ="wrap_content"
+            android:background="@drawable/lft" 
+             android:layout_weight = "1"/>
+             <Button 
+          android:layout_column="1"
+           android:visibility="invisible"
+           android:layout_weight = "1"/>
+         <Button 
+         android:id="@+id/bt_rgt" 
+          android:layout_column="2"
+          android:layout_width ="wrap_content"
+          android:layout_height ="wrap_content"   
+          android:background="@drawable/rgt"
+           android:layout_weight = "1"/>
+            <Button 
+         android:id="@+id/bt_start" 
+          android:layout_column="3"
+          android:layout_width ="wrap_content"
+          android:layout_height ="wrap_content"   
+          android:background="@drawable/start"
+          android:layout_weight = "1"
+          />
+          <Button 
+          android:id="@+id/bt_nkdt" 
+          android:layout_column="4"
+          android:layout_width ="wrap_content"
+          android:layout_height ="wrap_content"
+          android:background="@drawable/nkdh"
+          android:layout_weight = "1" />
+          <Button 
+          android:layout_column="5"
+          android:visibility="invisible"
+          android:layout_weight = "1" />
+           <Button 
+           android:id="@+id/bt_kdh" 
+          android:layout_column="6"
+          android:layout_width ="wrap_content"
+          android:layout_height ="wrap_content"
+          android:background="@drawable/kdh"
+          android:layout_weight = "1" />
+    </TableRow>
+    <TableRow>
+    <Button 
+          android:layout_column="0"
+          android:layout_weight = "1"
+          android:visibility="invisible"/>
+         <Button    
+         android:id="@+id/bt_bwd" 
+          android:layout_column="1"
+          android:layout_width ="wrap_content"
+          android:layout_height ="wrap_content"
+            android:background="@drawable/bwd"
+            android:layout_weight = "1"/>
+            <Button 
+          android:layout_column="2"
+          android:layout_weight = "1"
+          android:visibility="invisible"/>
+          <Button 
+          android:layout_column="3"
+          android:layout_weight = "1"
+          android:visibility="invisible"/>
+          <Button 
+          android:layout_column="4"
+          android:layout_weight = "1"
+          android:visibility="invisible"/>         
+         <Button 
+         android:id="@+id/bt_dwn" 
+         android:background="@drawable/down"
+          android:layout_column="5"
+          android:layout_height ="wrap_content"
+          android:layout_width="wrap_content"
+          android:layout_weight = "1"/>
+          <Button 
+          android:layout_column="6"
+          android:layout_weight = "1"
+          android:visibility="invisible"/>
+     </TableRow>
+     </TableLayout>
+  </LinearLayout>
+   
+    <FrameLayout
+    android:id="@+id/camera_preview"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_weight="1"
+    />
+</LinearLayout>
