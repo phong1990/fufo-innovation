@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    >
+    <TextView  
+   android:layout_width="wrap_content" 
+   android:layout_height="wrap_content" 
+   android:text="Server Setting" 
+   android:layout_marginTop = "20px"
+   android:textSize = "25px"
+              />
+    <LinearLayout
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    >    
+ 
+              <TextView  
+              android:layout_width="wrap_content" 
+              android:layout_height="wrap_content" 
+              android:text="IP server:" 
+              android:layout_marginTop = "10px"
+              />
+              <EditText
+              android:id="@+id/et_IPServer"
+              android:layout_width="fill_parent"
+              android:layout_height="wrap_content"
+              android:text = "192.168.157.1"
+              />
+           <Button 
+          android:id="@+id/bt_ConnectSV"
+          android:layout_width ="fill_parent"
+          android:layout_height ="wrap_content"
+          android:text = "Connect"
+        
+          android:layout_gravity = "bottom" />
+
+      
+    </LinearLayout>
+ 
+    <TextView
+    android:id="@+id/tv_StatusSV"
+    android:layout_width ="wrap_content"
+    android:layout_height = "wrap_content"
+    android:layout_gravity = "bottom"
+    android:text = "Disconnected!"
+     android:layout_marginBottom = "20px"
+    android:textColor="@color/red"/>    
+
+<View
+    android:layout_width="fill_parent"
+    android:layout_height="1dip"
+    android:background="#FF909090" />
+     <TextView  
+              android:layout_width="wrap_content" 
+              android:layout_height="wrap_content" 
+              android:text="FUFO Setting" 
+              android:layout_marginTop = "20px"
+                android:textSize = "25px"/>
+    <LinearLayout
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    >    
+     
+              <TextView  
+              android:layout_width="wrap_content" 
+              android:layout_height="wrap_content" 
+              android:text="Bluetooth address:" 
+              android:layout_marginTop = "10px"
+              />
+              <EditText
+              android:id="@+id/et_AddressBluetooth"
+              android:layout_width="fill_parent"
+              android:layout_height="wrap_content"
+              android:text = "00:12:02:15:60:12"
+              />
+           <Button 
+          android:id="@+id/bt_ConnectFF"
+          android:layout_width ="fill_parent"
+          android:layout_height ="wrap_content"
+          android:text = "Connect"/>
+
+    </LinearLayout>
+ 
+    <TextView
+    android:id="@+id/tv_StatusFF"
+    android:layout_width ="wrap_content"
+    android:layout_height = "wrap_content"
+    android:layout_gravity = "bottom"
+    android:text = "Disconnected!"
+    android:textColor="@color/red"/>    
+
+</LinearLayout>

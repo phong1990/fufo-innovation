@@ -10,6 +10,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TableLayout;
+import android.widget.Toast;
 
 /**
  * @author khoinguyen67
@@ -24,7 +25,7 @@ public class ControlActivity extends Activity implements OnCheckedChangeListener
     RadioGroup rd_Group;
     TableLayout tb_LO;
     VideoControl vdct;
-    
+
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.tab_control);
@@ -43,7 +44,7 @@ public class ControlActivity extends Activity implements OnCheckedChangeListener
         rd_Phone = (RadioButton)findViewById(R.id.rd_phone);
         tb_LO = (TableLayout)findViewById(R.id.tb_layout);
         preview = (FrameLayout) findViewById(R.id.camera_preview);
-        
+
         rd_Group.setOnCheckedChangeListener(this);
         bt_Fwd.setOnClickListener(Control.cmct);
         bt_Bwd.setOnClickListener(Control.cmct);
@@ -55,16 +56,10 @@ public class ControlActivity extends Activity implements OnCheckedChangeListener
         bt_Kdh.setOnClickListener(Control.cmct);
         bt_Start.setOnClickListener(Control.cmct);
         tb_LO.setVisibility(4);
-        
-        if(Control.svSetting == 0) 
-            rd_Computer.setEnabled(false);
-        
-        if(Control.ffSetting == 0) 
-           // rd_Phone.setEnabled(false);
-        
+
         vdct = new VideoControl(this);
     }
-    
+
     /**
      * [Explain the description for this method here].
      * @param arg0
@@ -76,30 +71,56 @@ public class ControlActivity extends Activity implements OnCheckedChangeListener
 
         // TODO Auto-generated method stub
         try{
-            if(arg0.getCheckedRadioButtonId() == R.id.rd_computer){
-                tb_LO.setVisibility(4); 
-                Control.cmct.controlMode = 1;
-                Log.d("FUFO","rd_computer pressed");
-                vdct.startStream();
-                Log.d("FUFO","rd_computer pressed2");
-                if(Control.cmct.bluetoothSocket != null){
-                    Control.cmct.bluetoothSocket.getOutputStream().write('c');
-                }
+            if(Control.ffSetting == 0){
                 
-            }
-            else {
-                tb_LO.setVisibility(0);
-                Control.cmct.controlMode = 2;
-                Log.d("FUFO","rd_phone pressed");
-                vdct.stopStream();
-                if(Control.cmct.bluetoothSocket != null){
-                    Control.cmct.bluetoothSocket.getOutputStream().write('n');
-                }
-                Log.d("FUFO","rd_Phone pressed2");
+                Toast.makeText(this, "Please check Bluetooth connection!", Toast.LENGTH_SHORT).show(); 
+                rd_Group.clearCheck();
+            }else{
                 
+                if(arg0.getCheckedRadioButtonId() == R.id.rd_computer){
+                    
+                    if(Control.svSetting == 0){
+                        
+                        Toast.makeText(this, "Please check Server connection!", Toast.LENGTH_SHORT).show(); 
+                        rd_Computer.setChecked(false);
+                        tb_LO.setVisibility(4);
+                        Control.cmct.controlMode = 0;
+                    }else{
+
+                        tb_LO.setVisibility(4); 
+                        Control.cmct.controlMode = 1;
+                        if(Control.cmct.bluetoothSocket != null){
+                            Control.cmct.bluetoothSocket.getOutputStream().write('c');
+                            Log.d("FUFO","da gui ki tu c");
+                        }
+                        Log.d("FUFO","before stream");
+                        vdct.startStream();
+                    }
+                }
+                else {
+                    
+                    tb_LO.setVisibility(0);
+                    Control.cmct.controlMode = 2;
+                    Log.d("FUFO","rd_phone pressed");
+                    
+                    
+                    if(Control.cmct.bluetoothSocket != null){
+                        Control.cmct.bluetoothSocket.getOutputStream().write('n');
+                        Log.d("FUFO","da gui ki tu n");
+                    }
+                    Log.d("FUFO","rd_Phone pressed2");
+                    vdct.stopStream();
+                }
             }
         }catch(Exception e){
 
         }
+    }
+    
+    @Override
+    public void onBackPressed() {
+    // do something on back.
+        System.exit(0);
+    return;
     }
 }
