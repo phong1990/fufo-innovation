@@ -1,6 +1,5 @@
-#include "Filter.h"
 #include "../FUFO.h"
-#include "../LCD/LCD.h"
+
 
 unsigned int idx100 = 0;
 int R0x, R0y, R0z;
@@ -17,12 +16,22 @@ float psiComp;
 
 
 void CompFilter(void){
-	fufoGetRateAngle();
-	fufoGetAngle();
-	phiComp = k*(phiComp + Ry*0.01) + (1 - k)*phiAngle;
+	int start = 1;
+	fufoGetAngleAccel();
+	fufoGetAngleGyros();
+	if (start == 1)	{
+		phiComp = k*(phiComp + phiAngle + Ry*0.01) + (1 - k)*phiAngle; 			// this line of code is to make the angle which is calculated by gyroscope 
+																				// become pessistant with the Zero point of the inertial frame, according to 
+																				// the Accelerometer.
+		thetaComp = k*(thetaComp + thetaAngle + Rx*0.01) + (1 - k)*thetaAngle;
+		start = 0;
+	} else {
+		phiComp = k*(phiComp + Ry*0.01) + (1 - k)*phiAngle;
+		thetaComp = k*(thetaComp + Rx*0.01) + (1 - k)*thetaAngle;
+	}
 	setPhiAngle(phiComp);
-	thetaComp = k*(thetaComp + Rx*0.01) + (1 - k)*thetaAngle;\
 	setThetaAngle(thetaComp);
+	//setThetaAngle(thetaAngle);
 	//psiComp = k*(psiComp + Rz*0.01) + (1 - k)*psiAngle;
 	//setPsiAngle(psiComp);
 	
@@ -49,47 +58,48 @@ void fufoGetRateAngle(void){
 			zIntG += (dataGyroArray[2] - 65536);
 		}
 		idx100++;
+		if (idx100%10 == 0){
+			fufoOutputChar("..");
+		}
 		if(idx100 == 100) {	
 			R0x = xIntG/idx100;
 			R0y = yIntG/idx100;
 			R0z = zIntG/idx100;	
+			idx100 = 0;
 			fufoCmd4LCD(LCD_CLEAR);
 			fufoDelayMs(1);
-			fufoOutputChar("dc roi");
-			setState(Setup);
-		} else {
-			fufoCmd4LCD(LCD_CLEAR);
-			fufoDelayMs(1);
-			fufoOutputChar("dc roi");
-	}
-		
-	} else {
-		fufoReadGyro(dataGyroArray);
-		if(dataGyroArray[0] < 32768) {
-			Rxm = dataGyroArray[0];
-		} else {
-			Rxm = (dataGyroArray[0] - 65536 );
-		}
-		
-		if(dataGyroArray[1] < 32768) {
-			Rym = dataGyroArray[1];
-		} else {
-			Rym = (dataGyroArray[1] - 65536);
-		}
-		
-		if(dataGyroArray[2] < 32768) {
-			Rzm = dataGyroArray[2];
-		} else {
-			Rzm = (dataGyroArray[2] - 65536);
-		}
-		Rx = (Rxm - R0x) * convertGyro;
-		Ry = (Rym - R0y) * convertGyro;
-		Rz = (Rzm - R0z) * convertGyro ;
+			fufoOutputChar("xong roi");
+			setState(Ready);
+			fufoDelayMs(500);
+		}		
 	}
 }
 
-void fufoGetAngle(void){
-	if(idx100 > 100) {
+void fufoGetAngleGyros(void){
+	fufoReadGyro(dataGyroArray);
+	if(dataGyroArray[0] < 32768) {
+		Rxm = dataGyroArray[0];
+	} else {
+		Rxm = (dataGyroArray[0] - 65536 );
+	}
+	
+	if(dataGyroArray[1] < 32768) {
+		Rym = dataGyroArray[1];
+	} else {
+		Rym = (dataGyroArray[1] - 65536);
+	}
+	
+	if(dataGyroArray[2] < 32768) {
+		Rzm = dataGyroArray[2];
+	} else {
+		Rzm = (dataGyroArray[2] - 65536);
+	}
+	Rx = (Rxm - R0x) * convertGyro;
+	Ry = (Rym - R0y) * convertGyro;
+	Rz = (Rzm - R0z) * convertGyro ;
+}
+
+void fufoGetAngleAccel(void){
 	fufoReadAccel(dataAccelArray);
 	
     if(dataAccelArray[0] < 4096) {
@@ -112,8 +122,7 @@ void fufoGetAngle(void){
 		Az = (8192 - dataAccelArray[2])*convertAccel;
 			
 	}
-	phiAngle = (180 / 3.1415926)*atan2(-Ax, sqrt(pow(Ay, 2) + pow(Az, 2)))*1000;
+	phiAngle = (180 / 3.1415926)*atan2(-Ax, sqrt(pow(Ay, 2) + pow(Az, 2)));
 
-	thetaAngle = (180 / 3.1415926)*atan2(Ay, sqrt(pow(Az, 2) + 0.01 * pow(Ax, 2)))*1000;
-	}
+	thetaAngle = (180 / 3.1415926)*atan2(Ay, sqrt(pow(Az, 2) + 0.01 * pow(Ax, 2)));
 }

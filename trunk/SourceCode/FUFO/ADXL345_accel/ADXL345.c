@@ -1,7 +1,5 @@
 //Definition ADXL345 accelerometer
-#include "ADXL345.h"
-#include "../I2C/I2C.h"
-
+#include "../FUFO.h"
 //---------------- Constantes ------------------
 // ADXL345  Registers
 #define ADXL345_DEVID                   0x00    // R     Device ID 

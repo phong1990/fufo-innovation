@@ -1,7 +1,5 @@
 //Definition LCD1602
-#include "p30f4012.h"
-#include "LCD.h"
-#include "../Delay/DelayTMR1.h"
+#include "../FUFO.h"
 
 
 //---------------------functions--------------------------------------
