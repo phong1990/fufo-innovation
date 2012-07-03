@@ -1,7 +1,5 @@
 //Definition L3G4200D gyroscope
-#include "L3G4200D.h"
-#include "../I2C/I2C.h"
-#include "../LCD/LCD.h"
+#include "../FUFO.h"
 //---------------- Constantes ------------------
 // L3G4200D  Registers
 #define L3G4200D_WHO_AM_I 0x0F
@@ -71,8 +69,5 @@ unsigned char fufoReadGyro(unsigned int *data) {
 	error += fufoReadByteI2C(L3G4200D_I2C, L3G4200D_OUT_Z_L, datatemp);
     error += fufoReadByteI2C(L3G4200D_I2C, L3G4200D_OUT_Z_H, datatemp1);
 	*(data + 2) = (datatemp1[0] << 8) | datatemp[0];
-		fufoCmd4LCD(LCD_CLEAR);
-		fufoDelayMs(1);
-		fufoOutputChar("vao if");  
 	return error;
 }

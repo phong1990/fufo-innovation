@@ -1,8 +1,4 @@
-#include "p30f4012.h"
-#include "../Delay/DelayTMR1.h"
-#include "pwmControl.h"
 #include "../FUFO.h"
-#include "../LCD/LCD.h"
 
 unsigned int PR4_value;
 unsigned int periodValue;
@@ -35,7 +31,7 @@ void initPWMHardware(void){
 }
 
 void initPWMSoftware(void){
-	IPC5bits.T4IP = 6;  	//highest priority interrupt
+	IPC5bits.T4IP = 7;  	//highest priority interrupt
 	T4CONbits.TCKPS = 0;	// timer 2 prescale = 1
 	TMR4 = 0;
 	PR4 = PR4_value;		
@@ -44,20 +40,20 @@ void initPWMSoftware(void){
 	T4CONbits.TON = 0;		//timer 2 off
 }
 
-void setPWM1(unsigned int Thrust1, unsigned int PID_Motor1){
-	PDC1 = (initDCValue + Thrust1*PWM_per_thrust + PID_Motor1)*2 + PWM_per_thrust*2;
+void setPWM1(unsigned int Thrust1, int PID_Motor1, int motor1){
+	PDC1 = (initDCValue + Thrust1*PWM_per_thrust + PID_Motor1 + motor1*80)*2 + PWM_per_thrust*2;
 }
 
-void setPWM2(unsigned int Thrust2, unsigned int PID_Motor2){
-	PDC2 = (initDCValue + Thrust2*PWM_per_thrust + PID_Motor2)*2;
+void setPWM2(unsigned int Thrust2, int PID_Motor2, int motor2){
+	PDC2 = (initDCValue + Thrust2*PWM_per_thrust + PID_Motor2 + motor2*80)*2;
 }
 
-void setPWM3(unsigned int Thrust3, unsigned int PID_Motor3){
-	PDC3 = (initDCValue + Thrust3*PWM_per_thrust + PID_Motor3)*2 + PWM_per_thrust*24;
+void setPWM3(unsigned int Thrust3, int PID_Motor3, int motor3){
+	PDC3 = (initDCValue + Thrust3*PWM_per_thrust + PID_Motor3 + motor3*80)*2 + PWM_per_thrust*24;
 }
 
-void setPWM4(unsigned int Thrust4, unsigned int PID_Motor4){
-	PR4_value = initDCValue + Thrust4*PWM_per_thrust + PID_Motor4 + PWM_per_thrust*7;
+void setPWM4(unsigned int Thrust4, int PID_Motor4, int motor4){
+	PR4_value = initDCValue + Thrust4*PWM_per_thrust + PID_Motor4 + motor4*80 + PWM_per_thrust*7;
 }
 
 void __attribute__((__interrupt__ , auto_psv)) _T4Interrupt (void)

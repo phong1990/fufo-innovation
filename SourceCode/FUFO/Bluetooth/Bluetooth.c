@@ -1,7 +1,5 @@
 //Define Bluetooth module
-#include "Bluetooth.h"
-#include "../UART/UART.h"
-#include "../LCD/LCD.h"
+#include "../FUFO.h"
 
 
 void fufoInitBluetooth(unsigned char *s){

@@ -1,3 +1,16 @@
+#include "p30f4012.h"
+#include "LCD/LCD.h"
+#include "Delay/DelayTMR1.h"
+#include "PWM/pwmControl.h"
+#include "Bluetooth/Bluetooth.h"
+#include "UART/UART.h"
+#include "Control/Control.h"
+#include "math.h"
+#include "Filter/Filter.h"
+#include "ADXL345_accel/ADXL345.h"
+#include "L3G4200D_gyro/L3G4200D.h"
+#include "I2C/I2C.h"
+
 // Khao bao bien hoac method dung chung cho ca project
 #define Fcy		(8000000*4/4)			//Tan so thuc thi lenh
 #define	Fpwm		400

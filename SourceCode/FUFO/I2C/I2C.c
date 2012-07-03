@@ -1,6 +1,4 @@
 /*Communication dspic30f4012 with ADXL345 in I2C*/
-#include "p30f4012.h"
-#include "I2C.h"
 #include "../FUFO.h"	
 
 #define I2CWRITE 0

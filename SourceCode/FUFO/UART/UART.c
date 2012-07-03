@@ -1,7 +1,4 @@
 //Communication dspic30f4012 with BlueTooth module (HC-06-S) in UART
-#include "p30f4012.h"
-#include "UART.h"
-#include "../Control/Control.h"
 #include "../FUFO.h"
 
 #define UARTWRITE 0

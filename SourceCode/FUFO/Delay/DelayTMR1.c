@@ -1,6 +1,5 @@
 /*Communication dspic30f4012 with ADXL345 in I2C*/
-#include "p30f4012.h"
-#include "DelayTMR1.h"
+#include "../FUFO.h"
 
 //Delay ms
 void fufoDelayMs(unsigned int n) {
