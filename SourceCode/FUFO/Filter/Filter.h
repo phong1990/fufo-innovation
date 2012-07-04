@@ -10,6 +10,7 @@
 #define convertAccel  0.0039;
 #define convertGyro  0.00875;
 
+void CalcFirstAngle(void);
 void fufoGetAngleAccel(void);
 void fufoGetAngleGyros(void);
 void fufoGetRateAngle(void);
