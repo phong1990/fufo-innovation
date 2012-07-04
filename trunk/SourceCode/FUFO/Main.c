@@ -60,7 +60,7 @@ int main(void) {
 					FUFO_thrust++;
 					if(FUFO_thrust >= 21) {
 						FUFO_thrust = 21;
-						setState(Ready);
+						//setState(Ready);
 						T2CONbits.TON = 1;
 					}
 					setThrustRate(FUFO_thrust);

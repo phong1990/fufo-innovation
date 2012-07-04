@@ -8,8 +8,8 @@ int PWM_Motor1 = 0;
 int PWM_Motor2 = 0;
 int PWM_Motor3 = 0;
 int PWM_Motor4 = 0;
+int PWM1 = 0;
 int PWM3 = 0;
-int PWM4 = 0;
 int gyro_output;
 unsigned char comandfromBluetooth;
 float P = 0;
@@ -146,22 +146,25 @@ void getInstruction(void){
 //		PWM_Motor3 -= 1;
 	} else if(comandfromBluetooth == 'a'){
 		Left = 1;
-		PWM3 += 1;
+		PWM1 += 1;
 //		PWM_Motor2 -= 1;
 //		PWM_Motor4 += 1;
 	} else if(comandfromBluetooth == 'd'){
 		Right = 1;
-		PWM4 += 1;
+		PWM3 += 1;
 //		PWM_Motor2 += 1;
 //		PWM_Motor4 -= 1;
 	} else if(comandfromBluetooth == 'k'){
 		R_Right = 1;
-		PWM4 -= 1;
+		PWM3 -= 1;
 	} else if(comandfromBluetooth == 'n'){
 		R_Left = 1;
-		PWM3 -= 1;
+		PWM1 -= 1;
 	} else if(comandfromBluetooth == 'f'){
-		pidEnable = 1;
+		if (pidEnable == 1){
+			pidEnable = 0;	
+			T2CONbits.TON = 0;
+		} else	pidEnable = 1;
 	}
 	if(Up == 1 || Down == 1 || R_Left == 1 || R_Right == 1 || Left == 1 || Right == 1 || Forward == 1 || Backward == 1){
 		userInput = 1;
@@ -175,9 +178,9 @@ void setSetpoint(float Phi, float Theta, float Psi){
 		CompFilter();
 		calcAngle_sum(Phi, Theta, Psi);
 	}
-	PWM_Motor1 = - Roll_sum + Yaw_sum;
+	PWM_Motor1 = Roll_sum + Yaw_sum;
 	PWM_Motor2 = Pitch_sum - Yaw_sum;
-	PWM_Motor3 = Roll_sum + Yaw_sum;
+	PWM_Motor3 = - Roll_sum + Yaw_sum;
 	PWM_Motor4 = - Pitch_sum - Yaw_sum;
 	
 //	if(PWM_Motor1 < 0){
@@ -216,10 +219,10 @@ void setSetpoint(float Phi, float Theta, float Psi){
 //	fufoSendCharUART('\r');
 //	fufoSendCharUART('\n');
 
-	setPWM1(thrustRate, PWM_Motor1, 0);
+	setPWM1(thrustRate, PWM_Motor1, PWM1);
 	setPWM2(thrustRate, PWM_Motor2, 0);
 	setPWM3(thrustRate, PWM_Motor3, PWM3);
-	setPWM4(thrustRate, PWM_Motor4, PWM4);
+	setPWM4(thrustRate, PWM_Motor4, 0);
 }
 
 void calcAngle_sum(float phiDesire, float thetaDesire, float psiDesire){
@@ -234,7 +237,11 @@ void calcAngle_sum(float phiDesire, float thetaDesire, float psiDesire){
 		fufoSendIntUART(thetaAct);
 		fufoSendCharUART(';');
 	}
-	fufoSendIntUART(KpTheta);
+	fufoSendIntUART(PDC1);
+	fufoSendCharUART(';');
+	fufoSendIntUART(PDC3);
+	fufoSendCharUART(';');
+//	fufoSendIntUART(KpTheta);
 //
 //	if(PWM_Motor3 < 0){
 //		fufoSendCharUART('-');
@@ -263,23 +270,17 @@ void calcAngle_sum(float phiDesire, float thetaDesire, float psiDesire){
 
 float calcRollAngle(float desire_Angle, float actual_Angle, int KpR, int KiR, int KdR){
 	e = desire_Angle - actual_Angle;
-	if (e < 0){
-		fufoSendCharUART('-');
-		fufoSendIntUART(e);
-		fufoSendCharUART(',');
-	} else {
-		fufoSendIntUART(e);
-		fufoSendCharUART(',');
-	}
+//	if (e < 0){
+//		fufoSendCharUART('-');
+//		fufoSendIntUART(e);
+//		fufoSendCharUART(',');
+//	} else {
+//		fufoSendIntUART(e);
+//		fufoSendCharUART(',');
+//	}
+//	fufoSendIntUART(PDC3);
+//	fufoSendCharUART(';');
 	total_e = total_e + e;
-	if (e < 0){
-		fufoSendCharUART('-');
-		fufoSendIntUART(total_e);
-		fufoSendCharUART(';');
-	} else {
-		fufoSendIntUART(total_e);
-		fufoSendCharUART(';');
-	}
 	P = KpR*e;
 	I = KiR*total_e;
 	D = KdR*gyro_output;
