@@ -1,7 +1,7 @@
-load D:\status4.txt;         %  read data into status
-step = status4(:,1);     % Steps
-gyrosDOT = status4(:,2);    %  first column into gyrosDOT value
-accel = status4(:,3);    %  second column into accel value (Already in Euler Angle)
+load D:\statusyphi.txt;         %  read data into status
+step = statusyphi(:,1);     % Steps
+gyrosDOT = statusyphi(:,2);    %  first column into gyrosDOT value
+accel = statusyphi(:,3);    %  second column into accel value (Already in Euler Angle)
 
 % the angles calculated by gyrosDOT 
 gyrosAngle = gyrosDOT*0.01;  % 0.01 is the delta t
