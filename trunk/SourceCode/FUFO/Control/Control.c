@@ -9,7 +9,9 @@ int PWM_Motor2 = 0;
 int PWM_Motor3 = 0;
 int PWM_Motor4 = 0;
 int PWM1 = 0;
+int PWM2 = 0;
 int PWM3 = 0;
+int PWM4 = 0;
 int gyro_output;
 unsigned char comandfromBluetooth;
 float P = 0;
@@ -18,7 +20,7 @@ float D = 0;
 float e = 0;
 float total_e = 0;
 float Angle_sum;
-int KpTheta = 1;
+float KpTheta = 0.1;
 unsigned int userInput;
 
 
@@ -48,7 +50,7 @@ void controlFUFO(void){
 //	} else if (Right == 1){
 //		setSetpoint(0,-20,0);
 //	} else 
-	setSetpoint(0,0,0);
+	setSetpoint(0,20,0);
 }
 
 void checkConnection(void){
@@ -87,6 +89,9 @@ void getStartInstruction(void){
 	if(comandfromBluetooth == 'f'){ // ky tu f bao Start
 		fufoOutputChar("dc  ");
 		fufoDelayMs(200);
+		resetSensor();
+		resetPWM();
+		resetInstruction();
 		setState(Setup);
 		fufoCmd4LCD(LCD_CLEAR);
 	} else {
@@ -105,8 +110,8 @@ void getUpInstruction(void){
 		if(thrustRate > 21){
 			//pidEnable = 1;
 			//pidEnable = 0;
+			T2CONbits.TON = 1;
 			setState(Hovering);
-			if(thrustRate > 97) thrustRate = 97;
 		}
 	}
 }
@@ -122,26 +127,25 @@ void getInstruction(void){
 			//pidEnable = 1;
 			//pidEnable = 0;
 			//setState(Hovering);
-			if(thrustRate > 97) thrustRate = 97;
+			if(thrustRate > 100) thrustRate = 100;
 		}
 	} else if(comandfromBluetooth == 'p'){
 		Down = 1;
 		thrustRate -= 1;
 		if (thrustRate < 22){
-			setState(Landing);
 			T2CONbits.TON = 0;
 			pidEnable = 0;
 			thrustRate = 21;
-			resetSensor();
+			setState(Landing);
 		}
 	} else if(comandfromBluetooth == 'w'){
 		Forward = 1;
-		KpTheta += 1;
+		KpTheta += 0.1;
 //		PWM_Motor1 -= 1;
 //		PWM_Motor3 += 1;
 	} else if(comandfromBluetooth == 's'){
 		Backward = 1;
-		KpTheta -= 1;
+		KpTheta -= 0.1;
 //		PWM_Motor1 += 1;
 //		PWM_Motor3 -= 1;
 	} else if(comandfromBluetooth == 'a'){
@@ -161,15 +165,12 @@ void getInstruction(void){
 		R_Left = 1;
 		PWM1 -= 1;
 	} else if(comandfromBluetooth == 'f'){
-		if (pidEnable == 1){
-			pidEnable = 0;	
-			T2CONbits.TON = 0;
-		} else	pidEnable = 1;
+			pidEnable = 1;
 	}
-	if(Up == 1 || Down == 1 || R_Left == 1 || R_Right == 1 || Left == 1 || Right == 1 || Forward == 1 || Backward == 1){
+	if(comandfromBluetooth == 'f' || Up == 1 || Down == 1 || R_Left == 1 || R_Right == 1 || Left == 1 || Right == 1 || Forward == 1 || Backward == 1){
 		userInput = 1;
 	} else userInput = 0;
-	setPID4(KpTheta);
+	setPID4(KpTheta*10);
 }
 
 void setSetpoint(float Phi, float Theta, float Psi){
@@ -231,16 +232,20 @@ void calcAngle_sum(float phiDesire, float thetaDesire, float psiDesire){
 	thetaAct = getThetaAngle();
 	if(thetaAct < 0){
 		fufoSendCharUART('-');
-		fufoSendIntUART(thetaAct);
+		fufoSendIntUART((int)thetaAct);
 		fufoSendCharUART(';');
 	} else {
-		fufoSendIntUART(thetaAct);
+		fufoSendIntUART((int)thetaAct);
 		fufoSendCharUART(';');
 	}
-	fufoSendIntUART(PDC1);
+//	fufoSendIntUART(PDC1);
+//	fufoSendCharUART(';');
+//	fufoSendIntUART(PDC3);
+//	fufoSendCharUART(';');
+
+	fufoSendIntUART(KpTheta*10);
 	fufoSendCharUART(';');
-	fufoSendIntUART(PDC3);
-	fufoSendCharUART(';');
+
 //	fufoSendIntUART(KpTheta);
 //
 //	if(PWM_Motor3 < 0){
@@ -268,7 +273,7 @@ void calcAngle_sum(float phiDesire, float thetaDesire, float psiDesire){
 	fufoSendCharUART('\n');
 }
 
-float calcRollAngle(float desire_Angle, float actual_Angle, int KpR, int KiR, int KdR){
+float calcRollAngle(float desire_Angle, float actual_Angle, float KpR, float KiR, float KdR){
 	e = desire_Angle - actual_Angle;
 //	if (e < 0){
 //		fufoSendCharUART('-');
@@ -282,7 +287,7 @@ float calcRollAngle(float desire_Angle, float actual_Angle, int KpR, int KiR, in
 //	fufoSendCharUART(';');
 	total_e = total_e + e;
 	P = KpR*e;
-	I = KiR*total_e;
+	I = KiR*total_e*0.01;
 	D = KdR*gyro_output;
 	Angle_sum = P + I + D;
 	return Angle_sum;
@@ -306,3 +311,13 @@ void resetSensor(void){
 	gyro_output = 0;
 }
 
+void resetPWM(void){
+	PWM_Motor1 = 0; 
+	PWM_Motor2 = 0;
+	PWM_Motor3 = 0;
+	PWM_Motor4 = 0;
+	PWM1 = 0;
+	PWM2 = 0;
+	PWM3 = 0;
+	PWM4 = 0;
+}

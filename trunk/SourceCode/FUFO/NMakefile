@@ -1,6 +1,6 @@
 # MPLAB IDE generated this makefile for use with Microsoft `nmake'.
 # Project: FUFO.mcp
-# Date: Mon Jun 18 15:42:39 2012
+# Date: Mon Jul 09 10:45:32 2012
 
 AS = pic30-as.exe
 CC = pic30-gcc.exe
@@ -12,30 +12,45 @@ RM = del
 "FUFO.hex" : "FUFO.cof"
 	$(HX) "FUFO.cof"
 
-"FUFO.cof" : "Main.o" "DelayTMR1.o" "LCD.o" "pwmControl.o" "Bluetooth.o" "UART.o" "Control.o"
-	$(CC) -mcpu=30F4012 "Main.o" "DelayTMR1.o" "LCD.o" "pwmControl.o" "Bluetooth.o" "UART.o" "Control.o" -o"FUFO.cof" -Wl,-L"C:\Program Files\Microchip\MPLAB C30\lib",--script="p30f4012.gld",--defsym=__MPLAB_BUILD=1,--defsym=__MPLAB_DEBUG=1,-Map="FUFO.map",--report-mem
+"FUFO.cof" : "Main.o" "DelayTMR1.o" "LCD.o" "pwmControl.o" "Bluetooth.o" "UART.o" "Control.o" "FUFO.o" "ADXL345.o" "I2C.o" "L3G4200D.o" "Filter.o"
+	$(CC) -mcpu=30F4012 "Main.o" "DelayTMR1.o" "LCD.o" "pwmControl.o" "Bluetooth.o" "UART.o" "Control.o" "FUFO.o" "ADXL345.o" "I2C.o" "L3G4200D.o" "Filter.o" -o"FUFO.cof" -Wl,-L"C:\Program Files\Microchip\MPLAB C30\lib",--script="p30f4012.gld",--defsym=__MPLAB_BUILD=1,--defsym=__MPLAB_DEBUG=1,-Map="FUFO.map",--report-mem
 
-"Main.o" : "FUFO.h" "..\..\..\program files\microchip\mplab c30\include\math.h" "..\..\..\program files\microchip\mplab c30\support\h\p30f4012.h" "PWM\pwmControl.h" "UART\UART.h" "Bluetooth\Bluetooth.h" "Delay\DelayTMR1.h" "..\..\..\program files\microchip\mplab c30\support\h\p30f4012.h" "LCD\LCD.h" "..\..\..\program files\microchip\mplab c30\support\h\p30f4012.h" "Control\Control.h" "UART\UART.h" "Bluetooth\Bluetooth.h" "..\..\..\program files\microchip\mplab c30\support\h\p30f4012.h" "PWM\pwmControl.h" "Delay\DelayTMR1.h" "..\..\..\program files\microchip\mplab c30\support\h\p30f4012.h" "LCD\LCD.h" "p30f4012.h" "Main.c"
+"Main.o" : "I2C\I2C.h" "L3G4200D_gyro\L3G4200D.h" "ADXL345_accel\ADXL345.h" "UART\UART.h" "I2C\I2C.h" "Delay\DelayTMR1.h" "L3G4200D_gyro\L3G4200D.h" "ADXL345_accel\ADXL345.h" "..\..\..\program files\microchip\mplab c30\support\h\p30f4012.h" "..\..\..\program files\microchip\mplab c30\include\math.h" "Filter\Filter.h" "..\..\..\program files\microchip\mplab c30\include\math.h" "Control\Control.h" "UART\UART.h" "Bluetooth\Bluetooth.h" "..\..\..\program files\microchip\mplab c30\support\h\p30f4012.h" "PWM\pwmControl.h" "Delay\DelayTMR1.h" "..\..\..\program files\microchip\mplab c30\support\h\p30f4012.h" "LCD\LCD.h" "p30f4012.h" "FUFO.h" "Main.c"
 	$(CC) -mcpu=30F4012 -x c -c "Main.c" -o"Main.o" -D__DEBUG -g -Wall
 
-"DelayTMR1.o" : "DELAY\DelayTMR1.h" "..\..\..\program files\microchip\mplab c30\support\h\p30f4012.h" "DELAY\DelayTMR1.c"
+"DelayTMR1.o" : "I2C\I2C.h" "L3G4200D_gyro\L3G4200D.h" "ADXL345_accel\ADXL345.h" "UART\UART.h" "I2C\I2C.h" "Delay\DelayTMR1.h" "L3G4200D_gyro\L3G4200D.h" "ADXL345_accel\ADXL345.h" "..\..\..\program files\microchip\mplab c30\support\h\p30f4012.h" "..\..\..\program files\microchip\mplab c30\include\math.h" "Filter\Filter.h" "..\..\..\program files\microchip\mplab c30\include\math.h" "Control\Control.h" "UART\UART.h" "Bluetooth\Bluetooth.h" "..\..\..\program files\microchip\mplab c30\support\h\p30f4012.h" "PWM\pwmControl.h" "Delay\DelayTMR1.h" "..\..\..\program files\microchip\mplab c30\support\h\p30f4012.h" "LCD\LCD.h" "p30f4012.h" "FUFO.h" "DELAY\DelayTMR1.c"
 	$(CC) -mcpu=30F4012 -x c -c "DELAY\DelayTMR1.c" -o"DelayTMR1.o" -D__DEBUG -g -Wall
 
-"LCD.o" : "Delay\DelayTMR1.h" "..\..\..\program files\microchip\mplab c30\support\h\p30f4012.h" "LCD\LCD.h" "..\..\..\program files\microchip\mplab c30\support\h\p30f4012.h" "LCD\LCD.c"
+"LCD.o" : "I2C\I2C.h" "L3G4200D_gyro\L3G4200D.h" "ADXL345_accel\ADXL345.h" "UART\UART.h" "I2C\I2C.h" "Delay\DelayTMR1.h" "L3G4200D_gyro\L3G4200D.h" "ADXL345_accel\ADXL345.h" "..\..\..\program files\microchip\mplab c30\support\h\p30f4012.h" "..\..\..\program files\microchip\mplab c30\include\math.h" "Filter\Filter.h" "..\..\..\program files\microchip\mplab c30\include\math.h" "Control\Control.h" "UART\UART.h" "Bluetooth\Bluetooth.h" "..\..\..\program files\microchip\mplab c30\support\h\p30f4012.h" "PWM\pwmControl.h" "Delay\DelayTMR1.h" "..\..\..\program files\microchip\mplab c30\support\h\p30f4012.h" "LCD\LCD.h" "p30f4012.h" "FUFO.h" "LCD\LCD.c"
 	$(CC) -mcpu=30F4012 -x c -c "LCD\LCD.c" -o"LCD.o" -D__DEBUG -g -Wall
 
-"pwmControl.o" : "FUFO.h" "..\..\..\program files\microchip\mplab c30\support\h\p30f4012.h" "PWM\pwmControl.h" "Delay\DelayTMR1.h" "..\..\..\program files\microchip\mplab c30\support\h\p30f4012.h" "PWM\pwmControl.c"
+"pwmControl.o" : "I2C\I2C.h" "L3G4200D_gyro\L3G4200D.h" "ADXL345_accel\ADXL345.h" "UART\UART.h" "I2C\I2C.h" "Delay\DelayTMR1.h" "L3G4200D_gyro\L3G4200D.h" "ADXL345_accel\ADXL345.h" "..\..\..\program files\microchip\mplab c30\support\h\p30f4012.h" "..\..\..\program files\microchip\mplab c30\include\math.h" "Filter\Filter.h" "..\..\..\program files\microchip\mplab c30\include\math.h" "Control\Control.h" "UART\UART.h" "Bluetooth\Bluetooth.h" "..\..\..\program files\microchip\mplab c30\support\h\p30f4012.h" "PWM\pwmControl.h" "Delay\DelayTMR1.h" "..\..\..\program files\microchip\mplab c30\support\h\p30f4012.h" "LCD\LCD.h" "p30f4012.h" "FUFO.h" "PWM\pwmControl.c"
 	$(CC) -mcpu=30F4012 -x c -c "PWM\pwmControl.c" -o"pwmControl.o" -D__DEBUG -g -Wall
 
-"Bluetooth.o" : "..\..\..\program files\microchip\mplab c30\support\h\p30f4012.h" "LCD\LCD.h" "UART\UART.h" "Bluetooth\Bluetooth.h" "Bluetooth\Bluetooth.c"
+"Bluetooth.o" : "I2C\I2C.h" "L3G4200D_gyro\L3G4200D.h" "ADXL345_accel\ADXL345.h" "UART\UART.h" "I2C\I2C.h" "Delay\DelayTMR1.h" "L3G4200D_gyro\L3G4200D.h" "ADXL345_accel\ADXL345.h" "..\..\..\program files\microchip\mplab c30\support\h\p30f4012.h" "..\..\..\program files\microchip\mplab c30\include\math.h" "Filter\Filter.h" "..\..\..\program files\microchip\mplab c30\include\math.h" "Control\Control.h" "UART\UART.h" "Bluetooth\Bluetooth.h" "..\..\..\program files\microchip\mplab c30\support\h\p30f4012.h" "PWM\pwmControl.h" "Delay\DelayTMR1.h" "..\..\..\program files\microchip\mplab c30\support\h\p30f4012.h" "LCD\LCD.h" "p30f4012.h" "FUFO.h" "Bluetooth\Bluetooth.c"
 	$(CC) -mcpu=30F4012 -x c -c "Bluetooth\Bluetooth.c" -o"Bluetooth.o" -D__DEBUG -g -Wall
 
-"UART.o" : "..\..\..\program files\microchip\mplab c30\support\h\p30f4012.h" "PWM\pwmControl.h" "UART\UART.h" "Bluetooth\Bluetooth.h" "Delay\DelayTMR1.h" "..\..\..\program files\microchip\mplab c30\support\h\p30f4012.h" "LCD\LCD.h" "..\..\..\program files\microchip\mplab c30\support\h\p30f4012.h" "Control\Control.h" "UART\UART.h" "..\..\..\program files\microchip\mplab c30\support\h\p30f4012.h" "UART\UART.c"
+"UART.o" : "I2C\I2C.h" "L3G4200D_gyro\L3G4200D.h" "ADXL345_accel\ADXL345.h" "UART\UART.h" "I2C\I2C.h" "Delay\DelayTMR1.h" "L3G4200D_gyro\L3G4200D.h" "ADXL345_accel\ADXL345.h" "..\..\..\program files\microchip\mplab c30\support\h\p30f4012.h" "..\..\..\program files\microchip\mplab c30\include\math.h" "Filter\Filter.h" "..\..\..\program files\microchip\mplab c30\include\math.h" "Control\Control.h" "UART\UART.h" "Bluetooth\Bluetooth.h" "..\..\..\program files\microchip\mplab c30\support\h\p30f4012.h" "PWM\pwmControl.h" "Delay\DelayTMR1.h" "..\..\..\program files\microchip\mplab c30\support\h\p30f4012.h" "LCD\LCD.h" "p30f4012.h" "FUFO.h" "UART\UART.c"
 	$(CC) -mcpu=30F4012 -x c -c "UART\UART.c" -o"UART.o" -D__DEBUG -g -Wall
 
-"Control.o" : "..\..\..\program files\microchip\mplab c30\support\h\p30f4012.h" "PWM\pwmControl.h" "UART\UART.h" "Bluetooth\Bluetooth.h" "Delay\DelayTMR1.h" "..\..\..\program files\microchip\mplab c30\support\h\p30f4012.h" "LCD\LCD.h" "..\..\..\program files\microchip\mplab c30\support\h\p30f4012.h" "Control\Control.h" "Control\Control.c"
+"Control.o" : "I2C\I2C.h" "L3G4200D_gyro\L3G4200D.h" "ADXL345_accel\ADXL345.h" "UART\UART.h" "I2C\I2C.h" "Delay\DelayTMR1.h" "L3G4200D_gyro\L3G4200D.h" "ADXL345_accel\ADXL345.h" "..\..\..\program files\microchip\mplab c30\support\h\p30f4012.h" "..\..\..\program files\microchip\mplab c30\include\math.h" "Filter\Filter.h" "..\..\..\program files\microchip\mplab c30\include\math.h" "Control\Control.h" "UART\UART.h" "Bluetooth\Bluetooth.h" "..\..\..\program files\microchip\mplab c30\support\h\p30f4012.h" "PWM\pwmControl.h" "Delay\DelayTMR1.h" "..\..\..\program files\microchip\mplab c30\support\h\p30f4012.h" "LCD\LCD.h" "p30f4012.h" "FUFO.h" "Control\Control.c"
 	$(CC) -mcpu=30F4012 -x c -c "Control\Control.c" -o"Control.o" -D__DEBUG -g -Wall
 
+"FUFO.o" : "I2C\I2C.h" "L3G4200D_gyro\L3G4200D.h" "ADXL345_accel\ADXL345.h" "UART\UART.h" "I2C\I2C.h" "Delay\DelayTMR1.h" "L3G4200D_gyro\L3G4200D.h" "ADXL345_accel\ADXL345.h" "..\..\..\program files\microchip\mplab c30\support\h\p30f4012.h" "..\..\..\program files\microchip\mplab c30\include\math.h" "Filter\Filter.h" "..\..\..\program files\microchip\mplab c30\include\math.h" "Control\Control.h" "UART\UART.h" "Bluetooth\Bluetooth.h" "..\..\..\program files\microchip\mplab c30\support\h\p30f4012.h" "PWM\pwmControl.h" "Delay\DelayTMR1.h" "..\..\..\program files\microchip\mplab c30\support\h\p30f4012.h" "LCD\LCD.h" "p30f4012.h" "FUFO.h" "FUFO.c"
+	$(CC) -mcpu=30F4012 -x c -c "FUFO.c" -o"FUFO.o" -D__DEBUG -g -Wall
+
+"ADXL345.o" : "I2C\I2C.h" "L3G4200D_gyro\L3G4200D.h" "ADXL345_accel\ADXL345.h" "UART\UART.h" "I2C\I2C.h" "Delay\DelayTMR1.h" "L3G4200D_gyro\L3G4200D.h" "ADXL345_accel\ADXL345.h" "..\..\..\program files\microchip\mplab c30\support\h\p30f4012.h" "..\..\..\program files\microchip\mplab c30\include\math.h" "Filter\Filter.h" "..\..\..\program files\microchip\mplab c30\include\math.h" "Control\Control.h" "UART\UART.h" "Bluetooth\Bluetooth.h" "..\..\..\program files\microchip\mplab c30\support\h\p30f4012.h" "PWM\pwmControl.h" "Delay\DelayTMR1.h" "..\..\..\program files\microchip\mplab c30\support\h\p30f4012.h" "LCD\LCD.h" "p30f4012.h" "FUFO.h" "ADXL345_accel\ADXL345.c"
+	$(CC) -mcpu=30F4012 -x c -c "ADXL345_accel\ADXL345.c" -o"ADXL345.o" -D__DEBUG -g -Wall
+
+"I2C.o" : "I2C\I2C.h" "L3G4200D_gyro\L3G4200D.h" "ADXL345_accel\ADXL345.h" "UART\UART.h" "I2C\I2C.h" "Delay\DelayTMR1.h" "L3G4200D_gyro\L3G4200D.h" "ADXL345_accel\ADXL345.h" "..\..\..\program files\microchip\mplab c30\support\h\p30f4012.h" "..\..\..\program files\microchip\mplab c30\include\math.h" "Filter\Filter.h" "..\..\..\program files\microchip\mplab c30\include\math.h" "Control\Control.h" "UART\UART.h" "Bluetooth\Bluetooth.h" "..\..\..\program files\microchip\mplab c30\support\h\p30f4012.h" "PWM\pwmControl.h" "Delay\DelayTMR1.h" "..\..\..\program files\microchip\mplab c30\support\h\p30f4012.h" "LCD\LCD.h" "p30f4012.h" "FUFO.h" "I2C\I2C.c"
+	$(CC) -mcpu=30F4012 -x c -c "I2C\I2C.c" -o"I2C.o" -D__DEBUG -g -Wall
+
+"L3G4200D.o" : "I2C\I2C.h" "L3G4200D_gyro\L3G4200D.h" "ADXL345_accel\ADXL345.h" "UART\UART.h" "I2C\I2C.h" "Delay\DelayTMR1.h" "L3G4200D_gyro\L3G4200D.h" "ADXL345_accel\ADXL345.h" "..\..\..\program files\microchip\mplab c30\support\h\p30f4012.h" "..\..\..\program files\microchip\mplab c30\include\math.h" "Filter\Filter.h" "..\..\..\program files\microchip\mplab c30\include\math.h" "Control\Control.h" "UART\UART.h" "Bluetooth\Bluetooth.h" "..\..\..\program files\microchip\mplab c30\support\h\p30f4012.h" "PWM\pwmControl.h" "Delay\DelayTMR1.h" "..\..\..\program files\microchip\mplab c30\support\h\p30f4012.h" "LCD\LCD.h" "p30f4012.h" "FUFO.h" "L3G4200D_gyro\L3G4200D.c"
+	$(CC) -mcpu=30F4012 -x c -c "L3G4200D_gyro\L3G4200D.c" -o"L3G4200D.o" -D__DEBUG -g -Wall
+
+"Filter.o" : "I2C\I2C.h" "L3G4200D_gyro\L3G4200D.h" "ADXL345_accel\ADXL345.h" "UART\UART.h" "I2C\I2C.h" "Delay\DelayTMR1.h" "L3G4200D_gyro\L3G4200D.h" "ADXL345_accel\ADXL345.h" "..\..\..\program files\microchip\mplab c30\support\h\p30f4012.h" "..\..\..\program files\microchip\mplab c30\include\math.h" "Filter\Filter.h" "..\..\..\program files\microchip\mplab c30\include\math.h" "Control\Control.h" "UART\UART.h" "Bluetooth\Bluetooth.h" "..\..\..\program files\microchip\mplab c30\support\h\p30f4012.h" "PWM\pwmControl.h" "Delay\DelayTMR1.h" "..\..\..\program files\microchip\mplab c30\support\h\p30f4012.h" "LCD\LCD.h" "p30f4012.h" "FUFO.h" "Filter\Filter.c"
+	$(CC) -mcpu=30F4012 -x c -c "Filter\Filter.c" -o"Filter.o" -D__DEBUG -g -Wall
+
 "clean" : 
-	$(RM) "Main.o" "DelayTMR1.o" "LCD.o" "pwmControl.o" "Bluetooth.o" "UART.o" "Control.o" "FUFO.cof" "FUFO.hex"
+	$(RM) "Main.o" "DelayTMR1.o" "LCD.o" "pwmControl.o" "Bluetooth.o" "UART.o" "Control.o" "FUFO.o" "ADXL345.o" "I2C.o" "L3G4200D.o" "Filter.o" "FUFO.cof" "FUFO.hex"
 

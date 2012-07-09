@@ -73,9 +73,9 @@ void fufoGetRateAngle(void){
 			fufoOutputChar("..");
 		}
 		if(idx100 == 100) {	
-			R0x = xIntG/idx100;
-			R0y = yIntG/idx100;
-			R0z = zIntG/idx100;	
+			R0x = (int)(xIntG/idx100);
+			R0y = (int)(yIntG/idx100);
+			R0z = (int)(zIntG/idx100);	
 			//idx100 = 0;
 			CalcFirstAngle();
 			fufoCmd4LCD(LCD_CLEAR);
