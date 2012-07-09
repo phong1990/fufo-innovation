@@ -60,8 +60,8 @@ int main(void) {
 					fufoGetRateAngle(); // calc R0
 					FUFO_thrust = getThrustRate();
 					FUFO_thrust++;
-					if(FUFO_thrust >= 21) {
-						FUFO_thrust = 21;
+					if(FUFO_thrust >= 22) {
+						FUFO_thrust = 22;
 						//setState(Ready);
 						//T2CONbits.TON = 1;
 					}
@@ -104,6 +104,7 @@ int main(void) {
 						fufoOutputChar("xong");
 						fufoDelayMs(1000);
 						setState(Pending);
+						
 					}
 					setThrustRate(FUFO_thrust);
 					controlFUFO();
@@ -129,12 +130,12 @@ int main(void) {
 
 //Ham khoi tao cac chuong trinh cua FUFO
 void initFUFO(void){
-//	fufoInitLCDPorts();
-//	fufoDelayMs(10);
-//	fufoInitLCD();
-//	fufoDelayMs(10);
-//	fufoOutputChar("Please wait");
-//	fufoCmd4LCD(LCD_HOMEL2);
+	fufoInitLCDPorts();
+	fufoDelayMs(10);
+	fufoInitLCD();
+	fufoDelayMs(10);
+	fufoOutputChar("Please wait");
+	fufoCmd4LCD(LCD_HOMEL2);
 	initPWM();		// khoi tao PWM voi tan so thuc thi lenh Fcy;
 							// do rong xung ban dau 1ms (1843).
 	fufoDelayMs(200);
@@ -154,25 +155,33 @@ void initFUFO(void){
 	fufoDelayMs(200);
 	fufoOutputChar("...");
 	initTMR2();
-	setState(Waiting_for_connection);
+//	initTMR3();
 //	fufoInitBluetooth(receiOK);
-//	testConnectBluetooth(receiOK);
+//	fufoDelayMs(200);
+	setState(Waiting_for_connection);
 }
 
 void initTMR2(void){
-	IPC1bits.T2IP = 7;  	//highest priority interrupt
-	T2CONbits.TCKPS = 0x01;	// timer 2 prescale = 8
+	IPC1bits.T2IP = 6;  	//highest priority interrupt
+	T2CONbits.TCKPS = 0b01;	// timer 2 prescale = 8
 	TMR2 = 0;
-	PR2 = 10000;		
+	PR2 = 20000;		
 	IFS0bits.T2IF = 0;		//interupt flag clear
     IEC0bits.T2IE = 1;  	//Enable Timer1 Interrupt Service Routine
 	T2CONbits.TON = 0;		//timer 2 on
+}
+
+void initTMR3(void){
+	T3CONbits.TCKPS = 0b01;	// timer 2 prescale = 8
+	TMR3 = 0;		
+	T3CONbits.TON = 1;		//timer 2 on
 }
 
 void __attribute__((__interrupt__ , auto_psv)) _T2Interrupt (void)
 {	
 	IFS0bits.T2IF = 0;	// clear interrupt flag manually
 	TMR2 = 0;
+//	TMR3 = 0;
 	//T2CONbits.TON = 0;		//timer 2 off
 	controlFUFO();
 //	flag = TMR2;
@@ -200,4 +209,7 @@ void __attribute__((__interrupt__ , auto_psv)) _T2Interrupt (void)
 		}
 	}
 	//T2CONbits.TON = 1;
+//	fufoSendCharUART('k');
+//	fufoSendIntUART(TMR3);
+//	fufoSendCharUART('k');
 }

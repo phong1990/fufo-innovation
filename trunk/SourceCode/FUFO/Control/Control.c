@@ -107,12 +107,10 @@ void getUpInstruction(void){
 	if(comandfromBluetooth == 'o'){
 		Up = 1;
 		thrustRate += 1;
-		if(thrustRate > 21){
-			//pidEnable = 1;
-			//pidEnable = 0;
-			T2CONbits.TON = 1;
-			setState(Hovering);
-		}
+		//pidEnable = 1;
+		//pidEnable = 0;
+		T2CONbits.TON = 1;
+		setState(Hovering);
 	}
 }
 
@@ -132,10 +130,10 @@ void getInstruction(void){
 	} else if(comandfromBluetooth == 'p'){
 		Down = 1;
 		thrustRate -= 1;
-		if (thrustRate < 22){
+		if (thrustRate < 23){
 			T2CONbits.TON = 0;
 			pidEnable = 0;
-			thrustRate = 21;
+			thrustRate = 22;
 			setState(Landing);
 		}
 	} else if(comandfromBluetooth == 'w'){
@@ -238,13 +236,13 @@ void calcAngle_sum(float phiDesire, float thetaDesire, float psiDesire){
 		fufoSendIntUART((int)thetaAct);
 		fufoSendCharUART(';');
 	}
-//	fufoSendIntUART(PDC1);
-//	fufoSendCharUART(';');
+	fufoSendIntUART(PDC1);
+	fufoSendCharUART(';');
 //	fufoSendIntUART(PDC3);
 //	fufoSendCharUART(';');
-
-	fufoSendIntUART(KpTheta*10);
-	fufoSendCharUART(';');
+//
+//	fufoSendIntUART(KpTheta*10);
+//	fufoSendCharUART(';');
 
 //	fufoSendIntUART(KpTheta);
 //

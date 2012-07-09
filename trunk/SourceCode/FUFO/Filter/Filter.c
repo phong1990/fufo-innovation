@@ -35,7 +35,6 @@ void CalcFirstAngle(void){
 }
 
 void CompFilter(void){
-	int start = 1;
 	fufoGetAngleAccel();
 	fufoGetAngleGyros();
 	phiComp = k*(phiComp + Ry*0.01) + (1 - k)*phiAngle;
@@ -76,7 +75,7 @@ void fufoGetRateAngle(void){
 			R0x = (int)(xIntG/idx100);
 			R0y = (int)(yIntG/idx100);
 			R0z = (int)(zIntG/idx100);	
-			//idx100 = 0;
+			idx100 = 0;
 			CalcFirstAngle();
 			fufoCmd4LCD(LCD_CLEAR);
 			fufoDelayMs(1);
