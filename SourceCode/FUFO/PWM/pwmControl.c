@@ -4,7 +4,7 @@ unsigned int PR4_value;
 unsigned int periodValue;
 unsigned int initDCValue;
 int a = 1000;
-unsigned int PWM_per_thrust = Fcy/100000;
+unsigned int PWM_per_thrust = 40;
 void initPWMPort(void){
 	PWM_LAT = 0;
 	PWM_TRIS = 0;
@@ -23,21 +23,21 @@ void initPWM(void){
 }
 
 void initPWMHardware(void){
-	PTPER = 2499;
+	PTPER = periodValue - 1;
 	PWMCON1 = 0x070F;			//1. Chinh mode Independent;  2. Chinh PWM chi ra o pin L, khong ra pin H;
 	OVDCON = 0xFF00;			//Khong dung overdrive
 	_PTSIDL = 0;			// PWM time base runs in CPU Idle mode
 	_PTOPS = 0x0000;			// 1:1 Postscale
-	_PTCKPS = 0x10;			// PWM time base input clock period is 16 Tcy  (1:16 prescale)
+	_PTCKPS = 0b01;			// PWM time base input clock period is 16 Tcy  (1:16 prescale)
 	_PTMOD = 0x00;			// PWM time base operates in a free running mode
-	PDC1 = 2000;			//Khoi tao ESC1 chay o 1ms
+	PDC1 = initDCValue*2;			//Khoi tao ESC1 chay o 1ms
 	PDC2 = initDCValue*2;			//Khoi tao ESC3 chay o 1ms
-	PDC3 = calcTimeMS(1)*2/16;			//Khoi tao ESC5 chay o 1ms
+	PDC3 = initDCValue*2;			//Khoi tao ESC5 chay o 1ms
 	_PTEN = 0;				// PWM time base is OFF
 }
 
 void initPWMSoftware(void){
-	IPC5bits.T4IP = 6;  	//highest priority interrupt
+	IPC5bits.T4IP = 7;  	//highest priority interrupt
 	T4CONbits.TCKPS = 0x00;	// timer 2 prescale = 1
 	TMR4 = 0;
 	PR4 = PR4_value;		
