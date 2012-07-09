@@ -12,10 +12,10 @@
 #include "I2C/I2C.h"
 
 // Khao bao bien hoac method dung chung cho ca project
-#define Fcy		(8000000*4/4)			//Tan so thuc thi lenh
+#define Fcy		(8000000*8/4)			//Tan so thuc thi lenh
 #define	Fpwm		400
 #define Fsp			50
-#define PLL			4
+#define PLL			8
 #define FOSC 	8000000
 #define Start						0
 #define	Waiting_for_connection		1
