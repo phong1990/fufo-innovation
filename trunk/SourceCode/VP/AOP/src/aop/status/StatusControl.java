@@ -18,9 +18,14 @@
  */
 package aop.status;
 
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
+
+import android.bluetooth.BluetoothSocket;
+import android.os.Environment;
+import android.util.Log;
 
 /**
  * @author khoinguyen67
@@ -28,35 +33,77 @@ import java.net.Socket;
  */
 public class StatusControl extends Thread{
     
-    Socket statusSocket;
+    public BluetoothSocket bluetoothSocket;
+    public Socket statusSocket;
     PrintWriter out;  
-    String statusMessage;
+    String statusMessage = null;
+    byte buf[] = null;
+    byte[] buffer = new byte[1024]; 
     
     public StatusControl(){}
-    public StatusControl(Socket statusSocket){
-        this.statusSocket = statusSocket;
+    
+    public StatusControl(BluetoothSocket bluetoothSocket){
+    
+        this.bluetoothSocket = bluetoothSocket;
     }
     
-    public void run(){
+    public StatusControl(Socket statusSocket, BluetoothSocket bluetoothSocket){
         
+        this.statusSocket = statusSocket;
+        this.bluetoothSocket = bluetoothSocket;
+    }
+    public void run(){
         try {
-            out = new PrintWriter(statusSocket.getOutputStream());
-            waitStatusFromFUFO();
-            sendStatusToAOC();
+        if (statusSocket != null){
+                Log.d("FUFO"," statusSocket ok");
+                out = new PrintWriter(statusSocket.getOutputStream());
+        }
+            } catch (IOException ex) {
+                // TODO Auto-generated catch block
+                ex.printStackTrace();
+            }
+        while(true){
+            if (statusSocket != null)
+                Log.d("FUFO"," statusSocket ok");
+        waitStatusFromFUFO();
+        sendStatusToAOC();
+        }
+    }
+    
+    public void waitStatusFromFUFO(){
+        try {
+            if(bluetoothSocket == null)
+                Log.d("FUFO"," bluetooth socket null");
+            int bread = bluetoothSocket.getInputStream().read(buffer);
+            buf = new byte[bread];
+            System.arraycopy(buffer, 0, buf, 0, bread);
+            writeToFile(buf);
         } catch (IOException ex) {
             // TODO Auto-generated catch block
             ex.printStackTrace();
         }
     }
     
-    public void waitStatusFromFUFO(){
-        
-    }
-    
     public void sendStatusToAOC(){
-        out.println(statusMessage);
+        if (statusSocket != null)
+            out.println(statusMessage);
     }
     
-    
+    public static void writeToFile(byte[] buffer){
+        String state = android.os.Environment.getExternalStorageState();
+        try{
+        if(state.equals(android.os.Environment.MEDIA_MOUNTED))   
+        { 
+            String sdcard_path = Environment.getExternalStorageDirectory().getAbsolutePath(); 
+            String file_path = sdcard_path; 
+         //   Log.d("FUFO",file_path);
+                FileOutputStream os = new FileOutputStream(file_path + "/" + "status2.txt",true);
+                os.write(buffer);
+                os.close(); 
+        }
+    }catch(Exception e){
+        e.getMessage();
+    }
+    }
 
 }

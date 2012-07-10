@@ -1,5 +1,6 @@
 package aop.control;
 
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.Socket;
@@ -11,12 +12,15 @@ import android.bluetooth.BluetoothSocket;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Environment;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 import aop.command.CommandControl;
+import aop.status.StatusControl;
 
 /**
  * @author khoinguyen67
@@ -103,7 +107,7 @@ public class SettingActivity extends Activity{
                     tv_StatusSV.setTextColor(Color.GREEN);
                     et_IpServer.setEnabled(false); 
                     Control.cmct.commandSocket = tcpSocket;
-                    Control.cmct.setPriority(10);
+                    Control.stct.statusSocket = tcpSocket;
                 } else {
                     tcpSocket.close();
                     tcpSocket = null;
@@ -132,7 +136,7 @@ public class SettingActivity extends Activity{
                         et_AddressBluetooth.setEnabled(false); 
                         bluetoothSocket.getOutputStream().write('h');
                         Control.cmct.bluetoothSocket = bluetoothSocket;
-                        
+                        if(Control.stct.bluetoothSocket == null) ghifileThread();
                     } else {
                         bluetoothSocket.close();
                         bluetoothSocket = null;
@@ -158,5 +162,57 @@ public class SettingActivity extends Activity{
     return;
     }
     
+    // Worker functions
+    Thread ghifile;
+    void ghifileThread()
+    {
+     
+        ghifile = new Thread() {
+            public void run() 
+            {
+                while (true) 
+                {
+                    byte buf[] = null;
+                     Log.i("FUFO", "StartReadThread: Data received:"+ "day");
+                    try {
+                    
+                        // Read from the InputStream
+                        byte[] buffer = new byte[1024]; 
+                        int bread = bluetoothSocket.getInputStream().read(buffer);
+                        buf = new byte[bread];
+                        System.arraycopy(buffer, 0, buf, 0, bread);
+                        writeToFile(buf);
+                        
+                       
+                        // Send the obtained bytes to the UI Activity
 
+                        Log.i(LOG_TAG, "StartReadThread: Data received:"+ "day2");
+                    } catch (IOException e) {
+                        Log.d(LOG_TAG, "StartReadThread: disconnected", e);
+                    }                    
+                }
+            }
+        };
+   //     ghifile.start();
+        Control.stct.bluetoothSocket = bluetoothSocket;
+        Log.d(LOG_TAG, "StartReadThread: stct");
+        Control.stct.start();
+        Log.d(LOG_TAG, "StartReadThread: start");
+    }
+    public static void writeToFile(byte[] buffer){
+        String state = android.os.Environment.getExternalStorageState();
+        try{
+        if(state.equals(android.os.Environment.MEDIA_MOUNTED))   
+        { 
+            String sdcard_path = Environment.getExternalStorageDirectory().getAbsolutePath(); 
+            String file_path = sdcard_path; 
+            Log.d("FUFO",file_path);
+                FileOutputStream os = new FileOutputStream(file_path + "/" + "status.txt",true);
+                os.write(buffer);
+                os.close(); 
+        }
+    }catch(Exception e){
+        e.getMessage();
+    }
+    }
 }
