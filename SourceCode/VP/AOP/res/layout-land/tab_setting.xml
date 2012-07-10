@@ -48,18 +48,6 @@
     android:textColor="@color/red"/>   
       
     </LinearLayout>
- 
-    
-
-<View
-    android:layout_width= "1dip"
-    android:layout_height="fill_parent"
-    android:layout_marginLeft = "20px"
-    android:layout_marginRight = "20px"
-    android:layout_marginTop = "20px"
-    android:layout_marginBottom = "20px"
-    android:background="#FF909090" />
-    
     <LinearLayout
     android:orientation="vertical"
     android:layout_width="wrap_content"
@@ -98,7 +86,4 @@
     android:text = "Disconnected!"
     android:textColor="@color/red"/> 
     </LinearLayout>
- 
-   
-
 </LinearLayout>
