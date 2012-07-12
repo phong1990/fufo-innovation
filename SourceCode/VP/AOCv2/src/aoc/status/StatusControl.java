@@ -52,11 +52,11 @@ public class StatusControl extends Thread {
      * This method is called when this thread starts.
      */
     public void run(){
-        
         try {
             while(true){
             updateStatusOnScreen(pitchAngle,rollAngle);
-          //  waitStatusFromeAOP();
+            waitStatusFromeAOP();
+            
             }
         } catch (Exception ex) {
             // TODO Auto-generated catch block
@@ -68,30 +68,34 @@ public class StatusControl extends Thread {
      * This method uses to receive status from FUFO via TCP socket and update it to screen
      */
     public void waitStatusFromeAOP() throws IOException{
-        
+        System.out.print( " : " + System.currentTimeMillis() + " : " );
             in = new BufferedReader(new InputStreamReader(
                     statusSocket.getInputStream()));
+            System.out.print( " : " + System.currentTimeMillis() + " : " );
             statusMessage = in.readLine();
+            System.out.print( " : " + System.currentTimeMillis() + " : " );
             sm = new StatusMessage();
+            System.out.print( " : " + System.currentTimeMillis() + " : " );
             sm.getStatus(statusMessage);
+            System.out.print( " : " + System.currentTimeMillis() + " : " );
             pitchAngle = sm.pitchAngle;
+            System.out.print( " : " + System.currentTimeMillis() + " : " );
             rollAngle = sm.rollAngle;
+            System.out.println( " : " + System.currentTimeMillis() + " : " );
     }
     
     /*
      * This method uses to update status on screen when new status receive
      */
     public void updateStatusOnScreen(double PitchAngle,double RollAngle){
-    //    aoc.lb_ai.PitchAngle = PitchAngle;
-     //   aoc.lb_ai.PitchAngle = RollAngle;
+        aoc.lb_ai.PitchAngle = PitchAngle;
+        aoc.lb_ai.RollAngle = RollAngle/100;
         try {
-            this.sleep(500);
-        } catch (InterruptedException ex) {
+         //   StatusControl.sleep(200);
+        } catch (Exception ex) {
             // TODO Auto-generated catch block
             ex.printStackTrace();
         }
-        aoc.lb_ai.PitchAngle += 2; 
-        aoc.lb_ai.RollAngle += 0.05;
         aoc.frame.repaint();
     }
 

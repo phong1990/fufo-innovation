@@ -19,36 +19,35 @@
 package aoc.status;
 
 /**
- * This class is uses to get status from message received from phone 
- * via TCP socket and set message to send to computer. The message type 
- * is String containing two first characters is horizontal status and two continuous 
- * characters is vertical status.
- * @author khoinguyen67
+ * This class is uses to get status from message received from phone via TCP socket and set message to send to computer.
+ * The message type is String containing two first characters is horizontal status and two continuous characters is
+ * vertical status.
  * 
+ * @author khoinguyen67
  */
 public class StatusMessage {
 
-    public int hoStatus = 0 ;                     //Initiate horizontal status 
-    public int veStatus = 0 ;                     //Initiate vertical status
-    public String statusMessage;                  //Message receive via TCP socket 
+    public int hoStatus = 0; // Initiate horizontal status
+    public int veStatus = 0; // Initiate vertical status
+    public String statusMessage; // Message receive via TCP socket
 
     /*
-     * This method uses to create message from horizontal status and vertical status. 
+     * This method uses to create message from horizontal status and vertical status.
      */
-    public String setStatusMessage(int hoStatus, int veStatus){
+    public String setStatusMessage(int hoStatus, int veStatus) {
 
-        statusMessage = Integer.toString(hoStatus) + Integer.toString(veStatus) ;
+        statusMessage = Integer.toString(hoStatus) + Integer.toString(veStatus);
         return statusMessage;
     }
 
     /*
      * This method uses to get horizontal status and vertical status from message.
      */
-    public void getStatus(String message){
-        
+    public void getStatus(String message) {
+
         try {
-            hoStatus = Integer.parseInt(message.substring(0,2));
-            veStatus = Integer.parseInt(message.substring(2,4));          
+            hoStatus = Integer.parseInt(message.substring(0, 2));
+            veStatus = Integer.parseInt(message.substring(2, 4));
         } catch (Exception ex) {
             // TODO Auto-generated catch block
             ex.printStackTrace();

@@ -108,6 +108,7 @@ public class SettingActivity extends Activity{
                     et_IpServer.setEnabled(false); 
                     Control.cmct.commandSocket = tcpSocket;
                     Control.stct.statusSocket = tcpSocket;
+                  //  Control.stct.start();
                 } else {
                     tcpSocket.close();
                     tcpSocket = null;

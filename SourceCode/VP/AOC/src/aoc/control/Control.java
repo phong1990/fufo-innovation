@@ -18,58 +18,52 @@
  */
 package aoc.control;
 
-import aoc.gui.*;
-import aoc.status.StatusControl;
-import aoc.video.VideoControl;
-
 import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.geom.Line2D;
 import java.net.ServerSocket;
 import java.net.Socket;
+
 import aoc.command.CommandControl;
+import aoc.gui.AOC;
 
 /**
- * This class is main class uses to control all of threads and GUI
- *  in application on computer.
+ * This class is main class uses to control all of threads and GUI in application on computer.
+ * 
  * @author khoinguyen67
- *
  */
 public class Control {
-    
-    private static ServerSocket serverSocket = null;               //Initiate ServerSocket to create server
-    private static Socket tcpSocket = null;                        //Used to send command and receive status
-    public static final int PORT = 8888;                           //Port of server
-    
+
+    private static ServerSocket serverSocket = null; // Initiate ServerSocket to create server
+    private static Socket tcpSocket = null; // Used to send command and receive status
+    public static final int PORT = 8888; // Port of server
+
     /*
-     * Used to start GUI and threads 
+     * Used to start GUI and threads
      */
-    public static void main(String args[]){
-        try{
-        AOC aoc = new AOC();                                   //Initiate GUI aoc
-       // aoc.frmFufo.setVisible(true);                          //Set components in GUI can visible
-        
-      //aoc.frmFufo.paint(aoc.frmFufo.getGraphics());
-       aoc.paint(AOC.panel.getGraphics()) ;
-     //  aoc.frmFufo.setVisible(true);
-        serverSocket = new ServerSocket(PORT);                //Start server
-        tcpSocket =  serverSocket.accept();                    //Wait for client connecting
-        aoc.panel_4.setBackground(Color.GREEN);                //Set color for panel of gui when connecting successful
-        aoc.lblConnectedToFufo.setText("Connected to FUFO!");  //Set text for label in GUI when connecting successful
-        
-        
-       // StatusControl stct = new StatusControl(tcpSocket);
-       // stct.start();
-       
-        //Initiate thread to control command with 2 arguments TCP socket and  GUI aoc 
-      //  CommandControl cmct = new CommandControl(tcpSocket, aoc);    
-      //  cmct.start();                                            //Start this thread.
-               
-      //  VideoControl vdct = new VideoControl(aoc);
-      // vdct.start();
-        
-        }catch(Exception e){
+    public static void main(String args[]) {
+        try {
+            AOC aoc = new AOC(); // Initiate GUI aoc
+            // aoc.frmFufo.setVisible(true); //Set components in GUI can visible
+
+            // aoc.frmFufo.paint(aoc.frmFufo.getGraphics());
+            aoc.paint(AOC.panel.getGraphics());
+            // aoc.frmFufo.setVisible(true);
+            serverSocket = new ServerSocket(PORT); // Start server
+            tcpSocket = serverSocket.accept(); // Wait for client connecting
+            aoc.panel_4.setBackground(Color.GREEN); // Set color for panel of gui when connecting successful
+            aoc.lblConnectedToFufo.setText("Connected to FUFO!"); // Set text for label in GUI when connecting
+                                                                  // successful
+
+            // StatusControl stct = new StatusControl(tcpSocket);
+            // stct.start();
+
+            // Initiate thread to control command with 2 arguments TCP socket and GUI aoc
+             CommandControl cmct = new CommandControl(tcpSocket, aoc);
+             cmct.start(); //Start this thread.
+
+            // VideoControl vdct = new VideoControl(aoc);
+            // vdct.start();
+
+        } catch (Exception e) {
             System.out.print(e.getMessage());
         }
     }

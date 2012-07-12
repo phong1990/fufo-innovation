@@ -20,27 +20,27 @@ package aoc.command;
 
 /**
  * This class is not used.
- * @author khoinguyen67
  * 
+ * @author khoinguyen67
  */
 public class CommandMessage {
-    
+
     private int command;
     private String commandMessage;
-    public CommandMessage(int command){
+    public CommandMessage(int command) {
         this.command = command;
     }
-    
-    public String setCommandMessage(int command){
+
+    public String setCommandMessage(int command) {
         commandMessage = "FU" + command + "FO";
         return commandMessage;
     }
-    
-    public int getCommand(String message){
+
+    public int getCommand(String message) {
         try {
-            if(message.startsWith("FU") && message.endsWith("FO")) {
-                String temp = message.substring(2,4);
-                command = Integer.parseInt(temp);               
+            if (message.startsWith("FU") && message.endsWith("FO")) {
+                String temp = message.substring(2, 4);
+                command = Integer.parseInt(temp);
             }
         } catch (Exception ex) {
             // TODO Auto-generated catch block
