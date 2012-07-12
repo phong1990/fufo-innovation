@@ -17,10 +17,12 @@ unsigned char comandfromBluetooth;
 float P = 0;
 float I = 0;
 float D = 0;
-float e = 0;
-float total_e = 0;
-float Angle_sum;
-float KpTheta = 0.1;
+float eR = 0;
+float eP = 0;
+float total_eR = 0;
+float total_eP = 0;
+float AngleR_sum, AngleP_sum;
+float KpTheta = 1;
 unsigned int userInput;
 
 
@@ -41,7 +43,8 @@ void controlFUFO(void){
 //		setSetpoint(0,0,0);
 //	} else if (Down == 1){
 //		setSetpoint(0,0,0);
-//	} else if(Forward == 1){
+//	} else 
+//	if(Forward == 1){
 //		setSetpoint(20,0,0);
 //	} else if (Backward == 1){
 //		setSetpoint(-20,0,0);
@@ -49,8 +52,8 @@ void controlFUFO(void){
 //		setSetpoint(0,20,0);
 //	} else if (Right == 1){
 //		setSetpoint(0,-20,0);
-//	} else 
-	setSetpoint(0,20,0);
+//	} else	
+	setSetpoint(0,0,0);
 }
 
 void checkConnection(void){
@@ -87,13 +90,13 @@ void getStartInstruction(void){
 	fufoOutputChar("qua  ");
 	fufoDelayMs(500);
 	if(comandfromBluetooth == 'f'){ // ky tu f bao Start
-		fufoOutputChar("dc  ");
-		fufoDelayMs(200);
 		resetSensor();
 		resetPWM();
 		resetInstruction();
 		setState(Setup);
 		fufoCmd4LCD(LCD_CLEAR);
+		fufoOutputChar("dc  ");
+		fufoDelayMs(200);
 	} else {
 		fufoCmd4LCD(LCD_HOMEL2);
 		fufoOutputChar("loi");
@@ -138,12 +141,12 @@ void getInstruction(void){
 		}
 	} else if(comandfromBluetooth == 'w'){
 		Forward = 1;
-		KpTheta += 0.1;
+		KpTheta += 1;
 //		PWM_Motor1 -= 1;
 //		PWM_Motor3 += 1;
 	} else if(comandfromBluetooth == 's'){
 		Backward = 1;
-		KpTheta -= 0.1;
+		KpTheta -= 1;
 //		PWM_Motor1 += 1;
 //		PWM_Motor3 -= 1;
 	} else if(comandfromBluetooth == 'a'){
@@ -163,12 +166,17 @@ void getInstruction(void){
 		R_Left = 1;
 		PWM1 -= 1;
 	} else if(comandfromBluetooth == 'f'){
-			pidEnable = 1;
+		if(pidEnable == 1){
+			pidEnable = 0;
+			T2CONbits.TON = 0;
+			setState(Landing);
+		} else 	pidEnable = 1;
+			
 	}
 	if(comandfromBluetooth == 'f' || Up == 1 || Down == 1 || R_Left == 1 || R_Right == 1 || Left == 1 || Right == 1 || Forward == 1 || Backward == 1){
 		userInput = 1;
 	} else userInput = 0;
-	setPID4(KpTheta*10);
+	setPID4(KpTheta);
 }
 
 void setSetpoint(float Phi, float Theta, float Psi){
@@ -181,114 +189,85 @@ void setSetpoint(float Phi, float Theta, float Psi){
 	PWM_Motor2 = Pitch_sum - Yaw_sum;
 	PWM_Motor3 = - Roll_sum + Yaw_sum;
 	PWM_Motor4 = - Pitch_sum - Yaw_sum;
-	
-//	if(PWM_Motor1 < 0){
-//		fufoSendCharUART('-');
-//		fufoSendIntUART(PWM_Motor1);
-//		fufoSendCharUART(',');
-//	} else {
-//		fufoSendIntUART(PWM_Motor1);
-//		fufoSendCharUART(',');
-//	}
-//	if(PWM_Motor2 < 0){
-//		fufoSendCharUART('-');
-//		fufoSendIntUART(PWM_Motor2);
-//		fufoSendCharUART(',');
-//	} else {
-//		fufoSendIntUART(PWM_Motor2);
-//		fufoSendCharUART(',');
-//	}
-	
-
-//	if(PWM_Motor3 < 0){
-//		fufoSendCharUART('-');
-//		fufoSendIntUART(PWM_Motor3);
-//		fufoSendCharUART(',');
-//	} else {
-//		fufoSendIntUART(PWM_Motor3);
-//		fufoSendCharUART(',');
-//	}
-//	if(PWM_Motor4 < 0){
-//		fufoSendCharUART('-');
-//		fufoSendIntUART(PWM_Motor4);
-//	} else {
-//		fufoSendIntUART(PWM_Motor4);
-//	}
-//	
-//	fufoSendCharUART('\r');
-//	fufoSendCharUART('\n');
 
 	setPWM1(thrustRate, PWM_Motor1, PWM1);
 	setPWM2(thrustRate, PWM_Motor2, 0);
 	setPWM3(thrustRate, PWM_Motor3, PWM3);
 	setPWM4(thrustRate, PWM_Motor4, 0);
+	
+//	fufoSendIntUART(PDC1);
+//	fufoSendCharUART(';');
+//
+//	fufoSendIntUART(PDC3);
+//	fufoSendCharUART(';');
+//
+//	fufoSendIntUART(KpTheta);
+//	fufoSendCharUART(';');
+//	
+//	fufoSendCharUART('\r');
+//	fufoSendCharUART('\n');
 }
 
 void calcAngle_sum(float phiDesire, float thetaDesire, float psiDesire){
 	float phiAct, thetaAct, psiAct;
 	phiAct = getPhiAngle();
 	thetaAct = getThetaAngle();
-	if(thetaAct < 0){
-		fufoSendCharUART('-');
-		fufoSendIntUART((int)thetaAct);
-		fufoSendCharUART(';');
-	} else {
-		fufoSendIntUART((int)thetaAct);
-		fufoSendCharUART(';');
-	}
-	fufoSendIntUART(PDC1);
-	fufoSendCharUART(';');
-//	fufoSendIntUART(PDC3);
-//	fufoSendCharUART(';');
-//
-//	fufoSendIntUART(KpTheta*10);
-//	fufoSendCharUART(';');
 
-//	fufoSendIntUART(KpTheta);
-//
-//	if(PWM_Motor3 < 0){
+// phan cua Nguyen
+//	if(phiAct < 0){
 //		fufoSendCharUART('-');
-//		fufoSendIntUART(PWM_Motor3);
+//		fufoSendIntUART(phiAct);
 //		fufoSendCharUART(',');
 //	} else {
-//		fufoSendIntUART(PWM_Motor3);
+//		fufoSendIntUART(phiAct);
 //		fufoSendCharUART(',');
 //	}
-//	if(PWM_Motor4 < 0){
+//	if(thetaAct < 0){
 //		fufoSendCharUART('-');
-//		fufoSendIntUART(PWM_Motor4);
+//		fufoSendIntUART(thetaAct);
+//		fufoSendCharUART(';');
 //	} else {
-//		fufoSendIntUART(PWM_Motor4);
+//		fufoSendIntUART(thetaAct);
+//		fufoSendCharUART(';');
 //	}
-	
+	fufoSendCharUART('\r');
+	fufoSendCharUART('\n');
+
+//	if(thetaAct < 0){
+//		fufoSendCharUART('-');
+//		fufoSendIntUART((int)thetaAct);
+//		fufoSendCharUART(';');
+//	} else {
+//		fufoSendIntUART((int)thetaAct);
+//		fufoSendCharUART(';');
+//	}
+
 	//psiAct = getPsiAngle();
-	//Pitch_sum = calcAngle(phiDesire, phiAct, KpPhi, KiPhi, KdPhi);
+	//Pitch_sum = calcPitchAngle(phiDesire, phiAct, KpPhi, KiPhi, KdPhi);
 	Pitch_sum = 0;
 	Roll_sum = calcRollAngle(thetaDesire, thetaAct, KpTheta, KiTheta, KdTheta);
 	//Yaw_sum = calcAngle(psiDesire, psiAct, KpPsi, KiPsi, KdPsi);
 	Yaw_sum = 0;
-	fufoSendCharUART('\r');
-	fufoSendCharUART('\n');
 }
 
-float calcRollAngle(float desire_Angle, float actual_Angle, float KpR, float KiR, float KdR){
-	e = desire_Angle - actual_Angle;
-//	if (e < 0){
-//		fufoSendCharUART('-');
-//		fufoSendIntUART(e);
-//		fufoSendCharUART(',');
-//	} else {
-//		fufoSendIntUART(e);
-//		fufoSendCharUART(',');
-//	}
-//	fufoSendIntUART(PDC3);
-//	fufoSendCharUART(';');
-	total_e = total_e + e;
-	P = KpR*e;
-	I = KiR*total_e*0.01;
+float calcRollAngle(float desireR_Angle, float actualR_Angle, float KpR, float KiR, float KdR){
+	eR = desireR_Angle - actualR_Angle;
+	total_eR = total_eR + eR;
+	P = KpR*eR;
+	I = KiR*total_eR*0.01;
 	D = KdR*gyro_output;
-	Angle_sum = P + I + D;
-	return Angle_sum;
+	AngleR_sum = P + I + D;
+	return AngleR_sum;
+}
+
+float calcPitchAngle(float desireP_Angle, float actualP_Angle, float KpP, float KiP, float KdP){
+	eP = desireP_Angle - actualP_Angle;
+	total_eP = total_eP + eP;
+	P = KpP*eP;
+	I = KiP*total_eP*0.01;
+	D = KdP*gyro_output;
+	AngleP_sum = P + I + D;
+	return AngleP_sum;
 }
 
 void resetInstruction(void){
@@ -307,6 +286,8 @@ void resetSensor(void){
 	Pitch_sum = 0;
 	Roll_sum = 0;
 	gyro_output = 0;
+	total_eR = 0;
+	total_eP = 0;
 }
 
 void resetPWM(void){

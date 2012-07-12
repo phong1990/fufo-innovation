@@ -47,19 +47,19 @@ void initPWMSoftware(void){
 }
 
 void setPWM1(unsigned int Thrust1, int PID_Motor1, int motor1){
-	PDC1 = (initDCValue + Thrust1*PWM_per_thrust + PID_Motor1 + motor1*40)*2 + PWM_per_thrust*2;
+	PDC1 = (initDCValue + Thrust1*PWM_per_thrust + PID_Motor1 + motor1*20)*2 + PWM_per_thrust*2;
 }
 
 void setPWM2(unsigned int Thrust2, int PID_Motor2, int motor2){
-	PDC2 = (initDCValue + Thrust2*PWM_per_thrust + PID_Motor2 + motor2*40)*2;
+	PDC2 = (initDCValue + Thrust2*PWM_per_thrust + PID_Motor2 + motor2*20)*2;
 }
 
 void setPWM3(unsigned int Thrust3, int PID_Motor3, int motor3){
-	PDC3 = (initDCValue + Thrust3*PWM_per_thrust + PID_Motor3 + motor3*40)*2 + PWM_per_thrust*24;
+	PDC3 = (initDCValue + Thrust3*PWM_per_thrust + PID_Motor3 + motor3*20)*2 + PWM_per_thrust*24;
 }
 
 void setPWM4(unsigned int Thrust4, int PID_Motor4, int motor4){
-	PR4_value = initDCValue + Thrust4*PWM_per_thrust + PID_Motor4 + motor4*40 + PWM_per_thrust*7;
+	PR4_value = initDCValue + Thrust4*PWM_per_thrust + PID_Motor4 + motor4*20 + PWM_per_thrust*7;
 }
 
 void __attribute__((__interrupt__ , auto_psv)) _T4Interrupt (void)

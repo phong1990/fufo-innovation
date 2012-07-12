@@ -22,16 +22,16 @@ void CalcFirstAngle(void){
 																				// become pessistant with the Zero point of the inertial frame, according to 
 																				// the Accelerometer.
 	thetaComp = k*(thetaAngle + Rx*0.01) + (1 - k)*thetaAngle;
-	if(thetaComp < 0){
-		fufoSendCharUART('-');
-		fufoSendIntUART(thetaComp);
-		fufoSendCharUART(';');
-	} else {
-		fufoSendIntUART(thetaComp);
-		fufoSendCharUART(';');
-	}
-	fufoSendCharUART('\r');
-	fufoSendCharUART('\n');
+//	if(thetaComp < 0){
+//		fufoSendCharUART('-');
+//		fufoSendIntUART(thetaComp);
+//		fufoSendCharUART(';');
+//	} else {
+//		fufoSendIntUART(thetaComp);
+//		fufoSendCharUART(';');
+//	}
+//	fufoSendCharUART('\r');
+//	fufoSendCharUART('\n');
 }
 
 void CompFilter(void){
@@ -94,7 +94,7 @@ void fufoGetAngleGyros(void){
 	} else {
 		Rxm = (dataGyroArray[0] - 65536 );
 	}
-	
+
 	if(dataGyroArray[1] < 32768) {
 		Rym = dataGyroArray[1];
 	} else {
@@ -106,14 +106,19 @@ void fufoGetAngleGyros(void){
 	} else {
 		Rzm = (dataGyroArray[2] - 65536);
 	}
-	Rx = (float)(Rxm - R0x) * convertGyro;
-	Ry = (float)(Rym - R0y) * convertGyro;
-	Rz = (float)(Rzm - R0z) * convertGyro ;
+	Rx = (float)1000*(Rxm - R0x) * convertGyro;
+	Ry = (float)1000*(Rym - R0y) * convertGyro;
+	Rz = (float)1000*(Rzm - R0z) * convertGyro;
+	
+	if(Rx < 0){
+		fufoSendCharUART('-');
+	} 
+	fufoSendLongUART((long)Rx);
+	fufoSendCharUART(';');
 }
 
 void fufoGetAngleAccel(void){
 	fufoReadAccel(dataAccelArray);
-	
     if(dataAccelArray[0] < 4096) {
 		Ax = (float)dataAccelArray[0]*convertAccel;	
 	} else {
@@ -132,7 +137,16 @@ void fufoGetAngleAccel(void){
 		Az = ((float)dataAccelArray[2] - 8192)*convertAccel;
 			
 	}
-	phiAngle = (180 / 3.1415926)*atan2(-Ax, sqrt(pow(Ay, 2) + pow(Az, 2)));
+	phiAngle = 1000*(180 / 3.1415926)*atan2(-Ax, sqrt(pow(Ay, 2) + pow(Az, 2)));
 
-	thetaAngle = (180 / 3.1415926)*atan2(Ay, sqrt(pow(Az, 2) + 0.01 * pow(Ax, 2)));
+	thetaAngle = 1000*(180 / 3.1415926)*atan2(Ay, sqrt(pow(Az, 2) + 0.01 * pow(Ax, 2)));
+	
+	if(thetaAngle < 0){
+		fufoSendCharUART('-');
+		fufoSendLongUART((long)thetaAngle);
+		fufoSendCharUART(';');
+	} else {
+		fufoSendLongUART((long)thetaAngle);
+		fufoSendCharUART(';');
+	}
 }

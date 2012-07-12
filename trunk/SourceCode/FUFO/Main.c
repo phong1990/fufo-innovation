@@ -79,7 +79,6 @@ int main(void) {
 					fufoCmd4LCD(LCD_CLEAR);
 					fufoOutputChar("Thrust :");
 					fufoOutputInt(getThrustRate());
-					//fufoOutputInt(Fcy/Fpwm - 1);
 					fufoCmd4LCD(LCD_HOMEL2);
 					//fufoOutputInt(calcTimeMS(1));
 //					fufoOutputChar("Kp Theta: ");
@@ -113,18 +112,6 @@ int main(void) {
 			case End: 
 					break;
 		}
-
-
-//		fufoCmd4LCD(LCD_CLEAR);
-//		fufoDelayMs(5);
-//		fufoOutputChar("Thrust: ");
-//		fufoOutputInt(getThrustRate());
-//		fufoCmd4LCD(LCD_HOMEL2);
-//		fufoOutputInt(PDC2);
-//		if (userInputFlag == 0){
-//			getInstruction();
-//			userInputFlag = getUserInput();
-//		}
 	}
 }
 
@@ -155,7 +142,7 @@ void initFUFO(void){
 	fufoDelayMs(200);
 	fufoOutputChar("...");
 	initTMR2();
-//	initTMR3();
+	initTMR3();
 //	fufoInitBluetooth(receiOK);
 //	fufoDelayMs(200);
 	setState(Waiting_for_connection);
@@ -181,26 +168,12 @@ void __attribute__((__interrupt__ , auto_psv)) _T2Interrupt (void)
 {	
 	IFS0bits.T2IF = 0;	// clear interrupt flag manually
 	TMR2 = 0;
-//	TMR3 = 0;
-	//T2CONbits.TON = 0;		//timer 2 off
+	TMR3 = 0;
 	controlFUFO();
-//	flag = TMR2;
-//	fufoSendIntUART(flag);
-//	fufoSendCharUART(';');
-//	i++;
-//	fufoSendIntUART(i);
-//	fufoSendCharUART(';');
-//	fufoSendCharUART('\r');
-//	fufoSendCharUART('\n');
-//	if(i == 6000) T2CONbits.TON = 0;
-	
 	if(userInputFlag == 1){
-//		
 		_RE8 = 1;
 		index++;
 		if(index == 50){
-//			fufoCmd4LCD(LCD_CLEAR);
-//			fufoOutputInt(PDC2);
 			index = 0;
 			userInputFlag = 0;
 			if (_RE8 == 1){
@@ -208,7 +181,7 @@ void __attribute__((__interrupt__ , auto_psv)) _T2Interrupt (void)
 			} else _RE8 = 1;
 		}
 	}
-	//T2CONbits.TON = 1;
+//	//T2CONbits.TON = 1;
 //	fufoSendCharUART('k');
 //	fufoSendIntUART(TMR3);
 //	fufoSendCharUART('k');
