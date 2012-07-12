@@ -4,5 +4,8 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="lib" path="/Demo-CommandControl/miglayout15-swing.jar" sourcepath="/Demo-CommandControl/miglayout-src.zip"/>
+	<classpathentry kind="lib" path="C:/Users/khoinguyen67/Downloads/java-image-scaling-0.8.5.jar"/>
+	<classpathentry kind="lib" path="C:/Users/khoinguyen67/Downloads/java-image-scaling-0.8.5-javadoc.jar"/>
+	<classpathentry kind="lib" path="C:/Users/khoinguyen67/Downloads/java-image-scaling-0.8.5-sources.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

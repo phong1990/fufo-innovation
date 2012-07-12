@@ -89,10 +89,12 @@ public class CommandControl extends Thread implements OnClickListener {
      */
     public void waitCommandFromeAOC() throws IOException{
         Log.d("cmct","Da vo wait");
-        
+        Log.d("cmct", " : " + System.currentTimeMillis() + " : " );
         in = new BufferedReader(new InputStreamReader(
                 commandSocket.getInputStream()));
+        Log.d("cmct", " : " + System.currentTimeMillis() + " : " );
         command = Integer.parseInt(in.readLine());
+        Log.d("cmct", " : " + System.currentTimeMillis() + " : " );
         switch(command){
             case 37:
                 controlByte = 'n';

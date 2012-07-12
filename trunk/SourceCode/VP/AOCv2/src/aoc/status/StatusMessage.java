@@ -35,9 +35,9 @@ public class StatusMessage {
     /*
      * This method uses to create message from horizontal status and vertical status. 
      */
-    public String setStatusMessage(int hoStatus, int veStatus){
+    public String setStatusMessage(int pitchAngle, int rollAngle){
 
-        statusMessage = Integer.toString(hoStatus) + Integer.toString(veStatus) ;
+        statusMessage = Integer.toString(pitchAngle) + Integer.toString(rollAngle) ;
         return statusMessage;
     }
 
@@ -47,8 +47,11 @@ public class StatusMessage {
     public void getStatus(String message){
         
         try {
-            pitchAngle = Integer.parseInt(message.substring(0,2));
-            rollAngle = Integer.parseInt(message.substring(2,4));          
+            String[] abc = message.split(",");
+            pitchAngle = Integer.parseInt(abc[0]);
+            rollAngle = Integer.parseInt(abc[1]); 
+         //   pitchAngle = Integer.parseInt(message.substring(0,2));
+          //  rollAngle = Integer.parseInt(message.substring(2,4));          
         } catch (Exception ex) {
             // TODO Auto-generated catch block
             ex.printStackTrace();

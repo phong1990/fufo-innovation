@@ -20,55 +20,57 @@ package aoc.video;
 
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
+
 import javax.swing.ImageIcon;
-import javax.swing.JLabel;
+
 import aoc.gui.AOC;
 
 /**
  * @author khoinguyen67
- *
  */
 public class VideoControl extends Thread {
-    
+
     AOC aoc;
     DatagramSocket udpSocket;
     DatagramPacket udpPackage;
     UDPpackage pk;
     int packNum;
-    
+
     byte[] frameBuffer = new byte[15000];
     byte[] pacBuffer = new byte[15001];
-   
-    public VideoControl(){ };
-    
-    public VideoControl(AOC aoc){
-        
+
+    public VideoControl() {
+    };
+
+    public VideoControl(AOC aoc) {
+
         this.aoc = aoc;
     }
- 
+
     /*
      * This method is called when this thread starts.
      */
-    public void run(){
+    @Override
+    public void run() {
         try {
             udpSocket = new DatagramSocket(4444);
             udpPackage = new DatagramPacket(pacBuffer, pacBuffer.length);
-            
-            while(true){
+
+            while (true) {
                 udpSocket.receive(udpPackage);
                 showOnScreen(udpPackage);
                 System.out.println("received!");
             }
-       
+
         } catch (Exception ex) {
             // TODO Auto-generated catch block
             ex.printStackTrace();
         }
     }
-    
-    public void showOnScreen(DatagramPacket udpPackage){
-        
-        frameBuffer = pacBuffer;       
-        AOC.lblFramePicture.setIcon(new ImageIcon(frameBuffer));  
+
+    public void showOnScreen(DatagramPacket udpPackage) {
+
+        frameBuffer = pacBuffer;
+        AOC.lblFramePicture.setIcon(new ImageIcon(frameBuffer));
     }
 }
