@@ -1,5 +1,5 @@
 //Communication dspic30f4012 with BlueTooth module (HC-06-S) in UART
-#define UARTBAUD 38400
+#define UARTBAUD 111111.1
 #define lineU1() fufoSendIntUART('\r');fufoSendIntUART('\n')
 
 void fufoInitUART(void);
