@@ -73,12 +73,13 @@ public class StatusControl extends Thread{
 
     public void waitStatusFromFUFO(){
         try {
-            
+            Log.d("stct", " : " + System.currentTimeMillis() + " : " );
             int bread = bluetoothSocket.getInputStream().read(buffer);
+            Log.d("stct", " : " + System.currentTimeMillis() + " : " );
             buf = new byte[bread];
             System.arraycopy(buffer, 0, buf, 0, bread);
             writeToFile(buf);
-            
+            Log.d("stct",buf.length+ " : " + System.currentTimeMillis() + " : \n" );
           
         } catch (IOException ex) {
             // TODO Auto-generated catch block
@@ -90,10 +91,17 @@ public class StatusControl extends Thread{
     
         String temp = new String(buf);
         String[] arrayMessage = temp.split(";");
-          for(int i = 1; i < arrayMessage.length-1; i++){
+      //    for(int i = 1; i < arrayMessage.length-1; i++){
              
-              if (statusSocket != null)
-                out.println(arrayMessage[i]);
+              if (statusSocket != null){
+                try {
+                  //  StatusControl.sleep(200);
+                } catch (Exception ex) {
+                    // TODO Auto-generated catch block
+                    ex.printStackTrace();
+                }
+                out.println(arrayMessage[1]);
+              //  out.println(arrayMessage[i]);
           }
     }
 

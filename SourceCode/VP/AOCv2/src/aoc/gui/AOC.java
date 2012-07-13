@@ -18,20 +18,14 @@
  */
 package aoc.gui;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Point;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.awt.geom.Line2D;
 import java.io.File;
 import java.io.IOException;
-
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -41,15 +35,12 @@ import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 
-import aoc.status.StatusControl;
-
 /**
  * @author khoinguyen67
  *
  */
 public class AOC{
-    
- 
+   
     public JFrame frame;
     JLayeredPane pane;
     public JLabel lb_background, lb_circle, lb_status, lb_picture;
@@ -58,6 +49,7 @@ public class AOC{
     bt_up, bt_down, bt_rotateLeft, bt_rotateRight;
     JPanel panel;
     int flag = 0;
+    
     public AOC(){
 
         frame = new JFrame();
@@ -65,18 +57,13 @@ public class AOC{
         frame.setTitle("FUFO APP");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setResizable(false);
+        frame.setVisible(true);
         pane = new JLayeredPane();
         pane.setPreferredSize(new Dimension(1240 , 690));
-
         lb_background = new JLabel(new ImageIcon("pic\\interface.png"));
         pane.add(lb_background,1);
         lb_background.setBounds(0, 0, 1240 , 690);
 
-        // lb_ai = new JLabel(new ImageIcon("pic\\ai2.png"));
-        //   pane.add(lb_ai,2);
-        // lb_ai.setBounds(0, -110,250, 720);
-        //lb_ai.setBounds(10, 150,200, 200);
-        
             try {
                 lb_ai = new AILabel();
             } catch (IOException ex) {
@@ -85,8 +72,6 @@ public class AOC{
             }
  
         pane.add(lb_ai,2);
-
-        //vi tri tam lo thung: 110,250
         lb_circle = new JLabel(new ImageIcon("pic\\Altitude_Indicator.png"));
         pane.add(lb_circle,0);
         lb_circle.setBounds(10, 150,200, 200);
@@ -109,7 +94,9 @@ public class AOC{
         bt_rotateLeft = createButton("bt_rotateLeft","pic\\bt_rotateLeft_Normal.png", 1050, 380, 60, 60);
         bt_rotateRight = createButton("bt_rotateRight","pic\\bt_rotateRight_Normal.png", 1165, 380, 60, 60);
         frame.add(pane);      
+
     }
+    
     MouseListener listener = new MouseListener() {
 
         @Override
@@ -147,27 +134,6 @@ public class AOC{
                 lb_ai.PitchAngle = 0;
              frame.repaint();
          }
-            Thread t = new Thread(){
-                public void run(){
-                    while(true){
-                    try {
-                        sleep(10);
-                    } catch (InterruptedException ex) {
-                        // TODO Auto-generated catch block
-                        ex.printStackTrace();
-                    }
-                    lb_ai.RollAngle += 0.01;
-                    lb_ai.PitchAngle += 0.1;
-                    flag ++;
-                    frame.repaint();
-                    if(lb_ai.RollAngle == 1 || lb_ai.PitchAngle == 50){
-                        lb_ai.RollAngle = 0 ;
-                        lb_ai.PitchAngle =0;
-                    }
-                }
-                }
-            };
-        //    t.start();        
         }
 
         @Override
@@ -211,6 +177,8 @@ public class AOC{
 
     public class AILabel extends JLabel {
 
+        /**  . */
+        private static final long serialVersionUID = 1L;
         Image image;
         public double PitchAngle = 0;   // Phi
         public double RollAngle = 0;    // Theta
