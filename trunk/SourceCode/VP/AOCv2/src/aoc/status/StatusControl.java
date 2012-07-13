@@ -30,20 +30,22 @@ import java.net.Socket;
  * 
  */
 public class StatusControl extends Thread {
+    
     //Create server socket to control command
     AOC aoc;                                  //Initiate GUI aoc.
     Socket statusSocket = null;               //Initiate Socket to receive status
     BufferedReader in;                        //Initiate BufferedReader to save status
     StatusMessage sm;
-    public double pitchAngle = 0 ;                    //Initiate Pitch Angle  
-    public double rollAngle = 0;                     //Initiate Roll Angle 
-    public String statusMessage;             //Status message receive from phone via TCP socket
+    public double pitchAngle = 0 ;            //Initiate Pitch Angle  
+    public double rollAngle = 0;              //Initiate Roll Angle 
+    public String statusMessage;              //Status message receive from phone via TCP socket
     
     //Constructor
     public StatusControl(){}
     
     //Constructor receive 2 arguments Socket to send command and aoc
     public StatusControl(Socket statusSocket, AOC aoc){
+        
         this.aoc = aoc;
         this.statusSocket = statusSocket;
     }
@@ -52,11 +54,13 @@ public class StatusControl extends Thread {
      * This method is called when this thread starts.
      */
     public void run(){
+        
         try {
+        
             while(true){
-            updateStatusOnScreen(pitchAngle,rollAngle);
-            waitStatusFromeAOP();
             
+                updateStatusOnScreen(pitchAngle,rollAngle);
+            waitStatusFromeAOP();
             }
         } catch (Exception ex) {
             // TODO Auto-generated catch block
@@ -68,12 +72,13 @@ public class StatusControl extends Thread {
      * This method uses to receive status from FUFO via TCP socket and update it to screen
      */
     public void waitStatusFromeAOP() throws IOException{
-        System.out.print( " : " + System.currentTimeMillis() + " : " );
+
+        //  System.out.print( " : " + System.currentTimeMillis() + " : " );
             in = new BufferedReader(new InputStreamReader(
                     statusSocket.getInputStream()));
-            System.out.print( " : " + System.currentTimeMillis() + " : " );
+      //      System.out.print( " : " + System.currentTimeMillis() + " : " );
             statusMessage = in.readLine();
-            System.out.print( " : " + System.currentTimeMillis() + " : " );
+      //      System.out.println( " : " + System.currentTimeMillis() + " : "+ statusMessage );
             sm = new StatusMessage();
             System.out.print( " : " + System.currentTimeMillis() + " : " );
             sm.getStatus(statusMessage);
@@ -88,16 +93,9 @@ public class StatusControl extends Thread {
      * This method uses to update status on screen when new status receive
      */
     public void updateStatusOnScreen(double PitchAngle,double RollAngle){
+
         aoc.lb_ai.PitchAngle = PitchAngle;
         aoc.lb_ai.RollAngle = RollAngle/100;
-        try {
-         //   StatusControl.sleep(200);
-        } catch (Exception ex) {
-            // TODO Auto-generated catch block
-            ex.printStackTrace();
-        }
         aoc.frame.repaint();
     }
-
-
 }

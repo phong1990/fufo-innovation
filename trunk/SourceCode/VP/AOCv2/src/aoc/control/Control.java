@@ -20,6 +20,8 @@ package aoc.control;
 
 import aoc.gui.*;
 import aoc.status.StatusControl;
+import aoc.video.VideoControl;
+
 import java.net.ServerSocket;
 import java.net.Socket;
 import javax.swing.ImageIcon;
@@ -42,30 +44,31 @@ public class Control {
      * Used to start GUI and threads 
      */
     public static void main(String args[]){
-        try{
-        AOC aoc = new AOC();                                   //Initiate GUI aoc
+        
+        try {
+            
+        AOC aoc = new AOC();                                    //Initiate GUI aoc
         aoc.frame.pack();
-        aoc.frame.setVisible(true);                          //Set components in GUI can visible
-        
-        serverSocket = new ServerSocket(PORT);                //Start server
-        tcpSocket =  serverSocket.accept();                    //Wait for client connecting
+        aoc.frame.setVisible(true);                             //Set components in GUI can visible       
+        serverSocket = new ServerSocket(PORT);                  //Start server
+        tcpSocket =  serverSocket.accept();                     //Wait for client connecting
         aoc.lb_status.setIcon(new ImageIcon("pic\\lb_status_Green.png"));  //Set color for panel of gui when connecting successful
-      //  aoc.lblConnectedToFufo.setText("Connected to FUFO!");  //Set text for label in GUI when connecting successful
-        
+        //aoc.lblConnectedToFufo.setText("Connected to FUFO!");  //Set text for label in GUI when connecting successful
         
         StatusControl stct = new StatusControl(tcpSocket, aoc);
         stct.start();
        
         //Initiate thread to control command with 2 arguments TCP socket and  GUI aoc 
         CommandControl cmct = new CommandControl(tcpSocket, aoc);    
-        cmct.setPriority(10);
-       // cmct.start();                                            //Start this thread.
+        //cmct.setPriority(10);
+        cmct.start();                                            //Start this thread.
                
-      /*  VideoControl vdct = new VideoControl(aoc);
-        vdct.setPriority(10);
-       vdct.start();*/
+        VideoControl vdct = new VideoControl(aoc);
+        //vdct.setPriority(10);
+        vdct.start();
         
         }catch(Exception e){
+        
             System.out.print(e.getMessage());
         }
     }
