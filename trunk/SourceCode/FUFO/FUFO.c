@@ -4,6 +4,7 @@ unsigned int mainState = 0;
 float phiActual = 0; 
 float thetaActual = 0;
 float psiActual = 0;
+float GyrosOutput = 0;
 int pid1 = 0;
 int pid2 = 0;
 int pid3 = 0;
@@ -72,4 +73,12 @@ void setPsiAngle(float Psi){
 
 float getPsiAngle(void){
 	return psiActual;
+}
+
+void setGyrosOutput(float Gyros){
+	GyrosOutput = Gyros;
+}
+
+float getGyrosOutput(void){
+	return GyrosOutput;
 }

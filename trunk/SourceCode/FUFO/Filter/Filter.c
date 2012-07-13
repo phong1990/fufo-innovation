@@ -39,6 +39,7 @@ void CompFilter(void){
 	fufoGetAngleGyros();
 	phiComp = k*(phiComp + Ry*0.01) + (1 - k)*phiAngle;
 	thetaComp = k*(thetaComp + Rx*0.01) + (1 - k)*thetaAngle;
+	setGyrosOutput(Rx);
 	setPhiAngle(phiComp);
 	setThetaAngle(thetaComp);
 	//setThetaAngle(thetaAngle);
@@ -77,7 +78,7 @@ void fufoGetRateAngle(void){
 			R0z = (int)(zIntG/idx100);	
 			idx100 = 0;
 			CalcFirstAngle();
-			fufoCmd4LCD(LCD_CLEAR);
+			fufoCmd4LCD(LCD_HOMEL2);
 			fufoDelayMs(1);
 			fufoOutputChar("xong roi");
 			fufoDelayMs(500);
