@@ -2,9 +2,9 @@
 #define KpPhi 		0
 #define KdPhi		0
 #define KiPhi		0
-#define KpTheta		0.6765
-#define KdTheta		2.8787
-#define KiTheta		0.7197
+#define KpTheta		0.8824
+#define KdTheta		3.7869
+#define KiTheta		0.9467
 #define KpPsi		0
 #define KdPsi		0
 #define KiPsi		0
