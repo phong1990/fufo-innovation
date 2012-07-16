@@ -37,19 +37,19 @@ void fufoSendIntUART(int a) {
     	a *= -1;
     }
     while((a % 10) >= 0 && a > 0){
-		if(idx == 3) {
-			aArr[idx++] = '.';
-		}
+//		if(idx == 3) {
+//			aArr[idx++] = '.';
+//		}
         aArr[idx++] = (char)((int)'0'+(a % 10));
         //aArr[idx++] = '0'+(a % 10);
         a /= 10;
 	}
-	while(idx < 7) {
+	while(idx < 6) {
 		aArr[idx++] = '0';
 	}
-	if(aArr[3] == '0') {
-			aArr[3] = '.';
-	}
+//	if(aArr[3] == '0') {
+//			aArr[3] = '.';
+//	}
     while(idx > 0){
         fufoSendCharUART(aArr[--idx]);
     }

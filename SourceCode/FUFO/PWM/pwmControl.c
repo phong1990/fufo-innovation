@@ -9,7 +9,7 @@ void initPWMPort(void){
 	PWM_LAT = 0;
 	PWM_TRIS = 0;
 }
- 
+
 void initPWM(void){
 	periodValue = Fcy/(Fpwm*4);
 	initDCValue = ((float)periodValue*Fpwm)/1000;
