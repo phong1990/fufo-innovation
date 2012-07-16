@@ -1,6 +1,6 @@
 # MPLAB IDE generated this makefile for use with GNU make.
 # Project: FUFO.mcp
-# Date: Mon Jul 09 10:45:32 2012
+# Date: Tue Jul 10 10:33:49 2012
 
 AS = pic30-as.exe
 CC = pic30-gcc.exe

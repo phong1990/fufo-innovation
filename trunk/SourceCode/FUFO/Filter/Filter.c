@@ -39,7 +39,6 @@ void CompFilter(void){
 	fufoGetAngleGyros();
 	phiComp = k*(phiComp + Ry*0.01) + (1 - k)*phiAngle;
 	thetaComp = k*(thetaComp + Rx*0.01) + (1 - k)*thetaAngle;
-	setGyrosOutput(Rx);
 	setPhiAngle(phiComp);
 	setThetaAngle(thetaComp);
 	//setThetaAngle(thetaAngle);
@@ -78,7 +77,7 @@ void fufoGetRateAngle(void){
 			R0z = (int)(zIntG/idx100);	
 			idx100 = 0;
 			CalcFirstAngle();
-			fufoCmd4LCD(LCD_HOMEL2);
+			fufoCmd4LCD(LCD_CLEAR);
 			fufoDelayMs(1);
 			fufoOutputChar("xong roi");
 			fufoDelayMs(500);
@@ -95,7 +94,7 @@ void fufoGetAngleGyros(void){
 	} else {
 		Rxm = (dataGyroArray[0] - 65536 );
 	}
-	
+
 	if(dataGyroArray[1] < 32768) {
 		Rym = dataGyroArray[1];
 	} else {
@@ -109,18 +108,17 @@ void fufoGetAngleGyros(void){
 	}
 	Rx = (float)(Rxm - R0x) * convertGyro;
 	Ry = (float)(Rym - R0y) * convertGyro;
-	Rz = (float)(Rzm - R0z) * convertGyro ;
-	
+	Rz = (float)(Rzm - R0z) * convertGyro;
+//	
 //	if(Rx < 0){
 //		fufoSendCharUART('-');
-//	}
-//	fufoSendIntUART(Rx);
-//	fufoSendCharUART('\t');
+//	} 
+//	fufoSendLongUART((long)Rx);
+//	fufoSendCharUART(';');
 }
 
 void fufoGetAngleAccel(void){
 	fufoReadAccel(dataAccelArray);
-	
     if(dataAccelArray[0] < 4096) {
 		Ax = (float)dataAccelArray[0]*convertAccel;	
 	} else {
@@ -142,10 +140,13 @@ void fufoGetAngleAccel(void){
 	phiAngle = (180 / 3.1415926)*atan2(-Ax, sqrt(pow(Ay, 2) + pow(Az, 2)));
 
 	thetaAngle = (180 / 3.1415926)*atan2(Ay, sqrt(pow(Az, 2) + 0.01 * pow(Ax, 2)));
-
+	
 //	if(thetaAngle < 0){
 //		fufoSendCharUART('-');
+//		fufoSendLongUART((long)thetaAngle);
+//		fufoSendCharUART(';');
+//	} else {
+//		fufoSendLongUART((long)thetaAngle);
+//		fufoSendCharUART(';');
 //	}
-//	fufoSendIntUART(thetaAngle);
-//	fufoSendCharUART('\t');
 }
