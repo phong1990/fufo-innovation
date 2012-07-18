@@ -36,6 +36,8 @@ void setThetaAngle(float Theta);
 float getThetaAngle(void);
 void setPsiAngle(float Psi);
 float getPsiAngle(void);
+void setGyrosOutput(float Gyros);
+float getGyrosOutput(void);
 
 void setPID1(int p1);
 int getPID1(void);

@@ -22,16 +22,16 @@ void CalcFirstAngle(void){
 																				// become pessistant with the Zero point of the inertial frame, according to 
 																				// the Accelerometer.
 	thetaComp = k*(thetaAngle + Rx*0.01) + (1 - k)*thetaAngle;
-	if(thetaComp < 0){
-		fufoSendCharUART('-');
-		fufoSendIntUART(thetaComp);
-		fufoSendCharUART(';');
-	} else {
-		fufoSendIntUART(thetaComp);
-		fufoSendCharUART(';');
-	}
-	fufoSendCharUART('\r');
-	fufoSendCharUART('\n');
+//	if(thetaComp < 0){
+//		fufoSendCharUART('-');
+//		fufoSendIntUART(thetaComp);
+//		fufoSendCharUART(';');
+//	} else {
+//		fufoSendIntUART(thetaComp);
+//		fufoSendCharUART(';');
+//	}
+//	fufoSendCharUART('\r');
+//	fufoSendCharUART('\n');
 }
 
 void CompFilter(void){
@@ -39,6 +39,7 @@ void CompFilter(void){
 	fufoGetAngleGyros();
 	phiComp = k*(phiComp + Ry*0.01) + (1 - k)*phiAngle;
 	thetaComp = k*(thetaComp + Rx*0.01) + (1 - k)*thetaAngle;
+	setGyrosOutput(Rx);
 	setPhiAngle(phiComp);
 	setThetaAngle(thetaComp);
 	//setThetaAngle(thetaAngle);
@@ -77,7 +78,7 @@ void fufoGetRateAngle(void){
 			R0z = (int)(zIntG/idx100);	
 			idx100 = 0;
 			CalcFirstAngle();
-			fufoCmd4LCD(LCD_CLEAR);
+			fufoCmd4LCD(LCD_HOMEL2);
 			fufoDelayMs(1);
 			fufoOutputChar("xong roi");
 			fufoDelayMs(500);
@@ -109,6 +110,12 @@ void fufoGetAngleGyros(void){
 	Rx = (float)(Rxm - R0x) * convertGyro;
 	Ry = (float)(Rym - R0y) * convertGyro;
 	Rz = (float)(Rzm - R0z) * convertGyro ;
+	
+//	if(Rx < 0){
+//		fufoSendCharUART('-');
+//	}
+//	fufoSendIntUART(Rx);
+//	fufoSendCharUART('\t');
 }
 
 void fufoGetAngleAccel(void){
@@ -135,4 +142,10 @@ void fufoGetAngleAccel(void){
 	phiAngle = (180 / 3.1415926)*atan2(-Ax, sqrt(pow(Ay, 2) + pow(Az, 2)));
 
 	thetaAngle = (180 / 3.1415926)*atan2(Ay, sqrt(pow(Az, 2) + 0.01 * pow(Ax, 2)));
+
+//	if(thetaAngle < 0){
+//		fufoSendCharUART('-');
+//	}
+//	fufoSendIntUART(thetaAngle);
+//	fufoSendCharUART('\t');
 }
