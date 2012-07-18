@@ -39,7 +39,11 @@ public class Control {
     private static ServerSocket serverSocket = null;               //Initiate ServerSocket to create server
     private static Socket tcpSocket = null;                        //Used to send command and receive status
     public static final int PORT = 8888;                           //Port of server
-    
+    public static StatusControl stct;
+    public static CommandControl cmct;
+    public static VideoControl vdct;
+    public static boolean svSetting = false;
+    public static boolean ffSetting = true;      
     /*
      * Used to start GUI and threads 
      */
@@ -49,7 +53,9 @@ public class Control {
             
         AOC aoc = new AOC();                                    //Initiate GUI aoc
         aoc.frame.pack();
-        aoc.frame.setVisible(true);                             //Set components in GUI can visible       
+        aoc.frame.setVisible(true);                             //Set components in GUI can visible   
+        cmct = new CommandControl();
+        aoc.frame.addKeyListener(aoc.keyListener);
         serverSocket = new ServerSocket(PORT);                  //Start server
         tcpSocket =  serverSocket.accept();                     //Wait for client connecting
         aoc.lb_status.setIcon(new ImageIcon("pic\\lb_status_Green.png"));  //Set color for panel of gui when connecting successful
@@ -58,13 +64,13 @@ public class Control {
         StatusControl stct = new StatusControl(tcpSocket, aoc);
         stct.start();
        
+       
         //Initiate thread to control command with 2 arguments TCP socket and  GUI aoc 
-        CommandControl cmct = new CommandControl(tcpSocket, aoc);    
-        //cmct.setPriority(10);
+       // CommandControl cmct = new CommandControl(tcpSocket, aoc);    
+        cmct.setCommandSocket(tcpSocket);
         cmct.start();                                            //Start this thread.
                
         VideoControl vdct = new VideoControl(aoc);
-        //vdct.setPriority(10);
         vdct.start();
         
         }catch(Exception e){
