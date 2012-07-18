@@ -30,7 +30,7 @@ import java.net.Socket;
  * 
  */
 public class StatusControl extends Thread {
-    
+
     //Create server socket to control command
     AOC aoc;                                  //Initiate GUI aoc.
     Socket statusSocket = null;               //Initiate Socket to receive status
@@ -39,13 +39,13 @@ public class StatusControl extends Thread {
     public double pitchAngle = 0 ;            //Initiate Pitch Angle  
     public double rollAngle = 0;              //Initiate Roll Angle 
     public String statusMessage;              //Status message receive from phone via TCP socket
-    
+
     //Constructor
     public StatusControl(){}
-    
+
     //Constructor receive 2 arguments Socket to send command and aoc
     public StatusControl(Socket statusSocket, AOC aoc){
-        
+
         this.aoc = aoc;
         this.statusSocket = statusSocket;
     }
@@ -54,41 +54,39 @@ public class StatusControl extends Thread {
      * This method is called when this thread starts.
      */
     public void run(){
-        
+
         try {
-        
+            in = new BufferedReader(new InputStreamReader(
+                    statusSocket.getInputStream()));
             while(true){
-            
                 updateStatusOnScreen(pitchAngle,rollAngle);
-            waitStatusFromeAOP();
+                waitStatusFromeAOP();
             }
         } catch (Exception ex) {
             // TODO Auto-generated catch block
             ex.printStackTrace();
         }
     }
-    
+
     /*
      * This method uses to receive status from FUFO via TCP socket and update it to screen
      */
     public void waitStatusFromeAOP() throws IOException{
 
-        //  System.out.print( " : " + System.currentTimeMillis() + " : " );
-            in = new BufferedReader(new InputStreamReader(
-                    statusSocket.getInputStream()));
-      //      System.out.print( " : " + System.currentTimeMillis() + " : " );
-            statusMessage = in.readLine();
-      //      System.out.println( " : " + System.currentTimeMillis() + " : "+ statusMessage );
-            sm = new StatusMessage();
-            System.out.print( " : " + System.currentTimeMillis() + " : " );
-            sm.getStatus(statusMessage);
-            System.out.print( " : " + System.currentTimeMillis() + " : " );
-            pitchAngle = sm.pitchAngle;
-            System.out.print( " : " + System.currentTimeMillis() + " : " );
-            rollAngle = sm.rollAngle;
-            System.out.println( " : " + System.currentTimeMillis() + " : " );
+
+        System.out.print( " : " + System.currentTimeMillis() + " : " );
+        statusMessage = in.readLine();
+        System.out.println( " : " + System.currentTimeMillis() + " : "+ statusMessage );
+        sm = new StatusMessage();
+        //       System.out.print( " : " + System.currentTimeMillis() + " : " );
+        sm.getStatus(statusMessage);
+        //       System.out.print( " : " + System.currentTimeMillis() + " : " );
+        pitchAngle = sm.pitchAngle;
+        //      System.out.print( " : " + System.currentTimeMillis() + " : " );
+        rollAngle = sm.rollAngle;
+        //  System.out.println( " : " + System.currentTimeMillis() + " : " );
     }
-    
+
     /*
      * This method uses to update status on screen when new status receive
      */
