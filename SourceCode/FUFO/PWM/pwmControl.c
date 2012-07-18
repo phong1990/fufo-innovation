@@ -3,13 +3,14 @@
 unsigned int PR4_value;
 unsigned int periodValue;
 unsigned int initDCValue;
+int state = 0;
 int a = 1000;
 unsigned int PWM_per_thrust = 40;
 void initPWMPort(void){
 	PWM_LAT = 0;
 	PWM_TRIS = 0;
 }
-
+ 
 void initPWM(void){
 	periodValue = Fcy/(Fpwm*4);
 	initDCValue = ((float)periodValue*Fpwm)/1000;
@@ -55,7 +56,12 @@ void setPWM2(unsigned int Thrust2, int PID_Motor2, int motor2){
 }
 
 void setPWM3(unsigned int Thrust3, int PID_Motor3, int motor3){
-	PDC3 = (initDCValue + Thrust3*PWM_per_thrust + PID_Motor3 + motor3*20)*2 + PWM_per_thrust*24;
+//	state = getState();
+//	if(state <= Setup){ 
+		PDC3 = (initDCValue + Thrust3*PWM_per_thrust + PID_Motor3 + motor3*20)*2 + PWM_per_thrust*24;
+//	} else {
+//		PDC3 = (initDCValue + Thrust3*34 + PID_Motor3 + motor3*20)*2 + PWM_per_thrust*24;	
+//	}
 }
 
 void setPWM4(unsigned int Thrust4, int PID_Motor4, int motor4){
