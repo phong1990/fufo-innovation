@@ -10,9 +10,9 @@ for i = 2:numOfSample
 end
 
 % Plot          
-plot(step,Theta*1000,'r-',step,Kcr*100,'g-',step,step*0,'b-');     %  plot 
+plot(step,Theta*1000,'r-',step,Kcr*100,'g-',step,step*0,'b-',step,step*0+20,'b-');     %  plot 
 xlabel('time');              %  add axis labels and plot title
 ylabel('Theta/Kcr');
 title('Test Kcr');
-h = legend('Theta','Kcr','SetPoint',3);
+h = legend('Theta','Kcr','SetPoint0','setPoint20',3);
 set(h,'Interpreter','none');
