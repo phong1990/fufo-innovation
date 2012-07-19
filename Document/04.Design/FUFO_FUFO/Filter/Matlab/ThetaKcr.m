@@ -1,18 +1,18 @@
 load D:\statusKcr.txt;         %  read data into status
-step = statusKcr(:,1);      % Steps
-Theta = statusKcr(:,2);    %  first column into Theta values
-Pwm1 = statusKcr(:,3);     %  second column into PWM of motor 1 value
-Pwm3 = statusKcr(:,4);     %  Third column into PWM of motor 2 value
-                            %  in case of Harmonic Oscillator, the plot of
-                            %  PWM1 will be a sine/cosine type plot and PWM
-                            %  will be an inverse image of PWM3
-                            %  PWM1 and PWM3 will have an equal in
-                            %  frequency.
-Kcr = statusKcr(:,5);       %  Kcr value
+Theta = statusKcr(:,1);    %  first column into Theta values
+Kcr = statusKcr(:,2);       %  Kcr
+
+numOfSample = length(Theta); 
+step = zeros(1,numOfSample); % create the steps array
+step(1) = 1;
+for i = 2:numOfSample
+    step(i) = step(i-1) + 1;
+end
+
 % Plot          
-plot(step,Theta,'r-',step,Pwm1,'g-', step, Pwm3,'b-',step,Kcr,'m+');     %  plot 
+plot(step,Theta*1000,'r-',step,Kcr*100,'g-',step,step*0,'b-');     %  plot 
 xlabel('time');              %  add axis labels and plot title
-ylabel('Theta/PWM/Kcr');
+ylabel('Theta/Kcr');
 title('Test Kcr');
-h = legend('Theta','PWM1','PWM3','Kcr',3);
+h = legend('Theta','Kcr','SetPoint',3);
 set(h,'Interpreter','none');
