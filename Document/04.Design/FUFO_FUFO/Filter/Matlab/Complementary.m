@@ -25,10 +25,10 @@ end
 
 %high pass filter
 HighpassEuler = zeros(1,numOfSample); % Create the array
-HighpassEuler(1) = k*(0 + gyros(i)*0.01); % calculate the first Euler value
+HighpassEuler(1) = k*(0 + gyrosDOT(1)*0.01); % calculate the first Euler value
 for i = 2:numOfSample
     % ? * y[i-1] + ? * (x[i] - x[i-1]) = ? * (y[i-1] + (x[i] - x[i-1]))
-    HighpassEuler(i) = k*HighpassEuler(i-1) + k*(gyros(i)-gyros(i-1)); 
+    HighpassEuler(i) = k*HighpassEuler(i-1) + k*gyrosDOT(i)*0.01; 
 end
 
 
