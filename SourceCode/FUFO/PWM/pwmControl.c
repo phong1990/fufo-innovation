@@ -1,15 +1,24 @@
 #include "../FUFO.h"
 
-unsigned int PR4_value;
-unsigned int periodValue;
-unsigned int initDCValue;
+int PR4_value;
+int periodValue;
+int initDCValue;
 int a = 1000;
-unsigned int PWM_per_thrust = 40;
+int PWM_per_thrust = 40;
+
 void initPWMPort(void){
 	PWM_LAT = 0;
 	PWM_TRIS = 0;
 }
  
+void setPR4(int value){
+	PR4_value = value;
+}
+
+int getPR4(void){
+	return PR4_value;
+}
+
 void initPWM(void){
 	periodValue = Fcy/(Fpwm*4);
 	initDCValue = ((float)periodValue*Fpwm)/1000;
@@ -38,27 +47,28 @@ void initPWMHardware(void){
 
 void initPWMSoftware(void){
 	IPC5bits.T4IP = 7;  	//highest priority interrupt
-	T4CONbits.TCKPS = 0x00;	// timer 2 prescale = 1
+	T4CONbits.TCKPS = 0b01;	// timer 2 prescale = 8
 	TMR4 = 0;
-	PR4 = PR4_value;		
+	PR4 = (PR4_value/2);		
 	IFS1bits.T4IF = 0;		//interupt flag clear
     IEC1bits.T4IE = 1;  	//Enable Timer1 Interrupt Service Routine
 	T4CONbits.TON = 0;		//timer 2 off
 }
 
-void setPWM1(unsigned int Thrust1, int PID_Motor1, int motor1){
+void setPWM1(int Thrust1, int PID_Motor1, int motor1){
 	PDC1 = (initDCValue + Thrust1*PWM_per_thrust + PID_Motor1 + motor1*20)*2 + PWM_per_thrust*2;
 }
 
-void setPWM2(unsigned int Thrust2, int PID_Motor2, int motor2){
+void setPWM2(int Thrust2, int PID_Motor2, int motor2){
 	PDC2 = (initDCValue + Thrust2*PWM_per_thrust + PID_Motor2 + motor2*20)*2;
 }
 
-void setPWM3(unsigned int Thrust3, int PID_Motor3, int motor3){
+void setPWM3(int Thrust3, int PID_Motor3, int motor3){
 	PDC3 = (initDCValue + Thrust3*PWM_per_thrust + PID_Motor3 + motor3*20)*2 + PWM_per_thrust*24;
 }
 
-void setPWM4(unsigned int Thrust4, int PID_Motor4, int motor4){
+void setPWM4(int Thrust4, int PID_Motor4, int motor4){
+	//PR4_value = initDCValue + Thrust4*PWM_per_thrust + PID_Motor4 + motor4*20)/2;//+ PWM_per_thrust*7;
 	PR4_value = initDCValue + Thrust4*PWM_per_thrust + PID_Motor4 + motor4*20 + PWM_per_thrust*7;
 }
 
@@ -66,11 +76,11 @@ void __attribute__((__interrupt__ , auto_psv)) _T4Interrupt (void)
 {
 	TMR4 = 0;	
 //	T4CONbits.TON = 0;	//timer 4 off
-	if (PR4 == (periodValue - PR4_value)){
-		PR4 = PR4_value;		// HIGH on 1 ms
+	if (PR4 == ((periodValue/2) - (PR4_value/2))){
+		PR4 = (PR4_value/2);		// HIGH on 1 ms
 		_RE5 = 1;
 	}else{
-		PR4 = periodValue - PR4_value;		// LOW on 2.5 ms
+		PR4 = (periodValue/2) - (PR4_value/2);		// LOW on 2.5 ms
 		_RE5 = 0;
 	}
 //	T4CONbits.TON = 1;		//timer 4 on

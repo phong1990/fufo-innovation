@@ -4,11 +4,29 @@ unsigned int mainState = 0;
 float phiActual = 0; 
 float thetaActual = 0;
 float psiActual = 0;
-float GyrosOutput = 0;
+float GyrosOutputR = 0;
+float GyrosOutputP = 0;
+float GyrosOutputY = 0;
 int pid1 = 0;
 int pid2 = 0;
 int pid3 = 0;
 int pid4 = 0;
+int PIDStatus = 0;
+int Conn;
+
+int getConnectStatus(void){
+	return Conn;
+}
+void setConnectStatus(int Connect){
+	Conn = Connect;
+}
+
+int getPIDStatus(void){
+	return PIDStatus;
+}
+void setPIDStatus(int status){
+	PIDStatus = status;
+}
 
 void setPID1(int p1){
 	pid1 = p1;
@@ -75,10 +93,26 @@ float getPsiAngle(void){
 	return psiActual;
 }
 
-void setGyrosOutput(float Gyros){
-	GyrosOutput = Gyros;
+void setGyrosOutputR(float GyrosR){
+	GyrosOutputR = GyrosR;
 }
 
-float getGyrosOutput(void){
-	return GyrosOutput;
+float getGyrosOutputR(void){
+	return GyrosOutputR;
+}
+
+void setGyrosOutputP(float GyrosP){
+	GyrosOutputP = GyrosP;
+}
+
+float getGyrosOutputP(void){
+	return GyrosOutputP;
+}
+
+void setGyrosOutputY(float GyrosY){
+	GyrosOutputY = GyrosY;
+}
+
+float getGyrosOutputY(void){
+	return GyrosOutputY;
 }

@@ -15,3 +15,4 @@ void fufoGetAngleAccel(void);
 void fufoGetAngleGyros(void);
 void fufoGetRateAngle(void);
 void CompFilter(void);
+void HighPassFilter(void);
