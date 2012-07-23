@@ -83,6 +83,9 @@ void fufoSendLongUART(long a) {
 
 //Receive a Char by UART
 unsigned char fufoReceiveUART(void) {
-	while(!U1STAbits.URXDA); 
-    return U1RXREG;
+	if(U1STAbits.URXDA == 1){ 
+    	return U1RXREG;
+	} else return ' ';
+//	while(!U1STAbits.URXDA);
+//	return U1RXREG;
 }

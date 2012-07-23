@@ -12,7 +12,7 @@ unsigned int dataGyroArray[3], dataAccelArray[3];
 unsigned char noticeError[] = "Errored";
 float phiComp;
 float thetaComp;
-float psiComp;
+float psiHigh;
 
 
 void CalcFirstAngle(void){
@@ -39,9 +39,13 @@ void CompFilter(void){
 	fufoGetAngleGyros();
 	phiComp = k*(phiComp + Ry*0.01) + (1 - k)*phiAngle;
 	thetaComp = k*(thetaComp + Rx*0.01) + (1 - k)*thetaAngle;
-	setGyrosOutput(Rx);
+	psiHigh = k*(psiHigh + Rz*0.01);
+	setGyrosOutputR(Rx);
+	setGyrosOutputP(Ry);
+	setGyrosOutputY(Rz);
 	setPhiAngle(phiComp);
 	setThetaAngle(thetaComp);
+	setPsiAngle(psiHigh);
 	//setThetaAngle(thetaAngle);
 	//psiComp = k*(psiComp + Rz*0.01) + (1 - k)*psiAngle;
 	//setPsiAngle(psiComp);
@@ -81,6 +85,7 @@ void fufoGetRateAngle(void){
 			fufoCmd4LCD(LCD_HOMEL2);
 			fufoDelayMs(1);
 			fufoOutputChar("xong roi");
+			_RE8 = 0;
 			fufoDelayMs(500);
 			setState(Ready);
 			

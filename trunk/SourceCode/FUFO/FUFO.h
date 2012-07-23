@@ -26,7 +26,13 @@
 #define	Hovering					6
 #define Landing						7
 #define End							10
+#define Enable		1
+#define	Disable		0
 
+int getConnectStatus(void);
+void setConnectStatus(int Connect);
+int getPIDStatus(void);
+void setPIDStatus(int status);
 int getState(void);
 void setState(unsigned int State);
 int calcTimeMS(unsigned int time);
@@ -36,8 +42,12 @@ void setThetaAngle(float Theta);
 float getThetaAngle(void);
 void setPsiAngle(float Psi);
 float getPsiAngle(void);
-void setGyrosOutput(float Gyros);
-float getGyrosOutput(void);
+void setGyrosOutputR(float GyrosR);
+float getGyrosOutputR(void);
+void setGyrosOutputP(float GyrosP);
+float getGyrosOutputP(void);
+void setGyrosOutputY(float GyrosY);
+float getGyrosOutputY(void);
 
 void setPID1(int p1);
 int getPID1(void);

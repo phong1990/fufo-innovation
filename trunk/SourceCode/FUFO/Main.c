@@ -16,12 +16,15 @@ void initFUFO(void);
 //Cac bien toan cuc
 unsigned char receiOK[25];
 unsigned int index = 0;
-unsigned int FUFO_thrust = 0;
+int FUFO_thrust = 0;
 unsigned int userInputFlag = 0;
 unsigned int FUFO_State;
-unsigned int flag = 0;
+int Connection = 1;
 int i = 0;
-
+unsigned char command;
+unsigned int PIDControl = 0;
+int motor1, motor2, motor3, motor4;
+int value = 0;
 //------------------------------------------------------------------------------
 //Chuong trinh chinh
 int main(void) {
@@ -40,6 +43,7 @@ int main(void) {
 					fufoCmd4LCD(LCD_HOMEL2);
 					fufoOutputChar("Wait for connect");
 					checkBLConnection();
+					setConnectStatus(1);
 					break;
 
 			case Verify: // Trang thai Verify
@@ -50,10 +54,8 @@ int main(void) {
 
 			case Pending: // Trang thai Pending 
 					fufoCmd4LCD(LCD_CLEAR);
-					fufoOutputChar("Press Start!!!");
-					//fufoDelayMs(500);
+					fufoOutputChar("Press Start  ");
 					getStartInstruction();
-					fufoOutputInt(getState());
 					break;
 
 			case Setup: // Trang thai Setup
@@ -78,14 +80,12 @@ int main(void) {
 			case Hovering: // Trang thai Hovering
 					fufoCmd4LCD(LCD_CLEAR);
 					fufoOutputChar("Thrust :");
-					fufoOutputInt(getThrustRate());
 					//fufoOutputInt(Fcy/Fpwm - 1);
 					fufoCmd4LCD(LCD_HOMEL2);
-					//fufoOutputInt(calcTimeMS(1));
+					fufoOutputInt(getThrustRate());
 //					fufoOutputChar("Kp Theta: ");
-					fufoOutputInt(getPID4());
+//					fufoOutputInt(getPID4());
 //					fufoOutputChar(" ");
-//					fufoOutputInt(PDC3);
 					if (userInputFlag == 0){
 						getInstruction();
 						userInputFlag = getUserInput();
@@ -94,20 +94,48 @@ int main(void) {
 			
 			case Landing: // Trang thai Landing
 					// Auto landing
-					fufoCmd4LCD(LCD_CLEAR);
-					fufoOutputChar("......");
-					FUFO_thrust = getThrustRate();
-					FUFO_thrust--;
-					if(FUFO_thrust < 1) {
-						FUFO_thrust = 0;
+					motor1 = 1;
+					motor2 = 1;
+					motor3 = 1;
+					motor4 = 1;
+					if(PDC1 >= 3000){
+						motor1 = 0;
+						PDC1 -= 80;
+//						fufoCmd4LCD(LCD_CLEAR);
+//						fufoOutputChar("motor1");
+//						fufoDelayMs(100);
+					}
+					if(PDC2 >= 3000){
+						motor2 = 0;
+						PDC2 -= 80;
+//						fufoCmd4LCD(LCD_CLEAR);
+//						fufoOutputChar("motor2");
+//					//	fufoDelayMs(100);
+					}
+					if(PDC3 >= 3000){
+						motor3 = 0;
+						PDC3 -= 80;
+//						fufoCmd4LCD(LCD_CLEAR);
+//						fufoOutputChar("motor3");
+//					//	fufoDelayMs(100);
+					}
+					if(getPR4() >= 800){
+						motor4 = 0;
+						value -= 20;
+						setPR4(value);
+//						fufoCmd4LCD(LCD_CLEAR);
+//						fufoOutputChar("motor4");
+//					//	fufoDelayMs(100);
+					}
+					if(motor1 == 1 && motor2 == 1 && motor3 == 1 && motor4 == 1) {
+						//FUFO_thrust = 0;
+						setPIDStatus(Disable);
+						T2CONbits.TON = 0;
 						fufoCmd4LCD(LCD_CLEAR);
 						fufoOutputChar("xong");
 						fufoDelayMs(1000);
-						setState(Pending);
-						
+						setState(Pending);	
 					}
-					setThrustRate(FUFO_thrust);
-					controlFUFO();
 					break;
 
 			case End: 
@@ -194,6 +222,16 @@ void __attribute__((__interrupt__ , auto_psv)) _T2Interrupt (void)
 			} else _RE8 = 1;
 		}
 	}
+
+	if(getConnectStatus() == Disable){
+		i++;
+		if(i == 200){
+			i = 0;
+//			setPIDStatus(Disable);
+//			T2CONbits.TON = 0;
+			setState(Landing);
+		}
+	} else i = 0;
 //	fufoSendCharUART('k');
 //	fufoSendIntUART(TMR3);
 //	fufoSendCharUART('k');
