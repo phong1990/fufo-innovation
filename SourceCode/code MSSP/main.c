@@ -2,6 +2,7 @@
 #include "p30f4012.h"
 #include "ADXL345_accel/ADXL345.h"
 #include "L3G4200D_gyro/L3G4200D.h"
+#include "BMP085_barometric/BMP085.h"
 #include "Delay/DelayTMR1.h"
 #include "I2C/I2C.h"
 #include "UART/UART.h"
@@ -9,7 +10,7 @@
 #include "Bluetooth/BL.h"
 #include "math.h"
 
-	_FOSC(CSW_FSCM_OFF & XT_PLL8);		//Clock = 8*8 = 32 MHz
+	_FOSC(CSW_FSCM_OFF & XT_PLL8);		//Clock = 8*8 = 64 MHz
 	_FWDT(WDT_OFF);
 	_FBORPOR(MCLR_EN & PBOR_OFF & PWMxL_ACT_HI & PWMxH_ACT_HI);
 	_FGS(CODE_PROT_OFF);
@@ -19,6 +20,7 @@ void fufoInitTimer2();
 void fufoInitTimer4();
 void fufoGetRateAngle();
 void fufoGetAngle();
+unsigned char reOk[27];
 unsigned short flag1, flag2, buf_idx, str_idx, i;
 unsigned int idx100 = 0;
 unsigned int setupFlag = 1;
@@ -44,7 +46,9 @@ int main(void) {
 		int tm;
 		float tmf;
 		int idx = 0;
-		fufoDelayMs(20000);
+		float altitude, altitudeR, altitudeG;
+        int altitudeLCD, altitudeRLCD, altitudeGLCD; 
+//		fufoDelayMs(20000);
         fufoInitSystem();
 		//Init BL module
 //		fufoInitBluetooth(receiOK);
@@ -82,17 +86,17 @@ int main(void) {
 //			fufoDelayMs(500);
 //			if(T2CONbits.TON == 1) {
 //			T4CONbits.TON = 1;
-			if (h == 1) {
-				if(readTimes >= 10000) {
-					T2CONbits.TON = 0;
-					fufoDat4LCD('F');
-				}
+//			if (h == 1) {
+//				if(readTimes >= 10000) {
+//					T2CONbits.TON = 0;
+//					fufoDat4LCD('F');
+//				}
 //				fufoSendIntUART(readTimes);
 //				fufoSendCharUART('\r');
 //				fufoSendCharUART('\n');				
-				fufoGetRateAngle();
-				fufoGetAngle();
-				h = 0;
+//				fufoGetRateAngle();
+//				fufoGetAngle();
+//				h = 0;
 //				tmf += TMR4/250;
 //				if(readTimes%100 == 0) {
 //					tm = (int)tmf;
@@ -100,10 +104,29 @@ int main(void) {
 //					fufoOutputInt(tm);
 //					tmf = 0;
 //				}
-			}
+//			}
 //			T4CONbits.TON = 0;
 //			TMR4 = 0;
 //			}
+            fufoMeasureBaro();
+            altitude = fufoGetBaroAltitude();
+            altitudeR = fufoGetBaroAltitudeR();
+            altitudeG = fufoGetBaroGAltitude();
+            altitudeLCD = (int)(altitude*100);
+            altitudeRLCD = (int)(altitudeR);
+            altitudeGLCD = (int)(altitudeG);
+			fufoCmd4LCD(LCD_HOMEL2);
+            fufoDelayMs(5);
+  			fufoOutputInt(altitudeLCD);
+			fufoDat4LCD(',');
+			fufoOutputInt(altitudeRLCD);
+			fufoDat4LCD(',');
+			fufoOutputInt(altitudeGLCD);
+            altitude = 0.0;
+			altitudeLCD = 0;
+            fufoDelayMs(2000);
+			fufoCmd4LCD(LCD_CLEAR);
+  			fufoDelayMs(2);
         }
 }
 
@@ -112,19 +135,23 @@ int main(void) {
 void fufoInitSystem() {
 	fufoInitI2C();
 	fufoDelayMs(5);
-	fufoInitAccel();
-	fufoDelayMs(5);
-	fufoInitGyro();
-	fufoDelayMs(5);
-	fufoInitUART();
-	fufoDelayMs(5);	
+//	fufoInitAccel();
+//	fufoDelayMs(5);
+//	fufoInitGyro();
+//	fufoDelayMs(5);
+//	fufoInitUART();
+//	fufoDelayMs(5);	
 	fufoInitLCDPorts();
 	fufoDelayMs(5);
 	fufoInitLCD();
 	fufoDelayMs(5);
-	fufoInitTimer4();
-	fufoDelayMs(5);
-	fufoInitTimer2();
+//	fufoInitTimer4();
+//	fufoDelayMs(5);
+//	fufoInitTimer2();
+//	fufoDelayMs(5);
+//	fufoInitBluetooth(reOk);
+	fufoInitBaro();
+	fufoDelayMs(200);
 }
 void fufoInitTimer2() {
 	IPC1bits.T2IP = 6;  	//highest priority interrupt
@@ -212,21 +239,21 @@ void fufoGetAngle() {
     if(dataAccelArray[0] < 4096) {
 		Ax = dataAccelArray[0] * convertAccel;	
 	} else {
-		Ax = (8192 - dataAccelArray[0]) * convertAccel;
+		Ax = (dataAccelArray[0] - 8192) * convertAccel;
 	
 	}
 
 	if(dataAccelArray[1] < 4096) {
 		Ay = dataAccelArray[1] * convertAccel;	
 	} else {
-		Ay = (8192 - dataAccelArray[1]) * convertAccel;
+		Ay = (dataAccelArray[1] - 8192) * convertAccel;
 			
 	}
 
 	if(dataAccelArray[2] < 4096) {
 		Az = dataAccelArray[2] * convertAccel;	
 	} else {
-		Az = (8192 - dataAccelArray[2]) * convertAccel;
+		Az = (dataAccelArray[2] - 8192) * convertAccel;
 			
 	}
 	phiAngle = (180 / 3.1415926) * atan2(-Ax, sqrt(pow(Ay, 2) + pow(Az, 2))) * 1000;
