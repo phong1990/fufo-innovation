@@ -87,11 +87,50 @@ void fufoOutputChar(unsigned char *data){
 }
 
 //Output data in int type
-void fufoOutputInt(unsigned int a) {
+void fufoOutputInt(int a) {
+    unsigned char aArr[15];
+    int idx = 0;
+    if(a < 0) {
+    	fufoDat4LCD('-');
+        fufoDelayMs(1);
+        a *= -1; 
+    }
+    while((a % 10) >= 0 && a > 0){
+        aArr[idx++] = (char)((int)'0'+(a % 10));
+        //aArr[idx++] = '0'+(a % 10);
+        a /= 10;
+	 }
+    while(idx > 0){
+        fufoDat4LCD(aArr[--idx]);
+		fufoDelayMs(1);
+    }
+}
+
+//Output data in uint type
+void fufoOutputUint(unsigned int a) {
     unsigned char aArr[15];
     int idx = 0;
     while((a % 10) >= 0 && a > 0){
         aArr[idx++] = (char)((int)'0'+(a % 10));
+        //aArr[idx++] = '0'+(a % 10);
+        a /= 10;
+	 }
+    while(idx > 0){
+        fufoDat4LCD(aArr[--idx]);
+		fufoDelayMs(1);
+    }
+}
+
+//Output data in int type
+void fufoOutputLong(long a) {
+    unsigned char aArr[15];
+    int idx = 0;
+    if(a < 0) {
+    	fufoDat4LCD('-');
+        fufoDelayMs(1);
+    }
+    while((a % 10) >= 0 && a > 0){
+        aArr[idx++] = (char)((long)'0'+(a % 10));
         //aArr[idx++] = '0'+(a % 10);
         a /= 10;
 	 }
