@@ -64,7 +64,8 @@ void setPWM2(int Thrust2, int PID_Motor2, int motor2){
 }
 
 void setPWM3(int Thrust3, int PID_Motor3, int motor3){
-	PDC3 = (initDCValue + Thrust3*PWM_per_thrust + PID_Motor3 + motor3*20)*2 + PWM_per_thrust*24;
+//	PDC3 = (initDCValue + Thrust3*PWM_per_thrust + PID_Motor3 + motor3*20)*2 + PWM_per_thrust*24;
+	PDC3 = (initDCValue + Thrust3*PWM_per_thrust + PID_Motor3 + motor3*20)*2 + PWM_per_thrust*2;
 }
 
 void setPWM4(int Thrust4, int PID_Motor4, int motor4){
