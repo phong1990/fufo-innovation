@@ -18,6 +18,7 @@
  */
 package aoc.status;
 
+import aoc.control.Control;
 import aoc.gui.AOC;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -56,9 +57,12 @@ public class StatusControl extends Thread {
     public void run(){
 
         try {
+            
             in = new BufferedReader(new InputStreamReader(
                     statusSocket.getInputStream()));
+            
             while(true){
+                
                 updateStatusOnScreen(pitchAngle,rollAngle);
                 waitStatusFromeAOP();
             }
@@ -73,18 +77,20 @@ public class StatusControl extends Thread {
      */
     public void waitStatusFromeAOP() throws IOException{
 
-
-        System.out.print( " : " + System.currentTimeMillis() + " : " );
         statusMessage = in.readLine();
-        System.out.println( " : " + System.currentTimeMillis() + " : "+ statusMessage );
-        sm = new StatusMessage();
-        //       System.out.print( " : " + System.currentTimeMillis() + " : " );
-        sm.getStatus(statusMessage);
-        //       System.out.print( " : " + System.currentTimeMillis() + " : " );
-        pitchAngle = sm.pitchAngle;
-        //      System.out.print( " : " + System.currentTimeMillis() + " : " );
-        rollAngle = sm.rollAngle;
-        //  System.out.println( " : " + System.currentTimeMillis() + " : " );
+        Control.svSetting = true;
+        
+        if(statusMessage.equals("ff1")){
+            
+            Control.ffSetting = true;
+        }else{
+            sm = new StatusMessage();
+            sm.getStatus(statusMessage);
+            pitchAngle = sm.pitchAngle;
+            rollAngle = sm.rollAngle;
+            Control.ffSetting = true;
+            Control.svSetting = true;
+        }
     }
 
     /*
