@@ -105,9 +105,9 @@ public class AOC{
         bt_minimize =  createButton("bt_minimize","pic\\bt_minimize_Normal.png", 1135, 10, 40, 40);
         bt_exit =  createButton("bt_exit","pic\\bt_exit_Normal.png", 1185, 10, 40, 40);
         frame.add(pane);  
-        
+
         try {
-            
+
             frame.setIconImage(ImageIO.read(new File("pic\\bt_exit_Normal.png")));
         } catch (IOException ex1) {
 
@@ -156,7 +156,7 @@ public class AOC{
 
         private static final long serialVersionUID = 1L;
         Image image;
-        public double PitchAngle = 5;   // Phi
+        public double PitchAngle = 0;   // Phi
         public double RollAngle = 0;    // Theta
 
         public HeightLabel() throws IOException{
@@ -234,7 +234,9 @@ public class AOC{
             if(Control.ffSetting && Control.svSetting && Control.start == 1){
 
                 int command = arg0.getKeyCode();                //Get key code of pressed key
-                Control.cmct.setCommand(command);               //Send command to phone via TCP socket
+
+                if(command != KeyEvent.VK_ENTER)
+                    Control.cmct.setCommand(command);               //Send command to phone via TCP socket
 
                 switch(command){
 
@@ -280,9 +282,9 @@ public class AOC{
         public void mousePressed(MouseEvent e) {
 
             JButton button = (JButton)e.getComponent();
-            
+
             if(button == bt_exit || button == bt_minimize)
-                
+
                 button.setIcon(new ImageIcon("pic\\"
                         + e.getComponent().getName()+"_Clicked.png"));
 
@@ -306,19 +308,19 @@ public class AOC{
                 }else if(button == bt_down){
 
                     if(lb_height.PitchAngle >= 0.5)
- 
+
                         lb_height.PitchAngle -= 0.5;
-                    
+
                     lb_setPoint.setText(Double.toString(lb_height.PitchAngle));
                     frame.repaint();
                     Control.cmct.setCommand(KeyEvent.VK_UP);
                     Control.cmct.setCommand(KeyEvent.VK_DOWN);
                 }else if(button == bt_up){
-                    
+
                     if(lb_height.PitchAngle <= 98.5)
-                        
+
                         lb_height.PitchAngle += 0.5;
-                    
+
                     lb_setPoint.setText(Double.toString(lb_height.PitchAngle));
                     frame.repaint();
                     Control.cmct.setCommand(KeyEvent.VK_UP);
@@ -335,7 +337,7 @@ public class AOC{
 
                 if(Control.ffSetting && Control.svSetting){
 
-                    Control.cmct.setCommand(KeyEvent.VK_F);
+                    Control.cmct.setCommand(KeyEvent.VK_ENTER);
 
                     if(Control.start == 0){
 
@@ -364,12 +366,12 @@ public class AOC{
 
                     }
                 } else if( Control.svSetting == false){
-                    
+
                     frame.repaint();
                     JOptionPane.showMessageDialog(frame, "Please check connection with Appplication on Android!",
                             "Connection error", JOptionPane.ERROR_MESSAGE);
                 }else{
-                    
+
                     frame.repaint();
                     JOptionPane.showMessageDialog(frame, "Please check connection with FUFO!",
                             "Connection error", JOptionPane.ERROR_MESSAGE);
@@ -383,15 +385,15 @@ public class AOC{
         public void mouseReleased(MouseEvent e) {
 
             JButton button = (JButton) e.getComponent();
-            
+
             if(button == bt_exit){ 
-                
+
                 frame.dispose();
                 System.exit(0);
             }
-            
+
             if(button == bt_minimize) frame.setState ( Frame.ICONIFIED );
-            
+
             if(Control.ffSetting && Control.svSetting &&Control.start == 1){
 
                 ((JButton) e.getComponent()).setIcon(new ImageIcon("pic\\"
@@ -425,7 +427,7 @@ public class AOC{
         }
     };
     public void setButtonDisable(){
-        
+
         Control.start = 0;
         bt_rotateRight.setIcon(new ImageIcon("pic\\bt_rotateRight_Disable.png"));
         bt_rotateLeft.setIcon(new ImageIcon("pic\\bt_rotateLeft_Disable.png"));
@@ -440,27 +442,27 @@ public class AOC{
 
 
 class MoveMouseListener implements MouseListener, MouseMotionListener {
-    
+
     JComponent target;
     Point start_drag;
     Point start_loc;
 
     public MoveMouseListener(JComponent target) {
-        
+
         this.target = target;
     }
 
     public JFrame getFrame(Container target) {
-        
+
         if (target instanceof JFrame) {
-            
+
             return (JFrame) target;
         }
         return getFrame(target.getParent());
     }
 
     Point getScreenLocation(MouseEvent e) {
-        
+
         Point cursor = e.getPoint();
         Point target_location = this.target.getLocationOnScreen();
         return new Point((int) (target_location.getX() + cursor.getX()),
@@ -477,7 +479,7 @@ class MoveMouseListener implements MouseListener, MouseMotionListener {
     }
 
     public void mousePressed(MouseEvent e) {
-        
+
         this.start_drag = this.getScreenLocation(e);
         this.start_loc = this.getFrame(this.target).getLocation();
     }
@@ -486,7 +488,7 @@ class MoveMouseListener implements MouseListener, MouseMotionListener {
     }
 
     public void mouseDragged(MouseEvent e) {
-        
+
         Point current = this.getScreenLocation(e);
         Point offset = new Point((int) current.getX() - (int) start_drag.getX(),
                 (int) current.getY() - (int) start_drag.getY());

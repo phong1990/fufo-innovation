@@ -62,7 +62,7 @@ public class VideoControl extends Thread {
             while(true){
 
                 udpSocket.receive(udpPackage);
-                System.out.println("received!");
+            //    System.out.println("received!");
                 showOnScreen(udpPackage);
             }
         } catch (Exception ex) {

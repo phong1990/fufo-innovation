@@ -36,7 +36,7 @@ public class Control {
             final AOC aoc = new AOC();                              //Initiate GUI aoc
             aoc.frame.pack();
             aoc.frame.setVisible(true);                             //Set components in GUI can visible   
-            cmct = new CommandControl();
+          //  cmct = new CommandControl();
             aoc.frame.addKeyListener(aoc.keyListener);
             serverSocket = new ServerSocket(PORT);                  //Start server
             tcpSocket =  serverSocket.accept();                     //Wait for client connecting
@@ -48,7 +48,8 @@ public class Control {
             stct.start();
 
             //Initiate thread to control command with 2 arguments TCP socket and  GUI aoc 
-            cmct.setCommandSocket(tcpSocket);
+         //   cmct.setCommandSocket(tcpSocket);
+            cmct = new CommandControl(tcpSocket);
             cmct.start();                                            //Start this thread.
 
             VideoControl vdct = new VideoControl(aoc);
@@ -81,7 +82,7 @@ public class Control {
 
                 }
             };
-            //  alert.start();
+              alert.start();
         }catch(Exception e){
 
             e.printStackTrace();

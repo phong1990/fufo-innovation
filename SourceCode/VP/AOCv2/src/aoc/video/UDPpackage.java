@@ -50,7 +50,7 @@ public class UDPpackage {
 
         Integer in = new Integer(pacNum);
          test = in.byteValue();
-         System.out.println(frameBuffer.length);
+      //   System.out.println(frameBuffer.length);
          byte[] temp = new byte[4];
          temp[0] = test;
          System.arraycopy(frameBuffer,0,pacBuffer,0,frameBuffer.length);
