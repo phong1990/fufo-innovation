@@ -39,6 +39,7 @@ public class StatusControl extends Thread {
     StatusMessage sm;
     public double pitchAngle = 0 ;            //Initiate Pitch Angle  
     public double rollAngle = 0;              //Initiate Roll Angle 
+    public double height = 0; 
     public String statusMessage;              //Status message receive from phone via TCP socket
 
     //Constructor
@@ -88,6 +89,7 @@ public class StatusControl extends Thread {
             sm.getStatus(statusMessage);
             pitchAngle = sm.pitchAngle;
             rollAngle = sm.rollAngle;
+            height = sm.height;
             Control.ffSetting = true;
             Control.svSetting = true;
         }
@@ -100,6 +102,7 @@ public class StatusControl extends Thread {
 
         aoc.lb_ai.PitchAngle = PitchAngle;
         aoc.lb_ai.RollAngle = RollAngle/100;
+        aoc.lb_height.PitchAngle = height;
         aoc.frame.repaint();
     }
 }

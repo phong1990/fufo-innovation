@@ -28,8 +28,9 @@ package aoc.status;
  */
 public class StatusMessage {
 
-    public int pitchAngle = 0 ;                     //Initiate pitch Angle  
-    public int rollAngle = 0 ;                     //Initiate roll Angle
+    public double pitchAngle = 0 ;                     //Initiate pitch Angle  
+    public double rollAngle = 0 ;                     //Initiate roll Angle
+    public double height = 0;
     public String statusMessage;                  //Message receive via TCP socket 
 
     /*
@@ -48,8 +49,11 @@ public class StatusMessage {
         
         try {
             String[] abc = message.split(",");
-            pitchAngle = Integer.parseInt(abc[0]);
-            rollAngle = Integer.parseInt(abc[1]); 
+            pitchAngle = Double.parseDouble(abc[0])*1000;
+            rollAngle = Double.parseDouble(abc[1])*1000; 
+            height = Double.parseDouble(abc[2])*10;
+            if (height < 0) height = 0;
+            if (height > 100) height = 100;
          //   pitchAngle = Integer.parseInt(message.substring(0,2));
           //  rollAngle = Integer.parseInt(message.substring(2,4));          
         } catch (Exception ex) {

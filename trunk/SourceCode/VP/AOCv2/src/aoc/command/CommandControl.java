@@ -50,7 +50,8 @@ public class CommandControl extends Thread{
                 }else {
                     sleep(10);
                     if(countY == 100){
-                        out.println("y");
+                        out.println("89");
+                        System.out.println("da gui y");
                         countY = 0;
                     } else {
                         countY ++;  
