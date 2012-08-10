@@ -25,6 +25,8 @@ unsigned char command;
 unsigned int PIDControl = 0;
 int motor1, motor2, motor3, motor4;
 int value = 0;
+int Hung = 0;
+
 //------------------------------------------------------------------------------
 //Chuong trinh chinh
 int main(void) {
@@ -60,15 +62,15 @@ int main(void) {
 
 			case Setup: // Trang thai Setup
 					fufoGetRateAngle(); // calc R0
-					FUFO_thrust = getThrustRate();
-					FUFO_thrust++;
-					if(FUFO_thrust >= 44) {
-						FUFO_thrust = 44;
-						//setState(Ready);
-						//T2CONbits.TON = 1;
-					}
-					setThrustRate(FUFO_thrust);
-					controlFUFO();
+//					FUFO_thrust = getThrustRate();
+//					FUFO_thrust++;
+//					if(FUFO_thrust >= 40) {
+//						FUFO_thrust = 40;
+//						//setState(Ready);
+//						//T2CONbits.TON = 1;
+//					}
+//					setThrustRate(FUFO_thrust);
+//					controlFUFO();
 					break;
 
 			case Ready: // Trang thai Ready
@@ -78,11 +80,16 @@ int main(void) {
 					break;
 
 			case Hovering: // Trang thai Hovering
-					fufoCmd4LCD(LCD_CLEAR);
-					fufoOutputChar("Thrust :");
-					//fufoOutputInt(Fcy/Fpwm - 1);
-					fufoCmd4LCD(LCD_HOMEL2);
-					fufoOutputInt(getThrustRate());
+					if(value >= 3){
+						setPIDAltitude(Enable);
+    					fufoMeasureBaro();
+						value = 0;
+					}
+//					fufoCmd4LCD(LCD_CLEAR);
+//					fufoOutputChar("Thrust :");
+//					//fufoOutputInt(Fcy/Fpwm - 1);
+//					fufoCmd4LCD(LCD_HOMEL2);
+//					fufoOutputInt(getThrustRate());
 //					fufoOutputChar("Kp Theta: ");
 //					fufoOutputInt(getPID4());
 //					fufoOutputChar(" ");
@@ -94,48 +101,25 @@ int main(void) {
 			
 			case Landing: // Trang thai Landing
 					// Auto landing
-					motor1 = 1;
-					motor2 = 1;
-					motor3 = 1;
-					motor4 = 1;
-					if(PDC1 >= 3000){
-						motor1 = 0;
-						PDC1 -= 80;
-//						fufoCmd4LCD(LCD_CLEAR);
-//						fufoOutputChar("motor1");
-//						fufoDelayMs(100);
-					}
-					if(PDC2 >= 3000){
-						motor2 = 0;
-						PDC2 -= 80;
-//						fufoCmd4LCD(LCD_CLEAR);
-//						fufoOutputChar("motor2");
-//					//	fufoDelayMs(100);
-					}
-					if(PDC3 >= 3000){
-						motor3 = 0;
-						PDC3 -= 80;
-//						fufoCmd4LCD(LCD_CLEAR);
-//						fufoOutputChar("motor3");
-//					//	fufoDelayMs(100);
-					}
-					if(getPR4() >= 800){
-						motor4 = 0;
-						value -= 20;
-						setPR4(value);
-//						fufoCmd4LCD(LCD_CLEAR);
-//						fufoOutputChar("motor4");
-//					//	fufoDelayMs(100);
-					}
-					if(motor1 == 1 && motor2 == 1 && motor3 == 1 && motor4 == 1) {
-						//FUFO_thrust = 0;
-						setPIDStatus(Disable);
-						T2CONbits.TON = 0;
-						fufoCmd4LCD(LCD_CLEAR);
-						fufoOutputChar("xong");
-						fufoDelayMs(1000);
-						setState(Pending);	
-					}
+//					if(Hung >= 9){
+//						Hung = 0;
+//						FUFO_thrust = getThrustRate();
+//						FUFO_thrust--;
+//						setThrustRate(FUFO_thrust);
+//						if(FUFO_thrust <= 20) {
+//							FUFO_thrust = 20;
+//							fufoSendCharUART('x');
+//							fufoSendCharUART('x');
+//							setPIDStatus(Disable);
+//							T2CONbits.TON = 0;
+//							setState(Pending);
+//						}	
+//					}
+					T4CONbits.TON = 0;
+					_PTEN = 0;
+					setPIDStatus(Disable);
+					T2CONbits.TON = 0;
+					setState(Pending);
 					break;
 
 			case End: 
@@ -182,8 +166,12 @@ void initFUFO(void){
 	fufoInitGyro();
 	fufoDelayMs(200);
 	fufoOutputChar("...");
+	fufoInitBaro();
+	fufoDelayMs(200);
+	fufoOutputChar("...");
 	initTMR2();
-//	initTMR3();
+	initTMR3();
+	
 //	fufoInitBluetooth(receiOK);
 //	fufoDelayMs(200);
 	setState(Waiting_for_connection);
@@ -208,8 +196,9 @@ void initTMR3(void){
 void __attribute__((__interrupt__ , auto_psv)) _T2Interrupt (void)
 {	
 	IFS0bits.T2IF = 0;	// clear interrupt flag manually
+	value++;
+	Hung++;
 	TMR2 = 0;
-//	TMR3 = 0;
 	controlFUFO();
 	if(userInputFlag == 1){
 		_RE8 = 1;
@@ -227,12 +216,12 @@ void __attribute__((__interrupt__ , auto_psv)) _T2Interrupt (void)
 		i++;
 		if(i == 200){
 			i = 0;
-//			setPIDStatus(Disable);
-//			T2CONbits.TON = 0;
+			setPIDAltitude(Disable);
 			setState(Landing);
 		}
 	} else i = 0;
 //	fufoSendCharUART('k');
 //	fufoSendIntUART(TMR3);
 //	fufoSendCharUART('k');
+//	IFS0bits.T2IF = 0;
 }

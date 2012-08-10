@@ -27,3 +27,5 @@ void fufoCmd4LCD(unsigned char);					//Output command to LCD by 4-bit mode
 void fufoDat4LCD(unsigned char);					//Output data to LCD by 4-bit mode
 void fufoOutputChar(unsigned char *data);			//Output data in char type
 void fufoOutputInt(unsigned int a);					//Output data in int type
+void fufoOutputUint(unsigned int a);
+void fufoOutputLong(long a);

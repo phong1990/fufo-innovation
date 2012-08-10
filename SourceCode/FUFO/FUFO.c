@@ -7,11 +7,13 @@ float psiActual = 0;
 float GyrosOutputR = 0;
 float GyrosOutputP = 0;
 float GyrosOutputY = 0;
+float AccelAltitude = 0;
 int pid1 = 0;
 int pid2 = 0;
 int pid3 = 0;
 int pid4 = 0;
 int PIDStatus = 0;
+int PIDAltitude = 0;
 int Conn;
 
 int getConnectStatus(void){
@@ -26,6 +28,13 @@ int getPIDStatus(void){
 }
 void setPIDStatus(int status){
 	PIDStatus = status;
+}
+
+void setPIDAltitude(int sta){
+	PIDAltitude = sta;
+}
+int getPIDAltitude(void){
+	return PIDAltitude;
 }
 
 void setPID1(int p1){
@@ -115,4 +124,12 @@ void setGyrosOutputY(float GyrosY){
 
 float getGyrosOutputY(void){
 	return GyrosOutputY;
+}
+
+void setAccelAlt(float Alt){
+	AccelAltitude = Alt;
+}
+
+float getAccelAlt(void){
+	return AccelAltitude;
 }
