@@ -13,6 +13,8 @@ unsigned char noticeError[] = "Errored";
 float phiComp;
 float thetaComp;
 float psiHigh;
+float accZ, accVelo, accAlt, altFinal;
+float accAltOld = 0;
 
 
 void CalcFirstAngle(void){
@@ -94,6 +96,7 @@ void fufoGetRateAngle(void){
 }
 
 void fufoGetAngleGyros(void){
+//	float xuatRollG;
 	fufoReadGyro(dataGyroArray);
 	if(dataGyroArray[0] < 32768) {
 		Rxm = dataGyroArray[0];
@@ -116,14 +119,18 @@ void fufoGetAngleGyros(void){
 	Ry = (float)(Rym - R0y) * convertGyro;
 	Rz = (float)(Rzm - R0z) * convertGyro ;
 	
-//	if(Rx < 0){
+//	xuatRollG = Rz;
+//	if(xuatRollG < 0){
 //		fufoSendCharUART('-');
 //	}
-//	fufoSendIntUART(Rx);
+//	fufoSendIntUART((int)(xuatRollG*1000));
 //	fufoSendCharUART('\t');
+//	fufoSendCharUART('\r');
+//	fufoSendCharUART('\n');
 }
 
 void fufoGetAngleAccel(void){
+//	float xuatRoll;
 	fufoReadAccel(dataAccelArray);
 	
     if(dataAccelArray[0] < 4096) {
@@ -148,9 +155,27 @@ void fufoGetAngleAccel(void){
 
 	thetaAngle = (180 / 3.1415926)*atan2(Ay, sqrt(pow(Az, 2) + 0.01 * pow(Ax, 2)));
 
-//	if(thetaAngle < 0){
+//	xuatRoll = thetaAngle;
+//	if(xuatRoll < 0){
 //		fufoSendCharUART('-');
 //	}
-//	fufoSendIntUART(thetaAngle);
+//	fufoSendIntUART((int)(xuatRoll*1000));
 //	fufoSendCharUART('\t');
+}
+
+void fufogetAltitude(void){
+	accZ =  (sqrt(pow(Ax, 2) + pow(Ay, 2) + pow(Az, 2)) - 1)*9.8;
+	accAlt = accAlt + (accZ*0.01)*0.01;
+	if(accAlt > accAltOld){
+		accAlt = accAlt + accAltOld;
+	} else {
+		accAlt = accAltOld - accAlt;
+	}
+	accAltOld = accAlt;
+	setAccelAlt(accAlt);
+}
+
+float altitudeFilter(float baroAlt, float accelAlt){
+	altFinal = kAlt*(altFinal + accelAlt) + (1-kAlt)*baroAlt;
+	return altFinal;
 }

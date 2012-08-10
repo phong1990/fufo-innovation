@@ -10,6 +10,8 @@
 #include "ADXL345_accel/ADXL345.h"
 #include "L3G4200D_gyro/L3G4200D.h"
 #include "I2C/I2C.h"
+#include "stdlib.h"
+#include "BMP085_barometric/BMP085.h"
 
 // Khao bao bien hoac method dung chung cho ca project
 #define Fcy		(8000000*8/4)			//Tan so thuc thi lenh
@@ -32,6 +34,8 @@
 int getConnectStatus(void);
 void setConnectStatus(int Connect);
 int getPIDStatus(void);
+void setPIDAltitude(int sta);
+int getPIDAltitude(void);
 void setPIDStatus(int status);
 int getState(void);
 void setState(unsigned int State);
@@ -48,6 +52,8 @@ void setGyrosOutputP(float GyrosP);
 float getGyrosOutputP(void);
 void setGyrosOutputY(float GyrosY);
 float getGyrosOutputY(void);
+void setAccelAlt(float Alt);
+float getAccelAlt(void);
 
 void setPID1(int p1);
 int getPID1(void);

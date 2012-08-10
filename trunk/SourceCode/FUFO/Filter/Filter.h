@@ -7,6 +7,7 @@
 #include "../UART/UART.h"
 
 #define k		0.98
+#define kAlt		0.93
 #define convertAccel  0.0039;
 #define convertGyro  0.00875;
 
@@ -16,3 +17,5 @@ void fufoGetAngleGyros(void);
 void fufoGetRateAngle(void);
 void CompFilter(void);
 void HighPassFilter(void);
+void fufogetAltitude(void);
+float altitudeFilter(float baroAlt, float accelAlt);
