@@ -35,7 +35,7 @@
 
 //-------------------------Functions-----------------------
 //Initialize Accelerometer
-unsigned char fufoInitAccel(void) {
+unsigned char initAccel(void) {
 	unsigned char error = 0;
 	error += fufoWriteByteI2C(ADXL345_I2C, ADXL345_DATA_FORMAT, 0x0B);
 	error += fufoWriteByteI2C(ADXL345_I2C, ADXL345_POWER_CTL, 0x08);
@@ -45,7 +45,7 @@ unsigned char fufoInitAccel(void) {
 
 //Read the values in an array of 3 integers accel_X, accel_Y, accel_Z.
 //Return an error if it can not.
-unsigned char fufoReadAccel(unsigned int *data) {
+unsigned char readAccel(unsigned int *data) {
 	unsigned char error = 0;
 	unsigned char datatemp[6];
 	error += fufoReadArrayI2C(ADXL345_I2C, ADXL345_DATAX0, datatemp, 6);

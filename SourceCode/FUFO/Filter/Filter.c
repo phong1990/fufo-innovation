@@ -13,7 +13,7 @@ unsigned char noticeError[] = "Errored";
 float phiComp;
 float thetaComp;
 float psiHigh;
-float accZ, accVelo, accAlt, altFinal;
+float accVelo, accAlt, altFinal;
 float accAltOld = 0;
 
 
@@ -131,7 +131,7 @@ void fufoGetAngleGyros(void){
 
 void fufoGetAngleAccel(void){
 //	float xuatRoll;
-	fufoReadAccel(dataAccelArray);
+	readAccel(dataAccelArray);
 	
     if(dataAccelArray[0] < 4096) {
 		Ax = (float)dataAccelArray[0]*convertAccel;	
@@ -164,18 +164,16 @@ void fufoGetAngleAccel(void){
 }
 
 void fufogetAltitude(void){
+	float accZ = 0;
 	accZ =  (sqrt(pow(Ax, 2) + pow(Ay, 2) + pow(Az, 2)) - 1)*9.8;
-	accAlt = accAlt + (accZ*0.01)*0.01;
-	if(accAlt > accAltOld){
-		accAlt = accAlt + accAltOld;
-	} else {
-		accAlt = accAltOld - accAlt;
-	}
-	accAltOld = accAlt;
+	accAlt = accAlt + (accVelo*0.01) + ((accZ*0.01)*0.01)/2;
+	accVelo = accVelo + accZ*0.01;
 	setAccelAlt(accAlt);
 }
 
 float altitudeFilter(float baroAlt, float accelAlt){
+	float avc;
 	altFinal = kAlt*(altFinal + accelAlt) + (1-kAlt)*baroAlt;
+	avc = (sqrt(pow(Ax, 2) + pow(Ay, 2) + pow(Az, 2)) - 1)*9.8;
 	return altFinal;
 }

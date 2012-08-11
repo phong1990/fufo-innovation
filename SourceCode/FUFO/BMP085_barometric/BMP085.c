@@ -10,7 +10,7 @@
 float baroAltitude      = 0.0; 
 float baroRawAltitude   = 0.0;
 float baroGroundAltitude = 0.0;
-float baroSmoothFactor   = 1; //0.92
+float baroSmoothFactor   = 0.92;
 long T = 0;
 int overSamplingSetting = OVER_SAMPLING_SETTING;
 int ac1 = 0, ac2 = 0, ac3 = 0;
@@ -26,7 +26,7 @@ int rawPressureSumCount = 0;
 //-------------------------Functions-----------------------
 
 //Initialize BMP085
-void fufoInitBaro(void) {
+void initBaro(void) {
 //   oversampling setting
 //   0 = ultra low power
 //   1 = standard
@@ -60,23 +60,23 @@ void fufoInitBaro(void) {
 //  fufoDat4LCD(',');
 //  fufoOutputInt(md);
   //end test constants values
-  fufoRequestRawTemperature();
+  requestRawTemperature();
   fufoDelayMs(5);
   isReadPressure = 0;
   pressureCount = 0;
-  fufoMeasureBaro();
+  measureBaro();
   fufoDelayMs(26);
   //fufoDelayMs(5); // delay for temperature
 
-  fufoMeasureBaro();
+  measureBaro();
 	fufoDelayMs(26);
   //fufoDelayMs(10); // delay for pressure
   
-  fufoMeasureGroundBaro();
+  measureGroundBaro();
   // check if measured ground altitude is valid
   while (abs(baroRawAltitude - baroGroundAltitude) > 10) {
     fufoDelayMs(26);
-    fufoMeasureGroundBaro();
+    measureGroundBaro();
   }
   baroAltitude = baroGroundAltitude;
 }
@@ -88,17 +88,17 @@ void fufoRequestRawPressure() {
   fufoWriteByteI2C(BMP085_I2C, 0xF4, 0x34 + (overSamplingSetting<<6));
 }
 
-long fufoReadRawPressure() {
+long readRawPressure() {
   unsigned char dataRawPressure[3];
   fufoReadArrayI2C(BMP085_I2C, 0xF6, dataRawPressure, 3);
   return (((long)dataRawPressure[0] << 16) | ((long)dataRawPressure[1] << 8) | ((long)dataRawPressure[2])) >> (8 - overSamplingSetting);
 }
 
-void fufoRequestRawTemperature() {
+void requestRawTemperature() {
   fufoWriteByteI2C(BMP085_I2C, 0xF4, 0x2E);
 }
 
-unsigned int fufoReadRawTemperature() {
+unsigned int readRawTemperature() {
   //unsigned char dataRawTemperature[2];
   //fufoReadArrayI2C(BMP085_I2C, 0xF6, dataRawTemperature, 2);
   unsigned char dataRawTemperatureM[1];
@@ -108,23 +108,23 @@ unsigned int fufoReadRawTemperature() {
   return ((long)dataRawTemperatureM[0] << 8) | ((long)dataRawTemperatureL[0]);
 }
 
-void fufoMeasureBaro() {
-  fufoMeasureBaroSum();
-  fufoEvaluateBaroAltitude();
+void measureBaro() {
+  measureBaroSum();
+  evaluateBaroAltitude();
 }
 
-void fufoMeasureBaroSum() {
+void measureBaroSum() {
   // switch between pressure and tempature measurements
   // each loop, since it's slow to measure pressure
   if (isReadPressure) {
-    rawPressureSum += fufoReadRawPressure();
-	//rawPressureSum = fufoReadRawPressure();
+    rawPressureSum += readRawPressure();
+	//rawPressureSum = readRawPressure();
 	//fufoCmd4LCD(LCD_HOMEL2);
 	//fufoDelayMs(5);
 	//fufoOutputLong(rawPressureSum);
 	rawPressureSumCount++;
     if (pressureCount == 4) {
-      fufoRequestRawTemperature();
+      requestRawTemperature();
       pressureCount = 0;
       isReadPressure = 0;
     }
@@ -135,14 +135,14 @@ void fufoMeasureBaroSum() {
     
   }
   else { // select must equal TEMPERATURE
-    rawTemperature = (long)fufoReadRawTemperature();
+    rawTemperature = (long)readRawTemperature();
     //fufoOutputLong(rawTemperature);
     fufoRequestRawPressure();
     isReadPressure = 1;
   }
 }
 
-void fufoEvaluateBaroAltitude(){ 
+void evaluateBaroAltitude(){ 
   long x1, x2, x3, b3, b5, b6, p;
   unsigned long b4, b7;
   long tmp;
@@ -193,33 +193,33 @@ void fufoEvaluateBaroAltitude(){
 //  fufoOutputLong(pressure);
   //end test calc first pressure  
   baroRawAltitude = 44330 * (1 - pow(pressure/101325.0, pressureFactor)); // returns absolute baroAltitude in meters
-  baroAltitude = fufoFilterSmooth(baroRawAltitude, baroAltitude, baroSmoothFactor);
+  baroAltitude = filterSmooth(baroRawAltitude, baroAltitude, baroSmoothFactor);
 }
 
-float fufoGetBaroAltitude() {
+float getBaroAltitude() {
   return baroAltitude - baroGroundAltitude;
 }
 
-float  fufoGetBaroAltitudeR() {
+float  getBaroAltitudeR() {
  return baroAltitude;
 }
 float  fufoGetBaroGAltitude() {
  return baroGroundAltitude;
 }
 
-void fufoMeasureGroundBaro() {
+void measureGroundBaro() {
   // measure initial ground pressure (multiple samples)
   float altSum = 0.0;
   int i;
   for (i=0; i < 25; i++) {
-    fufoMeasureBaro();
+    measureBaro();
 	altSum += baroRawAltitude;
     fufoDelayMs(26);
   }
   baroGroundAltitude = altSum / 25;
 }
 
-float fufoFilterSmooth(float currentData, float previousData, float smoothFactor) {
+float filterSmooth(float currentData, float previousData, float smoothFactor) {
   if (smoothFactor != 1.0) //only apply time compensated filter if smoothFactor is applied
   {
     return (currentData * (1.0 - smoothFactor) + (previousData * smoothFactor)); 
