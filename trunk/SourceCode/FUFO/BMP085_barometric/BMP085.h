@@ -6,14 +6,14 @@
 void fufoInitBaro(void);//Initialize BMP085
 unsigned char fufoReadBaro(unsigned int *data);//Read the values in an array of 2 integers baro_temp, baro_pressure. Return an error if it can not
 void fufoRequestRawPressure();
-long fufoReadRawPressure();
-void fufoRequestRawTemperature();
-unsigned int fufoReadRawTemperature();
-void fufoMeasureBaro();
-void fufoMeasureBaroSum();
-void fufoEvaluateBaroAltitude();
-float  fufoGetBaroAltitude();
-float  fufoGetBaroAltitudeR();
+long readRawPressure();
+void requestRawTemperature();
+unsigned int readRawTemperature();
+void measureBaro();
+void measureBaroSum();
+void evaluateBaroAltitude();
+float  getBaroAltitude();
+float  getBaroAltitudeR();
 float  fufoGetBaroGAltitude();
-void fufoMeasureGroundBaro();
-float fufoFilterSmooth(float currentData, float previousData, float smoothFactor);
+void measureGroundBaro();
+float filterSmooth(float currentData, float previousData, float smoothFactor);

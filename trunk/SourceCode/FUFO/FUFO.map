@@ -19,7 +19,7 @@ c:/program files/microchip/mplab c30/bin/../lib\libm-coff.a(fixsfsi.o)
 c:/program files/microchip/mplab c30/bin/../lib\libm-coff.a(addsf3.o)
                               Control.o (__subsf3)
 c:/program files/microchip/mplab c30/bin/../lib\libm-coff.a(fgtge.o)
-                              Filter.o (__gtsf2)
+                              Control.o (__gesf2)
 c:/program files/microchip/mplab c30/bin/../lib\libm-coff.a(feqltle.o)
                               Control.o (__ltsf2)
 c:/program files/microchip/mplab c30/bin/../lib\libm-coff.a(sqrtf.o)
@@ -86,36 +86,36 @@ section                    address   length (PC units)   length (bytes) (dec)
 .reset                           0                 0x4             0x6  (6)
 .ivt                           0x4                0x7c            0xba  (186)
 .aivt                         0x84                0x7c            0xba  (186)
-.text                        0x100              0x2b82          0x4143  (16707)
-.const                      0x2c82                0xd0           0x138  (312)
-.dinit                      0x2d52                0xf4           0x16e  (366)
-.isr                        0x2e46                 0x2             0x3  (3)
+.text                        0x100              0x2ca0          0x42f0  (17136)
+.const                      0x2da0                0xd0           0x138  (312)
+.dinit                      0x2e70                0xf0           0x168  (360)
+.isr                        0x2f60                 0x2             0x3  (3)
 __FOSC                    0xf80000                 0x2             0x3  (3)
 __FWDT                    0xf80002                 0x2             0x3  (3)
 __FBORPOR                 0xf80004                 0x2             0x3  (3)
 __FGS                     0xf8000a                 0x2             0x3  (3)
 
-                     Total program memory used (bytes):         0x4572  (17778) 36%
+                     Total program memory used (bytes):         0x4719  (18201) 37%
 
 
 Data Memory Usage
 
 section                    address      alignment gaps    total length  (dec)
 -------                    -------      --------------    -------------------
-.ndata                       0x800                   0            0x66  (102)
-.nbss                        0x866                   0            0x5a  (90)
-.nbss                        0x8c0                   0            0x50  (80)
-.ndata                       0x910                   0            0x46  (70)
-.ndata                       0x956                   0            0x2a  (42)
-.nbss                        0x980                   0            0x26  (38)
-.ndata                       0x9a6                   0            0x10  (16)
-.ndata                       0x9b6                   0             0xe  (14)
-.nbss                        0x9c4                   0             0x6  (6)
-.ndata                       0x9ca                   0             0x4  (4)
-.nbss                        0x9ce                   0             0x2  (2)
-.nbss                        0x9d0                   0             0x2  (2)
+.ndata                       0x800                   0            0x5e  (94)
+.nbss                        0x85e                   0            0x56  (86)
+.nbss                        0x8b4                   0            0x50  (80)
+.ndata                       0x904                   0            0x46  (70)
+.ndata                       0x94a                   0            0x2a  (42)
+.nbss                        0x974                   0            0x26  (38)
+.ndata                       0x99a                   0            0x10  (16)
+.ndata                       0x9aa                   0             0xe  (14)
+.nbss                        0x9b8                   0             0x6  (6)
+.ndata                       0x9be                   0             0x4  (4)
+.nbss                        0x9c2                   0             0x2  (2)
+.nbss                        0x9c4                   0             0x2  (2)
 
-                        Total data memory used (bytes):          0x1d2  (466) 22%
+                        Total data memory used (bytes):          0x1c6  (454) 22%
 
 
 Dynamic Memory Usage
@@ -123,9 +123,9 @@ Dynamic Memory Usage
 region                     address                      maximum length  (dec)
 ------                     -------                      ---------------------
 heap                             0                                   0  (0)
-stack                        0x9d2                               0x62e  (1582)
+stack                        0x9c6                               0x63a  (1594)
 
-                        Maximum dynamic memory (bytes):          0x62e  (1582)
+                        Maximum dynamic memory (bytes):          0x63a  (1594)
 
 
 External Symbols in Data Memory (by address):
@@ -136,293 +136,283 @@ External Symbols in Data Memory (by address):
                     0x0806                  _PWM_Motor2
                     0x0808                  _PWM_Motor3
                     0x080a                  _PWM_Motor4
-                    0x080c                  _PWM1
-                    0x080e                  _PWM2
-                    0x0810                  _PWM3
-                    0x0812                  _PWM4
-                    0x0814                  _P
-                    0x0818                  _I
-                    0x081c                  _D
-                    0x0820                  _eR
-                    0x0824                  _eP
-                    0x0828                  _eY
-                    0x082c                  _eA
-                    0x0830                  _total_eR
-                    0x0834                  _total_eP
-                    0x0838                  _total_eY
-                    0x083c                  _total_eA
-                    0x0840                  _actualAltitudeNew
-                    0x0844                  _actualAltitudeOld
-                    0x0848                  _PID_sum
-                    0x084c                  _KiAlt
-                    0x0850                  _xuatPhi
-                    0x0854                  _xuatTheta
-                    0x0858                  _phong
-                    0x085c                  _thang
-                    0x0860                  _PID_Yaw
-                    0x0862                  _docao
-                    0x0866                  _R0x
-                    0x0868                  _R0y
-                    0x086a                  _R0z
-                    0x086c                  _xIntG
-                    0x086e                  _yIntG
-                    0x0870                  _zIntG
-                    0x0872                  _Rxm
-                    0x0874                  _Rym
-                    0x0876                  _Rzm
-                    0x0878                  _Rx
-                    0x087c                  _Ry
-                    0x0880                  _Rz
-                    0x0884                  _Ax
-                    0x0888                  _Ay
-                    0x088c                  _Az
-                    0x0890                  _phiAngle
-                    0x0894                  _thetaAngle
-                    0x0898                  _dataGyroArray
-                    0x089e                  _dataAccelArray
-                    0x08a4                  _phiComp
-                    0x08a8                  _thetaComp
-                    0x08ac                  _psiHigh
-                    0x08b0                  _accZ
-                    0x08b4                  _accVelo
-                    0x08b8                  _accAlt
-                    0x08bc                  _altFinal
-                    0x08c0                  _Up
-                    0x08c2                  _Down
-                    0x08c4                  _Left
-                    0x08c6                  _Right
-                    0x08c8                  _R_Left
-                    0x08ca                  _R_Right
-                    0x08cc                  _Forward
-                    0x08ce                  _Backward
-                    0x08d0                  _Yaw_sum
-                    0x08d4                  _Pitch_sum
-                    0x08d8                  _Roll_sum
-                    0x08dc                  _High_sum
-                    0x08e0                  _comandfromBluetooth
-                    0x08e2                  _Angle_sumR
-                    0x08e6                  _Angle_sumP
-                    0x08ea                  _Angle_sumY
-                    0x08ee                  _Altitude
-                    0x08f2                  _userInput
-                    0x08f4                  _altitude
-                    0x08f8                  _altitudeR
-                    0x08fc                  _altitudeG
-                    0x0900                  _altitudeLCD
-                    0x0904                  _altitudeLCD1
-                    0x0908                  _altitudeLCD2
-                    0x090c                  _xuatdocao
-                    0x0910                  _baroAltitude
-                    0x0914                  _baroRawAltitude
-                    0x0918                  _baroGroundAltitude
-                    0x091c                  _baroSmoothFactor
-                    0x0920                  _T
-                    0x0924                  _overSamplingSetting
-                    0x0926                  _ac1
-                    0x0928                  _ac2
-                    0x092a                  _ac3
-                    0x092c                  _ac4
-                    0x092e                  _ac5
-                    0x0930                  _ac6
-                    0x0932                  _b1
-                    0x0934                  _b2
-                    0x0936                  _mb
-                    0x0938                  _mc
-                    0x093a                  _md
-                    0x093c                  _pressure
-                    0x0940                  _rawPressure
-                    0x0944                  _rawTemperature
-                    0x0948                  _pressureCount
-                    0x094a                  _pressureFactor
-                    0x094e                  _isReadPressure
-                    0x0950                  _rawPressureSum
-                    0x0954                  _rawPressureSumCount
-                    0x0956                  _mainState
-                    0x0958                  _phiActual
-                    0x095c                  _thetaActual
-                    0x0960                  _psiActual
-                    0x0964                  _GyrosOutputR
-                    0x0968                  _GyrosOutputP
-                    0x096c                  _GyrosOutputY
-                    0x0970                  _AccelAltitude
-                    0x0974                  _pid1
-                    0x0976                  _pid2
-                    0x0978                  _pid3
-                    0x097a                  _pid4
-                    0x097c                  _PIDStatus
-                    0x097e                  _PIDAltitude
-                    0x0980                  _receiOK
-                    0x099a                  _FUFO_State
-                    0x099c                  _command
-                    0x099e                  _motor1
-                    0x09a0                  _motor2
-                    0x09a2                  _motor3
-                    0x09a4                  _motor4
-                    0x09a6                  _index
-                    0x09a8                  _FUFO_thrust
-                    0x09aa                  _userInputFlag
-                    0x09ac                  _Connection
-                    0x09ae                  _i
-                    0x09b0                  _PIDControl
-                    0x09b2                  _value
-                    0x09b4                  _Hung
-                    0x09b6                  _idx100
-                    0x09b8                  _noticeError
-                    0x09c0                  _accAltOld
-                    0x09c4                  _PR4_value
-                    0x09c6                  _periodValue
-                    0x09c8                  _initDCValue
-                    0x09ca                  _a
-                    0x09cc                  _PWM_per_thrust
-                    0x09ce                  _Conn
+                    0x080c                  _P
+                    0x0810                  _I
+                    0x0814                  _D
+                    0x0818                  _e_Roll
+                    0x081c                  _e_Pitch
+                    0x0820                  _e_Yaw
+                    0x0824                  _eAlt
+                    0x0828                  _total_e_Roll
+                    0x082c                  _total_e_Pitch
+                    0x0830                  _total_e_Yaw
+                    0x0834                  _total_eAlt
+                    0x0838                  _actualAltitudeNew
+                    0x083c                  _actualAltitudeOld
+                    0x0840                  _PID_sum
+                    0x0844                  _KiAlt
+                    0x0848                  _xuatPhi
+                    0x084c                  _xuatTheta
+                    0x0850                  _phong
+                    0x0854                  _thang
+                    0x0858                  _PID_Yaw
+                    0x085a                  _docao
+                    0x085e                  _R0x
+                    0x0860                  _R0y
+                    0x0862                  _R0z
+                    0x0864                  _xIntG
+                    0x0866                  _yIntG
+                    0x0868                  _zIntG
+                    0x086a                  _Rxm
+                    0x086c                  _Rym
+                    0x086e                  _Rzm
+                    0x0870                  _Rx
+                    0x0874                  _Ry
+                    0x0878                  _Rz
+                    0x087c                  _Ax
+                    0x0880                  _Ay
+                    0x0884                  _Az
+                    0x0888                  _phiAngle
+                    0x088c                  _thetaAngle
+                    0x0890                  _dataGyroArray
+                    0x0896                  _dataAccelArray
+                    0x089c                  _phiComp
+                    0x08a0                  _thetaComp
+                    0x08a4                  _psiHigh
+                    0x08a8                  _accVelo
+                    0x08ac                  _accAlt
+                    0x08b0                  _altFinal
+                    0x08b4                  _Up
+                    0x08b6                  _Down
+                    0x08b8                  _Left
+                    0x08ba                  _Right
+                    0x08bc                  _R_Left
+                    0x08be                  _R_Right
+                    0x08c0                  _Forward
+                    0x08c2                  _Backward
+                    0x08c4                  _Yaw_sum
+                    0x08c8                  _Pitch_sum
+                    0x08cc                  _Roll_sum
+                    0x08d0                  _High_sum
+                    0x08d4                  _comandfromBluetooth
+                    0x08d6                  _Angle_sumRoll
+                    0x08da                  _Angle_sumPitch
+                    0x08de                  _Angle_sumYaw
+                    0x08e2                  _Altitude
+                    0x08e6                  _userInput
+                    0x08e8                  _altitude
+                    0x08ec                  _altitudeR
+                    0x08f0                  _altitudeG
+                    0x08f4                  _altitudeLCD
+                    0x08f8                  _altitudeLCD1
+                    0x08fc                  _altitudeLCD2
+                    0x0900                  _xuatdocao
+                    0x0904                  _baroAltitude
+                    0x0908                  _baroRawAltitude
+                    0x090c                  _baroGroundAltitude
+                    0x0910                  _baroSmoothFactor
+                    0x0914                  _T
+                    0x0918                  _overSamplingSetting
+                    0x091a                  _ac1
+                    0x091c                  _ac2
+                    0x091e                  _ac3
+                    0x0920                  _ac4
+                    0x0922                  _ac5
+                    0x0924                  _ac6
+                    0x0926                  _b1
+                    0x0928                  _b2
+                    0x092a                  _mb
+                    0x092c                  _mc
+                    0x092e                  _md
+                    0x0930                  _pressure
+                    0x0934                  _rawPressure
+                    0x0938                  _rawTemperature
+                    0x093c                  _pressureCount
+                    0x093e                  _pressureFactor
+                    0x0942                  _isReadPressure
+                    0x0944                  _rawPressureSum
+                    0x0948                  _rawPressureSumCount
+                    0x094a                  _mainState
+                    0x094c                  _phiActual
+                    0x0950                  _thetaActual
+                    0x0954                  _psiActual
+                    0x0958                  _GyrosOutputR
+                    0x095c                  _GyrosOutputP
+                    0x0960                  _GyrosOutputY
+                    0x0964                  _AccelAltitude
+                    0x0968                  _pid1
+                    0x096a                  _pid2
+                    0x096c                  _pid3
+                    0x096e                  _pid4
+                    0x0970                  _PIDStatus
+                    0x0972                  _PIDAltitude
+                    0x0974                  _receiOK
+                    0x098e                  _FUFO_State
+                    0x0990                  _command
+                    0x0992                  _motor1
+                    0x0994                  _motor2
+                    0x0996                  _motor3
+                    0x0998                  _motor4
+                    0x099a                  _index
+                    0x099c                  _FUFO_thrust
+                    0x099e                  _userInputFlag
+                    0x09a0                  _Connection
+                    0x09a2                  _i
+                    0x09a4                  _PIDControl
+                    0x09a6                  _value
+                    0x09a8                  _Hung
+                    0x09aa                  _idx100
+                    0x09ac                  _noticeError
+                    0x09b4                  _accAltOld
+                    0x09b8                  _PR4_value
+                    0x09ba                  _periodValue
+                    0x09bc                  _initDCValue
+                    0x09be                  _a
+                    0x09c0                  _PWM_per_thrust
+                    0x09c2                  _Conn
 
 External Symbols in Data Memory (by name):
 
-                    0x0970                  _AccelAltitude
-                    0x08ee                  _Altitude
-                    0x08e6                  _Angle_sumP
-                    0x08e2                  _Angle_sumR
-                    0x08ea                  _Angle_sumY
-                    0x0884                  _Ax
-                    0x0888                  _Ay
-                    0x088c                  _Az
-                    0x08ce                  _Backward
-                    0x09ce                  _Conn
-                    0x09ac                  _Connection
-                    0x081c                  _D
-                    0x08c2                  _Down
-                    0x099a                  _FUFO_State
-                    0x09a8                  _FUFO_thrust
-                    0x08cc                  _Forward
-                    0x0968                  _GyrosOutputP
-                    0x0964                  _GyrosOutputR
-                    0x096c                  _GyrosOutputY
-                    0x08dc                  _High_sum
-                    0x09b4                  _Hung
-                    0x0818                  _I
-                    0x084c                  _KiAlt
-                    0x08c4                  _Left
-                    0x0814                  _P
+                    0x0964                  _AccelAltitude
+                    0x08e2                  _Altitude
+                    0x08da                  _Angle_sumPitch
+                    0x08d6                  _Angle_sumRoll
+                    0x08de                  _Angle_sumYaw
+                    0x087c                  _Ax
+                    0x0880                  _Ay
+                    0x0884                  _Az
+                    0x08c2                  _Backward
+                    0x09c2                  _Conn
+                    0x09a0                  _Connection
+                    0x0814                  _D
+                    0x08b6                  _Down
+                    0x098e                  _FUFO_State
+                    0x099c                  _FUFO_thrust
+                    0x08c0                  _Forward
+                    0x095c                  _GyrosOutputP
+                    0x0958                  _GyrosOutputR
+                    0x0960                  _GyrosOutputY
+                    0x08d0                  _High_sum
+                    0x09a8                  _Hung
+                    0x0810                  _I
+                    0x0844                  _KiAlt
+                    0x08b8                  _Left
+                    0x080c                  _P
                     0x0800                  _PID
-                    0x097e                  _PIDAltitude
-                    0x09b0                  _PIDControl
-                    0x097c                  _PIDStatus
-                    0x0860                  _PID_Yaw
-                    0x0848                  _PID_sum
-                    0x09c4                  _PR4_value
-                    0x080c                  _PWM1
-                    0x080e                  _PWM2
-                    0x0810                  _PWM3
-                    0x0812                  _PWM4
+                    0x0972                  _PIDAltitude
+                    0x09a4                  _PIDControl
+                    0x0970                  _PIDStatus
+                    0x0858                  _PID_Yaw
+                    0x0840                  _PID_sum
+                    0x09b8                  _PR4_value
                     0x0804                  _PWM_Motor1
                     0x0806                  _PWM_Motor2
                     0x0808                  _PWM_Motor3
                     0x080a                  _PWM_Motor4
-                    0x09cc                  _PWM_per_thrust
-                    0x08d4                  _Pitch_sum
-                    0x0866                  _R0x
-                    0x0868                  _R0y
-                    0x086a                  _R0z
-                    0x08c8                  _R_Left
-                    0x08ca                  _R_Right
-                    0x08c6                  _Right
-                    0x08d8                  _Roll_sum
-                    0x0878                  _Rx
-                    0x0872                  _Rxm
-                    0x087c                  _Ry
-                    0x0874                  _Rym
-                    0x0880                  _Rz
-                    0x0876                  _Rzm
-                    0x0920                  _T
-                    0x08c0                  _Up
-                    0x08d0                  _Yaw_sum
-                    0x09ca                  _a
-                    0x0926                  _ac1
-                    0x0928                  _ac2
-                    0x092a                  _ac3
-                    0x092c                  _ac4
-                    0x092e                  _ac5
-                    0x0930                  _ac6
-                    0x08b8                  _accAlt
-                    0x09c0                  _accAltOld
-                    0x08b4                  _accVelo
-                    0x08b0                  _accZ
-                    0x0840                  _actualAltitudeNew
-                    0x0844                  _actualAltitudeOld
-                    0x08bc                  _altFinal
-                    0x08f4                  _altitude
-                    0x08fc                  _altitudeG
-                    0x0900                  _altitudeLCD
-                    0x0904                  _altitudeLCD1
-                    0x0908                  _altitudeLCD2
-                    0x08f8                  _altitudeR
-                    0x0932                  _b1
-                    0x0934                  _b2
-                    0x0910                  _baroAltitude
-                    0x0918                  _baroGroundAltitude
-                    0x0914                  _baroRawAltitude
-                    0x091c                  _baroSmoothFactor
-                    0x08e0                  _comandfromBluetooth
-                    0x099c                  _command
-                    0x089e                  _dataAccelArray
-                    0x0898                  _dataGyroArray
-                    0x0862                  _docao
-                    0x082c                  _eA
-                    0x0824                  _eP
-                    0x0820                  _eR
-                    0x0828                  _eY
-                    0x09ae                  _i
-                    0x09b6                  _idx100
-                    0x09a6                  _index
-                    0x09c8                  _initDCValue
-                    0x094e                  _isReadPressure
-                    0x0956                  _mainState
-                    0x0936                  _mb
-                    0x0938                  _mc
-                    0x093a                  _md
-                    0x099e                  _motor1
-                    0x09a0                  _motor2
-                    0x09a2                  _motor3
-                    0x09a4                  _motor4
-                    0x09b8                  _noticeError
-                    0x0924                  _overSamplingSetting
-                    0x09c6                  _periodValue
-                    0x0958                  _phiActual
-                    0x0890                  _phiAngle
-                    0x08a4                  _phiComp
-                    0x0858                  _phong
-                    0x0974                  _pid1
-                    0x0976                  _pid2
-                    0x0978                  _pid3
-                    0x097a                  _pid4
-                    0x093c                  _pressure
-                    0x0948                  _pressureCount
-                    0x094a                  _pressureFactor
-                    0x0960                  _psiActual
-                    0x08ac                  _psiHigh
-                    0x0940                  _rawPressure
-                    0x0950                  _rawPressureSum
-                    0x0954                  _rawPressureSumCount
-                    0x0944                  _rawTemperature
-                    0x0980                  _receiOK
-                    0x085c                  _thang
-                    0x095c                  _thetaActual
-                    0x0894                  _thetaAngle
-                    0x08a8                  _thetaComp
+                    0x09c0                  _PWM_per_thrust
+                    0x08c8                  _Pitch_sum
+                    0x085e                  _R0x
+                    0x0860                  _R0y
+                    0x0862                  _R0z
+                    0x08bc                  _R_Left
+                    0x08be                  _R_Right
+                    0x08ba                  _Right
+                    0x08cc                  _Roll_sum
+                    0x0870                  _Rx
+                    0x086a                  _Rxm
+                    0x0874                  _Ry
+                    0x086c                  _Rym
+                    0x0878                  _Rz
+                    0x086e                  _Rzm
+                    0x0914                  _T
+                    0x08b4                  _Up
+                    0x08c4                  _Yaw_sum
+                    0x09be                  _a
+                    0x091a                  _ac1
+                    0x091c                  _ac2
+                    0x091e                  _ac3
+                    0x0920                  _ac4
+                    0x0922                  _ac5
+                    0x0924                  _ac6
+                    0x08ac                  _accAlt
+                    0x09b4                  _accAltOld
+                    0x08a8                  _accVelo
+                    0x0838                  _actualAltitudeNew
+                    0x083c                  _actualAltitudeOld
+                    0x08b0                  _altFinal
+                    0x08e8                  _altitude
+                    0x08f0                  _altitudeG
+                    0x08f4                  _altitudeLCD
+                    0x08f8                  _altitudeLCD1
+                    0x08fc                  _altitudeLCD2
+                    0x08ec                  _altitudeR
+                    0x0926                  _b1
+                    0x0928                  _b2
+                    0x0904                  _baroAltitude
+                    0x090c                  _baroGroundAltitude
+                    0x0908                  _baroRawAltitude
+                    0x0910                  _baroSmoothFactor
+                    0x08d4                  _comandfromBluetooth
+                    0x0990                  _command
+                    0x0896                  _dataAccelArray
+                    0x0890                  _dataGyroArray
+                    0x085a                  _docao
+                    0x0824                  _eAlt
+                    0x081c                  _e_Pitch
+                    0x0818                  _e_Roll
+                    0x0820                  _e_Yaw
+                    0x09a2                  _i
+                    0x09aa                  _idx100
+                    0x099a                  _index
+                    0x09bc                  _initDCValue
+                    0x0942                  _isReadPressure
+                    0x094a                  _mainState
+                    0x092a                  _mb
+                    0x092c                  _mc
+                    0x092e                  _md
+                    0x0992                  _motor1
+                    0x0994                  _motor2
+                    0x0996                  _motor3
+                    0x0998                  _motor4
+                    0x09ac                  _noticeError
+                    0x0918                  _overSamplingSetting
+                    0x09ba                  _periodValue
+                    0x094c                  _phiActual
+                    0x0888                  _phiAngle
+                    0x089c                  _phiComp
+                    0x0850                  _phong
+                    0x0968                  _pid1
+                    0x096a                  _pid2
+                    0x096c                  _pid3
+                    0x096e                  _pid4
+                    0x0930                  _pressure
+                    0x093c                  _pressureCount
+                    0x093e                  _pressureFactor
+                    0x0954                  _psiActual
+                    0x08a4                  _psiHigh
+                    0x0934                  _rawPressure
+                    0x0944                  _rawPressureSum
+                    0x0948                  _rawPressureSumCount
+                    0x0938                  _rawTemperature
+                    0x0974                  _receiOK
+                    0x0854                  _thang
+                    0x0950                  _thetaActual
+                    0x088c                  _thetaAngle
+                    0x08a0                  _thetaComp
                     0x0802                  _thrustRate
-                    0x083c                  _total_eA
-                    0x0834                  _total_eP
-                    0x0830                  _total_eR
-                    0x0838                  _total_eY
-                    0x08f2                  _userInput
-                    0x09aa                  _userInputFlag
-                    0x09b2                  _value
-                    0x086c                  _xIntG
-                    0x0850                  _xuatPhi
-                    0x0854                  _xuatTheta
-                    0x090c                  _xuatdocao
-                    0x086e                  _yIntG
-                    0x0870                  _zIntG
+                    0x0834                  _total_eAlt
+                    0x082c                  _total_e_Pitch
+                    0x0828                  _total_e_Roll
+                    0x0830                  _total_e_Yaw
+                    0x08e6                  _userInput
+                    0x099e                  _userInputFlag
+                    0x09a6                  _value
+                    0x0864                  _xIntG
+                    0x0848                  _xuatPhi
+                    0x084c                  _xuatTheta
+                    0x0900                  _xuatdocao
+                    0x0866                  _yIntG
+                    0x0868                  _zIntG
 
 External Symbols in Program Memory (by address):
 
@@ -435,11 +425,11 @@ External Symbols in Program Memory (by address):
                   0x0002fe                  ___fixsfsi
                   0x000340                  ___subsf3
                   0x000342                  ___addsf3
-                  0x0003fc                  ___gtsf2
                   0x0003fc                  ___gesf2
-                  0x000400                  ___lesf2
-                  0x000400                  ___ltsf2
+                  0x0003fc                  ___gtsf2
                   0x000400                  ___eqsf2
+                  0x000400                  ___ltsf2
+                  0x000400                  ___lesf2
                   0x000404                  _sqrtf
                   0x00046e                  _atan2f
                   0x0004a8                  ___udivsi3
@@ -460,138 +450,138 @@ External Symbols in Program Memory (by address):
                   0x0008ea                  _logf
                   0x000998                  _expf
                   0x000a5c                  _main
-                  0x000b12                  _initFUFO
-                  0x000b78                  _initTMR2
-                  0x000ba4                  _initTMR3
-                  0x000bbc                  __T2Interrupt
-                  0x000c44                  _fufoDelayMs
-                  0x000c6a                  _fufoDelayUs
-                  0x000c8e                  _fufoInitLCDPorts
-                  0x000cac                  _fufoInitLCD
-                  0x000ce2                  _fufoCmd4LCD
-                  0x000dea                  _fufoDat4LCD
-                  0x000ef2                  _fufoOutputChar
-                  0x000f24                  _fufoOutputInt
-                  0x000f7c                  _fufoOutputUint
-                  0x000fc8                  _fufoOutputLong
-                  0x001044                  _initPWMPort
-                  0x001052                  _setPR4
-                  0x00105e                  _getPR4
-                  0x001066                  _initPWM
-                  0x001096                  _initPWMHardware
-                  0x0010dc                  _initPWMSoftware
-                  0x00110c                  _setPWM1
-                  0x001134                  _setPWM2
-                  0x001158                  _setPWM3
-                  0x001180                  _setPWM4
-                  0x0011a8                  __T4Interrupt
-                  0x001206                  _fufoInitBluetooth
-                  0x00121e                  _testConnectBluetooth
-                  0x0012a6                  _fufoReceiveCmd
-                  0x0012ac                  _fufoInitUART
-                  0x0012d4                  _fufoSendCharUART
-                  0x0012e8                  _fufoSendStringUART
-                  0x001312                  _fufoSendIntUART
-                  0x0013ac                  _fufoSendLongUART
-                  0x001470                  _fufoReceiveUART
-                  0x00148c                  _getThrustRate
-                  0x001494                  _setThrustRate
-                  0x0014a0                  _getUserInput
-                  0x0014a8                  _controlFUFO
-                  0x0014c8                  _checkConnection
-                  0x001508                  _checkBLConnection
-                  0x00152c                  _getStartInstruction
-                  0x00155a                  _getUpInstruction
-                  0x001590                  _getInstruction
-                  0x001728                  _setSetpoint
-                  0x0017e0                  _calcPID
-                  0x0018de                  _calcRollAngle
-                  0x001956                  _calcPitchAngle
-                  0x0019ce                  _calcYawAngle
-                  0x001a46                  _calcAltitude
-                  0x001adc                  _resetInstruction
-                  0x001b02                  _resetSensor
-                  0x001b20                  _resetPWM
-                  0x001b46                  _getConnectStatus
-                  0x001b4e                  _setConnectStatus
-                  0x001b5a                  _getPIDStatus
-                  0x001b62                  _setPIDStatus
-                  0x001b6e                  _setPIDAltitude
-                  0x001b7a                  _getPIDAltitude
-                  0x001b82                  _setPID1
-                  0x001b8e                  _getPID1
-                  0x001b96                  _setPID2
-                  0x001ba2                  _getPID2
-                  0x001baa                  _setPID3
-                  0x001bb6                  _getPID3
-                  0x001bbe                  _setPID4
-                  0x001bca                  _getPID4
-                  0x001bd2                  _getState
-                  0x001bda                  _setState
-                  0x001be6                  _calcTimeMS
-                  0x001c06                  _setPhiAngle
-                  0x001c14                  _getPhiAngle
-                  0x001c1e                  _setThetaAngle
-                  0x001c2c                  _getThetaAngle
-                  0x001c36                  _setPsiAngle
-                  0x001c44                  _getPsiAngle
-                  0x001c4e                  _setGyrosOutputR
-                  0x001c5c                  _getGyrosOutputR
-                  0x001c66                  _setGyrosOutputP
-                  0x001c74                  _getGyrosOutputP
-                  0x001c7e                  _setGyrosOutputY
-                  0x001c8c                  _getGyrosOutputY
-                  0x001c96                  _setAccelAlt
-                  0x001ca4                  _getAccelAlt
-                  0x001cae                  _fufoInitAccel
-                  0x001cd8                  _fufoReadAccel
-                  0x001d74                  _fufoStartI2C
-                  0x001d84                  _fufoRestartI2C
-                  0x001d94                  _fufoStopI2C
-                  0x001da4                  _fufoAckI2C
-                  0x001db6                  _fufoNackI2C
-                  0x001dca                  _fufoGetAckI2C
-                  0x001de0                  _fufoWriteI2C
-                  0x001df4                  _fufoWriteAckI2C
-                  0x001e18                  _fufoReadI2C
-                  0x001e2c                  _fufoInitI2C
-                  0x001e3a                  _fufoWaitI2C
-                  0x001e4a                  _fufoWriteByteI2C
-                  0x001eaa                  _fufoReadByteI2C
-                  0x001f2c                  _fufoReadArrayI2C
-                  0x001fda                  _fufoInitGyro
-                  0x001ff0                  _fufoReadGyro
-                  0x0020a0                  _CalcFirstAngle
-                  0x002112                  _CompFilter
-                  0x0021c8                  _fufoGetRateAngle
-                  0x00228e                  _fufoGetAngleGyros
-                  0x002316                  _fufoGetAngleAccel
-                  0x0024a8                  _fufogetAltitude
-                  0x002548                  _altitudeFilter
-                  0x002580                  _fufoInitBaro
-                  0x00273e                  _fufoRequestRawPressure
-                  0x00275c                  _fufoReadRawPressure
-                  0x0027be                  _fufoRequestRawTemperature
-                  0x0027cc                  _fufoReadRawTemperature
-                  0x002810                  _fufoMeasureBaro
-                  0x00281a                  _fufoMeasureBaroSum
-                  0x002864                  _fufoEvaluateBaroAltitude
-                  0x002bce                  _fufoGetBaroAltitude
-                  0x002bde                  _fufoGetBaroAltitudeR
-                  0x002be8                  _fufoGetBaroGAltitude
-                  0x002bf2                  _fufoMeasureGroundBaro
-                  0x002c2e                  _fufoFilterSmooth
-                  0x002e46                  __DefaultInterrupt
+                  0x000b4c                  _initFUFO
+                  0x000bb2                  _initTMR2
+                  0x000bde                  _initTMR3
+                  0x000bf6                  __T2Interrupt
+                  0x000c82                  _fufoDelayMs
+                  0x000ca8                  _fufoDelayUs
+                  0x000ccc                  _fufoInitLCDPorts
+                  0x000cea                  _fufoInitLCD
+                  0x000d20                  _fufoCmd4LCD
+                  0x000e28                  _fufoDat4LCD
+                  0x000f30                  _fufoOutputChar
+                  0x000f62                  _fufoOutputInt
+                  0x000fba                  _fufoOutputUint
+                  0x001006                  _fufoOutputLong
+                  0x001082                  _initPWMPort
+                  0x001090                  _setPR4
+                  0x00109c                  _getPR4
+                  0x0010a4                  _initPWM
+                  0x0010d4                  _initPWMHardware
+                  0x00111a                  _initPWMSoftware
+                  0x00114a                  _setPWM1
+                  0x001172                  _setPWM2
+                  0x001196                  _setPWM3
+                  0x0011be                  _setPWM4
+                  0x0011e6                  __T4Interrupt
+                  0x001244                  _initBluetooth
+                  0x00125c                  _testConnectBluetooth
+                  0x0012e4                  _fufoInitUART
+                  0x00130c                  _fufoSendCharUART
+                  0x001320                  _fufoSendStringUART
+                  0x00134a                  _fufoSendIntUART
+                  0x0013e4                  _fufoSendLongUART
+                  0x0014a8                  _fufoReceiveUART
+                  0x0014c4                  _getThrustRate
+                  0x0014cc                  _setThrustRate
+                  0x0014d8                  _getUserInput
+                  0x0014e0                  _setHigh_sum
+                  0x0014ee                  _controlFUFO
+                  0x00150e                  _checkConnection
+                  0x00154e                  _checkBLConnection
+                  0x001572                  _getStartInstruction
+                  0x0015a0                  _getUpInstruction
+                  0x0015d6                  _getInstruction
+                  0x001772                  _setSetpoint
+                  0x00183c                  _calcPID
+                  0x0019da                  _calcRollAngle
+                  0x001a52                  _calcPitchAngle
+                  0x001aca                  _calcYawAngle
+                  0x001b42                  _calcAltitude
+                  0x001bd4                  _resetInstruction
+                  0x001bfa                  _resetSensor
+                  0x001c18                  _resetPWM
+                  0x001c2e                  _getConnectStatus
+                  0x001c36                  _setConnectStatus
+                  0x001c42                  _getPIDStatus
+                  0x001c4a                  _setPIDStatus
+                  0x001c56                  _setPIDAltitude
+                  0x001c62                  _getPIDAltitude
+                  0x001c6a                  _setPID1
+                  0x001c76                  _getPID1
+                  0x001c7e                  _setPID2
+                  0x001c8a                  _getPID2
+                  0x001c92                  _setPID3
+                  0x001c9e                  _getPID3
+                  0x001ca6                  _setPID4
+                  0x001cb2                  _getPID4
+                  0x001cba                  _getState
+                  0x001cc2                  _setState
+                  0x001cce                  _calcTimeMS
+                  0x001cee                  _setPhiAngle
+                  0x001cfc                  _getPhiAngle
+                  0x001d06                  _setThetaAngle
+                  0x001d14                  _getThetaAngle
+                  0x001d1e                  _setPsiAngle
+                  0x001d2c                  _getPsiAngle
+                  0x001d36                  _setGyrosOutputR
+                  0x001d44                  _getGyrosOutputR
+                  0x001d4e                  _setGyrosOutputP
+                  0x001d5c                  _getGyrosOutputP
+                  0x001d66                  _setGyrosOutputY
+                  0x001d74                  _getGyrosOutputY
+                  0x001d7e                  _setAccelAlt
+                  0x001d8c                  _getAccelAlt
+                  0x001d96                  _initAccel
+                  0x001dc0                  _readAccel
+                  0x001e5c                  _fufoStartI2C
+                  0x001e6c                  _fufoRestartI2C
+                  0x001e7c                  _fufoStopI2C
+                  0x001e8c                  _fufoAckI2C
+                  0x001e9e                  _fufoNackI2C
+                  0x001eb2                  _fufoGetAckI2C
+                  0x001ec8                  _fufoWriteI2C
+                  0x001edc                  _fufoWriteAckI2C
+                  0x001f00                  _fufoReadI2C
+                  0x001f14                  _fufoInitI2C
+                  0x001f22                  _fufoWaitI2C
+                  0x001f32                  _fufoWriteByteI2C
+                  0x001f92                  _fufoReadByteI2C
+                  0x002014                  _fufoReadArrayI2C
+                  0x0020c2                  _fufoInitGyro
+                  0x0020d8                  _fufoReadGyro
+                  0x002188                  _CalcFirstAngle
+                  0x0021fa                  _CompFilter
+                  0x0022b0                  _fufoGetRateAngle
+                  0x002376                  _fufoGetAngleGyros
+                  0x0023fe                  _fufoGetAngleAccel
+                  0x002590                  _fufogetAltitude
+                  0x00262a                  _altitudeFilter
+                  0x00269e                  _initBaro
+                  0x00285c                  _fufoRequestRawPressure
+                  0x00287a                  _readRawPressure
+                  0x0028dc                  _requestRawTemperature
+                  0x0028ea                  _readRawTemperature
+                  0x00292e                  _measureBaro
+                  0x002938                  _measureBaroSum
+                  0x002982                  _evaluateBaroAltitude
+                  0x002cec                  _getBaroAltitude
+                  0x002cfc                  _getBaroAltitudeR
+                  0x002d06                  _fufoGetBaroGAltitude
+                  0x002d10                  _measureGroundBaro
+                  0x002d4c                  _filterSmooth
+                  0x002f60                  __DefaultInterrupt
                   0xf8000a                  __FGS.sec
 
 External Symbols in Program Memory (by name):
 
-                  0x0020a0                  _CalcFirstAngle
-                  0x002112                  _CompFilter
-                  0x002e46                  __DefaultInterrupt
+                  0x002188                  _CalcFirstAngle
+                  0x0021fa                  _CompFilter
+                  0x002f60                  __DefaultInterrupt
                   0xf8000a                  __FGS.sec
-                  0x000bbc                  __T2Interrupt
-                  0x0011a8                  __T4Interrupt
+                  0x000bf6                  __T2Interrupt
+                  0x0011e6                  __T4Interrupt
                   0x000342                  ___addsf3
                   0x00027a                  ___divsf3
                   0x00019e                  ___divsi3
@@ -618,131 +608,131 @@ External Symbols in Program Memory (by name):
                   0x000714                  __funpack
                   0x0006e4                  __funpack2
                   0x000100                  __resetPRI
-                  0x002548                  _altitudeFilter
+                  0x00262a                  _altitudeFilter
                   0x00046e                  _atan2f
                   0x000774                  _atanf
-                  0x001a46                  _calcAltitude
-                  0x0017e0                  _calcPID
-                  0x001956                  _calcPitchAngle
-                  0x0018de                  _calcRollAngle
-                  0x001be6                  _calcTimeMS
-                  0x0019ce                  _calcYawAngle
-                  0x001508                  _checkBLConnection
-                  0x0014c8                  _checkConnection
-                  0x0014a8                  _controlFUFO
+                  0x001b42                  _calcAltitude
+                  0x00183c                  _calcPID
+                  0x001a52                  _calcPitchAngle
+                  0x0019da                  _calcRollAngle
+                  0x001cce                  _calcTimeMS
+                  0x001aca                  _calcYawAngle
+                  0x00154e                  _checkBLConnection
+                  0x00150e                  _checkConnection
+                  0x0014ee                  _controlFUFO
+                  0x002982                  _evaluateBaroAltitude
                   0x000998                  _expf
-                  0x001da4                  _fufoAckI2C
-                  0x000ce2                  _fufoCmd4LCD
-                  0x000dea                  _fufoDat4LCD
-                  0x000c44                  _fufoDelayMs
-                  0x000c6a                  _fufoDelayUs
-                  0x002864                  _fufoEvaluateBaroAltitude
-                  0x002c2e                  _fufoFilterSmooth
-                  0x001dca                  _fufoGetAckI2C
-                  0x002316                  _fufoGetAngleAccel
-                  0x00228e                  _fufoGetAngleGyros
-                  0x002bce                  _fufoGetBaroAltitude
-                  0x002bde                  _fufoGetBaroAltitudeR
-                  0x002be8                  _fufoGetBaroGAltitude
-                  0x0021c8                  _fufoGetRateAngle
-                  0x001cae                  _fufoInitAccel
-                  0x002580                  _fufoInitBaro
-                  0x001206                  _fufoInitBluetooth
-                  0x001fda                  _fufoInitGyro
-                  0x001e2c                  _fufoInitI2C
-                  0x000cac                  _fufoInitLCD
-                  0x000c8e                  _fufoInitLCDPorts
-                  0x0012ac                  _fufoInitUART
-                  0x002810                  _fufoMeasureBaro
-                  0x00281a                  _fufoMeasureBaroSum
-                  0x002bf2                  _fufoMeasureGroundBaro
-                  0x001db6                  _fufoNackI2C
-                  0x000ef2                  _fufoOutputChar
-                  0x000f24                  _fufoOutputInt
-                  0x000fc8                  _fufoOutputLong
-                  0x000f7c                  _fufoOutputUint
-                  0x001cd8                  _fufoReadAccel
-                  0x001f2c                  _fufoReadArrayI2C
-                  0x001eaa                  _fufoReadByteI2C
-                  0x001ff0                  _fufoReadGyro
-                  0x001e18                  _fufoReadI2C
-                  0x00275c                  _fufoReadRawPressure
-                  0x0027cc                  _fufoReadRawTemperature
-                  0x0012a6                  _fufoReceiveCmd
-                  0x001470                  _fufoReceiveUART
-                  0x00273e                  _fufoRequestRawPressure
-                  0x0027be                  _fufoRequestRawTemperature
-                  0x001d84                  _fufoRestartI2C
-                  0x0012d4                  _fufoSendCharUART
-                  0x001312                  _fufoSendIntUART
-                  0x0013ac                  _fufoSendLongUART
-                  0x0012e8                  _fufoSendStringUART
-                  0x001d74                  _fufoStartI2C
-                  0x001d94                  _fufoStopI2C
-                  0x001e3a                  _fufoWaitI2C
-                  0x001df4                  _fufoWriteAckI2C
-                  0x001e4a                  _fufoWriteByteI2C
-                  0x001de0                  _fufoWriteI2C
-                  0x0024a8                  _fufogetAltitude
-                  0x001ca4                  _getAccelAlt
-                  0x001b46                  _getConnectStatus
-                  0x001c74                  _getGyrosOutputP
-                  0x001c5c                  _getGyrosOutputR
-                  0x001c8c                  _getGyrosOutputY
-                  0x001590                  _getInstruction
-                  0x001b8e                  _getPID1
-                  0x001ba2                  _getPID2
-                  0x001bb6                  _getPID3
-                  0x001bca                  _getPID4
-                  0x001b7a                  _getPIDAltitude
-                  0x001b5a                  _getPIDStatus
-                  0x00105e                  _getPR4
-                  0x001c14                  _getPhiAngle
-                  0x001c44                  _getPsiAngle
-                  0x00152c                  _getStartInstruction
-                  0x001bd2                  _getState
-                  0x001c2c                  _getThetaAngle
-                  0x00148c                  _getThrustRate
-                  0x00155a                  _getUpInstruction
-                  0x0014a0                  _getUserInput
-                  0x000b12                  _initFUFO
-                  0x001066                  _initPWM
-                  0x001096                  _initPWMHardware
-                  0x001044                  _initPWMPort
-                  0x0010dc                  _initPWMSoftware
-                  0x000b78                  _initTMR2
-                  0x000ba4                  _initTMR3
+                  0x002d4c                  _filterSmooth
+                  0x001e8c                  _fufoAckI2C
+                  0x000d20                  _fufoCmd4LCD
+                  0x000e28                  _fufoDat4LCD
+                  0x000c82                  _fufoDelayMs
+                  0x000ca8                  _fufoDelayUs
+                  0x001eb2                  _fufoGetAckI2C
+                  0x0023fe                  _fufoGetAngleAccel
+                  0x002376                  _fufoGetAngleGyros
+                  0x002d06                  _fufoGetBaroGAltitude
+                  0x0022b0                  _fufoGetRateAngle
+                  0x0020c2                  _fufoInitGyro
+                  0x001f14                  _fufoInitI2C
+                  0x000cea                  _fufoInitLCD
+                  0x000ccc                  _fufoInitLCDPorts
+                  0x0012e4                  _fufoInitUART
+                  0x001e9e                  _fufoNackI2C
+                  0x000f30                  _fufoOutputChar
+                  0x000f62                  _fufoOutputInt
+                  0x001006                  _fufoOutputLong
+                  0x000fba                  _fufoOutputUint
+                  0x002014                  _fufoReadArrayI2C
+                  0x001f92                  _fufoReadByteI2C
+                  0x0020d8                  _fufoReadGyro
+                  0x001f00                  _fufoReadI2C
+                  0x0014a8                  _fufoReceiveUART
+                  0x00285c                  _fufoRequestRawPressure
+                  0x001e6c                  _fufoRestartI2C
+                  0x00130c                  _fufoSendCharUART
+                  0x00134a                  _fufoSendIntUART
+                  0x0013e4                  _fufoSendLongUART
+                  0x001320                  _fufoSendStringUART
+                  0x001e5c                  _fufoStartI2C
+                  0x001e7c                  _fufoStopI2C
+                  0x001f22                  _fufoWaitI2C
+                  0x001edc                  _fufoWriteAckI2C
+                  0x001f32                  _fufoWriteByteI2C
+                  0x001ec8                  _fufoWriteI2C
+                  0x002590                  _fufogetAltitude
+                  0x001d8c                  _getAccelAlt
+                  0x002cec                  _getBaroAltitude
+                  0x002cfc                  _getBaroAltitudeR
+                  0x001c2e                  _getConnectStatus
+                  0x001d5c                  _getGyrosOutputP
+                  0x001d44                  _getGyrosOutputR
+                  0x001d74                  _getGyrosOutputY
+                  0x0015d6                  _getInstruction
+                  0x001c76                  _getPID1
+                  0x001c8a                  _getPID2
+                  0x001c9e                  _getPID3
+                  0x001cb2                  _getPID4
+                  0x001c62                  _getPIDAltitude
+                  0x001c42                  _getPIDStatus
+                  0x00109c                  _getPR4
+                  0x001cfc                  _getPhiAngle
+                  0x001d2c                  _getPsiAngle
+                  0x001572                  _getStartInstruction
+                  0x001cba                  _getState
+                  0x001d14                  _getThetaAngle
+                  0x0014c4                  _getThrustRate
+                  0x0015a0                  _getUpInstruction
+                  0x0014d8                  _getUserInput
+                  0x001d96                  _initAccel
+                  0x00269e                  _initBaro
+                  0x001244                  _initBluetooth
+                  0x000b4c                  _initFUFO
+                  0x0010a4                  _initPWM
+                  0x0010d4                  _initPWMHardware
+                  0x001082                  _initPWMPort
+                  0x00111a                  _initPWMSoftware
+                  0x000bb2                  _initTMR2
+                  0x000bde                  _initTMR3
                   0x0008a6                  _ldexpf
                   0x0008ea                  _logf
                   0x000a5c                  _main
+                  0x00292e                  _measureBaro
+                  0x002938                  _measureBaroSum
+                  0x002d10                  _measureGroundBaro
                   0x0004c8                  _powf
-                  0x001adc                  _resetInstruction
-                  0x001b20                  _resetPWM
-                  0x001b02                  _resetSensor
-                  0x001c96                  _setAccelAlt
-                  0x001b4e                  _setConnectStatus
-                  0x001c66                  _setGyrosOutputP
-                  0x001c4e                  _setGyrosOutputR
-                  0x001c7e                  _setGyrosOutputY
-                  0x001b82                  _setPID1
-                  0x001b96                  _setPID2
-                  0x001baa                  _setPID3
-                  0x001bbe                  _setPID4
-                  0x001b6e                  _setPIDAltitude
-                  0x001b62                  _setPIDStatus
-                  0x001052                  _setPR4
-                  0x00110c                  _setPWM1
-                  0x001134                  _setPWM2
-                  0x001158                  _setPWM3
-                  0x001180                  _setPWM4
-                  0x001c06                  _setPhiAngle
-                  0x001c36                  _setPsiAngle
-                  0x001728                  _setSetpoint
-                  0x001bda                  _setState
-                  0x001c1e                  _setThetaAngle
-                  0x001494                  _setThrustRate
+                  0x001dc0                  _readAccel
+                  0x00287a                  _readRawPressure
+                  0x0028ea                  _readRawTemperature
+                  0x0028dc                  _requestRawTemperature
+                  0x001bd4                  _resetInstruction
+                  0x001c18                  _resetPWM
+                  0x001bfa                  _resetSensor
+                  0x001d7e                  _setAccelAlt
+                  0x001c36                  _setConnectStatus
+                  0x001d4e                  _setGyrosOutputP
+                  0x001d36                  _setGyrosOutputR
+                  0x001d66                  _setGyrosOutputY
+                  0x0014e0                  _setHigh_sum
+                  0x001c6a                  _setPID1
+                  0x001c7e                  _setPID2
+                  0x001c92                  _setPID3
+                  0x001ca6                  _setPID4
+                  0x001c56                  _setPIDAltitude
+                  0x001c4a                  _setPIDStatus
+                  0x001090                  _setPR4
+                  0x00114a                  _setPWM1
+                  0x001172                  _setPWM2
+                  0x001196                  _setPWM3
+                  0x0011be                  _setPWM4
+                  0x001cee                  _setPhiAngle
+                  0x001d1e                  _setPsiAngle
+                  0x001772                  _setSetpoint
+                  0x001cc2                  _setState
+                  0x001d06                  _setThetaAngle
+                  0x0014cc                  _setThrustRate
                   0x000404                  _sqrtf
-                  0x00121e                  _testConnectBluetooth
+                  0x00125c                  _testConnectBluetooth
 
 Memory Configuration
 
@@ -805,7 +795,7 @@ LOAD BMP085.o
                   0x000002          0x2 SHORT 0x0 ((<code 336> (__reset) >> 0x10) & 0x7f)
                   0x000003          0x2 SHORT 0x0
 
-.text             0x000100       0x2b82
+.text             0x000100       0x2ca0
  *(.handle)
  *(.libc)
  .libc            0x000100         0x80 c:/program files/microchip/mplab c30/bin/../lib\libpic30-coff.a(crt0.o)
@@ -875,141 +865,141 @@ LOAD BMP085.o
  *(.libdsp)
  *(.lib*)
  *(.text)
- .text            0x000a5c        0x1e8 Main.o
+ .text            0x000a5c        0x226 Main.o
                   0x000a5c                  main
-                  0x000b12                  initFUFO
-                  0x000b78                  initTMR2
-                  0x000ba4                  initTMR3
-                  0x000bbc                  _T2Interrupt
- .text            0x000c44         0x4a DelayTMR1.o
-                  0x000c44                  fufoDelayMs
-                  0x000c6a                  fufoDelayUs
- .text            0x000c8e        0x3b6 LCD.o
-                  0x000c8e                  fufoInitLCDPorts
-                  0x000cac                  fufoInitLCD
-                  0x000ce2                  fufoCmd4LCD
-                  0x000dea                  fufoDat4LCD
-                  0x000ef2                  fufoOutputChar
-                  0x000f24                  fufoOutputInt
-                  0x000f7c                  fufoOutputUint
-                  0x000fc8                  fufoOutputLong
- .text            0x001044        0x1c2 pwmControl.o
-                  0x001044                  initPWMPort
-                  0x001052                  setPR4
-                  0x00105e                  getPR4
-                  0x001066                  initPWM
-                  0x001096                  initPWMHardware
-                  0x0010dc                  initPWMSoftware
-                  0x00110c                  setPWM1
-                  0x001134                  setPWM2
-                  0x001158                  setPWM3
-                  0x001180                  setPWM4
-                  0x0011a8                  _T4Interrupt
- .text            0x001206         0xa6 Bluetooth.o
-                  0x001206                  fufoInitBluetooth
-                  0x00121e                  testConnectBluetooth
-                  0x0012a6                  fufoReceiveCmd
- .text            0x0012ac        0x1e0 UART.o
-                  0x0012ac                  fufoInitUART
-                  0x0012d4                  fufoSendCharUART
-                  0x0012e8                  fufoSendStringUART
-                  0x001312                  fufoSendIntUART
-                  0x0013ac                  fufoSendLongUART
-                  0x001470                  fufoReceiveUART
- .text            0x00148c        0x6ba Control.o
-                  0x00148c                  getThrustRate
-                  0x001494                  setThrustRate
-                  0x0014a0                  getUserInput
-                  0x0014a8                  controlFUFO
-                  0x0014c8                  checkConnection
-                  0x001508                  checkBLConnection
-                  0x00152c                  getStartInstruction
-                  0x00155a                  getUpInstruction
-                  0x001590                  getInstruction
-                  0x001728                  setSetpoint
-                  0x0017e0                  calcPID
-                  0x0018de                  calcRollAngle
-                  0x001956                  calcPitchAngle
-                  0x0019ce                  calcYawAngle
-                  0x001a46                  calcAltitude
-                  0x001adc                  resetInstruction
-                  0x001b02                  resetSensor
-                  0x001b20                  resetPWM
- .text            0x001b46        0x168 FUFO.o
-                  0x001b46                  getConnectStatus
-                  0x001b4e                  setConnectStatus
-                  0x001b5a                  getPIDStatus
-                  0x001b62                  setPIDStatus
-                  0x001b6e                  setPIDAltitude
-                  0x001b7a                  getPIDAltitude
-                  0x001b82                  setPID1
-                  0x001b8e                  getPID1
-                  0x001b96                  setPID2
-                  0x001ba2                  getPID2
-                  0x001baa                  setPID3
-                  0x001bb6                  getPID3
-                  0x001bbe                  setPID4
-                  0x001bca                  getPID4
-                  0x001bd2                  getState
-                  0x001bda                  setState
-                  0x001be6                  calcTimeMS
-                  0x001c06                  setPhiAngle
-                  0x001c14                  getPhiAngle
-                  0x001c1e                  setThetaAngle
-                  0x001c2c                  getThetaAngle
-                  0x001c36                  setPsiAngle
-                  0x001c44                  getPsiAngle
-                  0x001c4e                  setGyrosOutputR
-                  0x001c5c                  getGyrosOutputR
-                  0x001c66                  setGyrosOutputP
-                  0x001c74                  getGyrosOutputP
-                  0x001c7e                  setGyrosOutputY
-                  0x001c8c                  getGyrosOutputY
-                  0x001c96                  setAccelAlt
-                  0x001ca4                  getAccelAlt
- .text            0x001cae         0xc6 ADXL345.o
-                  0x001cae                  fufoInitAccel
-                  0x001cd8                  fufoReadAccel
- .text            0x001d74        0x266 I2C.o
-                  0x001d74                  fufoStartI2C
-                  0x001d84                  fufoRestartI2C
-                  0x001d94                  fufoStopI2C
-                  0x001da4                  fufoAckI2C
-                  0x001db6                  fufoNackI2C
-                  0x001dca                  fufoGetAckI2C
-                  0x001de0                  fufoWriteI2C
-                  0x001df4                  fufoWriteAckI2C
-                  0x001e18                  fufoReadI2C
-                  0x001e2c                  fufoInitI2C
-                  0x001e3a                  fufoWaitI2C
-                  0x001e4a                  fufoWriteByteI2C
-                  0x001eaa                  fufoReadByteI2C
-                  0x001f2c                  fufoReadArrayI2C
- .text            0x001fda         0xc6 L3G4200D.o
-                  0x001fda                  fufoInitGyro
-                  0x001ff0                  fufoReadGyro
- .text            0x0020a0        0x4e0 Filter.o
-                  0x0020a0                  CalcFirstAngle
-                  0x002112                  CompFilter
-                  0x0021c8                  fufoGetRateAngle
-                  0x00228e                  fufoGetAngleGyros
-                  0x002316                  fufoGetAngleAccel
-                  0x0024a8                  fufogetAltitude
-                  0x002548                  altitudeFilter
- .text            0x002580        0x702 BMP085.o
-                  0x002580                  fufoInitBaro
-                  0x00273e                  fufoRequestRawPressure
-                  0x00275c                  fufoReadRawPressure
-                  0x0027be                  fufoRequestRawTemperature
-                  0x0027cc                  fufoReadRawTemperature
-                  0x002810                  fufoMeasureBaro
-                  0x00281a                  fufoMeasureBaroSum
-                  0x002864                  fufoEvaluateBaroAltitude
-                  0x002bce                  fufoGetBaroAltitude
-                  0x002bde                  fufoGetBaroAltitudeR
-                  0x002be8                  fufoGetBaroGAltitude
-                  0x002bf2                  fufoMeasureGroundBaro
-                  0x002c2e                  fufoFilterSmooth
+                  0x000b4c                  initFUFO
+                  0x000bb2                  initTMR2
+                  0x000bde                  initTMR3
+                  0x000bf6                  _T2Interrupt
+ .text            0x000c82         0x4a DelayTMR1.o
+                  0x000c82                  fufoDelayMs
+                  0x000ca8                  fufoDelayUs
+ .text            0x000ccc        0x3b6 LCD.o
+                  0x000ccc                  fufoInitLCDPorts
+                  0x000cea                  fufoInitLCD
+                  0x000d20                  fufoCmd4LCD
+                  0x000e28                  fufoDat4LCD
+                  0x000f30                  fufoOutputChar
+                  0x000f62                  fufoOutputInt
+                  0x000fba                  fufoOutputUint
+                  0x001006                  fufoOutputLong
+ .text            0x001082        0x1c2 pwmControl.o
+                  0x001082                  initPWMPort
+                  0x001090                  setPR4
+                  0x00109c                  getPR4
+                  0x0010a4                  initPWM
+                  0x0010d4                  initPWMHardware
+                  0x00111a                  initPWMSoftware
+                  0x00114a                  setPWM1
+                  0x001172                  setPWM2
+                  0x001196                  setPWM3
+                  0x0011be                  setPWM4
+                  0x0011e6                  _T4Interrupt
+ .text            0x001244         0xa0 Bluetooth.o
+                  0x001244                  initBluetooth
+                  0x00125c                  testConnectBluetooth
+ .text            0x0012e4        0x1e0 UART.o
+                  0x0012e4                  fufoInitUART
+                  0x00130c                  fufoSendCharUART
+                  0x001320                  fufoSendStringUART
+                  0x00134a                  fufoSendIntUART
+                  0x0013e4                  fufoSendLongUART
+                  0x0014a8                  fufoReceiveUART
+ .text            0x0014c4        0x76a Control.o
+                  0x0014c4                  getThrustRate
+                  0x0014cc                  setThrustRate
+                  0x0014d8                  getUserInput
+                  0x0014e0                  setHigh_sum
+                  0x0014ee                  controlFUFO
+                  0x00150e                  checkConnection
+                  0x00154e                  checkBLConnection
+                  0x001572                  getStartInstruction
+                  0x0015a0                  getUpInstruction
+                  0x0015d6                  getInstruction
+                  0x001772                  setSetpoint
+                  0x00183c                  calcPID
+                  0x0019da                  calcRollAngle
+                  0x001a52                  calcPitchAngle
+                  0x001aca                  calcYawAngle
+                  0x001b42                  calcAltitude
+                  0x001bd4                  resetInstruction
+                  0x001bfa                  resetSensor
+                  0x001c18                  resetPWM
+ .text            0x001c2e        0x168 FUFO.o
+                  0x001c2e                  getConnectStatus
+                  0x001c36                  setConnectStatus
+                  0x001c42                  getPIDStatus
+                  0x001c4a                  setPIDStatus
+                  0x001c56                  setPIDAltitude
+                  0x001c62                  getPIDAltitude
+                  0x001c6a                  setPID1
+                  0x001c76                  getPID1
+                  0x001c7e                  setPID2
+                  0x001c8a                  getPID2
+                  0x001c92                  setPID3
+                  0x001c9e                  getPID3
+                  0x001ca6                  setPID4
+                  0x001cb2                  getPID4
+                  0x001cba                  getState
+                  0x001cc2                  setState
+                  0x001cce                  calcTimeMS
+                  0x001cee                  setPhiAngle
+                  0x001cfc                  getPhiAngle
+                  0x001d06                  setThetaAngle
+                  0x001d14                  getThetaAngle
+                  0x001d1e                  setPsiAngle
+                  0x001d2c                  getPsiAngle
+                  0x001d36                  setGyrosOutputR
+                  0x001d44                  getGyrosOutputR
+                  0x001d4e                  setGyrosOutputP
+                  0x001d5c                  getGyrosOutputP
+                  0x001d66                  setGyrosOutputY
+                  0x001d74                  getGyrosOutputY
+                  0x001d7e                  setAccelAlt
+                  0x001d8c                  getAccelAlt
+ .text            0x001d96         0xc6 ADXL345.o
+                  0x001d96                  initAccel
+                  0x001dc0                  readAccel
+ .text            0x001e5c        0x266 I2C.o
+                  0x001e5c                  fufoStartI2C
+                  0x001e6c                  fufoRestartI2C
+                  0x001e7c                  fufoStopI2C
+                  0x001e8c                  fufoAckI2C
+                  0x001e9e                  fufoNackI2C
+                  0x001eb2                  fufoGetAckI2C
+                  0x001ec8                  fufoWriteI2C
+                  0x001edc                  fufoWriteAckI2C
+                  0x001f00                  fufoReadI2C
+                  0x001f14                  fufoInitI2C
+                  0x001f22                  fufoWaitI2C
+                  0x001f32                  fufoWriteByteI2C
+                  0x001f92                  fufoReadByteI2C
+                  0x002014                  fufoReadArrayI2C
+ .text            0x0020c2         0xc6 L3G4200D.o
+                  0x0020c2                  fufoInitGyro
+                  0x0020d8                  fufoReadGyro
+ .text            0x002188        0x516 Filter.o
+                  0x002188                  CalcFirstAngle
+                  0x0021fa                  CompFilter
+                  0x0022b0                  fufoGetRateAngle
+                  0x002376                  fufoGetAngleGyros
+                  0x0023fe                  fufoGetAngleAccel
+                  0x002590                  fufogetAltitude
+                  0x00262a                  altitudeFilter
+ .text            0x00269e        0x702 BMP085.o
+                  0x00269e                  initBaro
+                  0x00285c                  fufoRequestRawPressure
+                  0x00287a                  readRawPressure
+                  0x0028dc                  requestRawTemperature
+                  0x0028ea                  readRawTemperature
+                  0x00292e                  measureBaro
+                  0x002938                  measureBaroSum
+                  0x002982                  evaluateBaroAltitude
+                  0x002cec                  getBaroAltitude
+                  0x002cfc                  getBaroAltitudeR
+                  0x002d06                  fufoGetBaroGAltitude
+                  0x002d10                  measureGroundBaro
+                  0x002d4c                  filterSmooth
 
 usercode
  *(usercode)
@@ -1090,132 +1080,132 @@ userdata
  *(.debug_aranges)
 
 .ivt              0x000004         0x7c
-                  0x000004          0x4 LONG 0x2e46 DEFINED (__ReservedTrap0)?<code 336> (__ReservedTrap0):<code 336> (__DefaultInterrupt)
-                  0x000006          0x4 LONG 0x2e46 DEFINED (__OscillatorFail)?<code 336> (__OscillatorFail):<code 336> (__DefaultInterrupt)
-                  0x000008          0x4 LONG 0x2e46 DEFINED (__AddressError)?<code 336> (__AddressError):<code 336> (__DefaultInterrupt)
-                  0x00000a          0x4 LONG 0x2e46 DEFINED (__StackError)?<code 336> (__StackError):<code 336> (__DefaultInterrupt)
-                  0x00000c          0x4 LONG 0x2e46 DEFINED (__MathError)?<code 336> (__MathError):<code 336> (__DefaultInterrupt)
-                  0x00000e          0x4 LONG 0x2e46 DEFINED (__ReservedTrap5)?<code 336> (__ReservedTrap5):<code 336> (__DefaultInterrupt)
-                  0x000010          0x4 LONG 0x2e46 DEFINED (__ReservedTrap6)?<code 336> (__ReservedTrap6):<code 336> (__DefaultInterrupt)
-                  0x000012          0x4 LONG 0x2e46 DEFINED (__ReservedTrap7)?<code 336> (__ReservedTrap7):<code 336> (__DefaultInterrupt)
-                  0x000014          0x4 LONG 0x2e46 DEFINED (__INT0Interrupt)?<code 336> (__INT0Interrupt):<code 336> (__DefaultInterrupt)
-                  0x000016          0x4 LONG 0x2e46 DEFINED (__IC1Interrupt)?<code 336> (__IC1Interrupt):<code 336> (__DefaultInterrupt)
-                  0x000018          0x4 LONG 0x2e46 DEFINED (__OC1Interrupt)?<code 336> (__OC1Interrupt):<code 336> (__DefaultInterrupt)
-                  0x00001a          0x4 LONG 0x2e46 DEFINED (__T1Interrupt)?<code 336> (__T1Interrupt):<code 336> (__DefaultInterrupt)
-                  0x00001c          0x4 LONG 0x2e46 DEFINED (__IC2Interrupt)?<code 336> (__IC2Interrupt):<code 336> (__DefaultInterrupt)
-                  0x00001e          0x4 LONG 0x2e46 DEFINED (__OC2Interrupt)?<code 336> (__OC2Interrupt):<code 336> (__DefaultInterrupt)
-                  0x000020          0x4 LONG 0xbbc DEFINED (__T2Interrupt)?<code 336> (__T2Interrupt):<code 336> (__DefaultInterrupt)
-                  0x000022          0x4 LONG 0x2e46 DEFINED (__T3Interrupt)?<code 336> (__T3Interrupt):<code 336> (__DefaultInterrupt)
-                  0x000024          0x4 LONG 0x2e46 DEFINED (__SPI1Interrupt)?<code 336> (__SPI1Interrupt):<code 336> (__DefaultInterrupt)
-                  0x000026          0x4 LONG 0x2e46 DEFINED (__U1RXInterrupt)?<code 336> (__U1RXInterrupt):<code 336> (__DefaultInterrupt)
-                  0x000028          0x4 LONG 0x2e46 DEFINED (__U1TXInterrupt)?<code 336> (__U1TXInterrupt):<code 336> (__DefaultInterrupt)
-                  0x00002a          0x4 LONG 0x2e46 DEFINED (__ADCInterrupt)?<code 336> (__ADCInterrupt):<code 336> (__DefaultInterrupt)
-                  0x00002c          0x4 LONG 0x2e46 DEFINED (__NVMInterrupt)?<code 336> (__NVMInterrupt):<code 336> (__DefaultInterrupt)
-                  0x00002e          0x4 LONG 0x2e46 DEFINED (__SI2CInterrupt)?<code 336> (__SI2CInterrupt):<code 336> (__DefaultInterrupt)
-                  0x000030          0x4 LONG 0x2e46 DEFINED (__MI2CInterrupt)?<code 336> (__MI2CInterrupt):<code 336> (__DefaultInterrupt)
-                  0x000032          0x4 LONG 0x2e46 DEFINED (__CNInterrupt)?<code 336> (__CNInterrupt):<code 336> (__DefaultInterrupt)
-                  0x000034          0x4 LONG 0x2e46 DEFINED (__INT1Interrupt)?<code 336> (__INT1Interrupt):<code 336> (__DefaultInterrupt)
-                  0x000036          0x4 LONG 0x2e46 DEFINED (__IC7Interrupt)?<code 336> (__IC7Interrupt):<code 336> (__DefaultInterrupt)
-                  0x000038          0x4 LONG 0x2e46 DEFINED (__IC8Interrupt)?<code 336> (__IC8Interrupt):<code 336> (__DefaultInterrupt)
-                  0x00003a          0x4 LONG 0x2e46 DEFINED (__OC3Interrupt)?<code 336> (__OC3Interrupt):<code 336> (__DefaultInterrupt)
-                  0x00003c          0x4 LONG 0x2e46 DEFINED (__OC4Interrupt)?<code 336> (__OC4Interrupt):<code 336> (__DefaultInterrupt)
-                  0x00003e          0x4 LONG 0x11a8 DEFINED (__T4Interrupt)?<code 336> (__T4Interrupt):<code 336> (__DefaultInterrupt)
-                  0x000040          0x4 LONG 0x2e46 DEFINED (__T5Interrupt)?<code 336> (__T5Interrupt):<code 336> (__DefaultInterrupt)
-                  0x000042          0x4 LONG 0x2e46 DEFINED (__INT2Interrupt)?<code 336> (__INT2Interrupt):<code 336> (__DefaultInterrupt)
-                  0x000044          0x4 LONG 0x2e46 DEFINED (__U2RXInterrupt)?<code 336> (__U2RXInterrupt):<code 336> (__DefaultInterrupt)
-                  0x000046          0x4 LONG 0x2e46 DEFINED (__U2TXInterrupt)?<code 336> (__U2TXInterrupt):<code 336> (__DefaultInterrupt)
-                  0x000048          0x4 LONG 0x2e46 DEFINED (__SPI2Interrupt)?<code 336> (__SPI2Interrupt):<code 336> (__DefaultInterrupt)
-                  0x00004a          0x4 LONG 0x2e46 DEFINED (__C1Interrupt)?<code 336> (__C1Interrupt):<code 336> (__DefaultInterrupt)
-                  0x00004c          0x4 LONG 0x2e46 DEFINED (__IC3Interrupt)?<code 336> (__IC3Interrupt):<code 336> (__DefaultInterrupt)
-                  0x00004e          0x4 LONG 0x2e46 DEFINED (__IC4Interrupt)?<code 336> (__IC4Interrupt):<code 336> (__DefaultInterrupt)
-                  0x000050          0x4 LONG 0x2e46 DEFINED (__IC5Interrupt)?<code 336> (__IC5Interrupt):<code 336> (__DefaultInterrupt)
-                  0x000052          0x4 LONG 0x2e46 DEFINED (__IC6Interrupt)?<code 336> (__IC6Interrupt):<code 336> (__DefaultInterrupt)
-                  0x000054          0x4 LONG 0x2e46 DEFINED (__OC5Interrupt)?<code 336> (__OC5Interrupt):<code 336> (__DefaultInterrupt)
-                  0x000056          0x4 LONG 0x2e46 DEFINED (__OC6Interrupt)?<code 336> (__OC6Interrupt):<code 336> (__DefaultInterrupt)
-                  0x000058          0x4 LONG 0x2e46 DEFINED (__OC7Interrupt)?<code 336> (__OC7Interrupt):<code 336> (__DefaultInterrupt)
-                  0x00005a          0x4 LONG 0x2e46 DEFINED (__OC8Interrupt)?<code 336> (__OC8Interrupt):<code 336> (__DefaultInterrupt)
-                  0x00005c          0x4 LONG 0x2e46 DEFINED (__INT3Interrupt)?<code 336> (__INT3Interrupt):<code 336> (__DefaultInterrupt)
-                  0x00005e          0x4 LONG 0x2e46 DEFINED (__INT4Interrupt)?<code 336> (__INT4Interrupt):<code 336> (__DefaultInterrupt)
-                  0x000060          0x4 LONG 0x2e46 DEFINED (__C2Interrupt)?<code 336> (__C2Interrupt):<code 336> (__DefaultInterrupt)
-                  0x000062          0x4 LONG 0x2e46 DEFINED (__PWMInterrupt)?<code 336> (__PWMInterrupt):<code 336> (__DefaultInterrupt)
-                  0x000064          0x4 LONG 0x2e46 DEFINED (__QEIInterrupt)?<code 336> (__QEIInterrupt):<code 336> (__DefaultInterrupt)
-                  0x000066          0x4 LONG 0x2e46 DEFINED (__DCIInterrupt)?<code 336> (__DCIInterrupt):<code 336> (__DefaultInterrupt)
-                  0x000068          0x4 LONG 0x2e46 DEFINED (__LVDInterrupt)?<code 336> (__LVDInterrupt):<code 336> (__DefaultInterrupt)
-                  0x00006a          0x4 LONG 0x2e46 DEFINED (__FLTAInterrupt)?<code 336> (__FLTAInterrupt):<code 336> (__DefaultInterrupt)
-                  0x00006c          0x4 LONG 0x2e46 DEFINED (__FLTBInterrupt)?<code 336> (__FLTBInterrupt):<code 336> (__DefaultInterrupt)
-                  0x00006e          0x4 LONG 0x2e46 DEFINED (__Interrupt45)?<code 336> (__Interrupt45):<code 336> (__DefaultInterrupt)
-                  0x000070          0x4 LONG 0x2e46 DEFINED (__Interrupt46)?<code 336> (__Interrupt46):<code 336> (__DefaultInterrupt)
-                  0x000072          0x4 LONG 0x2e46 DEFINED (__Interrupt47)?<code 336> (__Interrupt47):<code 336> (__DefaultInterrupt)
-                  0x000074          0x4 LONG 0x2e46 DEFINED (__Interrupt48)?<code 336> (__Interrupt48):<code 336> (__DefaultInterrupt)
-                  0x000076          0x4 LONG 0x2e46 DEFINED (__Interrupt49)?<code 336> (__Interrupt49):<code 336> (__DefaultInterrupt)
-                  0x000078          0x4 LONG 0x2e46 DEFINED (__Interrupt50)?<code 336> (__Interrupt50):<code 336> (__DefaultInterrupt)
-                  0x00007a          0x4 LONG 0x2e46 DEFINED (__Interrupt51)?<code 336> (__Interrupt51):<code 336> (__DefaultInterrupt)
-                  0x00007c          0x4 LONG 0x2e46 DEFINED (__Interrupt52)?<code 336> (__Interrupt52):<code 336> (__DefaultInterrupt)
-                  0x00007e          0x4 LONG 0x2e46 DEFINED (__Interrupt53)?<code 336> (__Interrupt53):<code 336> (__DefaultInterrupt)
+                  0x000004          0x4 LONG 0x2f60 DEFINED (__ReservedTrap0)?<code 336> (__ReservedTrap0):<code 336> (__DefaultInterrupt)
+                  0x000006          0x4 LONG 0x2f60 DEFINED (__OscillatorFail)?<code 336> (__OscillatorFail):<code 336> (__DefaultInterrupt)
+                  0x000008          0x4 LONG 0x2f60 DEFINED (__AddressError)?<code 336> (__AddressError):<code 336> (__DefaultInterrupt)
+                  0x00000a          0x4 LONG 0x2f60 DEFINED (__StackError)?<code 336> (__StackError):<code 336> (__DefaultInterrupt)
+                  0x00000c          0x4 LONG 0x2f60 DEFINED (__MathError)?<code 336> (__MathError):<code 336> (__DefaultInterrupt)
+                  0x00000e          0x4 LONG 0x2f60 DEFINED (__ReservedTrap5)?<code 336> (__ReservedTrap5):<code 336> (__DefaultInterrupt)
+                  0x000010          0x4 LONG 0x2f60 DEFINED (__ReservedTrap6)?<code 336> (__ReservedTrap6):<code 336> (__DefaultInterrupt)
+                  0x000012          0x4 LONG 0x2f60 DEFINED (__ReservedTrap7)?<code 336> (__ReservedTrap7):<code 336> (__DefaultInterrupt)
+                  0x000014          0x4 LONG 0x2f60 DEFINED (__INT0Interrupt)?<code 336> (__INT0Interrupt):<code 336> (__DefaultInterrupt)
+                  0x000016          0x4 LONG 0x2f60 DEFINED (__IC1Interrupt)?<code 336> (__IC1Interrupt):<code 336> (__DefaultInterrupt)
+                  0x000018          0x4 LONG 0x2f60 DEFINED (__OC1Interrupt)?<code 336> (__OC1Interrupt):<code 336> (__DefaultInterrupt)
+                  0x00001a          0x4 LONG 0x2f60 DEFINED (__T1Interrupt)?<code 336> (__T1Interrupt):<code 336> (__DefaultInterrupt)
+                  0x00001c          0x4 LONG 0x2f60 DEFINED (__IC2Interrupt)?<code 336> (__IC2Interrupt):<code 336> (__DefaultInterrupt)
+                  0x00001e          0x4 LONG 0x2f60 DEFINED (__OC2Interrupt)?<code 336> (__OC2Interrupt):<code 336> (__DefaultInterrupt)
+                  0x000020          0x4 LONG 0xbf6 DEFINED (__T2Interrupt)?<code 336> (__T2Interrupt):<code 336> (__DefaultInterrupt)
+                  0x000022          0x4 LONG 0x2f60 DEFINED (__T3Interrupt)?<code 336> (__T3Interrupt):<code 336> (__DefaultInterrupt)
+                  0x000024          0x4 LONG 0x2f60 DEFINED (__SPI1Interrupt)?<code 336> (__SPI1Interrupt):<code 336> (__DefaultInterrupt)
+                  0x000026          0x4 LONG 0x2f60 DEFINED (__U1RXInterrupt)?<code 336> (__U1RXInterrupt):<code 336> (__DefaultInterrupt)
+                  0x000028          0x4 LONG 0x2f60 DEFINED (__U1TXInterrupt)?<code 336> (__U1TXInterrupt):<code 336> (__DefaultInterrupt)
+                  0x00002a          0x4 LONG 0x2f60 DEFINED (__ADCInterrupt)?<code 336> (__ADCInterrupt):<code 336> (__DefaultInterrupt)
+                  0x00002c          0x4 LONG 0x2f60 DEFINED (__NVMInterrupt)?<code 336> (__NVMInterrupt):<code 336> (__DefaultInterrupt)
+                  0x00002e          0x4 LONG 0x2f60 DEFINED (__SI2CInterrupt)?<code 336> (__SI2CInterrupt):<code 336> (__DefaultInterrupt)
+                  0x000030          0x4 LONG 0x2f60 DEFINED (__MI2CInterrupt)?<code 336> (__MI2CInterrupt):<code 336> (__DefaultInterrupt)
+                  0x000032          0x4 LONG 0x2f60 DEFINED (__CNInterrupt)?<code 336> (__CNInterrupt):<code 336> (__DefaultInterrupt)
+                  0x000034          0x4 LONG 0x2f60 DEFINED (__INT1Interrupt)?<code 336> (__INT1Interrupt):<code 336> (__DefaultInterrupt)
+                  0x000036          0x4 LONG 0x2f60 DEFINED (__IC7Interrupt)?<code 336> (__IC7Interrupt):<code 336> (__DefaultInterrupt)
+                  0x000038          0x4 LONG 0x2f60 DEFINED (__IC8Interrupt)?<code 336> (__IC8Interrupt):<code 336> (__DefaultInterrupt)
+                  0x00003a          0x4 LONG 0x2f60 DEFINED (__OC3Interrupt)?<code 336> (__OC3Interrupt):<code 336> (__DefaultInterrupt)
+                  0x00003c          0x4 LONG 0x2f60 DEFINED (__OC4Interrupt)?<code 336> (__OC4Interrupt):<code 336> (__DefaultInterrupt)
+                  0x00003e          0x4 LONG 0x11e6 DEFINED (__T4Interrupt)?<code 336> (__T4Interrupt):<code 336> (__DefaultInterrupt)
+                  0x000040          0x4 LONG 0x2f60 DEFINED (__T5Interrupt)?<code 336> (__T5Interrupt):<code 336> (__DefaultInterrupt)
+                  0x000042          0x4 LONG 0x2f60 DEFINED (__INT2Interrupt)?<code 336> (__INT2Interrupt):<code 336> (__DefaultInterrupt)
+                  0x000044          0x4 LONG 0x2f60 DEFINED (__U2RXInterrupt)?<code 336> (__U2RXInterrupt):<code 336> (__DefaultInterrupt)
+                  0x000046          0x4 LONG 0x2f60 DEFINED (__U2TXInterrupt)?<code 336> (__U2TXInterrupt):<code 336> (__DefaultInterrupt)
+                  0x000048          0x4 LONG 0x2f60 DEFINED (__SPI2Interrupt)?<code 336> (__SPI2Interrupt):<code 336> (__DefaultInterrupt)
+                  0x00004a          0x4 LONG 0x2f60 DEFINED (__C1Interrupt)?<code 336> (__C1Interrupt):<code 336> (__DefaultInterrupt)
+                  0x00004c          0x4 LONG 0x2f60 DEFINED (__IC3Interrupt)?<code 336> (__IC3Interrupt):<code 336> (__DefaultInterrupt)
+                  0x00004e          0x4 LONG 0x2f60 DEFINED (__IC4Interrupt)?<code 336> (__IC4Interrupt):<code 336> (__DefaultInterrupt)
+                  0x000050          0x4 LONG 0x2f60 DEFINED (__IC5Interrupt)?<code 336> (__IC5Interrupt):<code 336> (__DefaultInterrupt)
+                  0x000052          0x4 LONG 0x2f60 DEFINED (__IC6Interrupt)?<code 336> (__IC6Interrupt):<code 336> (__DefaultInterrupt)
+                  0x000054          0x4 LONG 0x2f60 DEFINED (__OC5Interrupt)?<code 336> (__OC5Interrupt):<code 336> (__DefaultInterrupt)
+                  0x000056          0x4 LONG 0x2f60 DEFINED (__OC6Interrupt)?<code 336> (__OC6Interrupt):<code 336> (__DefaultInterrupt)
+                  0x000058          0x4 LONG 0x2f60 DEFINED (__OC7Interrupt)?<code 336> (__OC7Interrupt):<code 336> (__DefaultInterrupt)
+                  0x00005a          0x4 LONG 0x2f60 DEFINED (__OC8Interrupt)?<code 336> (__OC8Interrupt):<code 336> (__DefaultInterrupt)
+                  0x00005c          0x4 LONG 0x2f60 DEFINED (__INT3Interrupt)?<code 336> (__INT3Interrupt):<code 336> (__DefaultInterrupt)
+                  0x00005e          0x4 LONG 0x2f60 DEFINED (__INT4Interrupt)?<code 336> (__INT4Interrupt):<code 336> (__DefaultInterrupt)
+                  0x000060          0x4 LONG 0x2f60 DEFINED (__C2Interrupt)?<code 336> (__C2Interrupt):<code 336> (__DefaultInterrupt)
+                  0x000062          0x4 LONG 0x2f60 DEFINED (__PWMInterrupt)?<code 336> (__PWMInterrupt):<code 336> (__DefaultInterrupt)
+                  0x000064          0x4 LONG 0x2f60 DEFINED (__QEIInterrupt)?<code 336> (__QEIInterrupt):<code 336> (__DefaultInterrupt)
+                  0x000066          0x4 LONG 0x2f60 DEFINED (__DCIInterrupt)?<code 336> (__DCIInterrupt):<code 336> (__DefaultInterrupt)
+                  0x000068          0x4 LONG 0x2f60 DEFINED (__LVDInterrupt)?<code 336> (__LVDInterrupt):<code 336> (__DefaultInterrupt)
+                  0x00006a          0x4 LONG 0x2f60 DEFINED (__FLTAInterrupt)?<code 336> (__FLTAInterrupt):<code 336> (__DefaultInterrupt)
+                  0x00006c          0x4 LONG 0x2f60 DEFINED (__FLTBInterrupt)?<code 336> (__FLTBInterrupt):<code 336> (__DefaultInterrupt)
+                  0x00006e          0x4 LONG 0x2f60 DEFINED (__Interrupt45)?<code 336> (__Interrupt45):<code 336> (__DefaultInterrupt)
+                  0x000070          0x4 LONG 0x2f60 DEFINED (__Interrupt46)?<code 336> (__Interrupt46):<code 336> (__DefaultInterrupt)
+                  0x000072          0x4 LONG 0x2f60 DEFINED (__Interrupt47)?<code 336> (__Interrupt47):<code 336> (__DefaultInterrupt)
+                  0x000074          0x4 LONG 0x2f60 DEFINED (__Interrupt48)?<code 336> (__Interrupt48):<code 336> (__DefaultInterrupt)
+                  0x000076          0x4 LONG 0x2f60 DEFINED (__Interrupt49)?<code 336> (__Interrupt49):<code 336> (__DefaultInterrupt)
+                  0x000078          0x4 LONG 0x2f60 DEFINED (__Interrupt50)?<code 336> (__Interrupt50):<code 336> (__DefaultInterrupt)
+                  0x00007a          0x4 LONG 0x2f60 DEFINED (__Interrupt51)?<code 336> (__Interrupt51):<code 336> (__DefaultInterrupt)
+                  0x00007c          0x4 LONG 0x2f60 DEFINED (__Interrupt52)?<code 336> (__Interrupt52):<code 336> (__DefaultInterrupt)
+                  0x00007e          0x4 LONG 0x2f60 DEFINED (__Interrupt53)?<code 336> (__Interrupt53):<code 336> (__DefaultInterrupt)
 
 .aivt             0x000084         0x7c
-                  0x000084          0x4 LONG 0x2e46 DEFINED (__AltReservedTrap0)?<code 336> (__AltReservedTrap0):DEFINED (__ReservedTrap0)?<code 336> (__ReservedTrap0):<code 336> (__DefaultInterrupt)
-                  0x000086          0x4 LONG 0x2e46 DEFINED (__AltOscillatorFail)?<code 336> (__AltOscillatorFail):DEFINED (__OscillatorFail)?<code 336> (__OscillatorFail):<code 336> (__DefaultInterrupt)
-                  0x000088          0x4 LONG 0x2e46 DEFINED (__AltAddressError)?<code 336> (__AltAddressError):DEFINED (__AddressError)?<code 336> (__AddressError):<code 336> (__DefaultInterrupt)
-                  0x00008a          0x4 LONG 0x2e46 DEFINED (__AltStackError)?<code 336> (__AltStackError):DEFINED (__StackError)?<code 336> (__StackError):<code 336> (__DefaultInterrupt)
-                  0x00008c          0x4 LONG 0x2e46 DEFINED (__AltMathError)?<code 336> (__AltMathError):DEFINED (__MathError)?<code 336> (__MathError):<code 336> (__DefaultInterrupt)
-                  0x00008e          0x4 LONG 0x2e46 DEFINED (__AltReservedTrap5)?<code 336> (__AltReservedTrap5):DEFINED (__ReservedTrap5)?<code 336> (__ReservedTrap5):<code 336> (__DefaultInterrupt)
-                  0x000090          0x4 LONG 0x2e46 DEFINED (__AltReservedTrap6)?<code 336> (__AltReservedTrap6):DEFINED (__ReservedTrap6)?<code 336> (__ReservedTrap6):<code 336> (__DefaultInterrupt)
-                  0x000092          0x4 LONG 0x2e46 DEFINED (__AltReservedTrap7)?<code 336> (__AltReservedTrap7):DEFINED (__ReservedTrap7)?<code 336> (__ReservedTrap7):<code 336> (__DefaultInterrupt)
-                  0x000094          0x4 LONG 0x2e46 DEFINED (__AltINT0Interrupt)?<code 336> (__AltINT0Interrupt):DEFINED (__INT0Interrupt)?<code 336> (__INT0Interrupt):<code 336> (__DefaultInterrupt)
-                  0x000096          0x4 LONG 0x2e46 DEFINED (__AltIC1Interrupt)?<code 336> (__AltIC1Interrupt):DEFINED (__IC1Interrupt)?<code 336> (__IC1Interrupt):<code 336> (__DefaultInterrupt)
-                  0x000098          0x4 LONG 0x2e46 DEFINED (__AltOC1Interrupt)?<code 336> (__AltOC1Interrupt):DEFINED (__OC1Interrupt)?<code 336> (__OC1Interrupt):<code 336> (__DefaultInterrupt)
-                  0x00009a          0x4 LONG 0x2e46 DEFINED (__AltT1Interrupt)?<code 336> (__AltT1Interrupt):DEFINED (__T1Interrupt)?<code 336> (__T1Interrupt):<code 336> (__DefaultInterrupt)
-                  0x00009c          0x4 LONG 0x2e46 DEFINED (__AltIC2Interrupt)?<code 336> (__AltIC2Interrupt):DEFINED (__IC2Interrupt)?<code 336> (__IC2Interrupt):<code 336> (__DefaultInterrupt)
-                  0x00009e          0x4 LONG 0x2e46 DEFINED (__AltOC2Interrupt)?<code 336> (__AltOC2Interrupt):DEFINED (__OC2Interrupt)?<code 336> (__OC2Interrupt):<code 336> (__DefaultInterrupt)
-                  0x0000a0          0x4 LONG 0xbbc DEFINED (__AltT2Interrupt)?<code 336> (__AltT2Interrupt):DEFINED (__T2Interrupt)?<code 336> (__T2Interrupt):<code 336> (__DefaultInterrupt)
-                  0x0000a2          0x4 LONG 0x2e46 DEFINED (__AltT3Interrupt)?<code 336> (__AltT3Interrupt):DEFINED (__T3Interrupt)?<code 336> (__T3Interrupt):<code 336> (__DefaultInterrupt)
-                  0x0000a4          0x4 LONG 0x2e46 DEFINED (__AltSPI1Interrupt)?<code 336> (__AltSPI1Interrupt):DEFINED (__SPI1Interrupt)?<code 336> (__SPI1Interrupt):<code 336> (__DefaultInterrupt)
-                  0x0000a6          0x4 LONG 0x2e46 DEFINED (__AltU1RXInterrupt)?<code 336> (__AltU1RXInterrupt):DEFINED (__U1RXInterrupt)?<code 336> (__U1RXInterrupt):<code 336> (__DefaultInterrupt)
-                  0x0000a8          0x4 LONG 0x2e46 DEFINED (__AltU1TXInterrupt)?<code 336> (__AltU1TXInterrupt):DEFINED (__U1TXInterrupt)?<code 336> (__U1TXInterrupt):<code 336> (__DefaultInterrupt)
-                  0x0000aa          0x4 LONG 0x2e46 DEFINED (__AltADCInterrupt)?<code 336> (__AltADCInterrupt):DEFINED (__ADCInterrupt)?<code 336> (__ADCInterrupt):<code 336> (__DefaultInterrupt)
-                  0x0000ac          0x4 LONG 0x2e46 DEFINED (__AltNVMInterrupt)?<code 336> (__AltNVMInterrupt):DEFINED (__NVMInterrupt)?<code 336> (__NVMInterrupt):<code 336> (__DefaultInterrupt)
-                  0x0000ae          0x4 LONG 0x2e46 DEFINED (__AltSI2CInterrupt)?<code 336> (__AltSI2CInterrupt):DEFINED (__SI2CInterrupt)?<code 336> (__SI2CInterrupt):<code 336> (__DefaultInterrupt)
-                  0x0000b0          0x4 LONG 0x2e46 DEFINED (__AltMI2CInterrupt)?<code 336> (__AltMI2CInterrupt):DEFINED (__MI2CInterrupt)?<code 336> (__MI2CInterrupt):<code 336> (__DefaultInterrupt)
-                  0x0000b2          0x4 LONG 0x2e46 DEFINED (__AltCNInterrupt)?<code 336> (__AltCNInterrupt):DEFINED (__CNInterrupt)?<code 336> (__CNInterrupt):<code 336> (__DefaultInterrupt)
-                  0x0000b4          0x4 LONG 0x2e46 DEFINED (__AltINT1Interrupt)?<code 336> (__AltINT1Interrupt):DEFINED (__INT1Interrupt)?<code 336> (__INT1Interrupt):<code 336> (__DefaultInterrupt)
-                  0x0000b6          0x4 LONG 0x2e46 DEFINED (__AltIC7Interrupt)?<code 336> (__AltIC7Interrupt):DEFINED (__IC7Interrupt)?<code 336> (__IC7Interrupt):<code 336> (__DefaultInterrupt)
-                  0x0000b8          0x4 LONG 0x2e46 DEFINED (__AltIC8Interrupt)?<code 336> (__AltIC8Interrupt):DEFINED (__IC8Interrupt)?<code 336> (__IC8Interrupt):<code 336> (__DefaultInterrupt)
-                  0x0000ba          0x4 LONG 0x2e46 DEFINED (__AltOC3Interrupt)?<code 336> (__AltOC3Interrupt):DEFINED (__OC3Interrupt)?<code 336> (__OC3Interrupt):<code 336> (__DefaultInterrupt)
-                  0x0000bc          0x4 LONG 0x2e46 DEFINED (__AltOC4Interrupt)?<code 336> (__AltOC4Interrupt):DEFINED (__OC4Interrupt)?<code 336> (__OC4Interrupt):<code 336> (__DefaultInterrupt)
-                  0x0000be          0x4 LONG 0x11a8 DEFINED (__AltT4Interrupt)?<code 336> (__AltT4Interrupt):DEFINED (__T4Interrupt)?<code 336> (__T4Interrupt):<code 336> (__DefaultInterrupt)
-                  0x0000c0          0x4 LONG 0x2e46 DEFINED (__AltT5Interrupt)?<code 336> (__AltT5Interrupt):DEFINED (__T5Interrupt)?<code 336> (__T5Interrupt):<code 336> (__DefaultInterrupt)
-                  0x0000c2          0x4 LONG 0x2e46 DEFINED (__AltINT2Interrupt)?<code 336> (__AltINT2Interrupt):DEFINED (__INT2Interrupt)?<code 336> (__INT2Interrupt):<code 336> (__DefaultInterrupt)
-                  0x0000c4          0x4 LONG 0x2e46 DEFINED (__AltU2RXInterrupt)?<code 336> (__AltU2RXInterrupt):DEFINED (__U2RXInterrupt)?<code 336> (__U2RXInterrupt):<code 336> (__DefaultInterrupt)
-                  0x0000c6          0x4 LONG 0x2e46 DEFINED (__AltU2TXInterrupt)?<code 336> (__AltU2TXInterrupt):DEFINED (__U2TXInterrupt)?<code 336> (__U2TXInterrupt):<code 336> (__DefaultInterrupt)
-                  0x0000c8          0x4 LONG 0x2e46 DEFINED (__AltSPI2Interrupt)?<code 336> (__AltSPI2Interrupt):DEFINED (__SPI2Interrupt)?<code 336> (__SPI2Interrupt):<code 336> (__DefaultInterrupt)
-                  0x0000ca          0x4 LONG 0x2e46 DEFINED (__AltC1Interrupt)?<code 336> (__AltC1Interrupt):DEFINED (__C1Interrupt)?<code 336> (__C1Interrupt):<code 336> (__DefaultInterrupt)
-                  0x0000cc          0x4 LONG 0x2e46 DEFINED (__AltIC3Interrupt)?<code 336> (__AltIC3Interrupt):DEFINED (__IC3Interrupt)?<code 336> (__IC3Interrupt):<code 336> (__DefaultInterrupt)
-                  0x0000ce          0x4 LONG 0x2e46 DEFINED (__AltIC4Interrupt)?<code 336> (__AltIC4Interrupt):DEFINED (__IC4Interrupt)?<code 336> (__IC4Interrupt):<code 336> (__DefaultInterrupt)
-                  0x0000d0          0x4 LONG 0x2e46 DEFINED (__AltIC5Interrupt)?<code 336> (__AltIC5Interrupt):DEFINED (__IC5Interrupt)?<code 336> (__IC5Interrupt):<code 336> (__DefaultInterrupt)
-                  0x0000d2          0x4 LONG 0x2e46 DEFINED (__AltIC6Interrupt)?<code 336> (__AltIC6Interrupt):DEFINED (__IC6Interrupt)?<code 336> (__IC6Interrupt):<code 336> (__DefaultInterrupt)
-                  0x0000d4          0x4 LONG 0x2e46 DEFINED (__AltOC5Interrupt)?<code 336> (__AltOC5Interrupt):DEFINED (__OC5Interrupt)?<code 336> (__OC5Interrupt):<code 336> (__DefaultInterrupt)
-                  0x0000d6          0x4 LONG 0x2e46 DEFINED (__AltOC6Interrupt)?<code 336> (__AltOC6Interrupt):DEFINED (__OC6Interrupt)?<code 336> (__OC6Interrupt):<code 336> (__DefaultInterrupt)
-                  0x0000d8          0x4 LONG 0x2e46 DEFINED (__AltOC7Interrupt)?<code 336> (__AltOC7Interrupt):DEFINED (__OC7Interrupt)?<code 336> (__OC7Interrupt):<code 336> (__DefaultInterrupt)
-                  0x0000da          0x4 LONG 0x2e46 DEFINED (__AltOC8Interrupt)?<code 336> (__AltOC8Interrupt):DEFINED (__OC8Interrupt)?<code 336> (__OC8Interrupt):<code 336> (__DefaultInterrupt)
-                  0x0000dc          0x4 LONG 0x2e46 DEFINED (__AltINT3Interrupt)?<code 336> (__AltINT3Interrupt):DEFINED (__INT3Interrupt)?<code 336> (__INT3Interrupt):<code 336> (__DefaultInterrupt)
-                  0x0000de          0x4 LONG 0x2e46 DEFINED (__AltINT4Interrupt)?<code 336> (__AltINT4Interrupt):DEFINED (__INT4Interrupt)?<code 336> (__INT4Interrupt):<code 336> (__DefaultInterrupt)
-                  0x0000e0          0x4 LONG 0x2e46 DEFINED (__AltC2Interrupt)?<code 336> (__AltC2Interrupt):DEFINED (__C2Interrupt)?<code 336> (__C2Interrupt):<code 336> (__DefaultInterrupt)
-                  0x0000e2          0x4 LONG 0x2e46 DEFINED (__AltPWMInterrupt)?<code 336> (__AltPWMInterrupt):DEFINED (__PWMInterrupt)?<code 336> (__PWMInterrupt):<code 336> (__DefaultInterrupt)
-                  0x0000e4          0x4 LONG 0x2e46 DEFINED (__AltQEIInterrupt)?<code 336> (__AltQEIInterrupt):DEFINED (__QEIInterrupt)?<code 336> (__QEIInterrupt):<code 336> (__DefaultInterrupt)
-                  0x0000e6          0x4 LONG 0x2e46 DEFINED (__AltDCIInterrupt)?<code 336> (__AltDCIInterrupt):DEFINED (__DCIInterrupt)?<code 336> (__DCIInterrupt):<code 336> (__DefaultInterrupt)
-                  0x0000e8          0x4 LONG 0x2e46 DEFINED (__AltLVDInterrupt)?<code 336> (__AltLVDInterrupt):DEFINED (__LVDInterrupt)?<code 336> (__LVDInterrupt):<code 336> (__DefaultInterrupt)
-                  0x0000ea          0x4 LONG 0x2e46 DEFINED (__AltFLTAInterrupt)?<code 336> (__AltFLTAInterrupt):DEFINED (__FLTAInterrupt)?<code 336> (__FLTAInterrupt):<code 336> (__DefaultInterrupt)
-                  0x0000ec          0x4 LONG 0x2e46 DEFINED (__AltFLTBInterrupt)?<code 336> (__AltFLTBInterrupt):DEFINED (__FLTBInterrupt)?<code 336> (__FLTBInterrupt):<code 336> (__DefaultInterrupt)
-                  0x0000ee          0x4 LONG 0x2e46 DEFINED (__AltInterrupt45)?<code 336> (__AltInterrupt45):DEFINED (__Interrupt45)?<code 336> (__Interrupt45):<code 336> (__DefaultInterrupt)
-                  0x0000f0          0x4 LONG 0x2e46 DEFINED (__AltInterrupt46)?<code 336> (__AltInterrupt46):DEFINED (__Interrupt46)?<code 336> (__Interrupt46):<code 336> (__DefaultInterrupt)
-                  0x0000f2          0x4 LONG 0x2e46 DEFINED (__AltInterrupt47)?<code 336> (__AltInterrupt47):DEFINED (__Interrupt47)?<code 336> (__Interrupt47):<code 336> (__DefaultInterrupt)
-                  0x0000f4          0x4 LONG 0x2e46 DEFINED (__AltInterrupt48)?<code 336> (__AltInterrupt48):DEFINED (__Interrupt48)?<code 336> (__Interrupt48):<code 336> (__DefaultInterrupt)
-                  0x0000f6          0x4 LONG 0x2e46 DEFINED (__AltInterrupt49)?<code 336> (__AltInterrupt49):DEFINED (__Interrupt49)?<code 336> (__Interrupt49):<code 336> (__DefaultInterrupt)
-                  0x0000f8          0x4 LONG 0x2e46 DEFINED (__AltInterrupt50)?<code 336> (__AltInterrupt50):DEFINED (__Interrupt50)?<code 336> (__Interrupt50):<code 336> (__DefaultInterrupt)
-                  0x0000fa          0x4 LONG 0x2e46 DEFINED (__AltInterrupt51)?<code 336> (__AltInterrupt51):DEFINED (__Interrupt51)?<code 336> (__Interrupt51):<code 336> (__DefaultInterrupt)
-                  0x0000fc          0x4 LONG 0x2e46 DEFINED (__AltInterrupt52)?<code 336> (__AltInterrupt52):DEFINED (__Interrupt52)?<code 336> (__Interrupt52):<code 336> (__DefaultInterrupt)
-                  0x0000fe          0x4 LONG 0x2e46 DEFINED (__AltInterrupt53)?<code 336> (__AltInterrupt53):DEFINED (__Interrupt53)?<code 336> (__Interrupt53):<code 336> (__DefaultInterrupt)
+                  0x000084          0x4 LONG 0x2f60 DEFINED (__AltReservedTrap0)?<code 336> (__AltReservedTrap0):DEFINED (__ReservedTrap0)?<code 336> (__ReservedTrap0):<code 336> (__DefaultInterrupt)
+                  0x000086          0x4 LONG 0x2f60 DEFINED (__AltOscillatorFail)?<code 336> (__AltOscillatorFail):DEFINED (__OscillatorFail)?<code 336> (__OscillatorFail):<code 336> (__DefaultInterrupt)
+                  0x000088          0x4 LONG 0x2f60 DEFINED (__AltAddressError)?<code 336> (__AltAddressError):DEFINED (__AddressError)?<code 336> (__AddressError):<code 336> (__DefaultInterrupt)
+                  0x00008a          0x4 LONG 0x2f60 DEFINED (__AltStackError)?<code 336> (__AltStackError):DEFINED (__StackError)?<code 336> (__StackError):<code 336> (__DefaultInterrupt)
+                  0x00008c          0x4 LONG 0x2f60 DEFINED (__AltMathError)?<code 336> (__AltMathError):DEFINED (__MathError)?<code 336> (__MathError):<code 336> (__DefaultInterrupt)
+                  0x00008e          0x4 LONG 0x2f60 DEFINED (__AltReservedTrap5)?<code 336> (__AltReservedTrap5):DEFINED (__ReservedTrap5)?<code 336> (__ReservedTrap5):<code 336> (__DefaultInterrupt)
+                  0x000090          0x4 LONG 0x2f60 DEFINED (__AltReservedTrap6)?<code 336> (__AltReservedTrap6):DEFINED (__ReservedTrap6)?<code 336> (__ReservedTrap6):<code 336> (__DefaultInterrupt)
+                  0x000092          0x4 LONG 0x2f60 DEFINED (__AltReservedTrap7)?<code 336> (__AltReservedTrap7):DEFINED (__ReservedTrap7)?<code 336> (__ReservedTrap7):<code 336> (__DefaultInterrupt)
+                  0x000094          0x4 LONG 0x2f60 DEFINED (__AltINT0Interrupt)?<code 336> (__AltINT0Interrupt):DEFINED (__INT0Interrupt)?<code 336> (__INT0Interrupt):<code 336> (__DefaultInterrupt)
+                  0x000096          0x4 LONG 0x2f60 DEFINED (__AltIC1Interrupt)?<code 336> (__AltIC1Interrupt):DEFINED (__IC1Interrupt)?<code 336> (__IC1Interrupt):<code 336> (__DefaultInterrupt)
+                  0x000098          0x4 LONG 0x2f60 DEFINED (__AltOC1Interrupt)?<code 336> (__AltOC1Interrupt):DEFINED (__OC1Interrupt)?<code 336> (__OC1Interrupt):<code 336> (__DefaultInterrupt)
+                  0x00009a          0x4 LONG 0x2f60 DEFINED (__AltT1Interrupt)?<code 336> (__AltT1Interrupt):DEFINED (__T1Interrupt)?<code 336> (__T1Interrupt):<code 336> (__DefaultInterrupt)
+                  0x00009c          0x4 LONG 0x2f60 DEFINED (__AltIC2Interrupt)?<code 336> (__AltIC2Interrupt):DEFINED (__IC2Interrupt)?<code 336> (__IC2Interrupt):<code 336> (__DefaultInterrupt)
+                  0x00009e          0x4 LONG 0x2f60 DEFINED (__AltOC2Interrupt)?<code 336> (__AltOC2Interrupt):DEFINED (__OC2Interrupt)?<code 336> (__OC2Interrupt):<code 336> (__DefaultInterrupt)
+                  0x0000a0          0x4 LONG 0xbf6 DEFINED (__AltT2Interrupt)?<code 336> (__AltT2Interrupt):DEFINED (__T2Interrupt)?<code 336> (__T2Interrupt):<code 336> (__DefaultInterrupt)
+                  0x0000a2          0x4 LONG 0x2f60 DEFINED (__AltT3Interrupt)?<code 336> (__AltT3Interrupt):DEFINED (__T3Interrupt)?<code 336> (__T3Interrupt):<code 336> (__DefaultInterrupt)
+                  0x0000a4          0x4 LONG 0x2f60 DEFINED (__AltSPI1Interrupt)?<code 336> (__AltSPI1Interrupt):DEFINED (__SPI1Interrupt)?<code 336> (__SPI1Interrupt):<code 336> (__DefaultInterrupt)
+                  0x0000a6          0x4 LONG 0x2f60 DEFINED (__AltU1RXInterrupt)?<code 336> (__AltU1RXInterrupt):DEFINED (__U1RXInterrupt)?<code 336> (__U1RXInterrupt):<code 336> (__DefaultInterrupt)
+                  0x0000a8          0x4 LONG 0x2f60 DEFINED (__AltU1TXInterrupt)?<code 336> (__AltU1TXInterrupt):DEFINED (__U1TXInterrupt)?<code 336> (__U1TXInterrupt):<code 336> (__DefaultInterrupt)
+                  0x0000aa          0x4 LONG 0x2f60 DEFINED (__AltADCInterrupt)?<code 336> (__AltADCInterrupt):DEFINED (__ADCInterrupt)?<code 336> (__ADCInterrupt):<code 336> (__DefaultInterrupt)
+                  0x0000ac          0x4 LONG 0x2f60 DEFINED (__AltNVMInterrupt)?<code 336> (__AltNVMInterrupt):DEFINED (__NVMInterrupt)?<code 336> (__NVMInterrupt):<code 336> (__DefaultInterrupt)
+                  0x0000ae          0x4 LONG 0x2f60 DEFINED (__AltSI2CInterrupt)?<code 336> (__AltSI2CInterrupt):DEFINED (__SI2CInterrupt)?<code 336> (__SI2CInterrupt):<code 336> (__DefaultInterrupt)
+                  0x0000b0          0x4 LONG 0x2f60 DEFINED (__AltMI2CInterrupt)?<code 336> (__AltMI2CInterrupt):DEFINED (__MI2CInterrupt)?<code 336> (__MI2CInterrupt):<code 336> (__DefaultInterrupt)
+                  0x0000b2          0x4 LONG 0x2f60 DEFINED (__AltCNInterrupt)?<code 336> (__AltCNInterrupt):DEFINED (__CNInterrupt)?<code 336> (__CNInterrupt):<code 336> (__DefaultInterrupt)
+                  0x0000b4          0x4 LONG 0x2f60 DEFINED (__AltINT1Interrupt)?<code 336> (__AltINT1Interrupt):DEFINED (__INT1Interrupt)?<code 336> (__INT1Interrupt):<code 336> (__DefaultInterrupt)
+                  0x0000b6          0x4 LONG 0x2f60 DEFINED (__AltIC7Interrupt)?<code 336> (__AltIC7Interrupt):DEFINED (__IC7Interrupt)?<code 336> (__IC7Interrupt):<code 336> (__DefaultInterrupt)
+                  0x0000b8          0x4 LONG 0x2f60 DEFINED (__AltIC8Interrupt)?<code 336> (__AltIC8Interrupt):DEFINED (__IC8Interrupt)?<code 336> (__IC8Interrupt):<code 336> (__DefaultInterrupt)
+                  0x0000ba          0x4 LONG 0x2f60 DEFINED (__AltOC3Interrupt)?<code 336> (__AltOC3Interrupt):DEFINED (__OC3Interrupt)?<code 336> (__OC3Interrupt):<code 336> (__DefaultInterrupt)
+                  0x0000bc          0x4 LONG 0x2f60 DEFINED (__AltOC4Interrupt)?<code 336> (__AltOC4Interrupt):DEFINED (__OC4Interrupt)?<code 336> (__OC4Interrupt):<code 336> (__DefaultInterrupt)
+                  0x0000be          0x4 LONG 0x11e6 DEFINED (__AltT4Interrupt)?<code 336> (__AltT4Interrupt):DEFINED (__T4Interrupt)?<code 336> (__T4Interrupt):<code 336> (__DefaultInterrupt)
+                  0x0000c0          0x4 LONG 0x2f60 DEFINED (__AltT5Interrupt)?<code 336> (__AltT5Interrupt):DEFINED (__T5Interrupt)?<code 336> (__T5Interrupt):<code 336> (__DefaultInterrupt)
+                  0x0000c2          0x4 LONG 0x2f60 DEFINED (__AltINT2Interrupt)?<code 336> (__AltINT2Interrupt):DEFINED (__INT2Interrupt)?<code 336> (__INT2Interrupt):<code 336> (__DefaultInterrupt)
+                  0x0000c4          0x4 LONG 0x2f60 DEFINED (__AltU2RXInterrupt)?<code 336> (__AltU2RXInterrupt):DEFINED (__U2RXInterrupt)?<code 336> (__U2RXInterrupt):<code 336> (__DefaultInterrupt)
+                  0x0000c6          0x4 LONG 0x2f60 DEFINED (__AltU2TXInterrupt)?<code 336> (__AltU2TXInterrupt):DEFINED (__U2TXInterrupt)?<code 336> (__U2TXInterrupt):<code 336> (__DefaultInterrupt)
+                  0x0000c8          0x4 LONG 0x2f60 DEFINED (__AltSPI2Interrupt)?<code 336> (__AltSPI2Interrupt):DEFINED (__SPI2Interrupt)?<code 336> (__SPI2Interrupt):<code 336> (__DefaultInterrupt)
+                  0x0000ca          0x4 LONG 0x2f60 DEFINED (__AltC1Interrupt)?<code 336> (__AltC1Interrupt):DEFINED (__C1Interrupt)?<code 336> (__C1Interrupt):<code 336> (__DefaultInterrupt)
+                  0x0000cc          0x4 LONG 0x2f60 DEFINED (__AltIC3Interrupt)?<code 336> (__AltIC3Interrupt):DEFINED (__IC3Interrupt)?<code 336> (__IC3Interrupt):<code 336> (__DefaultInterrupt)
+                  0x0000ce          0x4 LONG 0x2f60 DEFINED (__AltIC4Interrupt)?<code 336> (__AltIC4Interrupt):DEFINED (__IC4Interrupt)?<code 336> (__IC4Interrupt):<code 336> (__DefaultInterrupt)
+                  0x0000d0          0x4 LONG 0x2f60 DEFINED (__AltIC5Interrupt)?<code 336> (__AltIC5Interrupt):DEFINED (__IC5Interrupt)?<code 336> (__IC5Interrupt):<code 336> (__DefaultInterrupt)
+                  0x0000d2          0x4 LONG 0x2f60 DEFINED (__AltIC6Interrupt)?<code 336> (__AltIC6Interrupt):DEFINED (__IC6Interrupt)?<code 336> (__IC6Interrupt):<code 336> (__DefaultInterrupt)
+                  0x0000d4          0x4 LONG 0x2f60 DEFINED (__AltOC5Interrupt)?<code 336> (__AltOC5Interrupt):DEFINED (__OC5Interrupt)?<code 336> (__OC5Interrupt):<code 336> (__DefaultInterrupt)
+                  0x0000d6          0x4 LONG 0x2f60 DEFINED (__AltOC6Interrupt)?<code 336> (__AltOC6Interrupt):DEFINED (__OC6Interrupt)?<code 336> (__OC6Interrupt):<code 336> (__DefaultInterrupt)
+                  0x0000d8          0x4 LONG 0x2f60 DEFINED (__AltOC7Interrupt)?<code 336> (__AltOC7Interrupt):DEFINED (__OC7Interrupt)?<code 336> (__OC7Interrupt):<code 336> (__DefaultInterrupt)
+                  0x0000da          0x4 LONG 0x2f60 DEFINED (__AltOC8Interrupt)?<code 336> (__AltOC8Interrupt):DEFINED (__OC8Interrupt)?<code 336> (__OC8Interrupt):<code 336> (__DefaultInterrupt)
+                  0x0000dc          0x4 LONG 0x2f60 DEFINED (__AltINT3Interrupt)?<code 336> (__AltINT3Interrupt):DEFINED (__INT3Interrupt)?<code 336> (__INT3Interrupt):<code 336> (__DefaultInterrupt)
+                  0x0000de          0x4 LONG 0x2f60 DEFINED (__AltINT4Interrupt)?<code 336> (__AltINT4Interrupt):DEFINED (__INT4Interrupt)?<code 336> (__INT4Interrupt):<code 336> (__DefaultInterrupt)
+                  0x0000e0          0x4 LONG 0x2f60 DEFINED (__AltC2Interrupt)?<code 336> (__AltC2Interrupt):DEFINED (__C2Interrupt)?<code 336> (__C2Interrupt):<code 336> (__DefaultInterrupt)
+                  0x0000e2          0x4 LONG 0x2f60 DEFINED (__AltPWMInterrupt)?<code 336> (__AltPWMInterrupt):DEFINED (__PWMInterrupt)?<code 336> (__PWMInterrupt):<code 336> (__DefaultInterrupt)
+                  0x0000e4          0x4 LONG 0x2f60 DEFINED (__AltQEIInterrupt)?<code 336> (__AltQEIInterrupt):DEFINED (__QEIInterrupt)?<code 336> (__QEIInterrupt):<code 336> (__DefaultInterrupt)
+                  0x0000e6          0x4 LONG 0x2f60 DEFINED (__AltDCIInterrupt)?<code 336> (__AltDCIInterrupt):DEFINED (__DCIInterrupt)?<code 336> (__DCIInterrupt):<code 336> (__DefaultInterrupt)
+                  0x0000e8          0x4 LONG 0x2f60 DEFINED (__AltLVDInterrupt)?<code 336> (__AltLVDInterrupt):DEFINED (__LVDInterrupt)?<code 336> (__LVDInterrupt):<code 336> (__DefaultInterrupt)
+                  0x0000ea          0x4 LONG 0x2f60 DEFINED (__AltFLTAInterrupt)?<code 336> (__AltFLTAInterrupt):DEFINED (__FLTAInterrupt)?<code 336> (__FLTAInterrupt):<code 336> (__DefaultInterrupt)
+                  0x0000ec          0x4 LONG 0x2f60 DEFINED (__AltFLTBInterrupt)?<code 336> (__AltFLTBInterrupt):DEFINED (__FLTBInterrupt)?<code 336> (__FLTBInterrupt):<code 336> (__DefaultInterrupt)
+                  0x0000ee          0x4 LONG 0x2f60 DEFINED (__AltInterrupt45)?<code 336> (__AltInterrupt45):DEFINED (__Interrupt45)?<code 336> (__Interrupt45):<code 336> (__DefaultInterrupt)
+                  0x0000f0          0x4 LONG 0x2f60 DEFINED (__AltInterrupt46)?<code 336> (__AltInterrupt46):DEFINED (__Interrupt46)?<code 336> (__Interrupt46):<code 336> (__DefaultInterrupt)
+                  0x0000f2          0x4 LONG 0x2f60 DEFINED (__AltInterrupt47)?<code 336> (__AltInterrupt47):DEFINED (__Interrupt47)?<code 336> (__Interrupt47):<code 336> (__DefaultInterrupt)
+                  0x0000f4          0x4 LONG 0x2f60 DEFINED (__AltInterrupt48)?<code 336> (__AltInterrupt48):DEFINED (__Interrupt48)?<code 336> (__Interrupt48):<code 336> (__DefaultInterrupt)
+                  0x0000f6          0x4 LONG 0x2f60 DEFINED (__AltInterrupt49)?<code 336> (__AltInterrupt49):DEFINED (__Interrupt49)?<code 336> (__Interrupt49):<code 336> (__DefaultInterrupt)
+                  0x0000f8          0x4 LONG 0x2f60 DEFINED (__AltInterrupt50)?<code 336> (__AltInterrupt50):DEFINED (__Interrupt50)?<code 336> (__Interrupt50):<code 336> (__DefaultInterrupt)
+                  0x0000fa          0x4 LONG 0x2f60 DEFINED (__AltInterrupt51)?<code 336> (__AltInterrupt51):DEFINED (__Interrupt51)?<code 336> (__Interrupt51):<code 336> (__DefaultInterrupt)
+                  0x0000fc          0x4 LONG 0x2f60 DEFINED (__AltInterrupt52)?<code 336> (__AltInterrupt52):DEFINED (__Interrupt52)?<code 336> (__Interrupt52):<code 336> (__DefaultInterrupt)
+                  0x0000fe          0x4 LONG 0x2f60 DEFINED (__AltInterrupt53)?<code 336> (__AltInterrupt53):DEFINED (__Interrupt53)?<code 336> (__Interrupt53):<code 336> (__DefaultInterrupt)
                     0x0000                  WREG0 = 0x0
                     0x0000                  _WREG0 = 0x0
                     0x0002                  WREG1 = 0x2
@@ -2046,198 +2036,193 @@ LOAD FGS
 LOAD data_init
 LOAD default_isr
 
-.const              0xac82         0xd0
- .const             0xac82         0x62 Main.o
- .const             0xace4          0x6 LCD.o
- .const             0xacea         0x24 Bluetooth.o
- .const             0xad0e         0x38 Control.o
- .const             0xad46          0xc Filter.o
+.const              0xada0         0xd0
+ .const             0xada0         0x62 Main.o
+ .const             0xae02          0x6 LCD.o
+ .const             0xae08         0x24 Bluetooth.o
+ .const             0xae2c         0x38 Control.o
+ .const             0xae64          0xc Filter.o
 
-.ndata              0x0800         0x66
- .ndata             0x0800         0x66 Control.o
+.ndata              0x0800         0x5e
+ .ndata             0x0800         0x5e Control.o
                     0x0800                  PID
                     0x0802                  thrustRate
                     0x0804                  PWM_Motor1
                     0x0806                  PWM_Motor2
                     0x0808                  PWM_Motor3
                     0x080a                  PWM_Motor4
-                    0x080c                  PWM1
-                    0x080e                  PWM2
-                    0x0810                  PWM3
-                    0x0812                  PWM4
-                    0x0814                  P
-                    0x0818                  I
-                    0x081c                  D
-                    0x0820                  eR
-                    0x0824                  eP
-                    0x0828                  eY
-                    0x082c                  eA
-                    0x0830                  total_eR
-                    0x0834                  total_eP
-                    0x0838                  total_eY
-                    0x083c                  total_eA
-                    0x0840                  actualAltitudeNew
-                    0x0844                  actualAltitudeOld
-                    0x0848                  PID_sum
-                    0x084c                  KiAlt
-                    0x0850                  xuatPhi
-                    0x0854                  xuatTheta
-                    0x0858                  phong
-                    0x085c                  thang
-                    0x0860                  PID_Yaw
-                    0x0862                  docao
+                    0x080c                  P
+                    0x0810                  I
+                    0x0814                  D
+                    0x0818                  e_Roll
+                    0x081c                  e_Pitch
+                    0x0820                  e_Yaw
+                    0x0824                  eAlt
+                    0x0828                  total_e_Roll
+                    0x082c                  total_e_Pitch
+                    0x0830                  total_e_Yaw
+                    0x0834                  total_eAlt
+                    0x0838                  actualAltitudeNew
+                    0x083c                  actualAltitudeOld
+                    0x0840                  PID_sum
+                    0x0844                  KiAlt
+                    0x0848                  xuatPhi
+                    0x084c                  xuatTheta
+                    0x0850                  phong
+                    0x0854                  thang
+                    0x0858                  PID_Yaw
+                    0x085a                  docao
 
-.nbss               0x0866         0x5a
- .nbss              0x0866         0x5a Filter.o
-                    0x0866                  R0x
-                    0x0868                  R0y
-                    0x086a                  R0z
-                    0x086c                  xIntG
-                    0x086e                  yIntG
-                    0x0870                  zIntG
-                    0x0872                  Rxm
-                    0x0874                  Rym
-                    0x0876                  Rzm
-                    0x0878                  Rx
-                    0x087c                  Ry
-                    0x0880                  Rz
-                    0x0884                  Ax
-                    0x0888                  Ay
-                    0x088c                  Az
-                    0x0890                  phiAngle
-                    0x0894                  thetaAngle
-                    0x0898                  dataGyroArray
-                    0x089e                  dataAccelArray
-                    0x08a4                  phiComp
-                    0x08a8                  thetaComp
-                    0x08ac                  psiHigh
-                    0x08b0                  accZ
-                    0x08b4                  accVelo
-                    0x08b8                  accAlt
-                    0x08bc                  altFinal
+.nbss               0x085e         0x56
+ .nbss              0x085e         0x56 Filter.o
+                    0x085e                  R0x
+                    0x0860                  R0y
+                    0x0862                  R0z
+                    0x0864                  xIntG
+                    0x0866                  yIntG
+                    0x0868                  zIntG
+                    0x086a                  Rxm
+                    0x086c                  Rym
+                    0x086e                  Rzm
+                    0x0870                  Rx
+                    0x0874                  Ry
+                    0x0878                  Rz
+                    0x087c                  Ax
+                    0x0880                  Ay
+                    0x0884                  Az
+                    0x0888                  phiAngle
+                    0x088c                  thetaAngle
+                    0x0890                  dataGyroArray
+                    0x0896                  dataAccelArray
+                    0x089c                  phiComp
+                    0x08a0                  thetaComp
+                    0x08a4                  psiHigh
+                    0x08a8                  accVelo
+                    0x08ac                  accAlt
+                    0x08b0                  altFinal
 
-.nbss               0x08c0         0x50
- .nbss              0x08c0         0x50 Control.o
-                    0x08c0                  Up
-                    0x08c2                  Down
-                    0x08c4                  Left
-                    0x08c6                  Right
-                    0x08c8                  R_Left
-                    0x08ca                  R_Right
-                    0x08cc                  Forward
-                    0x08ce                  Backward
-                    0x08d0                  Yaw_sum
-                    0x08d4                  Pitch_sum
-                    0x08d8                  Roll_sum
-                    0x08dc                  High_sum
-                    0x08e0                  comandfromBluetooth
-                    0x08e2                  Angle_sumR
-                    0x08e6                  Angle_sumP
-                    0x08ea                  Angle_sumY
-                    0x08ee                  Altitude
-                    0x08f2                  userInput
-                    0x08f4                  altitude
-                    0x08f8                  altitudeR
-                    0x08fc                  altitudeG
-                    0x0900                  altitudeLCD
-                    0x0904                  altitudeLCD1
-                    0x0908                  altitudeLCD2
-                    0x090c                  xuatdocao
+.nbss               0x08b4         0x50
+ .nbss              0x08b4         0x50 Control.o
+                    0x08b4                  Up
+                    0x08b6                  Down
+                    0x08b8                  Left
+                    0x08ba                  Right
+                    0x08bc                  R_Left
+                    0x08be                  R_Right
+                    0x08c0                  Forward
+                    0x08c2                  Backward
+                    0x08c4                  Yaw_sum
+                    0x08c8                  Pitch_sum
+                    0x08cc                  Roll_sum
+                    0x08d0                  High_sum
+                    0x08d4                  comandfromBluetooth
+                    0x08d6                  Angle_sumRoll
+                    0x08da                  Angle_sumPitch
+                    0x08de                  Angle_sumYaw
+                    0x08e2                  Altitude
+                    0x08e6                  userInput
+                    0x08e8                  altitude
+                    0x08ec                  altitudeR
+                    0x08f0                  altitudeG
+                    0x08f4                  altitudeLCD
+                    0x08f8                  altitudeLCD1
+                    0x08fc                  altitudeLCD2
+                    0x0900                  xuatdocao
 
-.ndata              0x0910         0x46
- .ndata             0x0910         0x46 BMP085.o
-                    0x0910                  baroAltitude
-                    0x0914                  baroRawAltitude
-                    0x0918                  baroGroundAltitude
-                    0x091c                  baroSmoothFactor
-                    0x0920                  T
-                    0x0924                  overSamplingSetting
-                    0x0926                  ac1
-                    0x0928                  ac2
-                    0x092a                  ac3
-                    0x092c                  ac4
-                    0x092e                  ac5
-                    0x0930                  ac6
-                    0x0932                  b1
-                    0x0934                  b2
-                    0x0936                  mb
-                    0x0938                  mc
-                    0x093a                  md
-                    0x093c                  pressure
-                    0x0940                  rawPressure
-                    0x0944                  rawTemperature
-                    0x0948                  pressureCount
-                    0x094a                  pressureFactor
-                    0x094e                  isReadPressure
-                    0x0950                  rawPressureSum
-                    0x0954                  rawPressureSumCount
+.ndata              0x0904         0x46
+ .ndata             0x0904         0x46 BMP085.o
+                    0x0904                  baroAltitude
+                    0x0908                  baroRawAltitude
+                    0x090c                  baroGroundAltitude
+                    0x0910                  baroSmoothFactor
+                    0x0914                  T
+                    0x0918                  overSamplingSetting
+                    0x091a                  ac1
+                    0x091c                  ac2
+                    0x091e                  ac3
+                    0x0920                  ac4
+                    0x0922                  ac5
+                    0x0924                  ac6
+                    0x0926                  b1
+                    0x0928                  b2
+                    0x092a                  mb
+                    0x092c                  mc
+                    0x092e                  md
+                    0x0930                  pressure
+                    0x0934                  rawPressure
+                    0x0938                  rawTemperature
+                    0x093c                  pressureCount
+                    0x093e                  pressureFactor
+                    0x0942                  isReadPressure
+                    0x0944                  rawPressureSum
+                    0x0948                  rawPressureSumCount
 
-.ndata              0x0956         0x2a
- .ndata             0x0956         0x2a FUFO.o
-                    0x0956                  mainState
-                    0x0958                  phiActual
-                    0x095c                  thetaActual
-                    0x0960                  psiActual
-                    0x0964                  GyrosOutputR
-                    0x0968                  GyrosOutputP
-                    0x096c                  GyrosOutputY
-                    0x0970                  AccelAltitude
-                    0x0974                  pid1
-                    0x0976                  pid2
-                    0x0978                  pid3
-                    0x097a                  pid4
-                    0x097c                  PIDStatus
-                    0x097e                  PIDAltitude
+.ndata              0x094a         0x2a
+ .ndata             0x094a         0x2a FUFO.o
+                    0x094a                  mainState
+                    0x094c                  phiActual
+                    0x0950                  thetaActual
+                    0x0954                  psiActual
+                    0x0958                  GyrosOutputR
+                    0x095c                  GyrosOutputP
+                    0x0960                  GyrosOutputY
+                    0x0964                  AccelAltitude
+                    0x0968                  pid1
+                    0x096a                  pid2
+                    0x096c                  pid3
+                    0x096e                  pid4
+                    0x0970                  PIDStatus
+                    0x0972                  PIDAltitude
 
-.nbss               0x0980         0x26
- .nbss              0x0980         0x26 Main.o
-                    0x0980                  receiOK
-                    0x099a                  FUFO_State
-                    0x099c                  command
-                    0x099e                  motor1
-                    0x09a0                  motor2
-                    0x09a2                  motor3
-                    0x09a4                  motor4
+.nbss               0x0974         0x26
+ .nbss              0x0974         0x26 Main.o
+                    0x0974                  receiOK
+                    0x098e                  FUFO_State
+                    0x0990                  command
+                    0x0992                  motor1
+                    0x0994                  motor2
+                    0x0996                  motor3
+                    0x0998                  motor4
 
-.ndata              0x09a6         0x10
- .ndata             0x09a6         0x10 Main.o
-                    0x09a6                  index
-                    0x09a8                  FUFO_thrust
-                    0x09aa                  userInputFlag
-                    0x09ac                  Connection
-                    0x09ae                  i
-                    0x09b0                  PIDControl
-                    0x09b2                  value
-                    0x09b4                  Hung
+.ndata              0x099a         0x10
+ .ndata             0x099a         0x10 Main.o
+                    0x099a                  index
+                    0x099c                  FUFO_thrust
+                    0x099e                  userInputFlag
+                    0x09a0                  Connection
+                    0x09a2                  i
+                    0x09a4                  PIDControl
+                    0x09a6                  value
+                    0x09a8                  Hung
 
-.ndata              0x09b6          0xe
- .ndata             0x09b6          0xe Filter.o
-                    0x09b6                  idx100
-                    0x09b8                  noticeError
-                    0x09c0                  accAltOld
+.ndata              0x09aa          0xe
+ .ndata             0x09aa          0xe Filter.o
+                    0x09aa                  idx100
+                    0x09ac                  noticeError
+                    0x09b4                  accAltOld
 
-.nbss               0x09c4          0x6
- .nbss              0x09c4          0x6 pwmControl.o
-                    0x09c4                  PR4_value
-                    0x09c6                  periodValue
-                    0x09c8                  initDCValue
+.nbss               0x09b8          0x6
+ .nbss              0x09b8          0x6 pwmControl.o
+                    0x09b8                  PR4_value
+                    0x09ba                  periodValue
+                    0x09bc                  initDCValue
 
-.ndata              0x09ca          0x4
- .ndata             0x09ca          0x4 pwmControl.o
-                    0x09ca                  a
-                    0x09cc                  PWM_per_thrust
+.ndata              0x09be          0x4
+ .ndata             0x09be          0x4 pwmControl.o
+                    0x09be                  a
+                    0x09c0                  PWM_per_thrust
 
-.nbss               0x09ce          0x2
- .nbss              0x09ce          0x2 FUFO.o
-                    0x09ce                  Conn
+.nbss               0x09c2          0x2
+ .nbss              0x09c2          0x2 FUFO.o
+                    0x09c2                  Conn
 
-.nbss               0x09d0          0x2
- .nbss              0x09d0          0x2 c:/program files/microchip/mplab c30/bin/../lib\libm-coff.a(errno.o)
-                    0x09d0                  errno
+.nbss               0x09c4          0x2
+ .nbss              0x09c4          0x2 c:/program files/microchip/mplab c30/bin/../lib\libm-coff.a(errno.o)
+                    0x09c4                  errno
 
-.dinit            0x002d52         0xf4
- .dinit           0x002d52         0xf4 data_init
+.dinit            0x002e70         0xf0
+ .dinit           0x002e70         0xf0 data_init
 
-.isr              0x002e46          0x2
- .isr             0x002e46          0x2 default_isr
-                  0x002e46                  _DefaultInterrupt
+.isr              0x002f60          0x2
+ .isr             0x002f60          0x2 default_isr
+                  0x002f60                  _DefaultInterrupt

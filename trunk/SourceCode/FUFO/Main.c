@@ -62,15 +62,15 @@ int main(void) {
 
 			case Setup: // Trang thai Setup
 					fufoGetRateAngle(); // calc R0
-//					FUFO_thrust = getThrustRate();
-//					FUFO_thrust++;
-//					if(FUFO_thrust >= 40) {
-//						FUFO_thrust = 40;
-//						//setState(Ready);
-//						//T2CONbits.TON = 1;
-//					}
-//					setThrustRate(FUFO_thrust);
-//					controlFUFO();
+					FUFO_thrust = getThrustRate();
+					FUFO_thrust++;
+					if(FUFO_thrust >= 40) {
+						FUFO_thrust = 40;
+						//setState(Ready);
+						//T2CONbits.TON = 1;
+					}
+					setThrustRate(FUFO_thrust);
+					controlFUFO();
 					break;
 
 			case Ready: // Trang thai Ready
@@ -82,7 +82,7 @@ int main(void) {
 			case Hovering: // Trang thai Hovering
 					if(value >= 3){
 						setPIDAltitude(Enable);
-    					fufoMeasureBaro();
+    					measureBaro();
 						value = 0;
 					}
 //					fufoCmd4LCD(LCD_CLEAR);
@@ -101,25 +101,23 @@ int main(void) {
 			
 			case Landing: // Trang thai Landing
 					// Auto landing
-//					if(Hung >= 9){
-//						Hung = 0;
-//						FUFO_thrust = getThrustRate();
-//						FUFO_thrust--;
-//						setThrustRate(FUFO_thrust);
-//						if(FUFO_thrust <= 20) {
-//							FUFO_thrust = 20;
-//							fufoSendCharUART('x');
-//							fufoSendCharUART('x');
-//							setPIDStatus(Disable);
-//							T2CONbits.TON = 0;
-//							setState(Pending);
-//						}	
-//					}
-					T4CONbits.TON = 0;
-					_PTEN = 0;
-					setPIDStatus(Disable);
-					T2CONbits.TON = 0;
-					setState(Pending);
+					if(Hung >= 9){
+						Hung = 0;
+						FUFO_thrust = getThrustRate();
+						FUFO_thrust--;
+						setThrustRate(FUFO_thrust);
+						if(FUFO_thrust <= 20) {
+							FUFO_thrust = 20;
+							setPIDStatus(Disable);
+							T2CONbits.TON = 0;
+							setState(Pending);
+						}	
+					}
+//					T4CONbits.TON = 0;
+//					_PTEN = 0;
+//					setPIDStatus(Disable);
+//					T2CONbits.TON = 0;
+//					setState(Pending);
 					break;
 
 			case End: 
@@ -160,19 +158,19 @@ void initFUFO(void){
 	fufoInitI2C();
 	fufoDelayMs(200);
 	fufoOutputChar("..");
-	fufoInitAccel();
+	initAccel();
 	fufoDelayMs(200);
 	fufoOutputChar("..");
 	fufoInitGyro();
 	fufoDelayMs(200);
 	fufoOutputChar("...");
-	fufoInitBaro();
+	initBaro();
 	fufoDelayMs(200);
 	fufoOutputChar("...");
 	initTMR2();
 	initTMR3();
 	
-//	fufoInitBluetooth(receiOK);
+//	initBluetooth(receiOK);
 //	fufoDelayMs(200);
 	setState(Waiting_for_connection);
 }
@@ -217,6 +215,7 @@ void __attribute__((__interrupt__ , auto_psv)) _T2Interrupt (void)
 		if(i == 200){
 			i = 0;
 			setPIDAltitude(Disable);
+			setHigh_sum(0);
 			setState(Landing);
 		}
 	} else i = 0;

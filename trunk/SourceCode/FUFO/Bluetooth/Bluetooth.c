@@ -2,7 +2,7 @@
 #include "../FUFO.h"
 
 
-void fufoInitBluetooth(unsigned char *s){
+void initBluetooth(unsigned char *s){
 	
 	fufoSendStringUART(ATMODE);
 	fufoSendStringUART(ATB6);
@@ -34,8 +34,4 @@ void testConnectBluetooth(unsigned char *receiOK){
 	
 	fufoCmd4LCD(LCD_CLEAR);
 	fufoDelayMs(1);
-}
-
-unsigned char fufoReceiveCmd(void) {
-	
 }

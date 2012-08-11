@@ -8,25 +8,21 @@ int PWM_Motor1 = 0;
 int PWM_Motor2 = 0;
 int PWM_Motor3 = 0;
 int PWM_Motor4 = 0;
-int PWM1 = 0;
-int PWM2 = 0;
-int PWM3 = 0;
-int PWM4 = 0;
 unsigned char comandfromBluetooth;
 float P = 0;
 float I = 0;
 float D = 0;
-float eR = 0;
-float eP = 0; 
-float eY = 0;
-float eA = 0;
-float total_eR = 0;
-float total_eP = 0;
-float total_eY = 0;
-float total_eA = 0;
-float Angle_sumR;
-float Angle_sumP;
-float Angle_sumY;
+float e_Roll = 0;
+float e_Pitch = 0; 
+float e_Yaw = 0;
+float eAlt = 0;
+float total_e_Roll = 0;
+float total_e_Pitch = 0;
+float total_e_Yaw = 0;
+float total_eAlt = 0;
+float Angle_sumRoll;
+float Angle_sumPitch;
+float Angle_sumYaw;
 float Altitude;
 float actualAltitudeNew = 0;
 float actualAltitudeOld = 0;
@@ -44,8 +40,8 @@ float phong = 0.12;	//-0.8;
 float thang = -2.47;		//-6.58;
 int PID_Yaw = 0;
 float altitude, altitudeR, altitudeG;
-float altitudeLCD, altitudeLCD1, altitudeLCD2, xuatTheta; 
-float docao = 1;
+float altitudeLCD, altitudeLCD1, altitudeLCD2; 
+float docao = 0.5;
 float xuatdocao;
 
 int getThrustRate(void){
@@ -58,6 +54,10 @@ void setThrustRate(int Thrust){
 
 int getUserInput(void){
 	return userInput;	
+}
+
+float setHigh_sum(float h_sum){
+	High_sum = h_sum;
 }
 
 void controlFUFO(void){
@@ -139,61 +139,39 @@ void getInstruction(void){
 	IFS0bits.U1RXIF = 0;
 	if(comandfromBluetooth == 'o'){
 		Up = 1;
-		docao += 0.5;
+		docao += 0.25;
 	} else if(comandfromBluetooth == 'p'){
 		Down = 1;
-		docao -= 0.5;
+		docao -= 0.25;
 	} else if(comandfromBluetooth == 'w'){
 //		resetInstruction();
 		Forward = 1;
 		thang += 0.1;
-//		KpTheta += 0.1;
-//		KpTheta += 0.1;
-//		TT += 0.1;
-//		PWM_Motor1 -= 1;
-//		PWM_Motor3 += 1;
 	} else if(comandfromBluetooth == 's'){
 //		resetInstruction();
 		Backward = 1;
 		thang -= 0.1;
-//		KpTheta -= 0.1;
-//		KdPhi -= 0.1;
-//		PWM_Motor1 += 1;
-//		PWM_Motor3 -= 1;
 	} else if(comandfromBluetooth == 'a'){
 //		resetInstruction();
 		Left = 1;
 		phong += 0.1;
-//		PWM2 += 1;
-//		PWM1 += 1;
-//		PWM_Motor2 -= 1;
-//		PWM_Motor4 += 1;
 	} else if(comandfromBluetooth == 'd'){
 //		resetInstruction();
 		Right = 1;
 		phong -= 0.1;
-//		PWM4 += 1;
-//		PWM3 += 1;
-//		PWM_Motor2 += 1;
-//		PWM_Motor4 -= 1;
 	} else if(comandfromBluetooth == 'n'){
 //		resetInstruction();
 		R_Left = 1;
 		KiAlt += 5;
-//		PID_Yaw = 1;
-//		TT += 1;
-//		KpPsi += 1;
 	} else if(comandfromBluetooth == 'k'){
 //		resetInstruction();
 		R_Right = 1;
 		KiAlt -= 5;
-//		PID_Yaw = 1;
-//		TT -= 1;
-//		KpPsi -= 1;
 	} else if(comandfromBluetooth == 'f'){
 		_RE8 = 1;
 		if(getPIDStatus() == Enable){
 			setPIDAltitude(Disable);
+			setHigh_sum(0);
 			setState(Landing);
 			fufoSendCharUART('S');
 			fufoSendCharUART('S');
@@ -215,7 +193,7 @@ void setSetpoint(float Phi, float Theta, float Psi, float high){
 	
 	if (getPIDStatus() == Enable) {
 		CompFilter();
-		fufogetAltitude();
+//		fufogetAltitude();
 		calcPID(Phi, Theta, Psi, high);
 	}
 	PWM_Motor1 = Roll_sum + Yaw_sum;
@@ -225,6 +203,9 @@ void setSetpoint(float Phi, float Theta, float Psi, float high){
 	
 	if(High_sum >= 1000){				// gioi han PID altitude o muc 65% nang luong 
 		High_sum = 1000;					// do khoi dong ton 40% nang luong nen altitude chi dc dung toi da 25% nang luong con lai
+	}
+	if(High_sum <= 0){
+		High_sum = 0;
 	}
 
 	setPWM1(thrustRate, PWM_Motor1, High_sum);
@@ -237,110 +218,96 @@ void calcPID(float phiDesire, float thetaDesire, float psiDesire, float altitude
 	float phiAct, thetaAct, psiAct, GyrosR, GyrosP, GyrosY, altitudeBaroAct, altitudeAcc_Baro;
 	phiAct = getPhiAngle();
 	thetaAct = getThetaAngle();
-	xuatTheta = thetaAct;
 	psiAct = getPsiAngle();
 	GyrosR = getGyrosOutputR();
 	GyrosP = getGyrosOutputP();
 	GyrosY = getGyrosOutputY();
-	altitudeBaroAct = fufoGetBaroAltitude();
+	altitudeBaroAct = getBaroAltitude();
 	altitudeLCD = altitudeBaroAct;
-//	
-//	if (thetaAct <= -40 || thetaAct >= 40 || phiAct <= -40 || phiAct >= 40){
-//		T4CONbits.TON = 0;
-//		_PTEN = 0;
-//		fufoSendCharUART('G');
-//		fufoSendCharUART('G');
-//		setPIDStatus(Disable);
-//		T2CONbits.TON = 0;
-//		setState(Pending);	
-//	}
+	
+	if (thetaAct <= -40 || thetaAct >= 40 || phiAct <= -40 || phiAct >= 40){
+		T4CONbits.TON = 0;
+		_PTEN = 0;
+		fufoSendCharUART('G');
+		fufoSendCharUART('G');
+		setPIDStatus(Disable);
+		T2CONbits.TON = 0;
+		setState(Pending);	
+	}
 
-//	Pitch_sum = calcPitchAngle(phiDesire, phiAct, GyrosP, KpPhi, KiPhi, KdPhi);
-//	Roll_sum = calcRollAngle(thetaDesire, thetaAct, GyrosR, KpTheta, KiTheta, KdTheta);
-//	Yaw_sum = calcYawAngle(psiDesire, psiAct, GyrosY, KpPsi, KiPsi, KdPsi);	
-	Pitch_sum = 0;
-	Roll_sum = 0;
-	Yaw_sum = 0;
+	Pitch_sum = calcPitchAngle(phiDesire, phiAct, GyrosP, KpPhi, KiPhi, KdPhi);
+	Roll_sum = calcRollAngle(thetaDesire, thetaAct, GyrosR, KpTheta, KiTheta, KdTheta);
+	Yaw_sum = calcYawAngle(psiDesire, psiAct, GyrosY, KpPsi, KiPsi, KdPsi);	
+//	Pitch_sum = 0;
+//	Roll_sum = 0;
+//	Yaw_sum = 0;
 	if(getPIDAltitude() == Enable){
-		altitudeAcc_Baro = altitudeFilter(altitudeBaroAct, getAccelAlt());
-		altitudeLCD1 = getAccelAlt();
-		altitudeLCD2 = altitudeAcc_Baro;
-//		High_sum = calcAltitude(altitudeDesire, altitudeAct, KpAlt, KiAlt, KdAlt);
+//		altitudeAcc_Baro = altitudeFilter(altitudeBaroAct, getAccelAlt());
+//		altitudeLCD1 = getAccelAlt();
+//		altitudeLCD2 = altitudeAcc_Baro;
+		High_sum = calcAltitude(altitudeDesire, altitudeBaroAct, KpAlt, KiAlt, KdAlt);
 		setPIDAltitude(Disable);
 	}
-	High_sum = 0;
+//	High_sum = 0;
 
-//	if(xuatTheta < 0){
-//		fufoSendCharUART('-');
-//	}
-//	fufoSendIntUART((int)(xuatTheta*100));
-//	fufoSendCharUART(',');
-//
-//	if(xuatPhi < 0){
-//		fufoSendCharUART('-');
-//	}
-//	fufoSendIntUART((int)(xuatPhi*100));
-//	fufoSendCharUART(',');
-//
+	if(xuatTheta < 0){
+		fufoSendCharUART('-');
+	}
+	fufoSendIntUART((int)(xuatTheta*100));
+	fufoSendCharUART(',');
+
+	if(xuatPhi < 0){
+		fufoSendCharUART('-');
+	}
+	fufoSendIntUART((int)(xuatPhi*100));
+	fufoSendCharUART(',');
+
 	if(altitudeLCD < 0){
 		fufoSendCharUART('-');
 	}
-	fufoSendIntUART((int)(altitudeLCD*1000));
-	fufoSendCharUART('\t');
-
-	if(altitudeLCD1 < 0){
-		fufoSendCharUART('-');
-	}
-	fufoSendIntUART((int)(altitudeLCD1*1000));
-	fufoSendCharUART('\t');
-
-	if(altitudeLCD2 < 0){
-		fufoSendCharUART('-');
-	}
-	fufoSendIntUART((int)(altitudeLCD2*1000));
+	fufoSendIntUART((int)(altitudeLCD*100));
 	fufoSendCharUART('\t');
 
 	fufoSendCharUART('\r');
 	fufoSendCharUART('\n');
 }
 
-float calcRollAngle(float desireR_Angle, float actualR_Angle, float Gyros_OutputR, float KpR, float KiR, float KdR){
-	eR = desireR_Angle - actualR_Angle;
-	total_eR = total_eR + eR;
-	P = KpR*eR;
-	I = KiR*total_eR*0.01;
-	D = KdR*Gyros_OutputR*(-1);
-	Angle_sumR = P + I + D;
-	return Angle_sumR;
+float calcRollAngle(float desireRoll_Angle, float actualRoll_Angle, float Gyros_OutputRoll, float KpRoll, float KiRoll, float KdRoll){
+	e_Roll = desireRoll_Angle - actualRoll_Angle;
+	total_e_Roll = total_e_Roll + e_Roll;
+	P = KpRoll*e_Roll;
+	I = KiRoll*total_e_Roll*0.01;
+	D = KdRoll*Gyros_OutputRoll*(-1);
+	Angle_sumRoll = P + I + D;
+	return Angle_sumRoll;
 }
 
-float calcPitchAngle(float desireP_Angle, float actualP_Angle, float Gyros_OutputP, float KpP, float KiP, float KdP){
-	eP = desireP_Angle - actualP_Angle;
-	total_eP = total_eP + eP;
-	P = KpP*eP;
-	I = KiP*total_eP*0.01;
-	D = KdP*Gyros_OutputP*(-1);
-	Angle_sumP = P + I + D;
-	return Angle_sumP;
+float calcPitchAngle(float desirePitch_Angle, float actualPitch_Angle, float Gyros_OutputPitch, float KpPitch, float KiPitch, float KdPitch){
+	e_Pitch = desirePitch_Angle - actualPitch_Angle;
+	total_e_Pitch = total_e_Pitch + e_Pitch;
+	P = KpPitch*e_Pitch;
+	I = KiPitch*total_e_Pitch*0.01;
+	D = KdPitch*Gyros_OutputPitch*(-1);
+	Angle_sumPitch = P + I + D;
+	return Angle_sumPitch;
 }
 
-float calcYawAngle(float desireY_Angle, float actualY_Angle, float Gyros_OutputY, float KpY, float KiY, float KdY){
-	eY = desireY_Angle - actualY_Angle;
-	total_eY = total_eY + eY;
-	P = KpY*eY;
-	I = KiY*total_eY*0.01;
-	D = KdY*Gyros_OutputY*(-1);
-	Angle_sumY = P + I + D;
-	return Angle_sumY;
+float calcYawAngle(float desireYaw_Angle, float actualYaw_Angle, float Gyros_OutputYaw, float KpYaw, float KiYaw, float KdYaw){
+	e_Yaw = desireYaw_Angle - actualYaw_Angle;
+	total_e_Yaw = total_e_Yaw + e_Yaw;
+	P = KpYaw*e_Yaw;
+	I = KiYaw*total_e_Yaw*0.01;
+	D = KdYaw*Gyros_OutputYaw*(-1);
+	Angle_sumYaw = P + I + D;
+	return Angle_sumYaw;
 }
 
 float calcAltitude(float desireAltitude, float actualAltitude, float KpA, float KiA, float KdA){
-	float lcd;
-	eA = desireAltitude - actualAltitude;
+	eAlt = desireAltitude - actualAltitude;
 	actualAltitudeNew = actualAltitude ;
-	total_eA = total_eA + eA;
-	P = KpA*eA;
-	I = KiA*total_eA*0.04;
+	total_eAlt = total_eAlt + eAlt;
+	P = KpA*eAlt;
+	I = KiA*total_eAlt*0.04;
 	D = (float)(KdA*(actualAltitudeOld - actualAltitudeNew)*25); // chia 0.04
 	actualAltitudeOld = actualAltitudeNew;
 	PID_sum = P + I + D;
@@ -370,8 +337,4 @@ void resetPWM(void){
 	PWM_Motor2 = 0;
 	PWM_Motor3 = 0;
 	PWM_Motor4 = 0;
-	PWM1 = 0;
-	PWM2 = 0;
-	PWM3 = 0;
-	PWM4 = 0;
 }
