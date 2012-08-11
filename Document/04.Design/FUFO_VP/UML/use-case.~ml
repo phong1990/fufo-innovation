@@ -3831,7 +3831,7 @@
 <XPD:REF name="Incomings[0]">V/gh/trZUUemsUbB8/hUFQAA</XPD:REF>
 </XPD:OBJ>
 <XPD:OBJ name="Subvertices[41]" type="UMLSubactivityState" guid="Hb3J3PNE1kel3u4N367sSwAA">
-<XPD:ATTR name="Name" type="string">Play video</XPD:ATTR>
+<XPD:ATTR name="Name" type="string">VideoControl</XPD:ATTR>
 <XPD:REF name="ContainerState">/x8DKlW9qU+0Y6dcg0alRgAA</XPD:REF>
 <XPD:ATTR name="#Views" type="integer">1</XPD:ATTR>
 <XPD:REF name="Views[0]">z8Lfmlw/Akintqwvm3s5NgAA</XPD:REF>
@@ -3841,7 +3841,7 @@
 <XPD:REF name="Incomings[0]">cGFrNVtxNEyL7TczHbzpxwAA</XPD:REF>
 </XPD:OBJ>
 <XPD:OBJ name="Subvertices[42]" type="UMLSubactivityState" guid="V9byfJHp+UeyzmV4dRmC1wAA">
-<XPD:ATTR name="Name" type="string">Control command</XPD:ATTR>
+<XPD:ATTR name="Name" type="string">CommandControl</XPD:ATTR>
 <XPD:REF name="ContainerState">/x8DKlW9qU+0Y6dcg0alRgAA</XPD:REF>
 <XPD:ATTR name="#Views" type="integer">1</XPD:ATTR>
 <XPD:REF name="Views[0]">gSlM2KnQ6UGFOZu4Kge5nAAA</XPD:REF>
@@ -3851,7 +3851,7 @@
 <XPD:REF name="Incomings[0]">UlDxc8+9BEKMUvSunBCeKgAA</XPD:REF>
 </XPD:OBJ>
 <XPD:OBJ name="Subvertices[43]" type="UMLSubactivityState" guid="xozejMcDt06+xRh2Y76y1AAA">
-<XPD:ATTR name="Name" type="string">Control status</XPD:ATTR>
+<XPD:ATTR name="Name" type="string">StatusControl</XPD:ATTR>
 <XPD:REF name="ContainerState">/x8DKlW9qU+0Y6dcg0alRgAA</XPD:REF>
 <XPD:ATTR name="#Views" type="integer">1</XPD:ATTR>
 <XPD:REF name="Views[0]">mIrlCECsm026j3BLmuYFWQAA</XPD:REF>
@@ -5091,7 +5091,7 @@
 <XPD:REF name="Model">Hb3J3PNE1kel3u4N367sSwAA</XPD:REF>
 <XPD:OBJ name="NameCompartment" type="UMLNameCompartmentView" guid="hPkkliRZD06VD8LQ39meIgAA">
 <XPD:OBJ name="NameLabel" type="LabelView" guid="6LFW91CrCUaLnubF4g9vBAAA">
-<XPD:ATTR name="Text" type="string">Play video</XPD:ATTR>
+<XPD:ATTR name="Text" type="string">VideoControl</XPD:ATTR>
 </XPD:OBJ>
 <XPD:OBJ name="StereotypeLabel" type="LabelView" guid="8LxNlYamj0GLzQaEhccDxwAA">
 <XPD:ATTR name="Visible" type="boolean">False</XPD:ATTR>
@@ -5113,7 +5113,7 @@
 <XPD:REF name="Model">V9byfJHp+UeyzmV4dRmC1wAA</XPD:REF>
 <XPD:OBJ name="NameCompartment" type="UMLNameCompartmentView" guid="dIg8M83Mt0KKQDHbFMFSHwAA">
 <XPD:OBJ name="NameLabel" type="LabelView" guid="J9ViaJBOAEK0U38M/OlGMAAA">
-<XPD:ATTR name="Text" type="string">Control command</XPD:ATTR>
+<XPD:ATTR name="Text" type="string">CommandControl</XPD:ATTR>
 </XPD:OBJ>
 <XPD:OBJ name="StereotypeLabel" type="LabelView" guid="S/99+fjYskyLCNc1ht8BVwAA">
 <XPD:ATTR name="Visible" type="boolean">False</XPD:ATTR>
@@ -5135,7 +5135,7 @@
 <XPD:REF name="Model">xozejMcDt06+xRh2Y76y1AAA</XPD:REF>
 <XPD:OBJ name="NameCompartment" type="UMLNameCompartmentView" guid="pNFO5KNFH0aOqAOpxpsu7gAA">
 <XPD:OBJ name="NameLabel" type="LabelView" guid="YmdMiKkHA0+tk0CG5LdPxwAA">
-<XPD:ATTR name="Text" type="string">Control status</XPD:ATTR>
+<XPD:ATTR name="Text" type="string">StatusControl</XPD:ATTR>
 </XPD:OBJ>
 <XPD:OBJ name="StereotypeLabel" type="LabelView" guid="eqaYX0VNxEmVym1XLiSsggAA">
 <XPD:ATTR name="Visible" type="boolean">False</XPD:ATTR>
