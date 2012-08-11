@@ -205,13 +205,13 @@
 <XPD:ATTR name="FillColor" type="string">$00B9FFFF</XPD:ATTR>
 <XPD:ATTR name="Left" type="integer">576</XPD:ATTR>
 <XPD:ATTR name="Top" type="integer">208</XPD:ATTR>
-<XPD:ATTR name="Width" type="integer">121</XPD:ATTR>
+<XPD:ATTR name="Width" type="integer">203</XPD:ATTR>
 <XPD:ATTR name="Height" type="integer">45</XPD:ATTR>
 <XPD:REF name="Model">buxVFuukOkugVUhOiQPTQQAA</XPD:REF>
 <XPD:OBJ name="NameCompartment" type="UMLNameCompartmentView" guid="PdAXkcnWCE21heIyctiIygAA">
 <XPD:OBJ name="NameLabel" type="LabelView" guid="g3FQMF8yOUSeP1TfH9BSbAAA">
 <XPD:ATTR name="FontStyle" type="integer">1</XPD:ATTR>
-<XPD:ATTR name="Text" type="string">FUFO</XPD:ATTR>
+<XPD:ATTR name="Text" type="string">Quadrocopter Firmware</XPD:ATTR>
 </XPD:OBJ>
 <XPD:OBJ name="StereotypeLabel" type="LabelView" guid="tl8hBmb7Kk+XRxASU5UjpgAA">
 <XPD:ATTR name="Visible" type="boolean">False</XPD:ATTR>
@@ -236,7 +236,7 @@
 <XPD:OBJ name="OwnedViews[5]" type="UMLAssociationView" guid="iDjf0m3DDUi2VnrCv1ILxgAA">
 <XPD:ATTR name="LineColor" type="string">clMaroon</XPD:ATTR>
 <XPD:ATTR name="FillColor" type="string">$00B9FFFF</XPD:ATTR>
-<XPD:ATTR name="Points" type="Points">636,136;636,208</XPD:ATTR>
+<XPD:ATTR name="Points" type="Points">644,136;669,208</XPD:ATTR>
 <XPD:REF name="Model">rjogXSSm3E6acLqZoQ/KwAAA</XPD:REF>
 <XPD:REF name="Head">Y91TCryup0CuOaNKlyg0ZQAA</XPD:REF>
 <XPD:REF name="Tail">mF2OUBn6NUSEwiVJKINpTAAA</XPD:REF>
@@ -1427,7 +1427,7 @@
 <XPD:OBJ name="OwnedViews[21]" type="UMLAssociationView" guid="nFb2uHcmfU+TXntmrqreLQAA">
 <XPD:ATTR name="LineColor" type="string">clMaroon</XPD:ATTR>
 <XPD:ATTR name="FillColor" type="string">$00B9FFFF</XPD:ATTR>
-<XPD:ATTR name="Points" type="Points">636,136;636,208</XPD:ATTR>
+<XPD:ATTR name="Points" type="Points">644,136;669,208</XPD:ATTR>
 <XPD:REF name="Model">LAx7xTaHBkyo/rtYf9OqQwAA</XPD:REF>
 <XPD:REF name="Head">Y91TCryup0CuOaNKlyg0ZQAA</XPD:REF>
 <XPD:REF name="Tail">mF2OUBn6NUSEwiVJKINpTAAA</XPD:REF>
@@ -1598,7 +1598,7 @@
 </XPD:OBJ>
 </XPD:OBJ>
 <XPD:OBJ name="OwnedElements[5]" type="UMLUseCase" guid="buxVFuukOkugVUhOiQPTQQAA">
-<XPD:ATTR name="Name" type="string">FUFO</XPD:ATTR>
+<XPD:ATTR name="Name" type="string">Quadrocopter Firmware</XPD:ATTR>
 <XPD:REF name="Namespace">TCjxa0YoNEGm/7ZVKOYxZQAA</XPD:REF>
 <XPD:ATTR name="#Views" type="integer">4</XPD:ATTR>
 <XPD:REF name="Views[0]">Y91TCryup0CuOaNKlyg0ZQAA</XPD:REF>
