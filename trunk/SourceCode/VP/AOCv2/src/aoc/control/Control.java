@@ -16,16 +16,16 @@ import aoc.command.CommandControl;
  */
 public class Control {
 
-    private static ServerSocket serverSocket = null;               //Initiate ServerSocket to create server
-    private static Socket tcpSocket = null;                        //Used to send command and receive status
-    public static final int PORT = 8888;                           //Port of server
-    public static StatusControl stct;
-    public static CommandControl cmct;
-    public static VideoControl vdct;
-    public static boolean svSetting = true;
-    public static boolean ffSetting = true;   
-    public static int start = 0;
-
+    private static ServerSocket serverSocket = null;        //Initiate ServerSocket to create server
+    private static Socket tcpSocket = null;                 //Used to send command and receive status
+    public static final int PORT = 8888;                    //Port of server
+    public static StatusControl stct;                       //Thread to control status
+    public static CommandControl cmct;                      //Thread to control command
+    public static VideoControl vdct;                        //Thread to control video
+    public static boolean svSetting = false;                 //Flag to check socket between AOP and AOC 
+    public static boolean ffSetting = false;                 //Flag to check socket between AOP and FUFO 
+    public static int start = 0;                            //Flag to check socket whether start button pressed
+//    public static int command = 0;
     /*
      * Used to start GUI and threads 
      */
@@ -40,10 +40,11 @@ public class Control {
             aoc.frame.addKeyListener(aoc.keyListener);
             serverSocket = new ServerSocket(PORT);                  //Start server
             tcpSocket =  serverSocket.accept();                     //Wait for client connecting
-            serverSocket.close();
-            svSetting = true;
+            serverSocket.close();                                   //Close server socket
+            aoc.lb_text.setText("Connected!");
+            svSetting = true;                               
             aoc.lb_status.setIcon(new ImageIcon("pic\\lb_status_Green.png"));  //Set color for panel of gui when connecting successful
-
+            
             StatusControl stct = new StatusControl(tcpSocket, aoc);
             stct.start();
 
@@ -55,6 +56,9 @@ public class Control {
             VideoControl vdct = new VideoControl(aoc);
             vdct.start();
 
+            /*
+             * Thread to check connection error between AOP and AOC
+             */
             Thread alert = new Thread(){
 
                 public void run(){
@@ -82,7 +86,7 @@ public class Control {
 
                 }
             };
-              alert.start();
+           //   alert.start();
         }catch(Exception e){
 
             e.printStackTrace();

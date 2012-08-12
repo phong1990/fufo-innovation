@@ -5,8 +5,6 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Frame;
-import java.awt.Graphics;
-import java.awt.Image;
 import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -24,37 +22,56 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import aoc.control.Control;
 
 /**
  * @author khoinguyen67
- *
+ * This class uses to create new Graphic User Interface 
+ * for Application On Computer. It also Key Listener and Mouse Listener
+ * to monitor behavior of user
  */
 public class AOC{
 
-    public JFrame frame;
-    JLayeredPane pane;
-    public JLabel lb_background, lb_circle, lb_status, lb_picture, lb_setPoint;
-    public AILabel lb_ai;
-    public HeightLabel lb_height;
-    public JButton bt_start, bt_right, bt_left, bt_forward, bt_backward, 
-    bt_up, bt_down, bt_rotateLeft, bt_rotateRight , bt_exit, bt_minimize;
-    JPanel panel;
-    int flag = 0;
+    public JFrame frame;                   //Initiate main frame 
+    JLayeredPane pane;                     //Pane contains all component of GUI  
+    public JLabel lb_background;           //Set image background by this label
+    public JLabel lb_circle;               //Use to check time to send y signal to AOP 
+    public JLabel lb_status;               //This label checks connection status of system 
+    public JLabel lb_picture;              //Video frame streamed from AOP
+    public JLabel lb_setPoint;             //Height that user want 
+    public JLabel lb_text;                 //Text in label status 
+    public AILabel lb_ai;                  //Attitude indicator
+    public HeightLabel lb_height;          //Height indicator 
+    public JButton bt_start;               //Button start  
+    public JButton bt_right;               //Button right
+    public JButton bt_left;                //Button left
+    public JButton bt_forward;             //Button forward
+    public JButton bt_backward;            //Button backward 
+    public JButton bt_up;                  //Button up
+    public JButton bt_down;                //Button down
+    public JButton bt_rotateLeft;          //Button rotate left 
+    public JButton bt_rotateRight;         //Button rotate right
+    public JButton bt_exit;                //Button exit    
+    public JButton bt_minimize;            //Button minimize 
+ //   JPanel panel;                          //panel used to move frame by mouse 
+  //  int flag = 0;                          //Initiate pane to contain component         
 
+    /*
+     * Constructor to initiate AOC
+     */
     public AOC(){
 
         frame = new JFrame();
         frame.setSize(1240 , 690);
-        frame.setUndecorated(true);
-        frame.setBackground(new Color(0, 0, 0, 0));
+        frame.setUndecorated(true);                             //Remove title bar of main frame
+        frame.setBackground(new Color(0, 0, 0, 0));             //Set transparent for frame
         frame.setTitle("FUFO APP");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setResizable(false);
         frame.setVisible(true);
         pane = new JLayeredPane();
         pane.setPreferredSize(new Dimension(1240 , 690));
+        
         lb_background = new JLabel(new ImageIcon("pic\\interface.png"));
         pane.add(lb_background,1);
         lb_background.setBounds(0, 0, 1240 , 690);
@@ -89,6 +106,14 @@ public class AOC{
         pane.add(lb_status,0);
         lb_status.setBounds(220, 630, 800, 50);
 
+        lb_text = new JLabel();
+        lb_text.setText("Wait connect from Application on Phone!");
+        lb_text.setBounds(420, 630, 800, 50);
+        lb_text.setFont(new Font("Serif", Font.BOLD, 20));
+     //   lb_text.setForeground(Color.WHITE);
+        pane.add(lb_text,0);
+        
+        
         lb_picture = new JLabel(new ImageIcon("pic\\1009.jpg"));
         pane.add(lb_picture,0);
         lb_picture.setBounds(220, 10, 800, 600);
@@ -115,6 +140,9 @@ public class AOC{
         }
     }
 
+    /*
+     * This method is used to create a button in frame base on position, path of icon button
+     */
     public JButton createButton(String text, String path, int x, int y, int width, int height){
 
         JButton button = new JButton( new ImageIcon(path));
@@ -128,12 +156,15 @@ public class AOC{
         return button;
     }
 
-    public class AILabel extends JLabel {
+    /*
+     * This class is extended JLabel uses to override method paintComponent to draw attitude indicator.
+     */
+/*    public class AILabel extends JLabel {
 
         private static final long serialVersionUID = 1L;
         Image image;
-        public double PitchAngle = 20;   // Phi
-        public double RollAngle = 0.5;    // Theta
+        public double PitchAngle = 0;   // Phi
+        public double RollAngle = 0;    // Theta
 
         public AILabel() throws IOException{
 
@@ -174,7 +205,7 @@ public class AOC{
             is.RotateAndTranslate(g, image, RollAngle, (double) 0, ptBoule, 
                     (int)(PitchAngle*5200/104), ptRotation, 1);
         }
-    }
+    }*/
 
     public KeyListener keyListener = new KeyListener() {
 
@@ -307,21 +338,21 @@ public class AOC{
                     Control.cmct.setCommand(KeyEvent.VK_D);
                 }else if(button == bt_down){
 
-                    if(lb_height.PitchAngle >= 0.5)
+                    if(lb_height.height >= 0.5)
 
-                        lb_height.PitchAngle -= 0.5;
+                        lb_height.height -= 0.5;
 
-                    lb_setPoint.setText(Double.toString(lb_height.PitchAngle));
+                    lb_setPoint.setText(Double.toString(lb_height.height));
                     frame.repaint();
                     Control.cmct.setCommand(KeyEvent.VK_UP);
                     Control.cmct.setCommand(KeyEvent.VK_DOWN);
                 }else if(button == bt_up){
 
-                    if(lb_height.PitchAngle <= 98.5)
+                    if(lb_height.height <= 98.5)
 
-                        lb_height.PitchAngle += 0.5;
+                        lb_height.height += 0.5;
 
-                    lb_setPoint.setText(Double.toString(lb_height.PitchAngle));
+                    lb_setPoint.setText(Double.toString(lb_height.height));
                     frame.repaint();
                     Control.cmct.setCommand(KeyEvent.VK_UP);
                 }else if(button == bt_rotateLeft){

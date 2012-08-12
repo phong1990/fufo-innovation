@@ -25,8 +25,8 @@ package aoc.command;
  */
 public class CommandMessage {
     
-    private int command;
-    private String commandMessage;
+    private int command;                    //command to control FUFO
+    private String commandMessage;          
     public CommandMessage(int command){
         
         this.command = command;

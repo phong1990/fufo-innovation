@@ -8,7 +8,7 @@ import java.awt.geom.AffineTransform;
 
 /**
  * @author khoinguyen67
- *
+ * This class show methods to draw attitude indicator and height indicator on screen
  */
 public class InstrumentControl {
 
