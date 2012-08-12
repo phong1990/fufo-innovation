@@ -74,7 +74,7 @@ public class StatusControl extends Thread {
     }
 
     /*
-     * This method uses to receive status from FUFO via TCP socket and update it to screen
+     * This method uses to receive status from AOP via TCP socket and update it to screen
      */
     public void waitStatusFromeAOP() throws IOException{
 
@@ -102,7 +102,7 @@ public class StatusControl extends Thread {
 
         aoc.lb_ai.PitchAngle = PitchAngle;
         aoc.lb_ai.RollAngle = RollAngle/100;
-        aoc.lb_height.PitchAngle = height;
+        aoc.lb_height.height = height;
         aoc.frame.repaint();
     }
 }

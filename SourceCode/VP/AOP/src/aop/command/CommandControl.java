@@ -22,22 +22,19 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
-
 import android.bluetooth.BluetoothSocket;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.RadioGroup.OnCheckedChangeListener;
 import aop.control.Control;
-import aop.control.ControlActivity;
 import aop.control.R;
-
 
 /**
  * @author khoinguyen67
  *
  */
 public class CommandControl extends Thread implements OnClickListener {
+    
     //Create server socket to control command
     public Socket commandSocket = null;               //Initiate Socket to receive command
     BufferedReader in;                        //Initiate BufferedReader to save command
@@ -45,10 +42,11 @@ public class CommandControl extends Thread implements OnClickListener {
     public BluetoothSocket bluetoothSocket = null;
     public int controlMode;
     int buttonID;
-    byte controlByte;
+    byte controlByte = 'e';
     public static int flagDelay = 1;
     public boolean flagWhile = true;
-
+    int countY = 0;
+    
     //Constructor
     public CommandControl(){}
 
@@ -65,20 +63,42 @@ public class CommandControl extends Thread implements OnClickListener {
      * This method is called when this thread starts.
      */
     public void run(){
-        Log.d("cmct","Da vo Thread " + controlMode +Control.ffSetting+ Control.svSetting);
+        
+        Log.d("cmct","Da vo Thread cmct: " + controlMode +Control.ffSetting+ Control.svSetting);
         try {
-            
+
             while(true){
-                           
-                if(Control.svSetting == 1){
-                    
-                   waitCommandFromeAOC();
-                }
-                if (controlMode == 1) {
-                    sendCommandToFUFO();
+
+                if(Control.svSetting == 1 && controlMode == 1){
+
+                    waitCommandFromeAOC();
+                    bluetoothSocket.getOutputStream().write(controlByte);
+                    Log.d("cmct","da send: " + controlByte);
+                    controlByte = 'y';
+                }else if(controlMode == 2){
+
+                    if(controlByte != 'y'){
+
+                        bluetoothSocket.getOutputStream().write(controlByte);
+                        Log.d("cmct","da send: " + controlByte + "  " + Control.connectFF);
+                        controlByte = 'y';
+                        sleep(500);
+                        countY = 0;
+                    } else if (Control.connectFF == true){
+
+                        sleep(10);
+                        if(countY == 100){
+                            bluetoothSocket.getOutputStream().write(controlByte);
+                            Log.d("cmct","da send10 y");
+                            countY = 0;
+                        } else {
+                            
+                            countY ++;  
+                        }
+                    }
                 }
             }
-        } catch (IOException ex) {
+        } catch (Exception ex) {
             // TODO Auto-generated catch block
             ex.printStackTrace();
         }
@@ -88,39 +108,52 @@ public class CommandControl extends Thread implements OnClickListener {
      * This method uses to receive command from AOC via TCP socket
      */
     public void waitCommandFromeAOC() throws IOException{
-        Log.d("cmct","Da vo wait");
-        Log.d("cmct", " : " + System.currentTimeMillis() + " : " );
+
         in = new BufferedReader(new InputStreamReader(
                 commandSocket.getInputStream()));
-        Log.d("cmct", " : " + System.currentTimeMillis() + " : " );
-        command = Integer.parseInt(in.readLine());
-        Log.d("cmct", " : " + System.currentTimeMillis() + " : " );
+        String temp = in.readLine();
+        command = Integer.parseInt(temp);
+        Control.svSetting = 1;
         switch(command){
+            
             case 37:
                 controlByte = 'n';
                 break;
+                
             case 38:
                 controlByte = 'o';
                 break;
+                
             case 39:
                 controlByte = 'k';
                 break;
             case 40:
                 controlByte = 'p';
                 break;
+                
             case 65:
                 controlByte = 'a';
                 break;
+                
             case 87:
                 controlByte = 'w';
                 break;
+                
             case 68:
                 controlByte = 'd';
                 break;
+                
             case 83:
                 controlByte = 's';
                 break;
-
+                
+            case 89:
+                controlByte = 'y';
+                break;
+            case 10: 
+                controlByte = 'f';
+                break;
+            
         }
     }
 
@@ -130,12 +163,14 @@ public class CommandControl extends Thread implements OnClickListener {
     public void sendCommandToFUFO(){
 
         if (Control.ffSetting == 1 && flagDelay == 1){
-            
+
             Log.d("cmct", "Control:" + controlByte + " .Command : " + command + " .CtM: " + controlMode + Control.ffSetting +Control.svSetting);
             try {
+                
                 flagDelay = 2;
                 if (bluetoothSocket != null)
-                bluetoothSocket.getOutputStream().write(controlByte);
+                    
+                    bluetoothSocket.getOutputStream().write(controlByte);
                 sleep(500);
                 flagDelay =1;
             } catch (Exception e) {
@@ -152,47 +187,45 @@ public class CommandControl extends Thread implements OnClickListener {
      */
     @Override
     public void onClick(View v) {
-        // TODO Auto-generated method stub
 
         buttonID = v.getId();
         switch (buttonID){
             case R.id.bt_lft:
                 controlByte = 'a'; 
-                sendCommandToFUFO();
+                //                sendCommandToFUFO();
                 break;
             case R.id.bt_fwd:
                 controlByte = 'w'; 
-                sendCommandToFUFO();
+                //                sendCommandToFUFO();
                 break;
             case R.id.bt_rgt:
                 controlByte = 'd'; 
-                sendCommandToFUFO();
+                //                sendCommandToFUFO();
                 break;
             case R.id.bt_bwd:
                 controlByte = 's'; 
-                sendCommandToFUFO();
+                //                sendCommandToFUFO();
                 break;
             case R.id.bt_up:
                 controlByte = 'o'; 
-                sendCommandToFUFO();
+                //                sendCommandToFUFO();
                 break;
             case R.id.bt_dwn:
                 controlByte = 'p'; 
-                sendCommandToFUFO();
+                //                sendCommandToFUFO();
                 break;
             case R.id.bt_start:
                 controlByte = 'f'; 
-                sendCommandToFUFO();
+                //                sendCommandToFUFO();
                 break;
             case R.id.bt_nkdt:
                 controlByte = 'n'; 
-                sendCommandToFUFO();
+                //                sendCommandToFUFO();
                 break;
             case R.id.bt_kdh:
                 controlByte = 'k'; 
-                sendCommandToFUFO();
+                //                sendCommandToFUFO();
                 break;
         }
     }
-
 }

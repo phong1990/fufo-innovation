@@ -34,7 +34,7 @@ public class StatusMessage {
     public String statusMessage;                  //Message receive via TCP socket 
 
     /*
-     * This method uses to create message from horizontal status and vertical status. 
+     * This method uses to create message from pitch angel and roll angel. 
      */
     public String setStatusMessage(int pitchAngle, int rollAngle){
 
@@ -43,7 +43,7 @@ public class StatusMessage {
     }
 
     /*
-     * This method uses to get horizontal status and vertical status from message.
+     * This method uses to get pitch angel and roll angel from message.
      */
     public void getStatus(String message){
         
