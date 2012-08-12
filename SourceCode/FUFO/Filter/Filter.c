@@ -15,7 +15,8 @@ float thetaComp;
 float psiHigh;
 float accVelo, accAlt, altFinal;
 float accAltOld = 0;
-
+float altHigh;
+float accAltOld, altHighOld;
 
 void CalcFirstAngle(void){
 	fufoGetAngleAccel();
@@ -171,9 +172,10 @@ void fufogetAltitude(void){
 	setAccelAlt(accAlt);
 }
 
-float altitudeFilter(float baroAlt, float accelAlt){
-	float avc;
-	altFinal = kAlt*(altFinal + accelAlt) + (1-kAlt)*baroAlt;
-	avc = (sqrt(pow(Ax, 2) + pow(Ay, 2) + pow(Az, 2)) - 1)*9.8;
+float altitudeFilter(float baroAlt, float accelAlt){	
+	altHigh = k*(altHigh + accelAlt - altHighOld);
+	altFinal = kAlt*(altFinal + altHigh - altHighOld) + (1-kAlt)*baroAlt;
+	altHighOld = altHigh;
+	accAltOld = accelAlt;
 	return altFinal;
 }
