@@ -1,6 +1,7 @@
 load D:\statusPIDtheta.txt;         %  read data into status
-Theta = statusPIDtheta(:,2);       %  Kcr
-kd = statusPIDtheta(:,3);       %  Kcr
+Phi = statusPIDtheta(:,1);       %  
+Theta = statusPIDtheta(:,2);       %  
+PWM2 = statusPIDtheta(:,3);       %  
 
 numOfSample = length(Theta); 
 step = zeros(1,numOfSample); % create the steps array
@@ -10,9 +11,9 @@ for i = 2:numOfSample
 end
 
 % Plot          
-plot(step,Theta*1000,'r-',step,kd*100,'g-');     %  plot 
+plot(step,Phi*1000,'r-',step,PWM2,'g-');     %  plot 
 xlabel('time');              %  add axis labels and plot title
-ylabel('Theta');
+ylabel('Phi');
 title('Test PID');
-h = legend('Theta','Setpoint',3);
+h = legend('Phi','PWM',3);
 set(h,'Interpreter','none');
