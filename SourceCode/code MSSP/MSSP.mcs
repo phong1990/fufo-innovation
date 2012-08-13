@@ -2,7 +2,7 @@
 MagicCookie={0b13fe8c-dfe0-40eb-8900-6712719559a7}
 Version=1.0
 [File000]
-Location=D:\FU\FPTHN_FALL(20110905)\FUFO\SourceCode\code MSSP\main.o
+Location=C:\FUFO\SourceCode\code MSSP\main.o
 Folder=Intermediary
 DeviceName=dsPIC30F4012
 LanguageToolSuiteID={479DDE59-4D56-455E-855E-FFF59A3DB57E}
@@ -15,7 +15,7 @@ ToolArgsString=-g -Wall
 TraceCmdString=
 DebugOptions=
 [File001]
-Location=D:\FU\FPTHN_FALL(20110905)\FUFO\SourceCode\code MSSP\ADXL345.o
+Location=C:\FUFO\SourceCode\code MSSP\ADXL345.o
 Folder=Intermediary
 DeviceName=dsPIC30F4012
 LanguageToolSuiteID={479DDE59-4D56-455E-855E-FFF59A3DB57E}
@@ -28,7 +28,7 @@ ToolArgsString=-g -Wall
 TraceCmdString=
 DebugOptions=
 [File002]
-Location=D:\FU\FPTHN_FALL(20110905)\FUFO\SourceCode\code MSSP\DelayTMR1.o
+Location=C:\FUFO\SourceCode\code MSSP\DelayTMR1.o
 Folder=Intermediary
 DeviceName=dsPIC30F4012
 LanguageToolSuiteID={479DDE59-4D56-455E-855E-FFF59A3DB57E}
@@ -41,7 +41,7 @@ ToolArgsString=-g -Wall
 TraceCmdString=
 DebugOptions=
 [File003]
-Location=D:\FU\FPTHN_FALL(20110905)\FUFO\SourceCode\code MSSP\I2C.o
+Location=C:\FUFO\SourceCode\code MSSP\I2C.o
 Folder=Intermediary
 DeviceName=dsPIC30F4012
 LanguageToolSuiteID={479DDE59-4D56-455E-855E-FFF59A3DB57E}
@@ -54,7 +54,7 @@ ToolArgsString=-g -Wall
 TraceCmdString=
 DebugOptions=
 [File004]
-Location=D:\FU\FPTHN_FALL(20110905)\FUFO\SourceCode\code MSSP\L3G4200D.o
+Location=C:\FUFO\SourceCode\code MSSP\L3G4200D.o
 Folder=Intermediary
 DeviceName=dsPIC30F4012
 LanguageToolSuiteID={479DDE59-4D56-455E-855E-FFF59A3DB57E}
@@ -67,7 +67,7 @@ ToolArgsString=-g -Wall
 TraceCmdString=
 DebugOptions=
 [File005]
-Location=D:\FU\FPTHN_FALL(20110905)\FUFO\SourceCode\code MSSP\LCD.o
+Location=C:\FUFO\SourceCode\code MSSP\LCD.o
 Folder=Intermediary
 DeviceName=dsPIC30F4012
 LanguageToolSuiteID={479DDE59-4D56-455E-855E-FFF59A3DB57E}
@@ -80,7 +80,7 @@ ToolArgsString=-g -Wall
 TraceCmdString=
 DebugOptions=
 [File006]
-Location=D:\FU\FPTHN_FALL(20110905)\FUFO\SourceCode\code MSSP\BL.o
+Location=C:\FUFO\SourceCode\code MSSP\BL.o
 Folder=Intermediary
 DeviceName=dsPIC30F4012
 LanguageToolSuiteID={479DDE59-4D56-455E-855E-FFF59A3DB57E}
@@ -93,7 +93,7 @@ ToolArgsString=-g -Wall
 TraceCmdString=
 DebugOptions=
 [File007]
-Location=D:\FU\FPTHN_FALL(20110905)\FUFO\SourceCode\code MSSP\UART.o
+Location=C:\FUFO\SourceCode\code MSSP\UART.o
 Folder=Intermediary
 DeviceName=dsPIC30F4012
 LanguageToolSuiteID={479DDE59-4D56-455E-855E-FFF59A3DB57E}
@@ -106,7 +106,7 @@ ToolArgsString=-g -Wall
 TraceCmdString=
 DebugOptions=
 [File008]
-Location=D:\FU\FPTHN_FALL(20110905)\FUFO\SourceCode\code MSSP\BMP085.o
+Location=C:\FUFO\SourceCode\code MSSP\BMP085.o
 Folder=Intermediary
 DeviceName=dsPIC30F4012
 LanguageToolSuiteID={479DDE59-4D56-455E-855E-FFF59A3DB57E}
@@ -119,7 +119,7 @@ ToolArgsString=-g -Wall
 TraceCmdString=
 DebugOptions=
 [File009]
-Location=D:\FU\FPTHN_FALL(20110905)\FUFO\SourceCode\code MSSP\HMC5883L.o
+Location=C:\FUFO\SourceCode\code MSSP\HMC5883L.o
 Folder=Intermediary
 DeviceName=dsPIC30F4012
 LanguageToolSuiteID={479DDE59-4D56-455E-855E-FFF59A3DB57E}
@@ -132,7 +132,7 @@ ToolArgsString=-g -Wall
 TraceCmdString=
 DebugOptions=
 [File010]
-Location=D:\FU\FPTHN_FALL(20110905)\FUFO\SourceCode\code MSSP\MSSP.cof
+Location=C:\FUFO\SourceCode\code MSSP\MSSP.cof
 Folder=Output
 DeviceName=dsPIC30F4012
 LanguageToolSuiteID={479DDE59-4D56-455E-855E-FFF59A3DB57E}
@@ -145,7 +145,7 @@ ToolArgsString=-o"$(BINDIR_)$(TARGETBASE).$(TARGETSUFFIX)" -Map="$(BINDIR_)$(TAR
 TraceCmdString=
 DebugOptions=
 [File011]
-Location=D:\FU\FPTHN_FALL(20110905)\FUFO\SourceCode\code MSSP\MSSP.hex
+Location=C:\FUFO\SourceCode\code MSSP\MSSP.hex
 Folder=Output
 DeviceName=dsPIC30F4012
 LanguageToolSuiteID={479DDE59-4D56-455E-855E-FFF59A3DB57E}
