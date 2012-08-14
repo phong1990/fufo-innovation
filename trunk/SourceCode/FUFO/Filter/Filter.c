@@ -71,16 +71,7 @@ void fufoGetRateAngle(void){
 			R0z = (int)(zIntG/idx100);	
 			idx100 = 0;
 			CalcFirstAngle();
-			_RE8 = 0;
-	if(getThrustRate() < 0){
-		fufoSendCharUART('-');
-	}
-	fufoSendIntUART(getThrustRate());
-	fufoSendCharUART('\t');
-
-	fufoSendCharUART('\r');
-	fufoSendCharUART('\n');
-			
+			_RE8 = 0;			
 		}		
 	}
 }
