@@ -61,11 +61,11 @@ int main(void) {
 					break;
 
 			case Setup: // Trang thai Setup
-//					fufoGetRateAngle(); // calc R0
+					fufoGetRateAngle(); // calc R0
 					FUFO_thrust = getThrustRate();
 					FUFO_thrust++;
-					if(FUFO_thrust >= 5) {
-						FUFO_thrust = 5;
+					if(FUFO_thrust >= 21) {
+						FUFO_thrust = 21;
 						//setState(Ready);
 						//T2CONbits.TON = 1;
 					}
