@@ -7,7 +7,8 @@
 #include "../UART/UART.h"
 
 #define k		0.98
-#define kAlt		0.93
+#define kAlt	0.98
+#define kH		0.02
 #define convertAccel  0.0039;
 #define convertGyro  0.00875;
 

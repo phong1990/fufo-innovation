@@ -27,23 +27,17 @@ float Altitude;
 float actualAltitudeNew = 0;
 float actualAltitudeOld = 0;
 float PID_sum = 0;
-//float KiTheta = 0;
-//float KdTheta = 6;
-//float KdPhi = 1.0163;
-//float KpPsi = 9;
-float KiAlt = 50;
 //float KdAlt = 300;
 unsigned int userInput;
 float xuatPhi = 0;
 float xuatTheta = 0;
 float phong = 0.12;
-float thang = -2.47;		//-6.58;
+float thang = -1.97;		//-6.58;
 int PID_Yaw = 0;
 float altitude, altitudeR, altitudeG;
 float altitudeLCD, altitudeLCD1, altitudeLCD2; 
-float docao = 0.5;
+float docao = 1;
 float xuatdocao;
-float KdPsi = 18.8;
 
 int getThrustRate(void){
 	return thrustRate;	
@@ -66,10 +60,11 @@ void controlFUFO(void){
 //		setSetpoint(-2.59,-23.07,-1,1);
 //	} else if(Backward == 1){
 //		setSetpoint(-2.59,6.93,-1,1);
-//	} else if(Left == 1){
-//		setSetpoint(-17.59,-8.07,-1,1);
+//	} else 
+//	if(Left == 1){
+//		setSetpoint(-20,0,-1,1);
 //	} else if(Right == 1){
-//		setSetpoint(12.41,-8.07,-1,1);
+//		setSetpoint(20,0,-1,1);
 //	} else 
 	setSetpoint(phong,thang,-1,docao);
 }
@@ -123,7 +118,8 @@ void getUpInstruction(void){
 		Up = 1;
 //		thrustRate += 1;
 		PID_Yaw = 0;
-		//setPIDStatus(Enable);
+		setPIDStatus(Enable);
+		setPIDAltitude(Enable);
 		T2CONbits.TON = 1;
 		setState(Hovering);
 		fufoSendCharUART('y');
@@ -139,65 +135,67 @@ void getInstruction(void){
 	comandfromBluetooth = fufoReceiveUART();
 	IFS0bits.U1RXIF = 0;
 	if(comandfromBluetooth == 'o'){
+//		resetInstruction();
 		Up = 1;
-		thrustRate += 1;
 		docao += 0.25;
+
 		userInput = 1;
 		setConnectStatus(Enable);
 	} else if(comandfromBluetooth == 'p'){
+//		resetInstruction();
 		Down = 1;
-		thrustRate -= 1;
 		docao -= 0.25;
+
 		userInput = 1;
 		setConnectStatus(Enable);
 	} else if(comandfromBluetooth == 'w'){
 //		resetInstruction();
 		Forward = 1;
 		thang += 0.1;
+
 		userInput = 1;
 		setConnectStatus(Enable);
 	} else if(comandfromBluetooth == 's'){
 //		resetInstruction();
 		Backward = 1;
 		thang -= 0.1;
+
 		userInput = 1;
 		setConnectStatus(Enable);
 	} else if(comandfromBluetooth == 'a'){
 //		resetInstruction();
 		Left = 1;
 		phong += 0.1;
+
 		userInput = 1;
 		setConnectStatus(Enable);
 	} else if(comandfromBluetooth == 'd'){
 //		resetInstruction();
 		Right = 1;
 		phong -= 0.1;
+
 		userInput = 1;
 		setConnectStatus(Enable);
 	} else if(comandfromBluetooth == 'n'){
 //		resetInstruction();
 		R_Left = 1;
-		KdPsi += 1;
+
 		userInput = 1;
 		setConnectStatus(Enable);
 	} else if(comandfromBluetooth == 'k'){
 //		resetInstruction();
 		R_Right = 1;
-		KdPsi -= 1;
+
 		userInput = 1;
 		setConnectStatus(Enable);
 	} else if(comandfromBluetooth == 'f'){
 		_RE8 = 1;
-		if(getPIDStatus() == Enable){
-			setPIDAltitude(Disable);
-			setHigh_sum(0);
-			setState(Landing);
-			fufoSendCharUART('S');
-			fufoSendCharUART('S');
-		} else {
-			setPIDStatus(Enable);
-			setPIDAltitude(Enable);
-		}
+		setPIDStatus(Disable);
+		setPIDAltitude(Disable);
+		setHigh_sum(0);
+		setState(Landing);
+		fufoSendCharUART('S');
+		fufoSendCharUART('S');
 		userInput = 1;
 		setConnectStatus(Enable);
 	} else if(comandfromBluetooth == 'y'){
@@ -206,14 +204,14 @@ void getInstruction(void){
 	} else userInput = 0;
 	xuatPhi = phong;
 	xuatTheta = thang;
-	xuatdocao = KdPsi;
+	xuatdocao = docao;
 }
 
 void setSetpoint(float Phi, float Theta, float Psi, float high){
 	
 	if (getPIDStatus() == Enable) {
 		CompFilter();
-//		fufogetAltitude();
+		fufogetAltitude();
 		calcPID(Phi, Theta, Psi, high);
 	}
 	PWM_Motor1 = Roll_sum + Yaw_sum;
@@ -242,8 +240,6 @@ void calcPID(float phiDesire, float thetaDesire, float psiDesire, float altitude
 	GyrosR = getGyrosOutputR();
 	GyrosP = getGyrosOutputP();
 	GyrosY = getGyrosOutputY();
-	altitudeBaroAct = getBaroAltitude();
-	altitudeLCD = altitudeBaroAct;
 	
 	if (thetaAct <= -40 || thetaAct >= 40 || phiAct <= -40 || phiAct >= 40){
 		T4CONbits.TON = 0;
@@ -262,13 +258,12 @@ void calcPID(float phiDesire, float thetaDesire, float psiDesire, float altitude
 //	Roll_sum = 0;
 //	Yaw_sum = 0;
 	if(getPIDAltitude() == Enable){
-//		altitudeAcc_Baro = altitudeFilter(altitudeBaroAct, getAccelAlt());
-//		altitudeLCD1 = getAccelAlt();
-//		altitudeLCD2 = altitudeAcc_Baro;
-		//High_sum = calcAltitude(altitudeDesire, altitudeBaroAct, KpAlt, KiAlt, KdAlt);
+		altitudeAcc_Baro = altitudeFilter(altitudeBaroAct, getAccelAlt());
+		altitudeLCD2 = altitudeAcc_Baro;
+		High_sum = calcAltitude(altitudeDesire, altitudeAcc_Baro, KpAlt, KiAlt, KdAlt);
 		setPIDAltitude(Disable);
 	}
-	High_sum = 0;
+//	High_sum = 0;
 
 	if(xuatTheta < 0){
 		fufoSendCharUART('-');
@@ -282,10 +277,10 @@ void calcPID(float phiDesire, float thetaDesire, float psiDesire, float altitude
 	fufoSendIntUART((int)(xuatPhi*100));
 	fufoSendCharUART(',');
 
-	if(xuatdocao < 0){
+	if(altitudeLCD2 < 0){
 		fufoSendCharUART('-');
 	}
-	fufoSendIntUART((int)(xuatdocao*1000));
+	fufoSendIntUART((int)(altitudeLCD2*1000));
 	fufoSendCharUART('\t');
 
 	fufoSendCharUART('\r');

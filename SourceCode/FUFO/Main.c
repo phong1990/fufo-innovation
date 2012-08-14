@@ -61,11 +61,11 @@ int main(void) {
 					break;
 
 			case Setup: // Trang thai Setup
-					fufoGetRateAngle(); // calc R0
+//					fufoGetRateAngle(); // calc R0
 					FUFO_thrust = getThrustRate();
 					FUFO_thrust++;
-					if(FUFO_thrust >= 40) {
-						FUFO_thrust = 40;
+					if(FUFO_thrust >= 5) {
+						FUFO_thrust = 5;
 						//setState(Ready);
 						//T2CONbits.TON = 1;
 					}
@@ -101,23 +101,22 @@ int main(void) {
 			
 			case Landing: // Trang thai Landing
 					// Auto landing
-					if(Hung >= 9){
-						Hung = 0;
-						FUFO_thrust = getThrustRate();
-						FUFO_thrust--;
-						setThrustRate(FUFO_thrust);
-						if(FUFO_thrust <= 20) {
-							FUFO_thrust = 20;
-							setPIDStatus(Disable);
-							T2CONbits.TON = 0;
-							setState(Pending);
-						}	
-					}
-//					T4CONbits.TON = 0;
-//					_PTEN = 0;
-//					setPIDStatus(Disable);
-//					T2CONbits.TON = 0;
-//					setState(Pending);
+//					if(Hung >= 9){
+//						Hung = 0;
+//						FUFO_thrust = getThrustRate();
+//						FUFO_thrust--;
+//						setThrustRate(FUFO_thrust);
+//						if(FUFO_thrust <= 20) {
+//							FUFO_thrust = 20;
+//							setPIDStatus(Disable);
+//							T2CONbits.TON = 0;
+//							setState(Pending);
+//						}	
+//					}
+					T4CONbits.TON = 0;
+					_PTEN = 0;
+					T2CONbits.TON = 0;
+					setState(Pending);
 					break;
 
 			case End: 
@@ -214,6 +213,7 @@ void __attribute__((__interrupt__ , auto_psv)) _T2Interrupt (void)
 		i++;
 		if(i == 200){
 			i = 0;
+			setPIDStatus(Disable);
 			setPIDAltitude(Disable);
 			setHigh_sum(0);
 			setState(Landing);
