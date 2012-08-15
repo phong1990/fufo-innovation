@@ -64,8 +64,8 @@ int main(void) {
 					fufoGetRateAngle(); // calc R0
 					FUFO_thrust = getThrustRate();
 					FUFO_thrust++;
-					if(FUFO_thrust >= 21) {
-						FUFO_thrust = 21;
+					if(FUFO_thrust >= 25) {
+						FUFO_thrust = 25;
 						//setState(Ready);
 						//T2CONbits.TON = 1;
 					}
@@ -219,8 +219,4 @@ void __attribute__((__interrupt__ , auto_psv)) _T2Interrupt (void)
 			setState(Landing);
 		}
 	} else i = 0;
-//	fufoSendCharUART('k');
-//	fufoSendIntUART(TMR3);
-//	fufoSendCharUART('k');
-//	IFS0bits.T2IF = 0;
 }

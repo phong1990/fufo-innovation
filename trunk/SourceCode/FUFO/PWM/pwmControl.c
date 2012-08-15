@@ -73,20 +73,20 @@ void initPWMSoftware(void){
 //}
 
 void setPWM1(int Thrust1, int PID_Motor1, int motor1){
-	PDC1 = (initDCValue + Thrust1*PWM_per_thrust)*2 + PWM_per_thrust*20*2;
+	PDC1 = (initDCValue + Thrust1*PWM_per_thrust + PID_Motor1 + motor1)*2 + PWM_per_thrust*20*2;
 }
 
 void setPWM2(int Thrust2, int PID_Motor2, int motor2){
-	PDC2 = (initDCValue + Thrust2*PWM_per_thrust)*2 + PWM_per_thrust*19*2;
+	PDC2 = (initDCValue + Thrust2*PWM_per_thrust + PID_Motor2 + motor2)*2 + PWM_per_thrust*19*2;
 }
 
 void setPWM3(int Thrust3, int PID_Motor3, int motor3){
-	PDC3 = (initDCValue + Thrust3*PWM_per_thrust)*2;
+	PDC3 = (initDCValue + Thrust3*PWM_per_thrust + PID_Motor3 + motor3)*2;
 }
 
 void setPWM4(int Thrust4, int PID_Motor4, int motor4){
 	//PR4_value = initDCValue + Thrust4*PWM_per_thrust + PID_Motor4 + motor4*20)/2;//+ PWM_per_thrust*7;
-	PR4_value = initDCValue + Thrust4*PWM_per_thrust + PWM_per_thrust*26;
+	PR4_value = initDCValue + Thrust4*PWM_per_thrust + PID_Motor4 + motor4 + PWM_per_thrust*26;
 }
 
 
