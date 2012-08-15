@@ -71,7 +71,8 @@ void fufoGetRateAngle(void){
 			R0z = (int)(zIntG/idx100);	
 			idx100 = 0;
 			CalcFirstAngle();
-			_RE8 = 0;			
+			_RE8 = 0;
+			setState(Ready);	
 		}		
 	}
 }
