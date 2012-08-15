@@ -64,8 +64,8 @@ int main(void) {
 					fufoGetRateAngle(); // calc R0
 					FUFO_thrust = getThrustRate();
 					FUFO_thrust++;
-					if(FUFO_thrust >= 25) {
-						FUFO_thrust = 25;
+					if(FUFO_thrust >= 41) {
+						FUFO_thrust = 41;
 						//setState(Ready);
 						//T2CONbits.TON = 1;
 					}
