@@ -17,6 +17,7 @@ float accVelo, accAlt, altFinal;
 float accAltOld = 0;
 float altHigh;
 float accAltOld, altHighOld;
+float accZ = 0;
 
 void CalcFirstAngle(void){
 	fufoGetAngleAccel();
@@ -33,6 +34,9 @@ void CompFilter(void){
 	phiComp = k*(phiComp + Ry*0.01) + (1 - k)*phiAngle;
 	thetaComp = k*(thetaComp + Rx*0.01) + (1 - k)*thetaAngle;
 	psiHigh = k*(psiHigh + Rz*0.01);
+	if(psiHigh > 360){
+		psiHigh = psiHigh - 360;
+	}
 	setGyrosOutputR(Rx);
 	setGyrosOutputP(Ry);
 	setGyrosOutputY(Rz);
@@ -128,10 +132,9 @@ void fufoGetAngleAccel(void){
 }
 
 void fufogetAltitude(void){
-	float accZ = 0;
-	accZ =  (sqrt(pow(Ax, 2) + pow(Ay, 2) + pow(Az, 2)) - 1)*9.8;
 	accAlt = accAlt + (accVelo*0.01) + ((accZ*0.01)*0.01)/2;
 	accVelo = accVelo + accZ*0.01;
+	accZ =  (sqrt(pow(Ax, 2) + pow(Ay, 2) + pow(Az, 2)) - 1)*9.8;
 	setAccelAlt(accAlt);
 }
 

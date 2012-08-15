@@ -33,14 +33,15 @@ float xuatPhong = 0;
 float xuatThang = 0;
 float xuatPhi = 0;
 float xuatTheta = 0;
-float phong = 0;
-float thang = -1.8;		//-6.58;
+float phong = -1.9;
+float thang = -9.29;		//-6.58;
 int PID_Yaw = 0;
 float altitude, altitudeR, altitudeG;
 float altitudeLCD, altitudeLCD1, altitudeLCD2; 
 float docao = 1;
 float xuatdocao;
-float KdPsi = 10;
+float KdPsi = 18.8;
+
 
 int getThrustRate(void){
 	return thrustRate;	
@@ -207,7 +208,7 @@ void getInstruction(void){
 	} else userInput = 0;
 	xuatPhong = phong;
 	xuatThang = thang;
-	xuatdocao = docao;
+	xuatdocao = KdPsi;
 }
 
 void setSetpoint(float Phi, float Theta, float Psi, float high){
@@ -286,19 +287,19 @@ void calcPID(float phiDesire, float thetaDesire, float psiDesire, float altitude
 	if(altitudeLCD2 < 0){
 		fufoSendCharUART('-');
 	}
-	fufoSendIntUART((int)(altitudeLCD2));
+	fufoSendIntUART((int)(altitudeLCD2*100));
 	fufoSendCharUART('\t');
 
 	if(xuatTheta < 0){
 		fufoSendCharUART('-');
 	}
-	fufoSendIntUART((int)(xuatTheta));
+	fufoSendIntUART((int)(xuatTheta*100));
 	fufoSendCharUART('\t');
 
 	if(xuatPhi < 0){
 		fufoSendCharUART('-');
 	}
-	fufoSendIntUART((int)(xuatPhi));
+	fufoSendIntUART((int)(xuatPhi*100));
 	fufoSendCharUART('\t');
 
 	fufoSendCharUART('\r');
