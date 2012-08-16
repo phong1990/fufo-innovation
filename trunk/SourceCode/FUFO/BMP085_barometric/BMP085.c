@@ -10,7 +10,7 @@
 float baroAltitude      = 0.0; 
 float baroRawAltitude   = 0.0;
 float baroGroundAltitude = 0.0;
-float baroSmoothFactor   = 0.98;
+float baroSmoothFactor   = 1;
 long T = 0;
 int overSamplingSetting = OVER_SAMPLING_SETTING;
 int ac1 = 0, ac2 = 0, ac3 = 0;

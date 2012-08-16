@@ -54,6 +54,7 @@ void setGyrosOutputY(float GyrosY);
 float getGyrosOutputY(void);
 void setAccelAlt(float Alt);
 float getAccelAlt(void);
+float constrain(float valueConstrain, float max, float min);
 
 void setPID1(int p1);
 int getPID1(void);

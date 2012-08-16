@@ -33,14 +33,14 @@ float xuatPhong = 0;
 float xuatThang = 0;
 float xuatPhi = 0;
 float xuatTheta = 0;
-float phong = -0.79;
-float thang = -15.39;		//-6.58;
+float phong = -1.59;
+float thang = -16.19;		//-6.58;
 int PID_Yaw = 0;
 float altitude, altitudeR, altitudeG;
 float altitudeLCD, altitudeLCD1, altitudeLCD2; 
 float docao = 1;
 float xuatdocao;
-float KdPhi = 4.5;
+float KdPhi = 5;
 
 
 int getThrustRate(void){
@@ -215,6 +215,7 @@ void setSetpoint(float Phi, float Theta, float Psi, float high){
 	
 	if (getPIDStatus() == Enable) {
 		CompFilter();
+		calcAccZSum();
 		calcPID(Phi, Theta, Psi, high);
 	}
 	PWM_Motor1 = Roll_sum + Yaw_sum;
@@ -246,7 +247,7 @@ void calcPID(float phiDesire, float thetaDesire, float psiDesire, float altitude
 	altitudeBaroAct = getBaroAltitude();
 	xuatTheta = thetaAct;
 	xuatPhi = phiAct;
-	altitudeLCD = altitudeBaroAct;
+
 	if (thetaAct <= -40 || thetaAct >= 40 || phiAct <= -40 || phiAct >= 40){
 		T4CONbits.TON = 0;
 		_PTEN = 0;
@@ -264,7 +265,8 @@ void calcPID(float phiDesire, float thetaDesire, float psiDesire, float altitude
 //	Roll_sum = 0;
 //	Yaw_sum = 0;
 	if(getPIDAltitude() == Enable){
-//		altitudeLCD2 = altitudeAcc_Baro;
+		altitudeAcc_Baro = getAltitude(altitudeBaroAct);
+		altitudeLCD = altitudeAcc_Baro;
 //		High_sum = calcAltitude(altitudeDesire, altitudeAcc_Baro, KpAlt, KiAlt, KdAlt);
 		setPIDAltitude(Disable);
 	}
