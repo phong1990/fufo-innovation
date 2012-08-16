@@ -18,5 +18,5 @@ void fufoGetAngleGyros(void);
 void fufoGetRateAngle(void);
 void CompFilter(void);
 void HighPassFilter(void);
-void fufogetAltitude(void);
-float altitudeFilter(float baroAlt, float accelAlt);
+float getAltitude(float baroAlt);
+void calcAccZSum(void);

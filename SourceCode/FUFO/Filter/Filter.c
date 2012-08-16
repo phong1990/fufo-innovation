@@ -13,11 +13,10 @@ unsigned char noticeError[] = "Errored";
 float phiComp;
 float thetaComp;
 float psiHigh;
-float accVelo, accAlt, altFinal;
-float accAltOld = 0;
-float altHigh;
-float accAltOld, altHighOld;
-float accZ = 0;
+float altFinal = 0;
+float AccZSum = 0;
+float AzOld = 0;
+
 
 void CalcFirstAngle(void){
 	fufoGetAngleAccel();
@@ -131,17 +130,21 @@ void fufoGetAngleAccel(void){
 	thetaAngle = (180 / 3.1415926)*atan2(Ay, sqrt(pow(Az, 2) + 0.01 * pow(Ax, 2)));
 }
 
-void fufogetAltitude(void){
-	accAlt = accAlt + (accVelo*0.01) + ((accZ*0.01)*0.01)/2;
-	accVelo = accVelo + accZ*0.01;
-	accZ =  (sqrt(pow(Ax, 2) + pow(Ay, 2) + pow(Az, 2)) - 1)*9.8;
-	setAccelAlt(accAlt);
+float getAltitude(float baroAlt){	
+	float temp; 
+	float AccZSumSmooth = 0;  
+	// little filter for Accel
+	AccZSumSmooth = (AccZSumSmooth*0.8) + (AccZSum*0.2);
+
+	//now try to smooth deltaSum and Est Altiture using ACC Z readings
+    
+	temp = constrain(abs(AccZSumSmooth),1,4);
+    altFinal = (baroAlt*temp + altFinal*(4 - temp))/4;
+	AccZSum = 0;
+	return altFinal;
 }
 
-float altitudeFilter(float baroAlt, float accelAlt){	
-	altHigh = kH*(altHigh + accelAlt - accAltOld);
-	altFinal = kAlt*(altFinal + altHigh - altHighOld) + (1-kAlt)*baroAlt;
-	altHighOld = altHigh;
-	accAltOld = accelAlt;
-	return altFinal;
+void calcAccZSum(void){
+	AccZSum += AzOld - Az;
+	AzOld = Az;
 }

@@ -133,3 +133,13 @@ void setAccelAlt(float Alt){
 float getAccelAlt(void){
 	return AccelAltitude;
 }
+
+float constrain(float valueConstrain, float max, float min) {
+	if(valueConstrain > max) {
+		valueConstrain = max;
+	}
+	if(valueConstrain < min) {
+		valueConstrain = min;
+	}
+	return valueConstrain;
+}
