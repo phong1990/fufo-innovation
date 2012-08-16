@@ -33,15 +33,15 @@ float xuatPhong = 0;
 float xuatThang = 0;
 float xuatPhi = 0;
 float xuatTheta = 0;
-float phong = -1.59;
-float thang = -16.19;		//-6.58;
+float phong = -0.41;
+float thang = -16.39;		//-6.58;
 int PID_Yaw = 0;
 float altitude, altitudeR, altitudeG;
 float altitudeLCD, altitudeLCD1, altitudeLCD2; 
 float docao = 1;
 float xuatdocao;
 float KdPhi = 5;
-
+float KdTheta = 5.1;
 
 int getThrustRate(void){
 	return thrustRate;	
@@ -189,7 +189,7 @@ void getInstruction(void){
 	} else if(comandfromBluetooth == 'k'){
 //		resetInstruction();
 		R_Right = 1;
-		KdPhi -= 0.5;
+		KdTheta -= 0.5;
 		userInput = 1;
 		setConnectStatus(Enable);
 	} else if(comandfromBluetooth == 'f'){
@@ -245,7 +245,8 @@ void calcPID(float phiDesire, float thetaDesire, float psiDesire, float altitude
 	GyrosP = getGyrosOutputP();
 	GyrosY = getGyrosOutputY();
 	altitudeBaroAct = getBaroAltitude();
-	xuatTheta = thetaAct;
+	
+	xuatTheta = altitudeBaroAct;
 	xuatPhi = phiAct;
 
 	if (thetaAct <= -40 || thetaAct >= 40 || phiAct <= -40 || phiAct >= 40){
@@ -293,7 +294,7 @@ void calcPID(float phiDesire, float thetaDesire, float psiDesire, float altitude
 	if(xuatTheta < 0){
 		fufoSendCharUART('-');
 	}
-	fufoSendIntUART((int)(xuatTheta*100));
+	fufoSendIntUART((int)(xuatTheta*1000));
 	fufoSendCharUART('\t');
 
 	if(xuatdocao < 0){
