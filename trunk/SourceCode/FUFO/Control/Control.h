@@ -1,12 +1,12 @@
 
 #define KpPhi 		13.5		//19		//7.3		//19		//8.9		//1.08
-#define KdPhi		4.1			//5.8		//3.19	//1.0163
+//#define KdPhi		4.1			//5.8		//3.19	//1.0163
 #define KiPhi		15			//18		//2.19	//1.3481
 #define KpTheta		13.5		//19		//7.3		//19		//1.08		//9
-#define KdTheta		4.1			//5.8		//1.0163	//3.29
+#define KdTheta		5.1			//5.8		//1.0163	//3.29
 #define KiTheta		15			//18		//3		//18	//1.3481 	//6.155
 #define KpPsi		0
-//#define KdPsi		15
+#define KdPsi		18.8
 #define KiPsi		0
 #define KpAlt			100
 #define KdAlt			400
