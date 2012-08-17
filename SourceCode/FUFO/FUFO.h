@@ -30,6 +30,8 @@
 #define End							10
 #define Enable		1
 #define	Disable		0
+#define True 		1
+#define False		0
 
 int getConnectStatus(void);
 void setConnectStatus(int Connect);
@@ -54,7 +56,7 @@ void setGyrosOutputY(float GyrosY);
 float getGyrosOutputY(void);
 void setAccelAlt(float Alt);
 float getAccelAlt(void);
-float constrain(float valueConstrain, float max, float min);
+float constrain(float valueConstrain, float min, float max);
 
 void setPID1(int p1);
 int getPID1(void);

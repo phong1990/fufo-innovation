@@ -17,6 +17,8 @@ float altFinal = 0;
 float AccZSum = 0;
 float AzOld = 1;
 float AccZSumSmooth = 0;  
+int finishFlag = False;
+float altFinalLPF = 0;
 
 void CalcFirstAngle(void){
 	fufoGetAngleAccel();
@@ -65,19 +67,20 @@ void fufoGetRateAngle(void){
 			zIntG += (dataGyroArray[2] - 65536);
 		}
 		idx100++;
-		if (idx100%10 == 0){
-			fufoOutputChar("..");
-		}
+
 		if(idx100 == 100) {	
 			R0x = (int)(xIntG/idx100);
 			R0y = (int)(yIntG/idx100);
 			R0z = (int)(zIntG/idx100);	
 			idx100 = 0;
 			CalcFirstAngle();
-			_RE8 = 0;
-			setState(Ready);	
+			finishFlag = True;	
 		}		
 	}
+}
+
+int calcRateAngle(void){
+	return finishFlag;
 }
 
 void fufoGetAngleGyros(void){
@@ -132,18 +135,20 @@ void fufoGetAngleAccel(void){
 
 float getAltitude(float baroAlt){	
 	float temp; 
-	// little filter for Accel
-	AccZSumSmooth = (AccZSumSmooth*0.8) + (AccZSum*0.2);
-
 	//now try to smooth deltaSum and Est Altiture using ACC Z readings
     
 	temp = constrain(abs(AccZSumSmooth),1,4);
     altFinal = (baroAlt*temp + altFinal*(4 - temp))/4;
+	altFinalLPF = Klpf*altFinalLPF + (1-Klpf)*altFinal;
 	AccZSum = 0;
-	return altFinal;
+	return altFinalLPF;
 }
 
 void calcAccZSum(void){
-	AccZSum += AzOld - Az;
+	float sum;
+	sum = (AzOld - Az);
+	AccZSum += sum;
 	AzOld = Az;
+	// little filter for Accel
+	AccZSumSmooth = (AccZSumSmooth*0.8) + (AccZSum*0.2);
 }

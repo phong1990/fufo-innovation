@@ -9,6 +9,7 @@
 #define k		0.98
 #define kAlt	0.98
 #define kH		0.02
+#define Klpf	0.94
 #define convertAccel  0.0039;
 #define convertGyro  0.00875;
 
@@ -16,6 +17,7 @@ void CalcFirstAngle(void);
 void fufoGetAngleAccel(void);
 void fufoGetAngleGyros(void);
 void fufoGetRateAngle(void);
+int calcRateAngle(void);
 void CompFilter(void);
 void HighPassFilter(void);
 float getAltitude(float baroAlt);

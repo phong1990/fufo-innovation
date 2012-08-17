@@ -26,7 +26,9 @@ unsigned int PIDControl = 0;
 int motor1, motor2, motor3, motor4;
 int value = 0;
 int Hung = 0;
-
+int temp = 0;
+int tempHigh = 0;
+int FUFO_thrust_step = 0;
 //------------------------------------------------------------------------------
 //Chuong trinh chinh
 int main(void) {
@@ -61,16 +63,19 @@ int main(void) {
 					break;
 
 			case Setup: // Trang thai Setup
-					fufoGetRateAngle(); // calc R0
-					FUFO_thrust = getThrustRate();
-					FUFO_thrust++;
-					if(FUFO_thrust >= 41) {
-						FUFO_thrust = 41;
-						//setState(Ready);
-						//T2CONbits.TON = 1;
+					if(calcRateAngle() == True){
+						FUFO_thrust = getThrustRate();
+						FUFO_thrust++;
+						if(FUFO_thrust >= 41) {
+							FUFO_thrust = 41;
+							setState(Ready);
+							_RE8 = 0;
+						}
+						setThrustRate(FUFO_thrust);
+						controlFUFO();
+					} else {
+						fufoGetRateAngle(); // calc R0
 					}
-					setThrustRate(FUFO_thrust);
-					controlFUFO();
 					break;
 
 			case Ready: // Trang thai Ready
@@ -101,22 +106,29 @@ int main(void) {
 			
 			case Landing: // Trang thai Landing
 					// Auto landing
-//					if(Hung >= 9){
-//						Hung = 0;
-//						FUFO_thrust = getThrustRate();
-//						FUFO_thrust--;
-//						setThrustRate(FUFO_thrust);
-//						if(FUFO_thrust <= 20) {
-//							FUFO_thrust = 20;
-//							setPIDStatus(Disable);
-//							T2CONbits.TON = 0;
-//							setState(Pending);
-//						}	
-//					}
-					T4CONbits.TON = 0;
-					_PTEN = 0;
-					T2CONbits.TON = 0;
-					setState(Pending);
+					if(Hung >= 100){
+						Hung = 0;
+						if(FUFO_thrust > 42) 
+						{
+							FUFO_thrust = getThrustRate();
+							FUFO_thrust_step = (FUFO_thrust - 42)/5 ;
+							FUFO_thrust = FUFO_thrust-FUFO_thrust_step;
+							setThrustRate(FUFO_thrust);
+						}
+						if(FUFO_thrust <= 42) 
+						{
+							FUFO_thrust = 42;
+							setPIDStatus(Disable);
+							T4CONbits.TON = 0;
+							T2CONbits.TON = 0;
+							_PTEN = 0;
+							setState(Pending);
+						}	
+					}
+//					T4CONbits.TON = 0;
+//					_PTEN = 0;
+//					T2CONbits.TON = 0;
+//					setState(Pending);
 					break;
 
 			case End: 
@@ -143,29 +155,19 @@ void initFUFO(void){
 	fufoDelayMs(10);
 	fufoInitLCD();
 	fufoDelayMs(10);
-	fufoOutputChar("Please wait");
-	fufoCmd4LCD(LCD_HOMEL2);
 	initPWM();		// khoi tao PWM voi tan so thuc thi lenh Fcy;
 							// do rong xung ban dau 1ms (1843).
 	fufoDelayMs(200);
-	fufoOutputChar("...");
-	fufoDelayMs(500);
-	fufoOutputChar("....");
 	fufoInitUART();
 	fufoDelayMs(200);
-	fufoOutputChar("...");
 	fufoInitI2C();
 	fufoDelayMs(200);
-	fufoOutputChar("..");
 	initAccel();
 	fufoDelayMs(200);
-	fufoOutputChar("..");
 	fufoInitGyro();
 	fufoDelayMs(200);
-	fufoOutputChar("...");
 	initBaro();
 	fufoDelayMs(200);
-	fufoOutputChar("...");
 	initTMR2();
 	initTMR3();
 	
@@ -213,9 +215,13 @@ void __attribute__((__interrupt__ , auto_psv)) _T2Interrupt (void)
 		i++;
 		if(i == 200){
 			i = 0;
-			setPIDStatus(Disable);
-			setPIDAltitude(Disable);
+			tempHigh = getHigh_sum();
+			temp = (tempHigh/40);
+			FUFO_thrust = getThrustRate();
+			FUFO_thrust = FUFO_thrust + temp;
+			setThrustRate(FUFO_thrust);
 			setHigh_sum(0);
+			setPIDAltitude(Disable);
 			setState(Landing);
 		}
 	} else i = 0;
