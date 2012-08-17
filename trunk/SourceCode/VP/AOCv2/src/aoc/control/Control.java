@@ -19,9 +19,9 @@ public class Control {
     private static ServerSocket serverSocket = null;        //Initiate ServerSocket to create server
     private static Socket tcpSocket = null;                 //Used to send command and receive status
     public static final int PORT = 8888;                    //Port of server
-    public static StatusControl stct;                       //Thread to control status
+ //   public static StatusControl stct;                       //Thread to control status
     public static CommandControl cmct;                      //Thread to control command
-    public static VideoControl vdct;                        //Thread to control video
+  //  public static VideoControl vdct;                        //Thread to control video
     public static boolean svSetting = false;                 //Flag to check socket between AOP and AOC 
     public static boolean ffSetting = false;                 //Flag to check socket between AOP and FUFO 
     public static int start = 0;                            //Flag to check socket whether start button pressed
@@ -41,7 +41,7 @@ public class Control {
             serverSocket = new ServerSocket(PORT);                  //Start server
             tcpSocket =  serverSocket.accept();                     //Wait for client connecting
             serverSocket.close();                                   //Close server socket
-            aoc.lb_text.setText("Connected!");
+          //  aoc.lb_text.setText("Connected!");
             svSetting = true;                               
             aoc.lb_status.setIcon(new ImageIcon("pic\\lb_status_Green.png"));  //Set color for panel of gui when connecting successful
             

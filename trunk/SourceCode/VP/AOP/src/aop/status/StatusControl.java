@@ -74,7 +74,7 @@ public class StatusControl extends Thread{
                         bluetoothSocket.getInputStream()));
             }
 
-            while(true){
+            while(Control.whileStatus){
 
                 if (statusSocket != null && flagOutput == false){
 
@@ -87,7 +87,7 @@ public class StatusControl extends Thread{
                     Control.connectFF = true;
                 } else
                     
-                    if(temp.getBytes().length >= 24 && temp.getBytes().length <= 27){
+             //      if(temp.getBytes().length >= 24 && temp.getBytes().length <= 27){
                         writeToFile((temp + "\r\n").getBytes());
                         Log.d("stct",": " + temp.getBytes().length);
                         
@@ -96,7 +96,7 @@ public class StatusControl extends Thread{
                         if (statusSocket != null){
                             out.println(temp);
                         }
-                    }
+            //       }
                 Log.d("stct", " : " + System.currentTimeMillis() + " :" + temp + ":" );
 
                 //   waitStatusFromFUFO();

@@ -107,7 +107,7 @@ public class AOC{
         lb_status.setBounds(220, 630, 800, 50);
 
         lb_text = new JLabel();
-        lb_text.setText("Wait connect from Application on Phone!");
+      //  lb_text.setText("Wait connect from Application on Phone!");
         lb_text.setBounds(420, 630, 800, 50);
         lb_text.setFont(new Font("Serif", Font.BOLD, 20));
      //   lb_text.setForeground(Color.WHITE);
@@ -217,11 +217,11 @@ public class AOC{
 
         @Override
         public void keyReleased(KeyEvent arg0) {
-
+            
             if(Control.ffSetting && Control.svSetting && Control.start == 1){
 
                 int command = arg0.getKeyCode();           //Get key code of pressed key
-
+                Control.cmct.setCommand(KeyEvent.VK_R);
                 switch(command){
 
                     case KeyEvent.VK_RIGHT:
@@ -261,7 +261,7 @@ public class AOC{
 
         @Override
         public void keyPressed(KeyEvent arg0) {
-
+            System.out.println("fu");
             if(Control.ffSetting && Control.svSetting && Control.start == 1){
 
                 int command = arg0.getKeyCode();                //Get key code of pressed key
@@ -315,7 +315,7 @@ public class AOC{
             JButton button = (JButton)e.getComponent();
 
             if(button == bt_exit || button == bt_minimize)
-
+                
                 button.setIcon(new ImageIcon("pic\\"
                         + e.getComponent().getName()+"_Clicked.png"));
 
@@ -416,7 +416,7 @@ public class AOC{
         public void mouseReleased(MouseEvent e) {
 
             JButton button = (JButton) e.getComponent();
-
+            Control.cmct.setCommand(KeyEvent.VK_R);
             if(button == bt_exit){ 
 
                 frame.dispose();

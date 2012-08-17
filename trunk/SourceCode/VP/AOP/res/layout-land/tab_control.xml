@@ -51,7 +51,7 @@
           android:layout_column="1"
           android:layout_width ="wrap_content"
           android:layout_height ="wrap_content"
-          android:background="@drawable/fwd" 
+          android:background="@drawable/bt_forward" 
           android:layout_weight = "1"/>
            <Button 
           android:layout_column="2"
@@ -67,7 +67,7 @@
           android:visibility="invisible"/>
           <Button 
           android:id="@+id/bt_up" 
-          android:background="@drawable/up"
+          android:background="@drawable/bt_up"
           android:layout_column="5"
           android:layout_width ="wrap_content"
           android:layout_height ="wrap_content"
@@ -84,7 +84,7 @@
           android:layout_column="0"
           android:layout_width ="wrap_content"
           android:layout_height ="wrap_content"
-            android:background="@drawable/lft" 
+            android:background="@drawable/bt_left" 
              android:layout_weight = "1"/>
              <Button 
           android:layout_column="1"
@@ -95,14 +95,14 @@
           android:layout_column="2"
           android:layout_width ="wrap_content"
           android:layout_height ="wrap_content"   
-          android:background="@drawable/rgt"
+          android:background="@drawable/bt_rgt"
            android:layout_weight = "1"/>
             <Button 
          android:id="@+id/bt_start" 
           android:layout_column="3"
           android:layout_width ="wrap_content"
           android:layout_height ="wrap_content"   
-          android:background="@drawable/start"
+          android:background="@drawable/bt_start"
           android:layout_weight = "1"
           />
           <Button 
@@ -110,7 +110,7 @@
           android:layout_column="4"
           android:layout_width ="wrap_content"
           android:layout_height ="wrap_content"
-          android:background="@drawable/nkdh"
+          android:background="@drawable/bt_rotateleft"
           android:layout_weight = "1" />
           <Button 
           android:layout_column="5"
@@ -121,7 +121,7 @@
           android:layout_column="6"
           android:layout_width ="wrap_content"
           android:layout_height ="wrap_content"
-          android:background="@drawable/kdh"
+          android:background="@drawable/bt_rotateright"
           android:layout_weight = "1" />
     </TableRow>
     <TableRow>
@@ -134,7 +134,7 @@
           android:layout_column="1"
           android:layout_width ="wrap_content"
           android:layout_height ="wrap_content"
-            android:background="@drawable/bwd"
+            android:background="@drawable/bt_backward"
             android:layout_weight = "1"/>
             <Button 
           android:layout_column="2"
@@ -150,7 +150,7 @@
           android:visibility="invisible"/>         
          <Button 
          android:id="@+id/bt_dwn" 
-         android:background="@drawable/down"
+         android:background="@drawable/bt_down"
           android:layout_column="5"
           android:layout_height ="wrap_content"
           android:layout_width="wrap_content"

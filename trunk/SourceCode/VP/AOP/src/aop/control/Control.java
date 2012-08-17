@@ -9,13 +9,16 @@ import aop.command.CommandControl;
 import aop.status.StatusControl;
 
 public class Control extends TabActivity {
+
+    public static int svSetting = 0;
+    public static int ffSetting = 0;   
+    public static boolean connectFF = false;
+    public static CommandControl cmct = new CommandControl();
+    public static StatusControl stct = new StatusControl();
+    public static boolean whileCommand = true;
+    public static boolean whileStatus = true;
     
-        public static int svSetting = 0;
-        public static int ffSetting = 0;   
-        public static boolean connectFF = false;
-        public static CommandControl cmct = new CommandControl();
-        public static StatusControl stct = new StatusControl();
-        public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
@@ -29,15 +32,15 @@ public class Control extends TabActivity {
 
         // Initialize a TabSpec for each tab and add it to the TabHost
         spec = tabHost.newTabSpec("setting").setIndicator("Setting",
-                          res.getDrawable(R.drawable.ic_tab_setting))
-                      .setContent(intent);
+                res.getDrawable(R.drawable.ic_tab_setting))
+                .setContent(intent);
         tabHost.addTab(spec);
-        
+
         // Do the same for the other tabs
         intent = new Intent().setClass(this, ControlActivity.class);
         spec = tabHost.newTabSpec("control").setIndicator("Control",
-                          res.getDrawable(R.drawable.ic_tab_control))
-                      .setContent(intent);
+                res.getDrawable(R.drawable.ic_tab_control))
+                .setContent(intent);
         tabHost.addTab(spec);
         tabHost.setCurrentTab(0);
     }

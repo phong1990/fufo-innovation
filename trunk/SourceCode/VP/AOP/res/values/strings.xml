@@ -10,4 +10,6 @@
     <color name="GREEN">#76BD09</color>
     <string name="expandable_list_sample_action">hmmm</string>
     <color name="nau">#8B8386</color>
+    <color name="white">#FFFFFF</color>
+    
 </resources>

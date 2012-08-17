@@ -60,7 +60,7 @@ public class VideoControl extends Thread {
             udpPackage = new DatagramPacket(pacBuffer, pacBuffer.length);
 
             while(true){
-
+                
                 udpSocket.receive(udpPackage);
             //    System.out.println("received!");
                 showOnScreen(udpPackage);
