@@ -15,8 +15,8 @@ float thetaComp;
 float psiHigh;
 float altFinal = 0;
 float AccZSum = 0;
-float AzOld = 0;
-
+float AzOld = 1;
+float AccZSumSmooth = 0;  
 
 void CalcFirstAngle(void){
 	fufoGetAngleAccel();
@@ -132,7 +132,6 @@ void fufoGetAngleAccel(void){
 
 float getAltitude(float baroAlt){	
 	float temp; 
-	float AccZSumSmooth = 0;  
 	// little filter for Accel
 	AccZSumSmooth = (AccZSumSmooth*0.8) + (AccZSum*0.2);
 
