@@ -132,65 +132,73 @@ void getUpInstruction(void){
 }
 
 void getInstruction(void){
-	resetInstruction();
+//	resetInstruction();
 	setConnectStatus(Disable);
 	comandfromBluetooth = fufoReceiveUART();
 	IFS0bits.U1RXIF = 0;
 	if(comandfromBluetooth == 'o'){
-//		resetInstruction();
+		resetInstruction();
 		Up = 1;
 //		docao += 0.25;
-		thrustRate += 1;
+		thrustRate = 51;
 		userInput = 1;
 		setConnectStatus(Enable);
 	} else if(comandfromBluetooth == 'p'){
-//		resetInstruction();
+		resetInstruction();
 		Down = 1;
 //		docao -= 0.25;
 		thrustRate -= 1;
 		userInput = 1;
 		setConnectStatus(Enable);
 	} else if(comandfromBluetooth == 'w'){
-//		resetInstruction();
+		resetInstruction();
 		Forward = 1;
 //		thang += 0.1;
 //		KdAlt += 10;
 		userInput = 1;
 		setConnectStatus(Enable);
 	} else if(comandfromBluetooth == 's'){
-//		resetInstruction();
+		resetInstruction();
 		Backward = 1;
 //		thang -= 0.1;
 //		KdAlt -= 10;
 		userInput = 1;
 		setConnectStatus(Enable);
 	} else if(comandfromBluetooth == 'a'){
-//		resetInstruction();
+		resetInstruction();
 		Left = 1;
 //		phong += 0.1;
 //		KpAlt += 10;
 		userInput = 1;
 		setConnectStatus(Enable);
 	} else if(comandfromBluetooth == 'd'){
-//		resetInstruction();
+		resetInstruction();
 		Right = 1;
 //		phong -= 0.1;
 //		KpAlt -= 10;
 		userInput = 1;
 		setConnectStatus(Enable);
 	} else if(comandfromBluetooth == 'n'){
-//		resetInstruction();
+		resetInstruction();
 		R_Left = 1;
 //		KiAlt += 10;
 		userInput = 1;
 		setConnectStatus(Enable);
 	} else if(comandfromBluetooth == 'k'){
-//		resetInstruction();
+		resetInstruction();
 		R_Right = 1;
 //		KiAlt -= 10;
 		userInput = 1;
 		setConnectStatus(Enable);
+	} else if(comandfromBluetooth == 'r'){
+		if(Up == 1){
+			thrustRate = 47;
+		}	
+		resetInstruction();
+		userInput = 1;
+		setConnectStatus(Enable);
 	} else if(comandfromBluetooth == 'f'){
+		resetInstruction();
 		_RE8 = 1;
 		setPIDAltitude(Disable);
 		setHigh_sum(0);

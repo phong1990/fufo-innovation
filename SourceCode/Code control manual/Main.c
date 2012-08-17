@@ -66,8 +66,8 @@ int main(void) {
 					if(calcRateAngle() == True){
 						FUFO_thrust = getThrustRate();
 						FUFO_thrust++;
-						if(FUFO_thrust >= 41) {
-							FUFO_thrust = 41;
+						if(FUFO_thrust >= 43) {
+							FUFO_thrust = 43;
 							setState(Ready);
 							_RE8 = 0;
 						}
@@ -198,7 +198,7 @@ void __attribute__((__interrupt__ , auto_psv)) _T2Interrupt (void)
 	if(userInputFlag == 1){
 		_RE8 = 1;
 		index++;
-		if(index == 50){
+		if(index == 5){
 			index = 0;
 			userInputFlag = 0;
 			if (_RE8 == 1){
