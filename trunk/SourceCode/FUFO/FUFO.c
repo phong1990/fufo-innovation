@@ -134,7 +134,7 @@ float getAccelAlt(void){
 	return AccelAltitude;
 }
 
-float constrain(float valueConstrain, float max, float min) {
+float constrain(float valueConstrain, float min, float max) {
 	if(valueConstrain > max) {
 		valueConstrain = max;
 	}
