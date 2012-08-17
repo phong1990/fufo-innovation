@@ -67,7 +67,7 @@ public class CommandControl extends Thread implements OnClickListener {
         Log.d("cmct","Da vo Thread cmct: " + controlMode +Control.ffSetting+ Control.svSetting);
         try {
 
-            while(true){
+            while(Control.whileCommand){
 
                 if(Control.svSetting == 1 && controlMode == 1){
 
@@ -152,6 +152,9 @@ public class CommandControl extends Thread implements OnClickListener {
                 break;
             case 10: 
                 controlByte = 'f';
+                break;
+            case 82: 
+                controlByte = 'r';
                 break;
             
         }

@@ -65,7 +65,7 @@
           android:layout_column="0"
           android:layout_width ="fill_parent"
           android:layout_height ="wrap_content"
-            android:background="@drawable/lft" 
+            android:background="@drawable/bt_left" 
              android:paddingBottom="35px" />
              <Button 
             
@@ -94,7 +94,7 @@
           android:layout_marginTop = "15px"
           android:layout_marginBottom= "15px"
           android:layout_marginRight = "15px"
-          android:background="@drawable/start"
+          android:background="@drawable/bt_start"
           />
           <Button 
           android:id="@+id/bt_nkdt" 

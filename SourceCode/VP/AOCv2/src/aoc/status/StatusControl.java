@@ -64,7 +64,7 @@ public class StatusControl extends Thread {
             
             while(true){
                 
-                updateStatusOnScreen(pitchAngle,rollAngle);
+             //   updateStatusOnScreen(pitchAngle,rollAngle);
                 waitStatusFromeAOP();
             }
         } catch (Exception ex) {
@@ -85,11 +85,11 @@ public class StatusControl extends Thread {
             
             Control.ffSetting = true;
         }else{
-            sm = new StatusMessage();
+          /*  sm = new StatusMessage();
             sm.getStatus(statusMessage);
             pitchAngle = sm.pitchAngle;
             rollAngle = sm.rollAngle;
-            height = sm.height;
+            height = sm.height;*/
             Control.ffSetting = true;
             Control.svSetting = true;
         }

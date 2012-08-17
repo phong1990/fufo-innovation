@@ -182,10 +182,17 @@ public class SettingActivity extends Activity{
 
         // do something on back.
         try{
-            Control.stct.stop();
-            Control.cmct.stop();
+          //  Control.stct.stop();
+         //   Control.cmct.stop();
+            if(bluetoothSocket != null)
             bluetoothSocket.close();
             tcpSocket.close();
+            if  (Control.stct.bluetoothSocket!= null)                        
+                Control.stct.bluetoothSocket.close();
+                if  (Control.cmct.bluetoothSocket!= null)
+                Control.cmct.bluetoothSocket.close();
+                Control.whileCommand = false;
+                Control.whileStatus = false;
         }catch(Exception e){
 
         }

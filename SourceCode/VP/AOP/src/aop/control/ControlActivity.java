@@ -1,5 +1,7 @@
 package aop.control;
 
+import java.io.IOException;
+
 import aop.video.*;
 import android.app.Activity;
 import android.os.Bundle;
@@ -69,16 +71,18 @@ public class ControlActivity extends Activity implements OnCheckedChangeListener
                 
                 Toast.makeText(this, "Please check Bluetooth connection!", Toast.LENGTH_SHORT).show(); 
                 rd_group.clearCheck();
+                return;
             }else{
                 
                 if(arg0.getCheckedRadioButtonId() == R.id.rd_computer){
                     
                     if(Control.svSetting == 0){
-                        
-                        Toast.makeText(this, "Please check Server connection!", Toast.LENGTH_SHORT).show(); 
+                         
+                        Toast.makeText(this, "Please check Server connection!", Toast.LENGTH_SHORT).show();
                         rd_computer.setChecked(false);
                         tb_LO.setVisibility(4);
                         Control.cmct.controlMode = 0;
+                        
                     }else{
 
                         tb_LO.setVisibility(4); 
@@ -116,6 +120,22 @@ public class ControlActivity extends Activity implements OnCheckedChangeListener
     @Override
     public void onBackPressed() {
     // do something on back.
+        try {
+            if  (Control.stct.bluetoothSocket!= null)                        
+            Control.stct.bluetoothSocket.close();
+            if  (Control.cmct.bluetoothSocket!= null)
+            Control.cmct.bluetoothSocket.close();
+            Control.whileCommand = false;
+            Control.whileStatus = false;
+        } catch (IOException ex) {
+            // TODO Auto-generated catch block
+            ex.printStackTrace();
+        }
+       
+      //  Control.stct.stop();
+      //  Control.cmct.stop();
+       // Control.cmctbluetoothSocket.close();
+       // tcpSocket.close();
         System.exit(0);
     return;
     }
