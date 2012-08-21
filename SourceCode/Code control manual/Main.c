@@ -66,8 +66,9 @@ int main(void) {
 					if(calcRateAngle() == True){
 						FUFO_thrust = getThrustRate();
 						FUFO_thrust++;
-						if(FUFO_thrust >= 43) {
-							FUFO_thrust = 43;
+						if(FUFO_thrust >= 41) {
+							FUFO_thrust = 41;
+							initBaro();
 							setState(Ready);
 							_RE8 = 0;
 						}
@@ -98,7 +99,7 @@ int main(void) {
 //					fufoOutputChar("Kp Theta: ");
 //					fufoOutputInt(getPID4());
 //					fufoOutputChar(" ");
-					if (userInputFlag == 0){
+					if (userInputFlag == Off){
 						getInstruction();
 						userInputFlag = getUserInput();
 					}
@@ -106,12 +107,12 @@ int main(void) {
 			
 			case Landing: // Trang thai Landing
 					// Auto landing
-					if(Hung >= 50){
+					if(Hung >= 75){
 						Hung = 0;
 						FUFO_thrust = getThrustRate();
 						FUFO_thrust--;
 						setThrustRate(FUFO_thrust);
-						if(FUFO_thrust <= 42) 
+						if(FUFO_thrust <= 45) 
 						{
 							//FUFO_thrust = 45;
 							setPIDStatus(Disable);
@@ -162,8 +163,8 @@ void initFUFO(void){
 	fufoDelayMs(200);
 	fufoInitGyro();
 	fufoDelayMs(200);
-	initBaro();
-	fufoDelayMs(200);
+//	initBaro();
+//	fufoDelayMs(200);
 	initTMR2();
 	initTMR3();
 	
@@ -192,15 +193,17 @@ void __attribute__((__interrupt__ , auto_psv)) _T2Interrupt (void)
 {	
 	IFS0bits.T2IF = 0;	// clear interrupt flag manually
 	value++;
-	Hung++;
+	if(FUFO_State == Landing){
+		Hung++;
+	}
 	TMR2 = 0;
 	controlFUFO();
-	if(userInputFlag == 1){
+	if(userInputFlag == On){
 		_RE8 = 1;
 		index++;
-		if(index == 5){
+		if(index == 10){
 			index = 0;
-			userInputFlag = 0;
+			userInputFlag = Off;
 			if (_RE8 == 1){
 				_RE8 = 0;
 			} else _RE8 = 1;
@@ -217,6 +220,7 @@ void __attribute__((__interrupt__ , auto_psv)) _T2Interrupt (void)
 //			FUFO_thrust = FUFO_thrust + temp;
 //			setThrustRate(FUFO_thrust);
 //			setHigh_sum(0);
+			resetInstruction();
 			setPIDAltitude(Disable);
 			setState(Landing);
 		}
