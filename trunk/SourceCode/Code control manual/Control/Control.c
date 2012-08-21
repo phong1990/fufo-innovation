@@ -42,7 +42,7 @@ float docao = 1;
 float xuatdocao;
 float KdAlt = 300;
 float KpAlt = 100;
-float KiAlt = 10;
+float KiAlt = 35;
 //float KdTheta = 5.1;
 int tempAlt = 0;
 
@@ -67,16 +67,15 @@ float getHigh_sum(void){
 }
 
 void controlFUFO(void){
-//	if(Forward == 1){
-//		setSetpoint(-3.01,-9.77,-1,docao);
-//	} else if(Backward == 1){
-//		setSetpoint(-3.01,7.23,-1,docao);
-//	} else if(Left == 1){
-//		setSetpoint(-10.01,-2.77,-1,docao);
-//	} else if(Right == 1){
-//		setSetpoint(3.99,-2.77,-1,docao);
-//	} else 
-	setSetpoint(phong,thang,-1,docao);
+	if(Forward == 1){
+		setSetpoint(0.59,-18.16,-1,docao);
+	} else if(Backward == 1){
+		setSetpoint(0.59,-8.16,-1,docao);
+	} else if(Left == 1){
+		setSetpoint(-4.41,-13.16,-1,docao);
+	} else if(Right == 1){
+		setSetpoint(5.59,-13.16,-1,docao);
+	} else setSetpoint(0.59,-13.16,-1,docao);
 }
 
 void checkConnection(void){
@@ -122,7 +121,7 @@ void getUpInstruction(void){
 	if(comandfromBluetooth == 'o'){
 		_RE8 = 1;
 //		Up = 1;
-//		thrustRate = 52;
+		thrustRate = 48;
 		PID_Yaw = 0;
 		setPIDStatus(Enable);
 		setPIDAltitude(Enable);
@@ -158,28 +157,28 @@ void getInstruction(void){
 	} else if(comandfromBluetooth == 'w'){
 		resetInstruction();
 		Forward = 1;
-		thang += 0.2;
+//		thang += 0.2;
 //		KdAlt += 10;
 		userInput = On;
 		setConnectStatus(Enable);
 	} else if(comandfromBluetooth == 's'){
 		resetInstruction();
 		Backward = 1;
-		thang -= 0.2;
+//		thang -= 0.2;
 //		KdAlt -= 10;
 		userInput = On;
 		setConnectStatus(Enable);
 	} else if(comandfromBluetooth == 'a'){
 		resetInstruction();
 		Left = 1;
-		phong += 0.2;
+//		phong += 0.2;
 //		KpAlt += 10;
 		userInput = On;
 		setConnectStatus(Enable);
 	} else if(comandfromBluetooth == 'd'){
 		resetInstruction();
 		Right = 1;
-		phong -= 0.2;
+//		phong -= 0.2;
 //		KpAlt -= 10;
 		userInput = On;
 		setConnectStatus(Enable);
@@ -235,8 +234,8 @@ void setSetpoint(float Phi, float Theta, float Psi, float high){
 	PWM_Motor3 = - Roll_sum + Yaw_sum;
 	PWM_Motor4 = - Pitch_sum - Yaw_sum;
 	
-	if(High_sum >= 1000){				// gioi han PID altitude o muc 65% nang luong 
-		High_sum = 1000;					// do khoi dong ton 40% nang luong nen altitude chi dc dung toi da 25% nang luong con lai
+	if(High_sum >= 520){				// gioi han PID altitude o muc 65% nang luong 
+		High_sum = 520;					// do khoi dong ton 40% nang luong nen altitude chi dc dung toi da 25% nang luong con lai
 	}
 	if(High_sum <= 0){
 		High_sum = 0;
@@ -285,16 +284,16 @@ void calcPID(float phiDesire, float thetaDesire, float psiDesire, float altitude
 	}
 
 
-	if(xuatPhong < 0){
+	if(xuatPhi < 0){
 		fufoSendCharUART('-');
 	}
-	fufoSendIntUART((int)(xuatPhong*1000));
+	fufoSendIntUART((int)(xuatPhi*1000));
 	fufoSendCharUART(',');
 
-	if(xuatThang < 0){
+	if(xuatTheta < 0){
 		fufoSendCharUART('-');
 	}
-	fufoSendIntUART((int)(xuatThang*1000));
+	fufoSendIntUART((int)(xuatTheta*1000));
 	fufoSendCharUART(',');
 
 	if(altitudeLCD < 0){
