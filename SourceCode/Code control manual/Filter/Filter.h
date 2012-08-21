@@ -23,4 +23,4 @@ int calcRateAngle(void);
 void CompFilter(void);
 void HighPassFilter(void);
 float getAltitude(float baroAlt);
-void calcAccZ(void);
+void calcAltZ(void);

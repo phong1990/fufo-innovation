@@ -112,7 +112,7 @@ int main(void) {
 						FUFO_thrust = getThrustRate();
 						FUFO_thrust--;
 						setThrustRate(FUFO_thrust);
-						if(FUFO_thrust <= 45) 
+						if(FUFO_thrust <= 44) 
 						{
 							//FUFO_thrust = 45;
 							setPIDStatus(Disable);
@@ -214,12 +214,12 @@ void __attribute__((__interrupt__ , auto_psv)) _T2Interrupt (void)
 		i++;
 		if(i == 350){
 			i = 0;
-//			tempHigh = getHigh_sum();
-//			temp = (tempHigh/40);
-//			FUFO_thrust = getThrustRate();
-//			FUFO_thrust = FUFO_thrust + temp;
-//			setThrustRate(FUFO_thrust);
-//			setHigh_sum(0);
+			tempHigh = getHigh_sum();
+			temp = (tempHigh/40);
+			FUFO_thrust = getThrustRate();
+			FUFO_thrust = FUFO_thrust + temp;
+			setThrustRate(FUFO_thrust);
+			setHigh_sum(0);
 			resetInstruction();
 			setPIDAltitude(Disable);
 			setState(Landing);
