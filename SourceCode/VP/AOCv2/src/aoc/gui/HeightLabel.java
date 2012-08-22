@@ -37,6 +37,7 @@ public class HeightLabel extends JLabel {
     Image image;
     public double height = 0;   // Phi
     public double RollAngle = 0;    // Theta
+    public double setPoint = 0;
 
     public HeightLabel() throws IOException{
 

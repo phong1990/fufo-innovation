@@ -3,6 +3,8 @@ package aoc.command;
 import java.io.PrintWriter;
 import java.net.Socket;
 
+import aoc.control.Control;
+
 
 /**
  * @author khoinguyen67
@@ -48,7 +50,7 @@ public class CommandControl extends Thread{
                      * if users don't control. Application will automatic send byte 'y' 
                      * to AOP 1 second per time.
                      */
-                }else {
+                }else if (Control.start == 1 && Control.flagY == true){
                     sleep(10);
                     if(countY == 100){
                         out.println("89");

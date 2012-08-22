@@ -17,6 +17,7 @@ public class Control extends TabActivity {
     public static StatusControl stct = new StatusControl();
     public static boolean whileCommand = true;
     public static boolean whileStatus = true;
+    public static byte controlByte = 'e';
     
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -46,16 +46,18 @@ public class StatusMessage {
      * This method uses to get pitch angel and roll angel from message.
      */
     public void getStatus(String message){
-        
+
         try {
             String[] abc = message.split(",");
-            pitchAngle = Double.parseDouble(abc[0])*1000;
-            rollAngle = Double.parseDouble(abc[1])*1000; 
-            height = Double.parseDouble(abc[2])*10;
-            if (height < 0) height = 0;
-            if (height > 100) height = 100;
-         //   pitchAngle = Integer.parseInt(message.substring(0,2));
-          //  rollAngle = Integer.parseInt(message.substring(2,4));          
+            if(abc.length == 3){
+                pitchAngle = Double.parseDouble(abc[0]) - 0.59;
+                rollAngle = Double.parseDouble(abc[1]) + 13.16; 
+                height = Double.parseDouble(abc[2]);
+                if (height < 0) height = 0;
+                if (height > 100) height = 100;
+                //   pitchAngle = Integer.parseInt(message.substring(0,2));
+                //  rollAngle = Integer.parseInt(message.substring(2,4)); 
+            }
         } catch (Exception ex) {
             // TODO Auto-generated catch block
             ex.printStackTrace();

@@ -4,8 +4,11 @@ import java.io.IOException;
 
 import aop.video.*;
 import android.app.Activity;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.RadioButton;
@@ -48,15 +51,15 @@ public class ControlActivity extends Activity implements OnCheckedChangeListener
         preview = (FrameLayout) findViewById(R.id.camera_preview);
 
         rd_group.setOnCheckedChangeListener(this);
-        bt_forward.setOnClickListener(Control.cmct);
-        bt_backward.setOnClickListener(Control.cmct);
-        bt_right.setOnClickListener(Control.cmct);
-        bt_left.setOnClickListener(Control.cmct);
-        bt_up.setOnClickListener(Control.cmct);
-        bt_down.setOnClickListener(Control.cmct);
-        bt_rotateLeft.setOnClickListener(Control.cmct);
-        bt_rotateRight.setOnClickListener(Control.cmct);
-        bt_start.setOnClickListener(Control.cmct);
+        bt_forward.setOnClickListener(onClickBt);
+        bt_backward.setOnClickListener(onClickBt);
+        bt_right.setOnClickListener(onClickBt);
+        bt_left.setOnClickListener(onClickBt);
+        bt_up.setOnClickListener(onClickBt);
+        bt_down.setOnClickListener(onClickBt);
+        bt_rotateLeft.setOnClickListener(onClickBt);
+        bt_rotateRight.setOnClickListener(onClickBt);
+        bt_start.setOnClickListener(onClickBt);
         tb_LO.setVisibility(4);
 
         vdct = new VideoControl(this);
@@ -139,4 +142,52 @@ public class ControlActivity extends Activity implements OnCheckedChangeListener
         System.exit(0);
     return;
     }
+    
+    public View.OnClickListener onClickBt = new View.OnClickListener() {
+
+        @Override
+        public void onClick(View v) {
+            // TODO Auto-generated method stub
+     
+       int  buttonID = v.getId();
+        switch (buttonID){
+            case R.id.bt_lft:
+                Control.controlByte = 'a'; 
+                //                sendCommandToFUFO();
+                break;
+            case R.id.bt_fwd:
+                Control.controlByte = 'w'; 
+                //                sendCommandToFUFO();
+                break;
+            case R.id.bt_rgt:
+                Control.controlByte = 'd'; 
+                //                sendCommandToFUFO();
+                break;
+            case R.id.bt_bwd:
+                Control.controlByte = 's'; 
+                //                sendCommandToFUFO();
+                break;
+            case R.id.bt_up:
+                Control.controlByte = 'o'; 
+                //                sendCommandToFUFO();
+                break;
+            case R.id.bt_dwn:
+                Control.controlByte = 'p'; 
+                //                sendCommandToFUFO();
+                break;
+            case R.id.bt_start:
+                Control.controlByte = 'f'; 
+                //                sendCommandToFUFO();
+                break;
+            case R.id.bt_nkdt:
+                Control.controlByte = 'n'; 
+                //                sendCommandToFUFO();
+                break;
+            case R.id.bt_kdh:
+                Control.controlByte = 'k'; 
+                //                sendCommandToFUFO();
+                break;
+        }
+    }
+};
 }
