@@ -32,6 +32,8 @@
 #define	Disable		0
 #define True 		1
 #define False		0
+#define	On			1
+#define Off			0
 
 int getConnectStatus(void);
 void setConnectStatus(int Connect);
@@ -57,7 +59,8 @@ float getGyrosOutputY(void);
 void setAccelAlt(float Alt);
 float getAccelAlt(void);
 float constrain(float valueConstrain, float min, float max);
-
+void initTMR2(void);
+void initTMR3(void);
 void setPID1(int p1);
 int getPID1(void);
 void setPID2(int p2);

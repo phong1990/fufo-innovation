@@ -68,6 +68,7 @@ int main(void) {
 						FUFO_thrust++;
 						if(FUFO_thrust >= 41) {
 							FUFO_thrust = 41;
+							initBaro();
 							setState(Ready);
 							_RE8 = 0;
 						}
@@ -98,7 +99,7 @@ int main(void) {
 //					fufoOutputChar("Kp Theta: ");
 //					fufoOutputInt(getPID4());
 //					fufoOutputChar(" ");
-					if (userInputFlag == 0){
+					if (userInputFlag == Off){
 						getInstruction();
 						userInputFlag = getUserInput();
 					}
@@ -106,18 +107,14 @@ int main(void) {
 			
 			case Landing: // Trang thai Landing
 					// Auto landing
-					if(Hung >= 100){
+					if(Hung >= 75){
 						Hung = 0;
-						if(FUFO_thrust > 42) 
+						FUFO_thrust = getThrustRate();
+						FUFO_thrust--;
+						setThrustRate(FUFO_thrust);
+						if(FUFO_thrust <= 48) 
 						{
-							FUFO_thrust = getThrustRate();
-							FUFO_thrust_step = (FUFO_thrust - 42)/5 ;
-							FUFO_thrust = FUFO_thrust-FUFO_thrust_step;
-							setThrustRate(FUFO_thrust);
-						}
-						if(FUFO_thrust <= 42) 
-						{
-							FUFO_thrust = 42;
+							//FUFO_thrust = 45;
 							setPIDStatus(Disable);
 							T4CONbits.TON = 0;
 							T2CONbits.TON = 0;
@@ -166,8 +163,8 @@ void initFUFO(void){
 	fufoDelayMs(200);
 	fufoInitGyro();
 	fufoDelayMs(200);
-	initBaro();
-	fufoDelayMs(200);
+//	initBaro();
+//	fufoDelayMs(200);
 	initTMR2();
 	initTMR3();
 	
@@ -196,15 +193,17 @@ void __attribute__((__interrupt__ , auto_psv)) _T2Interrupt (void)
 {	
 	IFS0bits.T2IF = 0;	// clear interrupt flag manually
 	value++;
-	Hung++;
+	if(FUFO_State == Landing){
+		Hung++;
+	}
 	TMR2 = 0;
 	controlFUFO();
-	if(userInputFlag == 1){
+	if(userInputFlag == On){
 		_RE8 = 1;
 		index++;
-		if(index == 50){
+		if(index == 10){
 			index = 0;
-			userInputFlag = 0;
+			userInputFlag = Off;
 			if (_RE8 == 1){
 				_RE8 = 0;
 			} else _RE8 = 1;
@@ -213,7 +212,7 @@ void __attribute__((__interrupt__ , auto_psv)) _T2Interrupt (void)
 
 	if(getConnectStatus() == Disable){
 		i++;
-		if(i == 200){
+		if(i == 350){
 			i = 0;
 			tempHigh = getHigh_sum();
 			temp = (tempHigh/40);
@@ -221,6 +220,7 @@ void __attribute__((__interrupt__ , auto_psv)) _T2Interrupt (void)
 			FUFO_thrust = FUFO_thrust + temp;
 			setThrustRate(FUFO_thrust);
 			setHigh_sum(0);
+			resetInstruction();
 			setPIDAltitude(Disable);
 			setState(Landing);
 		}

@@ -8,9 +8,9 @@
 #define KpPsi		0
 #define KdPsi		18.8
 #define KiPsi		0
-//#define KpAlt			100
-//#define KdAlt			400
-//#define KiAlt			0
+#define KpAlt			100
+#define KdAlt			400
+#define KiAlt			25
 
 void controlFUFO(void);
 void getInstruction(void);
