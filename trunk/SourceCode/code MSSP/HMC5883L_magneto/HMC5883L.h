@@ -6,3 +6,4 @@
 
 unsigned char fufoInitMagneto(void);//Initialize HMC5883L
 unsigned char fufoReadMagneto(unsigned int *data);//Read the values in an array of 3 integers magneto_X, magneto_Y, magneto_Z. Return an error if it can not
+void fufoCalcAngleMag();//Calculate Angle from HMC5883L

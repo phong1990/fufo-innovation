@@ -4,11 +4,11 @@
 
 //---------------- Constantes ------------------
 //#define SENSOR_GAIN 0x00  // +/- 0.7 Ga
-#define SENSOR_GAIN 0x20  // +/- 1.0 Ga (default)
+//#define SENSOR_GAIN 0x20  // +/- 1.0 Ga (default)
 //#define SENSOR_GAIN 0x40  // +/- 1.5 Ga
 //#define SENSOR_GAIN 0x60  // +/- 2.0 Ga
 //#define SENSOR_GAIN 0x80  // +/- 3.2 Ga
-//#define SENSOR_GAIN 0xA0  // +/- 3.8 Ga
+#define SENSOR_GAIN 0xA0  // +/- 3.8 Ga
 //#define SENSOR_GAIN 0xC0  // +/- 4.5 Ga
 //#define SENSOR_GAIN 0xE0  // +/- 6.5 Ga (not recommended)
 
@@ -29,9 +29,9 @@
 //Initialize HMC5883L
 unsigned char fufoInitMagneto(void) {
 	unsigned char error = 0;
-	error += fufoWriteByteI2C(HMC5883L_I2C, HMC5883L_A_REGISTER, 0x12);
+	error += fufoWriteByteI2C(HMC5883L_I2C, HMC5883L_A_REGISTER, 0x18);
 	error += fufoWriteByteI2C(HMC5883L_I2C, HMC5883L_B_REGISTER, SENSOR_GAIN);
-	error += fufoWriteByteI2C(HMC5883L_I2C, HMC5883L_MODE_REGISTER, 0x01);
+	error += fufoWriteByteI2C(HMC5883L_I2C, HMC5883L_MODE_REGISTER, 0x00);
 	return error;
 }
 
@@ -47,13 +47,62 @@ unsigned char fufoReadMagneto(unsigned int *data) {
 	unsigned char datatemp[1];
 	unsigned char datatemp1[1];
 	error += fufoReadByteI2C(HMC5883L_I2C, HMC5883L_DATAX0, datatemp);
-	error += fufoReadByteI2C(HMC5883L_I2C, HMC5883L_DATAX0, datatemp1);
-	*data = ((datatemp1[0] << 8)&(0x0FFF)) | datatemp[0];
+	error += fufoReadByteI2C(HMC5883L_I2C, HMC5883L_DATAX1, datatemp1);
+	*data = ((datatemp1[0] << 8)&(0xF0)) | (datatemp[0]&(0x0F)) ;
 	error += fufoReadByteI2C(HMC5883L_I2C, HMC5883L_DATAY0, datatemp);
 	error += fufoReadByteI2C(HMC5883L_I2C, HMC5883L_DATAY1, datatemp1);
-	*(data + 1) = ((datatemp1[0] << 8)&(0x0FFF)) | datatemp[0];
+	*(data + 1) = ((datatemp1[0] << 8)&(0xF0)) | (datatemp[0]&(0x0F));
 	error += fufoReadByteI2C(HMC5883L_I2C, HMC5883L_DATAZ0, datatemp);
 	error += fufoReadByteI2C(HMC5883L_I2C, HMC5883L_DATAZ1, datatemp1);
-	*(data + 2) = ((datatemp1[0] << 8)&(0x0FFF)) | datatemp[0];
+	*(data + 2) = ((datatemp1[0] << 8)&(0xF0)) | (datatemp[0]&(0x0F));
 	return error;
 }
+//ham nay viet trong filter
+//tao cac bien global
+float xScaled, yScaled, zScaled;
+float xRaw, yRaw, zRaw; 
+int dataMagnetoArray[3];
+float heading = 0;
+float declinationAngle = 0.0235619445;
+float convertMagneto = 2.56;
+float headingDegrees = 0;
+
+
+void fufoCalcAngleMag() {
+	fufoReadMagneto(dataMagnetoArray);
+	if(dataMagnetoArray[0] < 32768) {
+			xRaw = dataMagnetoArray[0];
+		} else {
+			xRaw = (dataMagnetoArray[0] - 65536 );
+		}
+		
+		if(dataMagnetoArray[1] < 32768) {
+			yRaw = dataMagnetoArray[1];
+		} else {
+			yRaw = (dataMagnetoArray[1] - 65536);
+		}
+		
+		if(dataGyroArray[2] < 32768) {
+			zRaw = dataMagnetoArray[2];
+		} else {
+			zRaw = (dataMagnetoArray[2] - 65536);
+		}
+
+	xScaled = (float)(xRaw) * convertMagneto;
+	yScaled = (float)(yRaw) * convertMagneto;
+	zScaled = (float)(zRaw) * convertMagneto;
+
+	heading = atan2(yScaled, xScaled);
+
+	
+  	heading += declinationAngle;
+
+	headingDegrees = (180 / 3.1415926) * heading; 
+
+   if(heading < 0)
+    heading += 6.2831852;
+   else if(heading > 6.2831852)
+    heading -= 6.2831852;
+
+}
+
