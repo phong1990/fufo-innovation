@@ -53,6 +53,7 @@ public class SettingActivity extends Activity{
 
         bt_connectSV.setOnClickListener(onClickBt);
         bt_connectFF.setOnClickListener(onClickBt);
+        Control.cmct.setPriority(10);
         Control.cmct.start();
 
         bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
@@ -153,6 +154,7 @@ public class SettingActivity extends Activity{
                             // ghifileThread();
                             Control.stct.bluetoothSocket = bluetoothSocket;
                             Log.d(LOG_TAG, "StartReadThread: stct");
+                            
                             Control.stct.start();
                             Log.d(LOG_TAG, "StartReadThread: start");
                         }

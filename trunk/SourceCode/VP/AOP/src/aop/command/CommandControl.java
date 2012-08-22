@@ -42,7 +42,7 @@ public class CommandControl extends Thread implements OnClickListener {
     public BluetoothSocket bluetoothSocket = null;
     public int controlMode;
     int buttonID;
-    byte controlByte = 'e';
+  //  byte Control.controlByte = 'e';
     public static int flagDelay = 1;
     public boolean flagWhile = true;
     int countY = 0;
@@ -72,23 +72,23 @@ public class CommandControl extends Thread implements OnClickListener {
                 if(Control.svSetting == 1 && controlMode == 1){
 
                     waitCommandFromeAOC();
-                    bluetoothSocket.getOutputStream().write(controlByte);
-                    Log.d("cmct","da send: " + controlByte);
-                    controlByte = 'y';
+                    bluetoothSocket.getOutputStream().write(Control.controlByte);
+                    Log.d("cmct","da send: " + Control.controlByte);
+                    Control.controlByte = 'y';
                 }else if(controlMode == 2){
 
-                    if(controlByte != 'y'){
+                    if(Control.controlByte != 'y'){
 
-                        bluetoothSocket.getOutputStream().write(controlByte);
-                        Log.d("cmct","da send: " + controlByte + "  " + Control.connectFF);
-                        controlByte = 'y';
+                        bluetoothSocket.getOutputStream().write(Control.controlByte);
+                        Log.d("cmct","da send: " + Control.controlByte + "  " + Control.connectFF);
+                        Control.controlByte = 'y';
                         sleep(500);
                         countY = 0;
                     } else if (Control.connectFF == true){
 
                         sleep(10);
                         if(countY == 100){
-                            bluetoothSocket.getOutputStream().write(controlByte);
+                            bluetoothSocket.getOutputStream().write(Control.controlByte);
                             Log.d("cmct","da send10 y");
                             countY = 0;
                         } else {
@@ -117,44 +117,44 @@ public class CommandControl extends Thread implements OnClickListener {
         switch(command){
             
             case 37:
-                controlByte = 'n';
+                Control.controlByte = 'n';
                 break;
                 
             case 38:
-                controlByte = 'o';
+                Control.controlByte = 'o';
                 break;
                 
             case 39:
-                controlByte = 'k';
+                Control.controlByte = 'k';
                 break;
             case 40:
-                controlByte = 'p';
+                Control.controlByte = 'p';
                 break;
                 
             case 65:
-                controlByte = 'a';
+                Control.controlByte = 'a';
                 break;
                 
             case 87:
-                controlByte = 'w';
+                Control.controlByte = 'w';
                 break;
                 
             case 68:
-                controlByte = 'd';
+                Control.controlByte = 'd';
                 break;
                 
             case 83:
-                controlByte = 's';
+                Control.controlByte = 's';
                 break;
                 
             case 89:
-                controlByte = 'y';
+                Control.controlByte = 'y';
                 break;
             case 10: 
-                controlByte = 'f';
+                Control.controlByte = 'f';
                 break;
             case 82: 
-                controlByte = 'r';
+                Control.controlByte = 'r';
                 break;
             
         }
@@ -167,13 +167,13 @@ public class CommandControl extends Thread implements OnClickListener {
 
         if (Control.ffSetting == 1 && flagDelay == 1){
 
-            Log.d("cmct", "Control:" + controlByte + " .Command : " + command + " .CtM: " + controlMode + Control.ffSetting +Control.svSetting);
+            Log.d("cmct", "Control:" + Control.controlByte + " .Command : " + command + " .CtM: " + controlMode + Control.ffSetting +Control.svSetting);
             try {
                 
                 flagDelay = 2;
                 if (bluetoothSocket != null)
                     
-                    bluetoothSocket.getOutputStream().write(controlByte);
+                    bluetoothSocket.getOutputStream().write(Control.controlByte);
                 sleep(500);
                 flagDelay =1;
             } catch (Exception e) {
@@ -194,41 +194,45 @@ public class CommandControl extends Thread implements OnClickListener {
         buttonID = v.getId();
         switch (buttonID){
             case R.id.bt_lft:
-                controlByte = 'a'; 
+                Control.controlByte = 'a'; 
                 //                sendCommandToFUFO();
                 break;
             case R.id.bt_fwd:
-                controlByte = 'w'; 
+                Control.controlByte = 'w'; 
                 //                sendCommandToFUFO();
                 break;
             case R.id.bt_rgt:
-                controlByte = 'd'; 
+                Control.controlByte = 'd'; 
                 //                sendCommandToFUFO();
                 break;
             case R.id.bt_bwd:
-                controlByte = 's'; 
+                Control.controlByte = 's'; 
                 //                sendCommandToFUFO();
                 break;
             case R.id.bt_up:
-                controlByte = 'o'; 
+                Control.controlByte = 'o'; 
                 //                sendCommandToFUFO();
                 break;
             case R.id.bt_dwn:
-                controlByte = 'p'; 
+                Control.controlByte = 'p'; 
                 //                sendCommandToFUFO();
                 break;
             case R.id.bt_start:
-                controlByte = 'f'; 
+                Control.controlByte = 'f'; 
                 //                sendCommandToFUFO();
                 break;
             case R.id.bt_nkdt:
-                controlByte = 'n'; 
+                Control.controlByte = 'n'; 
                 //                sendCommandToFUFO();
                 break;
             case R.id.bt_kdh:
-                controlByte = 'k'; 
+                Control.controlByte = 'k'; 
                 //                sendCommandToFUFO();
                 break;
         }
+    }
+    public void setCommand(byte command){
+
+        this.command = Control.controlByte;
     }
 }

@@ -53,9 +53,9 @@ public class AOC{
     public JButton bt_rotateRight;         //Button rotate right
     public JButton bt_exit;                //Button exit    
     public JButton bt_minimize;            //Button minimize 
- //   JPanel panel;                          //panel used to move frame by mouse 
-  //  int flag = 0;                          //Initiate pane to contain component         
-
+    //   JPanel panel;                          //panel used to move frame by mouse 
+    //  int flag = 0;                          //Initiate pane to contain component         
+    public boolean firstUP = true;
     /*
      * Constructor to initiate AOC
      */
@@ -64,14 +64,14 @@ public class AOC{
         frame = new JFrame();
         frame.setSize(1240 , 690);
         frame.setUndecorated(true);                             //Remove title bar of main frame
-        frame.setBackground(new Color(0, 0, 0, 0));             //Set transparent for frame
+        //   frame.setBackground(new Color(0, 0, 0, 0));             //Set transparent for frame
         frame.setTitle("FUFO APP");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setResizable(false);
         frame.setVisible(true);
         pane = new JLayeredPane();
         pane.setPreferredSize(new Dimension(1240 , 690));
-        
+
         lb_background = new JLabel(new ImageIcon("pic\\interface.png"));
         pane.add(lb_background,1);
         lb_background.setBounds(0, 0, 1240 , 690);
@@ -107,13 +107,13 @@ public class AOC{
         lb_status.setBounds(220, 630, 800, 50);
 
         lb_text = new JLabel();
-      //  lb_text.setText("Wait connect from Application on Phone!");
+        //  lb_text.setText("Wait connect from Application on Phone!");
         lb_text.setBounds(420, 630, 800, 50);
         lb_text.setFont(new Font("Serif", Font.BOLD, 20));
-     //   lb_text.setForeground(Color.WHITE);
+        //   lb_text.setForeground(Color.WHITE);
         pane.add(lb_text,0);
-        
-        
+
+
         lb_picture = new JLabel(new ImageIcon("pic\\1009.jpg"));
         pane.add(lb_picture,0);
         lb_picture.setBounds(220, 10, 800, 600);
@@ -159,7 +159,7 @@ public class AOC{
     /*
      * This class is extended JLabel uses to override method paintComponent to draw attitude indicator.
      */
-/*    public class AILabel extends JLabel {
+    /*    public class AILabel extends JLabel {
 
         private static final long serialVersionUID = 1L;
         Image image;
@@ -217,7 +217,7 @@ public class AOC{
 
         @Override
         public void keyReleased(KeyEvent arg0) {
-            
+
             if(Control.ffSetting && Control.svSetting && Control.start == 1){
 
                 int command = arg0.getKeyCode();           //Get key code of pressed key
@@ -261,7 +261,7 @@ public class AOC{
 
         @Override
         public void keyPressed(KeyEvent arg0) {
-            System.out.println("fu");
+
             if(Control.ffSetting && Control.svSetting && Control.start == 1){
 
                 int command = arg0.getKeyCode();                //Get key code of pressed key
@@ -281,10 +281,26 @@ public class AOC{
 
                     case KeyEvent.VK_UP:
                         bt_up.setIcon(new ImageIcon("pic\\bt_up_Clicked.png"));
+                        if(firstUP){
+                            lb_height.setPoint = 1;
+                            firstUP = false;
+                        }else{
+                            if(lb_height.setPoint <= 98.5)
+
+                                lb_height.setPoint += 0.25;
+                        }
+                        lb_setPoint.setText(Double.toString(lb_height.setPoint));
+                       // frame.repaint();
                         break;
 
                     case KeyEvent.VK_DOWN:
                         bt_down.setIcon(new ImageIcon("pic\\bt_down_Clicked.png"));
+                        if(lb_height.setPoint >= 0.25)
+
+                            lb_height.setPoint -= 0.25;
+
+                        lb_setPoint.setText(Double.toString(lb_height.setPoint));
+                       // frame.repaint();
                         break;
 
                     case KeyEvent.VK_D:
@@ -315,7 +331,7 @@ public class AOC{
             JButton button = (JButton)e.getComponent();
 
             if(button == bt_exit || button == bt_minimize)
-                
+
                 button.setIcon(new ImageIcon("pic\\"
                         + e.getComponent().getName()+"_Clicked.png"));
 
@@ -338,21 +354,20 @@ public class AOC{
                     Control.cmct.setCommand(KeyEvent.VK_D);
                 }else if(button == bt_down){
 
-                    if(lb_height.height >= 0.5)
+                    if(lb_height.setPoint >= 0.5)
 
-                        lb_height.height -= 0.5;
+                        lb_height.setPoint -= 0.5;
 
-                    lb_setPoint.setText(Double.toString(lb_height.height));
+                    lb_setPoint.setText(Double.toString(lb_height.setPoint));
                     frame.repaint();
-                    Control.cmct.setCommand(KeyEvent.VK_UP);
                     Control.cmct.setCommand(KeyEvent.VK_DOWN);
                 }else if(button == bt_up){
 
-                    if(lb_height.height <= 98.5)
+                    if(lb_height.setPoint <= 98.5)
 
-                        lb_height.height += 0.5;
+                        lb_height.setPoint += 0.5;
 
-                    lb_setPoint.setText(Double.toString(lb_height.height));
+                    lb_setPoint.setText(Double.toString(lb_height.setPoint));
                     frame.repaint();
                     Control.cmct.setCommand(KeyEvent.VK_UP);
                 }else if(button == bt_rotateLeft){
@@ -416,7 +431,7 @@ public class AOC{
         public void mouseReleased(MouseEvent e) {
 
             JButton button = (JButton) e.getComponent();
-            Control.cmct.setCommand(KeyEvent.VK_R);
+
             if(button == bt_exit){ 
 
                 frame.dispose();
@@ -424,7 +439,8 @@ public class AOC{
             }
 
             if(button == bt_minimize) frame.setState ( Frame.ICONIFIED );
-
+            if(Control.cmct != null)
+                Control.cmct.setCommand(KeyEvent.VK_R);
             if(Control.ffSetting && Control.svSetting &&Control.start == 1){
 
                 ((JButton) e.getComponent()).setIcon(new ImageIcon("pic\\"

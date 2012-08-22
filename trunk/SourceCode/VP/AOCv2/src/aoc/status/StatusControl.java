@@ -25,6 +25,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
 
+import javax.swing.ImageIcon;
+
 /**
  * This class uses to start a thread to receive status of FUFO from Android phone via TCP.
  * @author khoinguyen67
@@ -58,13 +60,13 @@ public class StatusControl extends Thread {
     public void run(){
 
         try {
-            
+
             in = new BufferedReader(new InputStreamReader(
                     statusSocket.getInputStream()));
-            
+
             while(true){
-                
-             //   updateStatusOnScreen(pitchAngle,rollAngle);
+
+                   updateStatusOnScreen(pitchAngle,rollAngle,height);
                 waitStatusFromeAOP();
             }
         } catch (Exception ex) {
@@ -80,16 +82,25 @@ public class StatusControl extends Thread {
 
         statusMessage = in.readLine();
         Control.svSetting = true;
-        
+
         if(statusMessage.equals("ff1")){
-            
+        //    aoc.lb_status.setIcon(new ImageIcon("pic\\lb_status_Green.png"));
             Control.ffSetting = true;
+            Control.checkConnect = true;
+            // Control.alert.start();
+        }else if(statusMessage.equals("y")){
+            Control.flagY = true;
+
         }else{
-          /*  sm = new StatusMessage();
-            sm.getStatus(statusMessage);
-            pitchAngle = sm.pitchAngle;
-            rollAngle = sm.rollAngle;
-            height = sm.height;*/
+            System.out.println(statusMessage);
+            String[] abc = statusMessage.split(",");
+            if(abc.length == 3){
+                sm = new StatusMessage();
+                sm.getStatus(statusMessage);
+                pitchAngle = sm.pitchAngle;
+                rollAngle = sm.rollAngle;
+                height = sm.height;
+            }
             Control.ffSetting = true;
             Control.svSetting = true;
         }
@@ -98,7 +109,7 @@ public class StatusControl extends Thread {
     /*
      * This method uses to update status on screen when new status receive
      */
-    public void updateStatusOnScreen(double PitchAngle,double RollAngle){
+    public void updateStatusOnScreen(double PitchAngle,double RollAngle, double height){
 
         aoc.lb_ai.PitchAngle = PitchAngle;
         aoc.lb_ai.RollAngle = RollAngle/100;
