@@ -19,6 +19,9 @@ float AzOld = 1;
 float AccZSumSmooth = 0;  
 int finishFlag = False;
 float altFinalLPF = 0;
+float vz_est = 0;
+float h_est = 0;
+
 
 void CalcFirstAngle(void){
 	fufoGetAngleAccel();
@@ -134,21 +137,12 @@ void fufoGetAngleAccel(void){
 }
 
 float getAltitude(float baroAlt){	
-	float temp; 
-	//now try to smooth deltaSum and Est Altiture using ACC Z readings
-    
-	temp = constrain(abs(AccZSumSmooth),1,4);
-    altFinal = (baroAlt*temp + altFinal*(4 - temp))/4;
-	altFinalLPF = Klpf*altFinalLPF + (1-Klpf)*altFinal;
-	AccZSum = 0;
-	return altFinalLPF;
+	h_est = h_est + (h_est - baroAlt)*k_h_est;
+	vz_est = vz_est + (h_est - baroAlt)*k_vz_est;
+	return h_est;
 }
 
-void calcAccZSum(void){
-	float sum;
-	sum = (AzOld - Az);
-	AccZSum += sum;
-	AzOld = Az;
-	// little filter for Accel
-	AccZSumSmooth = (AccZSumSmooth*0.8) + (AccZSum*0.2);
+void calcAltZ(void){
+	h_est = h_est + vz_est*0.01;
+	vz_est = vz_est + Az*9.8*0.01;
 }
