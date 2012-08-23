@@ -77,15 +77,15 @@ void fufoCalcAngleMag() {
 		}
 		
 		if(dataMagnetoArray[1] < 32768) {
-			yRaw = dataMagnetoArray[1];
+			zRaw = dataMagnetoArray[1];
 		} else {
-			yRaw = (dataMagnetoArray[1] - 65536);
+			zRaw = (dataMagnetoArray[1] - 65536);
 		}
 		
 		if(dataGyroArray[2] < 32768) {
-			zRaw = dataMagnetoArray[2];
+			yRaw = dataMagnetoArray[2];
 		} else {
-			zRaw = (dataMagnetoArray[2] - 65536);
+			yRaw = (dataMagnetoArray[2] - 65536);
 		}
 
 	xScaled = (float)(xRaw) * convertMagneto;
