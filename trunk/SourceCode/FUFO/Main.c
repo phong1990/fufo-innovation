@@ -167,9 +167,9 @@ void initFUFO(void){
 //	fufoDelayMs(200);
 	initTMR2();
 	initTMR3();
-	
+	fufoInitMagneto();
 //	initBluetooth(receiOK);
-//	fufoDelayMs(200);
+	fufoDelayMs(200);
 	setState(Waiting_for_connection);
 }
 
@@ -191,12 +191,14 @@ void initTMR3(void){
 
 void __attribute__((__interrupt__ , auto_psv)) _T2Interrupt (void)
 {	
-	IFS0bits.T2IF = 0;	// clear interrupt flag manually
+//	IFS0bits.T2IF = 0;	// clear interrupt flag manually
+//	TMR2 = 0;
+	TMR3 = 0;
 	value++;
 	if(FUFO_State == Landing){
 		Hung++;
 	}
-	TMR2 = 0;
+
 	controlFUFO();
 	if(userInputFlag == On){
 		_RE8 = 1;
@@ -225,4 +227,9 @@ void __attribute__((__interrupt__ , auto_psv)) _T2Interrupt (void)
 			setState(Landing);
 		}
 	} else i = 0;
+//	fufoSendCharUART('k');
+//	fufoSendIntUART(TMR3);
+//	fufoSendCharUART('k');
+	TMR2 = 0;
+	IFS0bits.T2IF = 0;	// clear interrupt flag manually
 }

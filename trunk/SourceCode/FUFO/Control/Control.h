@@ -26,7 +26,7 @@ void getValuefromSensor();
 void calcPID(float phiDesire, float thetaDesire, float psiDesire, float altitudeDesire);
 float calcRollAngle(float desireRoll_Angle, float actualRoll_Angle, float Gyros_OutputRoll, float KpRoll, float KiRoll, float KdRoll);
 float calcPitchAngle(float desirePitch_Angle, float actualPitch_Angle, float Gyros_OutputPitch, float KpPitch, float KiPitch, float KdPitch);
-float calcYawAngle(float desireYaw_Angle, float actualYaw_Angle, float Gyros_OutputYaw, float KpYaw, float KiYaw, float KdYaw);
+float calcYawAngle(float desireYaw_Angle, float actualYaw_Angle, float KpYaw, float KiYaw, float KdYaw);
 float calcAltitude(float desireAltitude, float actualAltitude, float KpA, float KiA, float KdA);
 void resetInstruction(void);
 void resetSensor(void);

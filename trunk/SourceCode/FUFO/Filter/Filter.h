@@ -22,5 +22,6 @@ void fufoGetRateAngle(void);
 int calcRateAngle(void);
 void CompFilter(void);
 void HighPassFilter(void);
-float getAltitude(float baroAlt);
-void calcAltZ(void);
+//float getAltitude(float baroAlt);
+//void calcAltZ(void);
+float fufoCalcAngleMag(void);
