@@ -21,7 +21,15 @@ int finishFlag = False;
 float altFinalLPF = 0;
 float vz_est = 0;
 float h_est = 0;
-
+//////////////////////////////////
+float xScaled, yScaled, zScaled;
+float xRaw, yRaw, zRaw; 
+float xRaw_Old, yRaw_Old, zRaw_Old; 
+unsigned int dataMagnetoArray[3];
+float heading = 0;
+float declinationAngle = 0.0235619445;
+float convertMagneto = 2.56;
+float headingDegrees = 0;
 
 void CalcFirstAngle(void){
 	fufoGetAngleAccel();
@@ -37,16 +45,16 @@ void CompFilter(void){
 	fufoGetAngleGyros();
 	phiComp = k*(phiComp + Ry*0.01) + (1 - k)*phiAngle;
 	thetaComp = k*(thetaComp + Rx*0.01) + (1 - k)*thetaAngle;
-	psiHigh = k*(psiHigh + Rz*0.01);
-	if(psiHigh > 360){
-		psiHigh = psiHigh - 360;
-	}
+//	psiHigh = k*(psiHigh + Rz*0.01);
+//	if(psiHigh > 360){
+//		psiHigh = psiHigh - 360;
+//	}
 	setGyrosOutputR(Rx);
 	setGyrosOutputP(Ry);
 	setGyrosOutputY(Rz);
 	setPhiAngle(phiComp);
 	setThetaAngle(thetaComp);
-	setPsiAngle(psiHigh);	
+//	setPsiAngle(psiHigh);	
 }
 
 void fufoGetRateAngle(void){
@@ -136,13 +144,46 @@ void fufoGetAngleAccel(void){
 	thetaAngle = (180 / 3.1415926)*atan2(Ay, sqrt(pow(Az, 2) + 0.01 * pow(Ax, 2)));
 }
 
-float getAltitude(float baroAlt){	
-	h_est = h_est + (h_est - baroAlt)*k_h_est;
-	vz_est = vz_est + (h_est - baroAlt)*k_vz_est;
-	return h_est;
-}
+float fufoCalcAngleMag() {
+	float xuatX, xuatY, xuatZ;
+	fufoReadMagneto(dataMagnetoArray);
+	if(dataMagnetoArray[0] < 32768) {
+			xRaw = dataMagnetoArray[0];
+		} else {
+			xRaw = (dataMagnetoArray[0] - 65536 );
+		}
+		
+		if(dataMagnetoArray[1] < 32768) {
+			yRaw = dataMagnetoArray[1];
+		} else {
+			yRaw = (dataMagnetoArray[1] - 65536);
+		}
+		
+		if(dataMagnetoArray[2] < 32768) {
+			zRaw = dataMagnetoArray[2];
+		} else {
+			zRaw = (dataMagnetoArray[2] - 65536);
+		}
 
-void calcAltZ(void){
-	h_est = h_est + vz_est*0.01;
-	vz_est = vz_est + Az*9.8*0.01;
+	xScaled = (float)(xRaw) * convertMagneto;
+	yScaled = (float)(yRaw) * convertMagneto;
+	zScaled = (float)(zRaw) * convertMagneto;
+
+	if(xScaled  == 0) {
+		if(yScaled > 0) {
+			heading = 90;
+		} else {
+			heading = -90;
+		}
+	} else {
+		heading = (180 / 3.1415926) * atan2(yScaled, -xScaled);
+	}
+	
+  	heading += (180 / 3.1415926) * declinationAngle;
+
+	xuatX = xScaled;
+	xuatY = yScaled;
+	xuatZ = heading;
+
+	return heading;
 }

@@ -26,6 +26,8 @@ float Angle_sumYaw;
 float Altitude;
 float actualAltitudeNew = 0;
 float actualAltitudeOld = 0;
+float yaw_Angle_New = 0;
+float yaw_Angle_Old = 0;
 float PID_sum = 0;
 //float KdAlt = 300;
 unsigned int userInput;
@@ -33,6 +35,8 @@ float xuatPhong = 0;
 float xuatThang = 0;
 float xuatPhi = 0;
 float xuatTheta = 0;
+float xuatPsi = 0;
+float xuatHMC = 0; 
 float phong = 0.59;
 float thang = -13.16;		//-6.58;
 int PID_Yaw = 0;
@@ -219,14 +223,13 @@ void getInstruction(void){
 	} else userInput = Off;
 	xuatPhong = phong;
 	xuatThang = thang;
-	xuatdocao = thrustRate;
 }
 
 void setSetpoint(float Phi, float Theta, float Psi, float high){
 	
 	if (getPIDStatus() == Enable) {
 		CompFilter();
-		calcAltZ();
+//		calcAltZ();
 		calcPID(Phi, Theta, Psi, high); 
 	}
 	PWM_Motor1 = Roll_sum + Yaw_sum;
@@ -251,14 +254,15 @@ void calcPID(float phiDesire, float thetaDesire, float psiDesire, float altitude
 	float phiAct, thetaAct, psiAct, GyrosR, GyrosP, GyrosY, altitudeBaroAct, altitudeAcc_Baro;
 	phiAct = getPhiAngle();
 	thetaAct = getThetaAngle();
-	psiAct = getPsiAngle();
+	psiAct = fufoCalcAngleMag();
 	GyrosR = getGyrosOutputR();
 	GyrosP = getGyrosOutputP();
-	GyrosY = getGyrosOutputY();
 	altitudeBaroAct = getBaroAltitude();
 	
 	xuatTheta = thetaAct;
-	xuatPhi = psiAct;
+	xuatPhi = phiAct;
+	xuatPsi = psiAct;
+	
 	if (thetaAct <= -40 || thetaAct >= 40 || phiAct <= -40 || phiAct >= 40){
 		T4CONbits.TON = 0;
 		_PTEN = 0;
@@ -271,7 +275,7 @@ void calcPID(float phiDesire, float thetaDesire, float psiDesire, float altitude
 
 	Pitch_sum = calcPitchAngle(phiDesire, phiAct, GyrosP, KpPhi, KiPhi, KdPhi);
 	Roll_sum = calcRollAngle(thetaDesire, thetaAct, GyrosR, KpTheta, KiTheta, KdTheta);
-	Yaw_sum = calcYawAngle(psiDesire, psiAct, GyrosY, KpPsi, KiPsi, KdPsi);	
+	Yaw_sum = calcYawAngle(psiDesire, psiAct, KpPsi, KiPsi, KdPsi);	
 //	Pitch_sum = 0;
 //	Roll_sum = 0;
 //	Yaw_sum = 0;
@@ -283,24 +287,25 @@ void calcPID(float phiDesire, float thetaDesire, float psiDesire, float altitude
 		setPIDAltitude(Disable);
 	}
 
+	xuatdocao = Yaw_sum;
 
-	if(xuatPhi < 0){
+	if(xuatPsi < 0){
 		fufoSendCharUART('-');
 	}
-	fufoSendIntUART((int)(xuatPhi*1000));
+	fufoSendIntUART((int)(xuatPsi*10));
 	fufoSendCharUART(',');
 
-	if(xuatTheta < 0){
+	if(xuatdocao < 0){
 		fufoSendCharUART('-');
 	}
-	fufoSendIntUART((int)(xuatTheta*1000));
+	fufoSendIntUART((int)(xuatdocao));
 	fufoSendCharUART(',');
 
 	if(altitudeLCD < 0){
 		fufoSendCharUART('-');
 	}
 	fufoSendIntUART((int)(altitudeLCD*1000));
-//	fufoSendCharUART(',');
+	fufoSendCharUART(',');
 
 	fufoSendCharUART('\r');
 	fufoSendCharUART('\n');
@@ -326,12 +331,14 @@ float calcPitchAngle(float desirePitch_Angle, float actualPitch_Angle, float Gyr
 	return Angle_sumPitch;
 }
 
-float calcYawAngle(float desireYaw_Angle, float actualYaw_Angle, float Gyros_OutputYaw, float KpYaw, float KiYaw, float KdYaw){
+float calcYawAngle(float desireYaw_Angle, float actualYaw_Angle, float KpYaw, float KiYaw, float KdYaw){
 	e_Yaw = desireYaw_Angle - actualYaw_Angle;
+	yaw_Angle_New = actualYaw_Angle;
 	total_e_Yaw = total_e_Yaw + e_Yaw;
 	P = KpYaw*e_Yaw;
 	I = KiYaw*total_e_Yaw*0.01;
-	D = KdYaw*Gyros_OutputYaw*(-1);
+	D = KdYaw*(yaw_Angle_Old - yaw_Angle_New)/0.013;
+	yaw_Angle_Old = yaw_Angle_New;
 	Angle_sumYaw = P + I + D;
 	return Angle_sumYaw;
 }
