@@ -1,4 +1,7 @@
 #include "../FUFO.h"
+#define min(value1,value2)(float) !(value2<value1)?value1:value2
+#define max(value1,value2)(float) !(value1<value2)?value2:value1
+
 
 unsigned int Up, Down, Left, Right, R_Left, R_Right, Forward, Backward;
 float Yaw_sum, Pitch_sum, Roll_sum, High_sum;
@@ -33,19 +36,21 @@ float PID_sum = 0;
 unsigned int userInput;
 float xuatPhong = 0;
 float xuatThang = 0;
+float xuatPsong = 0;
 float xuatPhi = 0;
 float xuatTheta = 0;
 float xuatPsi = 0;
 float xuatHMC = 0; 
-float phong = 0.59;
-float thang = -13.16;		//-6.58;
+float phong = -0.6;
+float thang = 1.6;		//-6.58;
+float psong = 0;
 int PID_Yaw = 0;
 float altitude, altitudeR, altitudeG;
 float altitudeLCD, altitudeLCD1, altitudeLCD2; 
-float docao = 1.25;
+float docao = 1.5;
 float xuatdocao;
-float KpPsi = 0;
-float KdPsi = 1;
+//float KpPsi = 5;
+//float KdPsi = 1;
 int tempAlt = 0;
 
 int getThrustRate(void){
@@ -69,16 +74,15 @@ float getHigh_sum(void){
 }
 
 void controlFUFO(void){
-//	if(Forward == 1){
-//		setSetpoint(3.59,-23.16,-1,docao);
-//	} else if(Backward == 1){
-//		setSetpoint(3.59,-2.77,-1,docao);
-//	} else if(Left == 1){
-//		setSetpoint(-5.41,-14.16,-1,docao);
-//	} else if(Right == 1){
-//		setSetpoint(10.59,-14.16,-1,docao);
-//	} else 
-	setSetpoint(3.59,-14.16,0,docao);
+	if(Forward == 1){
+		setSetpoint(-0.6,-10,psong,docao);
+	} else if(Backward == 1){
+		setSetpoint(-0.6,17,psong,docao);
+	} else if(Left == 1){
+		setSetpoint(-14,1.6,psong,docao);
+	} else if(Right == 1){
+		setSetpoint(13,1.6,psong,docao);
+	} else setSetpoint(-0.6,1.6,psong,docao);
 }
 
 void checkConnection(void){
@@ -124,8 +128,9 @@ void getUpInstruction(void){
 	if(comandfromBluetooth == 'o'){
 		_RE8 = 1;
 //		Up = 1;
+		psong = fufoCalcAngleMag();
+		fufoDelayMs(20);
 		thrustRate = 49;
-		PID_Yaw = 0;
 		setPIDStatus(Enable);
 		setPIDAltitude(Enable);
 		T2CONbits.TON = 1;
@@ -147,14 +152,14 @@ void getInstruction(void){
 		Up = 1;
 		docao += 0.25;
 //		thrustRate = 54;
-		thrustRate += 1;
+//		thrustRate += 1;
 		userInput = On;
 		setConnectStatus(Enable);
 	} else if(comandfromBluetooth == 'p'){
 		resetInstruction();
 		Down = 1;
 		docao -= 0.25;
-		thrustRate -= 1;
+//		thrustRate -= 1;
 		userInput = On;
 		setConnectStatus(Enable);
 	} else if(comandfromBluetooth == 'w'){
@@ -162,7 +167,7 @@ void getInstruction(void){
 		Forward = 1;
 //		thang += 0.2;
 //		KdAlt += 10;
-		KdPsi += 1;
+//		KpPsi += 1;
 		userInput = On;
 		setConnectStatus(Enable);
 	} else if(comandfromBluetooth == 's'){
@@ -170,7 +175,7 @@ void getInstruction(void){
 		Backward = 1;
 //		thang -= 0.2;
 //		KdAlt -= 10;
-		KdPsi -= 1;
+//		KpPsi -= 1;
 		userInput = On;
 		setConnectStatus(Enable);
 	} else if(comandfromBluetooth == 'a'){
@@ -178,7 +183,7 @@ void getInstruction(void){
 		Left = 1;
 //		phong += 0.2;
 //		KpAlt += 10;
-		KdPsi += 0.1;
+//		KpPsi += 0.1;
 		userInput = On;
 		setConnectStatus(Enable);
 	} else if(comandfromBluetooth == 'd'){
@@ -186,18 +191,20 @@ void getInstruction(void){
 		Right = 1;
 //		phong -= 0.2;
 //		KpAlt -= 10;
-		KdPsi -= 0.1;
+//		KpPsi -= 0.1;
 		userInput = On;
 		setConnectStatus(Enable);
 	} else if(comandfromBluetooth == 'n'){
 		resetInstruction();
 		R_Left = 1;
+		psong += 30;
 //		KiAlt += 10;
 		userInput = On;
 		setConnectStatus(Enable);
 	} else if(comandfromBluetooth == 'k'){
 		resetInstruction();
 		R_Right = 1;
+		psong -= 30;
 //		KiAlt -= 10;
 		userInput = On;
 		setConnectStatus(Enable);
@@ -224,8 +231,9 @@ void getInstruction(void){
 		userInput = On;
 		setConnectStatus(Enable);
 	} else userInput = Off;
-	xuatPhong = KdPsi;
+	xuatPhong = KpPsi;
 	xuatThang = thang;
+	xuatPsong = psong;
 }
 
 void setSetpoint(float Phi, float Theta, float Psi, float high){
@@ -235,17 +243,21 @@ void setSetpoint(float Phi, float Theta, float Psi, float high){
 //		calcAltZ();
 		calcPID(Phi, Theta, Psi, high); 
 	}
-	PWM_Motor1 = Roll_sum + Yaw_sum;
-	PWM_Motor2 = Pitch_sum - Yaw_sum;
-	PWM_Motor3 = - Roll_sum + Yaw_sum;
-	PWM_Motor4 = - Pitch_sum - Yaw_sum;
-	
-	if(High_sum >= 520){				// gioi han PID altitude o muc 65% nang luong 
-		High_sum = 520;					// do khoi dong ton 40% nang luong nen altitude chi dc dung toi da 25% nang luong con lai
+
+
+	if(High_sum >= 600){				// gioi han PID altitude o muc 65% nang luong 
+		High_sum = 600;					// do khoi dong ton 40% nang luong nen altitude chi dc dung toi da 25% nang luong con lai
 	}
 	if(High_sum <= 0){
 		High_sum = 0;
 	}
+
+	PWM_Motor1 = Roll_sum - Yaw_sum;
+	PWM_Motor2 = Pitch_sum + Yaw_sum;
+	PWM_Motor3 = - Roll_sum - Yaw_sum;
+	PWM_Motor4 = - Pitch_sum + Yaw_sum;
+
+
 
 	setPWM1(thrustRate, PWM_Motor1, High_sum);
 	setPWM2(thrustRate, PWM_Motor2, High_sum);
@@ -257,7 +269,9 @@ void calcPID(float phiDesire, float thetaDesire, float psiDesire, float altitude
 	float phiAct, thetaAct, psiAct, GyrosR, GyrosP, GyrosY, altitudeBaroAct, altitudeAcc_Baro;
 	phiAct = getPhiAngle();
 	thetaAct = getThetaAngle();
-	psiAct = fufoCalcAngleMag();
+//	psiAct = fufoCalcAngleMag();
+	psiAct = 0;
+	GyrosY = getGyrosOutputY();
 	GyrosR = getGyrosOutputR();
 	GyrosP = getGyrosOutputP();
 	altitudeBaroAct = getBaroAltitude();
@@ -265,7 +279,6 @@ void calcPID(float phiDesire, float thetaDesire, float psiDesire, float altitude
 	xuatTheta = thetaAct;
 	xuatPhi = phiAct;
 	xuatPsi = psiAct;
-	
 	if (thetaAct <= -40 || thetaAct >= 40 || phiAct <= -40 || phiAct >= 40){
 		T4CONbits.TON = 0;
 		_PTEN = 0;
@@ -278,30 +291,30 @@ void calcPID(float phiDesire, float thetaDesire, float psiDesire, float altitude
 
 	Pitch_sum = calcPitchAngle(phiDesire, phiAct, GyrosP, KpPhi, KiPhi, KdPhi);
 	Roll_sum = calcRollAngle(thetaDesire, thetaAct, GyrosR, KpTheta, KiTheta, KdTheta);
-	Yaw_sum = calcYawAngle(psiDesire, psiAct, KpPsi, KiPsi, KdPsi);	
+	Yaw_sum = calcYawAngle(psiDesire, psiAct, GyrosY, KpPsi, KiPsi, KdPsi);	
 //	Pitch_sum = 0;
 //	Roll_sum = 0;
 //	Yaw_sum = 0;
-	High_sum = 0;
+//	High_sum = 0;
 	if(getPIDAltitude() == Enable){
 //		altitudeAcc_Baro = getAltitude(altitudeBaroAct);
 		altitudeLCD = altitudeBaroAct;
-//		High_sum = calcAltitude(altitudeDesire, altitudeBaroAct, KpAlt, KiAlt, KdAlt);
+		High_sum = calcAltitude(altitudeDesire, altitudeBaroAct, KpAlt, KiAlt, KdAlt);
 		setPIDAltitude(Disable);
 	}
 
-	xuatdocao = Yaw_sum;
+	xuatdocao = KiPsi;
 
-	if(xuatPsi < 0){
+	if(xuatPhi < 0){
 		fufoSendCharUART('-');
 	}
-	fufoSendIntUART((int)(xuatPsi*10));
+	fufoSendIntUART((int)(xuatPhi*1000));
 	fufoSendCharUART(',');
 
-	if(xuatPhong < 0){
+	if(xuatTheta < 0){
 		fufoSendCharUART('-');
 	}
-	fufoSendIntUART((int)(xuatPhong*10));
+	fufoSendIntUART((int)(xuatTheta*1000));
 	fufoSendCharUART(',');
 
 	if(altitudeLCD < 0){
@@ -334,14 +347,19 @@ float calcPitchAngle(float desirePitch_Angle, float actualPitch_Angle, float Gyr
 	return Angle_sumPitch;
 }
 
-float calcYawAngle(float desireYaw_Angle, float actualYaw_Angle, float KpYaw, float KiYaw, float KdYaw){
+float calcYawAngle(float desireYaw_Angle, float actualYaw_Angle,float Gyros_OutputYaw, float KpYaw, float KiYaw, float KdYaw){
 	e_Yaw = desireYaw_Angle - actualYaw_Angle;
-	yaw_Angle_New = actualYaw_Angle;
+	if(e_Yaw > 180){
+		e_Yaw = e_Yaw - 360;
+	}
+	if(e_Yaw < -180){
+		e_Yaw = e_Yaw + 360;
+	}
+
 	total_e_Yaw = total_e_Yaw + e_Yaw;
 	P = KpYaw*e_Yaw;
 	I = KiYaw*total_e_Yaw*0.01;
-	D = KdYaw*(yaw_Angle_Old - yaw_Angle_New)/0.013;
-	yaw_Angle_Old = yaw_Angle_New;
+	D = KdYaw*Gyros_OutputYaw*(-1);		//KdYaw*(yaw_Angle_Old - yaw_Angle_New)/0.013;
 	Angle_sumYaw = P + I + D;
 	return Angle_sumYaw;
 }
@@ -381,4 +399,11 @@ void resetPWM(void){
 	PWM_Motor2 = 0;
 	PWM_Motor3 = 0;
 	PWM_Motor4 = 0;
+}
+
+float limit(float compass, float alt){
+ if (compass >=0)
+  return min(compass, max(80,alt/2));  // compass will not greater than maximum value.
+ else
+  return max(compass, min(-80,( 0 - (alt/2))));  // compass will not smaller than minimum value.
 }

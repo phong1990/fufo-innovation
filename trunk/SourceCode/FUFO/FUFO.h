@@ -14,6 +14,7 @@
 #include "BMP085_barometric/BMP085.h"
 #include "HMC5883L_magneto/HMC5883L.h"
 
+
 // Khao bao bien hoac method dung chung cho ca project
 #define Fcy		(8000000*8/4)			//Tan so thuc thi lenh
 #define	Fpwm		400

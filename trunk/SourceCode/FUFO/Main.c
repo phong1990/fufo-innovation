@@ -217,7 +217,11 @@ void __attribute__((__interrupt__ , auto_psv)) _T2Interrupt (void)
 		if(i == 350){
 			i = 0;
 			tempHigh = getHigh_sum();
-			temp = (tempHigh/40);
+			if(tempHigh = 0) {
+				temp = 0;
+			} else{
+				temp = (tempHigh/40);
+			}
 			FUFO_thrust = getThrustRate();
 			FUFO_thrust = FUFO_thrust + temp;
 			setThrustRate(FUFO_thrust);
