@@ -50,8 +50,8 @@ public class StatusMessage {
         try {
             String[] abc = message.split(",");
             if(abc.length == 3){
-                pitchAngle = Double.parseDouble(abc[0]) - 0.59;
-                rollAngle = Double.parseDouble(abc[1]) + 13.16; 
+                pitchAngle = Double.parseDouble(abc[0]) + 0.6;
+                rollAngle = Double.parseDouble(abc[1]) - 1.6; 
                 height = Double.parseDouble(abc[2]);
                 if (height < 0) height = 0;
                 if (height > 100) height = 100;
