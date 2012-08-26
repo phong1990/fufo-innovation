@@ -45,16 +45,16 @@ void CompFilter(void){
 	fufoGetAngleGyros();
 	phiComp = k*(phiComp + Ry*0.01) + (1 - k)*phiAngle;
 	thetaComp = k*(thetaComp + Rx*0.01) + (1 - k)*thetaAngle;
-//	psiHigh = k*(psiHigh + Rz*0.01);
-//	if(psiHigh > 360){
-//		psiHigh = psiHigh - 360;
-//	}
+	psiHigh = k*(psiHigh + Rz*0.01);
+	if(psiHigh > 360){
+		psiHigh = psiHigh - 360;
+	}
 	setGyrosOutputR(Rx);
 	setGyrosOutputP(Ry);
 	setGyrosOutputY(Rz);
 	setPhiAngle(phiComp);
 	setThetaAngle(thetaComp);
-//	setPsiAngle(psiHigh);	
+	setPsiAngle(psiHigh);	
 }
 
 void fufoGetRateAngle(void){
