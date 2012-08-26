@@ -64,7 +64,7 @@ public class AOC{
         frame = new JFrame();
         frame.setSize(1240 , 690);
         frame.setUndecorated(true);                             //Remove title bar of main frame
-        //   frame.setBackground(new Color(0, 0, 0, 0));             //Set transparent for frame
+      //  frame.setBackground(new Color(0, 0, 0, 0));             //Set transparent for frame
         frame.setTitle("FUFO APP");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setResizable(false);
@@ -282,7 +282,7 @@ public class AOC{
                     case KeyEvent.VK_UP:
                         bt_up.setIcon(new ImageIcon("pic\\bt_up_Clicked.png"));
                         if(firstUP){
-                            lb_height.setPoint = 1;
+                            lb_height.setPoint = 1.5;
                             firstUP = false;
                         }else{
                             if(lb_height.setPoint <= 98.5)
